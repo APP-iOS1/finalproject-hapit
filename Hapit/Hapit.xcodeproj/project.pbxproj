@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
 		F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49E28CE29762CA0009EEB1A /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
 		F49E28CC29762C9C009EEB1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6774979329763C29003F9D6C /* AddHabitView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 			files = (
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
+				6774979429763C29003F9D6C /* AddHabitView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
 		C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC879297632D400E58C84 /* DiaryView.swift */; };
+		C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC87C29765BAC00E58C84 /* MyPageView.swift */; };
+		C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88029765E7500E58C84 /* RewardView.swift */; };
+		C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */; };
+		C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88429766BE100E58C84 /* JellyGridView.swift */; };
+		C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* ProfileModalView.swift */; };
+		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
 		F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49E28CE29762CA0009EEB1A /* Assets.xcassets */; };
@@ -18,6 +24,12 @@
 /* Begin PBXFileReference section */
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
 		C5FAC879297632D400E58C84 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
+		C5FAC87C29765BAC00E58C84 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		C5FAC88029765E7500E58C84 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
+		C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellView.swift; sourceTree = "<group>"; };
+		C5FAC88429766BE100E58C84 /* JellyGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyGridView.swift; sourceTree = "<group>"; };
+		C5FAC88729766C6800E58C84 /* ProfileModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModalView.swift; sourceTree = "<group>"; };
+		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
 		F49E28CC29762C9C009EEB1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +48,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5FAC87E29765E1D00E58C84 /* MyPageView */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC87C29765BAC00E58C84 /* MyPageView.swift */,
+				C5FAC88629766C2B00E58C84 /* Profile */,
+				C5FAC87F29765E6600E58C84 /* Reward */,
+			);
+			path = MyPageView;
+			sourceTree = "<group>";
+		};
+		C5FAC87F29765E6600E58C84 /* Reward */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC88029765E7500E58C84 /* RewardView.swift */,
+				C5FAC88429766BE100E58C84 /* JellyGridView.swift */,
+				C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */,
+			);
+			path = Reward;
+			sourceTree = "<group>";
+		};
+		C5FAC88629766C2B00E58C84 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */,
+				C5FAC88729766C6800E58C84 /* ProfileModalView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		F49E28BE29762C9B009EEB1A = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +125,7 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C5FAC87E29765E1D00E58C84 /* MyPageView */,
 				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
 				C5FAC879297632D400E58C84 /* DiaryView.swift */,
 			);
@@ -168,8 +210,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
+				C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */,
+				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
+				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
+				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */,
+				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
+				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

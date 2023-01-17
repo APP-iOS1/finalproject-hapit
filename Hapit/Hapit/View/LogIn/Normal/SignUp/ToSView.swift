@@ -13,12 +13,11 @@ struct ToSView: View {
     @State private var agreePrivate: Bool = false
     @State private var agreeAD: Bool = false
     
-//    @Binding var step: Int
     var totalPage: Int = 3
     
     var body: some View {
         VStack(spacing: 20) {
-            Spacer().frame(height: 40)
+            Spacer().frame(height: 20)
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {

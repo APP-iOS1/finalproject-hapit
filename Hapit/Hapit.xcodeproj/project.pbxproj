@@ -22,6 +22,7 @@
 		F49E28F229767F45009EEB1A /* ADToS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28F129767F45009EEB1A /* ADToS.swift */; };
 		F49E28F5297681E9009EEB1A /* SignUpTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28F4297681E9009EEB1A /* SignUpTab.swift */; };
 		F49E291729770195009EEB1A /* GetStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E291629770195009EEB1A /* GetStartView.swift */; };
+		F49E2919297714E8009EEB1A /* StepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E2918297714E8009EEB1A /* StepBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		F49E28F129767F45009EEB1A /* ADToS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADToS.swift; sourceTree = "<group>"; };
 		F49E28F4297681E9009EEB1A /* SignUpTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTab.swift; sourceTree = "<group>"; };
 		F49E291629770195009EEB1A /* GetStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartView.swift; sourceTree = "<group>"; };
+		F49E2918297714E8009EEB1A /* StepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				F49E28F32976813E009EEB1A /* SignUp */,
 				F49E28DB297633A7009EEB1A /* LogInView.swift */,
 				F49E28F4297681E9009EEB1A /* SignUpTab.swift */,
+				F49E2918297714E8009EEB1A /* StepBar.swift */,
 				F49E28EA29766319009EEB1A /* ToS */,
 			);
 			path = Normal;
@@ -243,6 +246,7 @@
 				F49E28E5297639F4009EEB1A /* RegisterView.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
+				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,

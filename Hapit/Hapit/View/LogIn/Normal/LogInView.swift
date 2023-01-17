@@ -57,7 +57,7 @@ struct LogInView: View {
                 
                 HStack {
                     Text("아직 회원이 아니신가요?")
-                    NavigationLink(destination: RegisterView().navigationTitle("회원가입").navigationBarTitleDisplayMode(.large)) {
+                    NavigationLink(destination: RegisterView()) {
                         Text("회원가입")
                     }
                 }

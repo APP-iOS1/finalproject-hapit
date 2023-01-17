@@ -17,7 +17,21 @@ struct RegisterView: View {
     var totalPage: Int = 3
 
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
+            Spacer().frame(height: 20)
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("기본정보를")
+                        .foregroundColor(.pink)
+                    Text("입력해주세요")
+                }
+                .font(.largeTitle)
+                .bold()
+                Spacer()
+            }
+            
+            Spacer().frame(height: 30)
+            
             Group {
                 HStack {
                     VStack {
@@ -26,8 +40,6 @@ struct RegisterView: View {
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)
                     }
-                    
-                    Spacer().frame(width: 10)
                     
                     Button(action: {}){
                         RoundedRectangle(cornerRadius: 5)
@@ -40,8 +52,6 @@ struct RegisterView: View {
                     }
                 }
                 
-                Spacer().frame(height: 22)
-                
                 VStack {
                     SecureField("Password", text: $pw)
                     Rectangle()
@@ -49,16 +59,12 @@ struct RegisterView: View {
                         .frame(maxWidth: .infinity, maxHeight: 0.3)
                 }
                 
-                Spacer().frame(height: 22)
-                
                 VStack {
                     SecureField("Password Check", text: $pwCheck)
                     Rectangle()
                         .fill(.gray)
                         .frame(maxWidth: .infinity, maxHeight: 0.3)
                 }
-                
-                Spacer().frame(height: 22)
                 
                 HStack {
                     VStack {
@@ -82,13 +88,13 @@ struct RegisterView: View {
                 }
             }
             
-            Spacer().frame(height: 40)
+            Spacer().frame(height: 160)
             
             
             NavigationLink(destination: ToSView()) {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.pink)
-                    .frame(maxWidth: .infinity, maxHeight: 40)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
                     .overlay {
                         Text("완료")
                             .foregroundColor(.white)

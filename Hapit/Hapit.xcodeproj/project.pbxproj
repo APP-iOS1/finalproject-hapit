@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
+		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
+		C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC879297632D400E58C84 /* DiaryView.swift */; };
+		C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC87C29765BAC00E58C84 /* MyPageView.swift */; };
+		C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88029765E7500E58C84 /* RewardView.swift */; };
+		C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */; };
+		C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88429766BE100E58C84 /* JellyGridView.swift */; };
+		C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* ProfileModalView.swift */; };
+		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
 		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
 		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
@@ -20,6 +27,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
+		C5FAC879297632D400E58C84 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
+		C5FAC87C29765BAC00E58C84 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		C5FAC88029765E7500E58C84 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
+		C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellView.swift; sourceTree = "<group>"; };
+		C5FAC88429766BE100E58C84 /* JellyGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyGridView.swift; sourceTree = "<group>"; };
+		C5FAC88729766C6800E58C84 /* ProfileModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModalView.swift; sourceTree = "<group>"; };
+		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
 		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
@@ -43,12 +58,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5FAC87E29765E1D00E58C84 /* MyPageView */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC87C29765BAC00E58C84 /* MyPageView.swift */,
+				C5FAC88629766C2B00E58C84 /* Profile */,
+				C5FAC87F29765E6600E58C84 /* Reward */,
+			);
+			path = MyPageView;
+			sourceTree = "<group>";
+		};
+		C5FAC87F29765E6600E58C84 /* Reward */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC88029765E7500E58C84 /* RewardView.swift */,
+				C5FAC88429766BE100E58C84 /* JellyGridView.swift */,
+				C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */,
+			);
+			path = Reward;
+			sourceTree = "<group>";
+		};
+		C5FAC88629766C2B00E58C84 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */,
+				C5FAC88729766C6800E58C84 /* ProfileModalView.swift */,
+			);
+			path = Profile;
+
 		3C38AFC229763327002D5ADF /* HomeTab */ = {
 			isa = PBXGroup;
 			children = (
 				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
 			);
 			path = HomeTab;
+
 			sourceTree = "<group>";
 		};
 		F49E28BE29762C9B009EEB1A = {
@@ -70,11 +114,11 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				F49E28CA29762C9C009EEB1A /* HapitApp.swift */,
+				F49E28CC29762C9C009EEB1A /* ContentView.swift */,
 				F49E28DA29762CE0009EEB1A /* ViewModel */,
 				F49E28D929762CD6009EEB1A /* View */,
 				F49E28D829762CCF009EEB1A /* Model */,
-				F49E28CA29762C9C009EEB1A /* HapitApp.swift */,
-				F49E28CC29762C9C009EEB1A /* ContentView.swift */,
 				F49E28CE29762CA0009EEB1A /* Assets.xcassets */,
 				F49E28D029762CA0009EEB1A /* Preview Content */,
 			);
@@ -100,6 +144,9 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C5FAC87E29765E1D00E58C84 /* MyPageView */,
+				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
+				C5FAC879297632D400E58C84 /* DiaryView.swift */,
 				6774979329763C29003F9D6C /* AddHabitView.swift */,
 				3625FB66297634AC0006478B /* HabitDetailView.swift */,
 				3C38AFC229763327002D5ADF /* HomeTab */,
@@ -187,7 +234,15 @@
 			files = (
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
+				C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */,
+				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
+				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
+				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
+				C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */,
+				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
+				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
+				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddHabitView.swift in Sources */,
 				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
 				3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */,

@@ -11,7 +11,8 @@
 		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
 		3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6C2976688A0006478B /* DiaryViewModel.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
-		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
+		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
+		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
 		C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC879297632D400E58C84 /* DiaryView.swift */; };
 		C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC87C29765BAC00E58C84 /* MyPageView.swift */; };
@@ -32,7 +33,8 @@
 		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
 		3625FB6C2976688A0006478B /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
+		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
+		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
 		C5FAC879297632D400E58C84 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 		C5FAC87C29765BAC00E58C84 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
-				6774979329763C29003F9D6C /* AddHabitView.swift */,
+				6774979329763C29003F9D6C /* AddChallengeView.swift */,
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
 			);
 			path = HomeTab;
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				C9CBC800297683BB00D530CC /* SocialView.swift */,
+				3CF39BA429770D87003D4809 /* AddFriendView.swift */,
 			);
 			path = SocialTab;
 			sourceTree = "<group>";
@@ -263,7 +266,8 @@
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
-				6774979429763C29003F9D6C /* AddHabitView.swift in Sources */,
+				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
+				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
 				3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */,
 				3625FB6B297668740006478B /* Dairy.swift in Sources */,

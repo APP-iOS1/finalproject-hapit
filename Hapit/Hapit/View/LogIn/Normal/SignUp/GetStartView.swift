@@ -12,7 +12,7 @@ struct GetStartView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Spacer().frame(height: 20)
+            Spacer().frame(height: 27)
             
             HStack() {
                 StepBar(nowStep: 3)
@@ -31,16 +31,21 @@ struct GetStartView: View {
                 Spacer()
             }
             
-            Spacer().frame(height: 30)
+            Spacer().frame(height: 80)
             
-            Spacer().frame(height: 160)
+            Image("fourbears")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: 310, maxHeight: 170)
+            
+            Spacer().frame(height: 104)
             
             NavigationLink(destination: LogInView()) {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.pink)
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .overlay {
-                        Text("로그인")
+                        Text("시작하기")
                             .foregroundColor(.white)
                     }
             }

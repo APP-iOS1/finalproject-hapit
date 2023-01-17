@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
+		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
+		3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6C2976688A0006478B /* DiaryViewModel.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
@@ -15,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
+		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
+		3625FB6C2976688A0006478B /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
@@ -83,6 +90,7 @@
 		F49E28D829762CCF009EEB1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3625FB6A297668740006478B /* Dairy.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -90,6 +98,7 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3625FB66297634AC0006478B /* HabitDetailView.swift */,
 				3C38AFC229763327002D5ADF /* HomeTab */,
 			);
 			path = View;
@@ -98,6 +107,7 @@
 		F49E28DA29762CE0009EEB1A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3625FB6C2976688A0006478B /* DiaryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -175,6 +185,9 @@
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
+				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
+				3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */,
+				3625FB6B297668740006478B /* Dairy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

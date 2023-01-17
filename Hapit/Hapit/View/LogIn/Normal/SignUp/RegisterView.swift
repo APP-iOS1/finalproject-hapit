@@ -13,7 +13,7 @@ struct RegisterView: View {
     @State private var pwCheck: String = ""
     @State private var nickName: String = ""
     
-    @Binding var step: Int
+    //@Binding var step: Int
     var totalPage: Int = 3
 
     var body: some View {
@@ -84,15 +84,8 @@ struct RegisterView: View {
             
             Spacer().frame(height: 40)
             
-            Button(action: {
-                withAnimation(.easeInOut) {
-                    if step < totalPage {
-                        step += 1
-                    } else {
-                        step = 1
-                    }
-                }
-            }){
+            
+            NavigationLink(destination: ToSView()) {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.pink)
                     .frame(maxWidth: .infinity, maxHeight: 40)
@@ -101,6 +94,7 @@ struct RegisterView: View {
                             .foregroundColor(.white)
                     }
             }
+            .disabled(false)
         }
         .padding(.horizontal, 20)
     }
@@ -108,6 +102,6 @@ struct RegisterView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(step: .constant(0))
+        RegisterView()
     }
 }

@@ -5,9 +5,11 @@
 //  Created by 추현호 on 2023/01/17.
 //
 
+
+
 import SwiftUI
-import Firebase
-import GoogleSignIn
+//import Firebase
+//import GoogleSignIn
 import _AuthenticationServices_SwiftUI
 
 // MARK: - Extension View
@@ -22,8 +24,8 @@ struct LoginView: View {
     
     @Binding var isFirstLaunching: Bool
     
-    @EnvironmentObject var loginModel: LoginViewModel
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var loginModel: AppleLoginViewModel
+    @EnvironmentObject var authManager: GoogleAuthManager
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
 
@@ -63,6 +65,7 @@ struct LoginView: View {
             VStack {
                 Spacer()
                 
+                // 로고자리
                 VStack(alignment: .center) {
                     ZStack{
                         Circle()
@@ -80,6 +83,10 @@ struct LoginView: View {
                 .padding()
                 .font(.largeTitle)
                 .bold()
+                // 로고자리
+                //Image("logo")
+//                .resizable()
+//                .frame(maxWidth: .infinity, maxHeight: 200)
                 
                 Spacer()
                 
@@ -229,18 +236,7 @@ struct LoginView: View {
                             authManager.signIn()
                         }
                     
-//                    Button {
-//
-//                    } label: {
-//                        Text("구글 로그인 자리")
-//                            .font(.title2)
-//                            .bold()
-//                            .foregroundColor(.white)
-//                            .frame(width: 300, height: 50)
-//                            .background(Color.gray)
-//                            .clipShape(RoundedRectangle(cornerRadius: 15))
-//                            .padding(EdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20))
-//                    }
+                    //카카오 로그인 버튼
                     
                 } // Buttons VStack
                 Spacer()

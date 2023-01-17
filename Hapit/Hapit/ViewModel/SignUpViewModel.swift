@@ -299,7 +299,7 @@ public func reAuthLoginIn(withEmail email: String, withPassword password: String
 }
 
 //MARK: - 구글 뷰모델
-class AuthManager: ObservableObject {
+class GoogleAuthManager: ObservableObject {
     
     enum signInState {
         case signedIn
@@ -403,7 +403,7 @@ class AuthManager: ObservableObject {
 }
 
     //MARK: - APPLE LOGIN
-class LoginViewModel: ObservableObject {
+class AppleLoginViewModel: ObservableObject {
     
     @Published var nonce = ""
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true

@@ -14,6 +14,8 @@
 		3625FB88297690A30006478B /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB87297690A30006478B /* UserInfoViewModel.swift */; };
 		3625FB8A297690E30006478B /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB89297690E30006478B /* SignUpView.swift */; };
 		3625FB8C297691140006478B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB8B297691140006478B /* LoginView.swift */; };
+		3625FB8E297691C80006478B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB8D297691C80006478B /* User.swift */; };
+		3625FB90297695E80006478B /* ToSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB8F297695E80006478B /* ToSView.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
@@ -40,6 +42,8 @@
 		3625FB87297690A30006478B /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		3625FB89297690E30006478B /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		3625FB8B297691140006478B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3625FB8D297691C80006478B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3625FB8F297695E80006478B /* ToSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSView.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				3625FB6A297668740006478B /* Dairy.swift */,
+				3625FB8D297691C80006478B /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				3625FB8B297691140006478B /* LoginView.swift */,
+				3625FB8F297695E80006478B /* ToSView.swift */,
 				3625FB89297690E30006478B /* SignUpView.swift */,
 				C9CBC7FF2976835100D530CC /* SocialTab */,
 				C5FAC87E29765E1D00E58C84 /* MyPageTab */,
@@ -285,6 +291,8 @@
 				3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */,
 				3625FB8C297691140006478B /* LoginView.swift in Sources */,
 				3625FB6B297668740006478B /* Dairy.swift in Sources */,
+				3625FB8E297691C80006478B /* User.swift in Sources */,
+				3625FB90297695E80006478B /* ToSView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

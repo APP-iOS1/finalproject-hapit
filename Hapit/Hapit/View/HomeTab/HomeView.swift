@@ -8,8 +8,8 @@
 import SwiftUI
 
 enum HabitTypes: String, CaseIterable{
-    case personal = "개인습관"
-    case group = "그룹습관"
+    case Challenge = "챌린지"
+    case Habit = "습관"
 }
 
 
@@ -21,29 +21,41 @@ struct HabitSegmentView: View {
     
     var body: some View {
         switch habitType {
-        case .personal:
+        case .Challenge:
+            List{
+                NavigationLink {
+                    Text("디테일이 들어가는 곳")
+                } label: {
+                    ChallengeListCell(didHabit: $didHabit)
+                }
+                .swipeActions {
+                            Button("완료하기") {
+                                didHabit.toggle()
+                            }
+                            .tint(.green)
+                        }
+                NavigationLink {
+                    Text("디테일이 들어가는 곳")
+                } label: {
+                    ChallengeListCell(didHabit: $didHabit)
+                }
+                .swipeActions {
+                            Button("완료하기") {
+                                didHabit.toggle()
+                            }
+                            .tint(.green)
+                        }
+            }
+            .listStyle(.insetGrouped)
+            
+            
+        case .Habit:
+            
             List{
                 NavigationLink {
                     Text("디테일이 들어가는 곳")
                 } label: {
                     HabitListCell(didHabit: $didHabit)
-                }
-                .swipeActions {
-                            Button("습관 완료하기") {
-                                didHabit.toggle()
-                            }
-                            .tint(.green)
-                        }
-                
-            }
-            
-        case .group:
-            
-            List{
-                NavigationLink {
-                    Text("디테일이 들어가는 곳")
-                } label: {
-                    Text("모여서 담배피기")
                 }
             }
         }// switch
@@ -61,19 +73,18 @@ struct HabitListCell: View {
     
     var body: some View {
         HStack{
-            Image(systemName: didHabit ? "checkmark.square.fill" : "checkmark.square")
-                .foregroundColor(didHabit ? .green : .gray)
+            Button {
+                didHabit.toggle()
+            } label: {
+                Image(systemName: didHabit ? "checkmark.square.fill" : "checkmark.square")
+                    .foregroundColor(didHabit ? .green : .gray)
+            }
+            .buttonStyle(PlainButtonStyle())
 
             VStack(alignment: .leading){
                 Text(title)
                     .bold()
-                HStack{
-                    Text("D+\(dateFromStart)")
-                    Divider()
-                    Image(systemName: "flame.fill").font(.body)
-                        .foregroundColor(.red)
-                    Text("\(dayWithOutStop)일 연속중..!")
-                }//HStack
+               
             }//VStack
         }//HStack
         
@@ -81,11 +92,51 @@ struct HabitListCell: View {
     }
 }
 
+struct ChallengeListCell: View {
+    
+    @Binding var didHabit: Bool
+    
+    //MARK: 습관 모델이 만들어지면 수정할 부분
+    var title: String = "나의 습관명"
+    var dateFromStart: Int = 20
+    var dayWithOutStop: Int = 5
+    
+    var body: some View {
+        HStack{
+            Button {
+                didHabit.toggle()
+            } label: {
+                Image(systemName: didHabit ? "checkmark.square.fill" : "checkmark.square")
+                    .foregroundColor(didHabit ? .green : .gray)
+            }
+            .buttonStyle(PlainButtonStyle())
+
+            VStack(alignment: .leading){
+                Text(title)
+                    .bold()
+                HStack{
+                    Text("D+\(dateFromStart)")
+                    Divider()
+                  
+                    Image(systemName: "flame.fill").font(.body)
+                        .foregroundColor(.red)
+                    Text("\(dayWithOutStop)일 연속중..!")
+                }//HStack
+            }//VStack
+        }//HStack
+
+        
+        
+    }
+}
+
+
+
 
 
 struct HomeView: View {
-    
-    @State private var selectedType: HabitTypes = .personal
+    @State private var isAddHabitViewShown: Bool = false
+    @State private var selectedType: HabitTypes = .Challenge
     var body: some View {
         NavigationStack{
             VStack {
@@ -96,31 +147,34 @@ struct HomeView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
-                
+                //Text("스와이프 해서 오늘의 챌린지를 달성하세요")
                 Spacer()
                 HabitSegmentView(habitType: selectedType)
                 Spacer()
                 
                 
             }//VStack
-            .navigationTitle("Home")
+            .navigationTitle("나의 해핏")
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
-                NavigationLink {
-                    // AddHabitView가 올 자리
-                    Text("hello")
+//                NavigationLink {
+//                    // AddHabitView가 올 자리
+//                    Text("hello")
+//                } label: {
+//                    Label("Add Habit", systemImage: "plus.app")
+//                }
+
+                Button {
+                    isAddHabitViewShown.toggle()
                 } label: {
                     Label("Add Habit", systemImage: "plus.app")
                 }
-
-//                Button {
-//                    print("tap!")
-//                } label: {
-//                    Label("Profile", systemImage: "person.crop.circle")
-//                }
                 
             }//toolbar
         }//NavigationStack
+        .sheet(isPresented: $isAddHabitViewShown) {
+            AddHabitView()
+        }
     }//body
 }
 

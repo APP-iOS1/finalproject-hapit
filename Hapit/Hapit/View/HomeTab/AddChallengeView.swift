@@ -10,10 +10,10 @@ import SwiftUI
 // MARK: - AddHabitView Struct
 struct AddHabitView: View {
     // MARK: - Property Wrappers
+    @Environment(\.dismiss) private var dismiss
     @State private var habitName: String = ""
     @State private var isAlarmOn: Bool = false
     @State private var currentDate = Date()
-    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -65,7 +65,7 @@ struct AddHabitView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-
+                        dismiss()
                     } label: {
                         Image(systemName: "multiply")
                             .foregroundColor(.gray)

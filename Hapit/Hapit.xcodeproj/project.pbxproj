@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
+		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
+		3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6C2976688A0006478B /* DiaryViewModel.swift */; };
+		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
+		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
 		C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC879297632D400E58C84 /* DiaryView.swift */; };
 		C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC87C29765BAC00E58C84 /* MyPageView.swift */; };
@@ -15,11 +20,7 @@
 		C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88429766BE100E58C84 /* JellyGridView.swift */; };
 		C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* ProfileModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
-		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
-		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
-		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
-		3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6C2976688A0006478B /* DiaryViewModel.swift */; };
-		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
+		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
 		F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49E28CE29762CA0009EEB1A /* Assets.xcassets */; };
@@ -27,6 +28,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
+		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
+		3625FB6C2976688A0006478B /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
 		C5FAC879297632D400E58C84 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 		C5FAC87C29765BAC00E58C84 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -35,11 +41,7 @@
 		C5FAC88429766BE100E58C84 /* JellyGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyGridView.swift; sourceTree = "<group>"; };
 		C5FAC88729766C6800E58C84 /* ProfileModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
-		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
-		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
-		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
-		3625FB6C2976688A0006478B /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
-		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
 		F49E28CC29762C9C009EEB1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,14 +60,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C5FAC87E29765E1D00E58C84 /* MyPageView */ = {
+		3C38AFC229763327002D5ADF /* HomeTab */ = {
+			isa = PBXGroup;
+			children = (
+				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
+				6774979329763C29003F9D6C /* AddHabitView.swift */,
+				C9CBC7FE2976831600D530CC /* HabitDetail */,
+			);
+			path = HomeTab;
+			sourceTree = "<group>";
+		};
+		C5FAC87E29765E1D00E58C84 /* MyPageTab */ = {
 			isa = PBXGroup;
 			children = (
 				C5FAC87C29765BAC00E58C84 /* MyPageView.swift */,
 				C5FAC88629766C2B00E58C84 /* Profile */,
 				C5FAC87F29765E6600E58C84 /* Reward */,
 			);
-			path = MyPageView;
+			path = MyPageTab;
 			sourceTree = "<group>";
 		};
 		C5FAC87F29765E6600E58C84 /* Reward */ = {
@@ -87,14 +99,22 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-
-		3C38AFC229763327002D5ADF /* HomeTab */ = {
+		C9CBC7FE2976831600D530CC /* HabitDetail */ = {
 			isa = PBXGroup;
 			children = (
-				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
+				3625FB66297634AC0006478B /* HabitDetailView.swift */,
+				C5FAC879297632D400E58C84 /* DiaryView.swift */,
+				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
 			);
-			path = HomeTab;
-
+			path = HabitDetail;
+			sourceTree = "<group>";
+		};
+		C9CBC7FF2976835100D530CC /* SocialTab */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBC800297683BB00D530CC /* SocialView.swift */,
+			);
+			path = SocialTab;
 			sourceTree = "<group>";
 		};
 		F49E28BE29762C9B009EEB1A = {
@@ -146,11 +166,8 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C5FAC87E29765E1D00E58C84 /* MyPageView */,
-				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
-				C5FAC879297632D400E58C84 /* DiaryView.swift */,
-				6774979329763C29003F9D6C /* AddHabitView.swift */,
-				3625FB66297634AC0006478B /* HabitDetailView.swift */,
+				C9CBC7FF2976835100D530CC /* SocialTab */,
+				C5FAC87E29765E1D00E58C84 /* MyPageTab */,
 				3C38AFC229763327002D5ADF /* HomeTab */,
 			);
 			path = View;
@@ -235,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
+				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */,
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
@@ -450,4 +468,3 @@
 	};
 	rootObject = F49E28BF29762C9B009EEB1A /* Project object */;
 }
-

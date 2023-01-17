@@ -13,66 +13,20 @@ struct AddHabitView: View {
     @State private var habitName: String = ""
     @State private var isAlarmOn: Bool = false
     @State private var currentDate = Date()
-    @State private var dayOfTheWeekValues: [Bool] = [false, false, false, false, false, false, false] // 요일 배열
-    @State private var dayOfTheWeekKeys: [String] = ["월", "화", "수", "목", "금", "토", "일"] // 요일 배열
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack(spacing: 15) {
-                TextField("습관 이름을 입력해주세요.", text: $habitName)
+                TextField("챌린지 이름을 입력해주세요.", text: $habitName)
                     .font(.title3)
                     .bold()
-                    .padding(20)
+                    .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                     .background(Color("CellColor"))
                     .cornerRadius(15)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .padding(.horizontal, 20)
-                
-                Divider()
-                    .padding(.vertical, 10)
-                
-                HStack {
-                    Text("기간")
-                    Spacer()
-                    DatePicker("", selection: $currentDate, displayedComponents: .date)
-                        .labelsHidden()
-                    Text("-")
-                    DatePicker("", selection: $currentDate, displayedComponents: .date)
-                        .labelsHidden()
-                    
-                }
-                .padding()
-                .background(Color("CellColor"))
-                .cornerRadius(15)
-                .padding(.horizontal, 20)
-                
-                
-                HStack {
-                    Text("요일")
-                    Spacer()
-                    ForEach(0..<7, id: \.self) { index in
-                        Button {
-                            dayOfTheWeekValues[index].toggle()
-                        } label: {
-                            Circle()
-                                .frame(width: 30)
-                                .foregroundColor(dayOfTheWeekValues[index] ? .accentColor : Color("BackgroundColor"))
-                                .overlay {
-                                    Text("\(dayOfTheWeekKeys[index])")
-                                        .font(.footnote)
-                                        .foregroundColor(dayOfTheWeekValues[index] ? .white : .accentColor)
-                                }
-                        }
-
-                    }
-                    
-                }
-                .padding()
-                .background(Color("CellColor"))
-                .cornerRadius(15)
-                .padding(.horizontal, 20)
                 
                 HStack {
                     Text("알림")
@@ -84,6 +38,7 @@ struct AddHabitView: View {
                     
                     Toggle("", isOn: $isAlarmOn)
                         .labelsHidden()
+                        .padding(.leading, 5)
                     
                 }
                 .frame(height: 40)
@@ -92,13 +47,20 @@ struct AddHabitView: View {
                 .cornerRadius(15)
                 .padding(.horizontal, 20)
                 
+                HStack(spacing: 5) {
+                    Image(systemName: "exclamationmark.circle")
+                    Text("66일 동안의 챌린지를 성공하면 종료일이 없는 습관으로 변경돼요.")
+                }
+                .foregroundColor(.gray)
+                .font(.caption2)
+                .padding(.top, 5)
                 
                 
                 Spacer()
             } // VStack
             .padding(.top, 30)
             .background(Color("BackgroundColor")) // 라이트 모드
-            .navigationTitle("새로운 습관")
+            .navigationTitle("새로운 챌린지")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

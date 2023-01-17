@@ -85,6 +85,8 @@
 				C5FAC88729766C6800E58C84 /* ProfileModalView.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
 
 		3C38AFC229763327002D5ADF /* HomeTab */ = {
 			isa = PBXGroup;
@@ -448,3 +450,4 @@
 	};
 	rootObject = F49E28BF29762C9B009EEB1A /* Project object */;
 }
+

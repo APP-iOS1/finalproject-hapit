@@ -10,7 +10,44 @@ import SwiftUI
 struct GetStartView: View {
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 20) {
+            
+            Spacer().frame(height: 20)
+            
+            HStack() {
+                StepBar(nowStep: 3)
+                    .padding(.leading, -8)
+                Spacer()
+            }
+            
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Hapit")
+                        .foregroundColor(.pink)
+                    Text("회원가입 완료!")
+                }
+                .font(.largeTitle)
+                .bold()
+                Spacer()
+            }
+            
+            Spacer().frame(height: 30)
+            
+            Spacer().frame(height: 160)
+            
+            NavigationLink(destination: LogInView()) {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.pink)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
+                    .overlay {
+                        Text("로그인")
+                            .foregroundColor(.white)
+                    }
+            }
+            .disabled(false)
+            
+        }
+        .padding(.horizontal, 20)
     }
 }
 

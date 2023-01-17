@@ -12,13 +12,18 @@ struct RegisterView: View {
     @State private var pw: String = ""
     @State private var pwCheck: String = ""
     @State private var nickName: String = ""
-    
-    //@Binding var step: Int
-    var totalPage: Int = 3
 
     var body: some View {
         VStack(spacing: 20) {
+            
             Spacer().frame(height: 20)
+            
+            HStack() {
+                StepBar(nowStep: 1)
+                    .padding(.leading, -8)
+                Spacer()
+            }
+            
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("기본정보를")

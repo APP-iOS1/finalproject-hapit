@@ -17,20 +17,20 @@ struct StepBar: View {
                     Spacer().frame(width: 8)
                     Circle()
                         .fill(Color.pink)
-                        .frame(width: 40)
+                        .frame(width: 30)
                         .overlay {
                             Text("\(index)")
-                                .font(.title2)
+                                .font(.title3)
                                 .foregroundColor(Color.white)
                         }
                 } else {
                     Spacer().frame(width: 8)
                     Circle()
                         .stroke(Color.gray, lineWidth: 0.7)
-                        .frame(width: 40)
+                        .frame(width: 30)
                         .overlay {
                             Text("\(index)")
-                                .font(.title2)
+                                .font(.title3)
                                 .foregroundColor(index == nowStep ? Color.white : Color.gray)
                         }
                 }

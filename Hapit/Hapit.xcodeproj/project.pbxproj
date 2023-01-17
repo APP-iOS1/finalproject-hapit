@@ -10,6 +10,10 @@
 		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
 		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
 		3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6C2976688A0006478B /* DiaryViewModel.swift */; };
+		3625FB85297690690006478B /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB84297690690006478B /* SignUpViewModel.swift */; };
+		3625FB88297690A30006478B /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB87297690A30006478B /* UserInfoViewModel.swift */; };
+		3625FB8A297690E30006478B /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB89297690E30006478B /* SignUpView.swift */; };
+		3625FB8C297691140006478B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB8B297691140006478B /* LoginView.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		6774979429763C29003F9D6C /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddHabitView.swift */; };
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
@@ -31,6 +35,11 @@
 		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
 		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
 		3625FB6C2976688A0006478B /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		3625FB84297690690006478B /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		3625FB86297690840006478B /* Hapit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hapit.entitlements; sourceTree = "<group>"; };
+		3625FB87297690A30006478B /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
+		3625FB89297690E30006478B /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		3625FB8B297691140006478B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
@@ -136,6 +145,7 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				3625FB86297690840006478B /* Hapit.entitlements */,
 				F49E28CA29762C9C009EEB1A /* HapitApp.swift */,
 				F49E28CC29762C9C009EEB1A /* ContentView.swift */,
 				F49E28DA29762CE0009EEB1A /* ViewModel */,
@@ -166,6 +176,8 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3625FB8B297691140006478B /* LoginView.swift */,
+				3625FB89297690E30006478B /* SignUpView.swift */,
 				C9CBC7FF2976835100D530CC /* SocialTab */,
 				C5FAC87E29765E1D00E58C84 /* MyPageTab */,
 				3C38AFC229763327002D5ADF /* HomeTab */,
@@ -177,6 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				3625FB6C2976688A0006478B /* DiaryViewModel.swift */,
+				3625FB84297690690006478B /* SignUpViewModel.swift */,
+				3625FB87297690A30006478B /* UserInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -252,20 +266,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
+				3625FB85297690690006478B /* SignUpViewModel.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */,
+				3625FB8A297690E30006478B /* SignUpView.swift in Sources */,
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
+				3625FB88297690A30006478B /* UserInfoViewModel.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddHabitView.swift in Sources */,
 				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
 				3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */,
+				3625FB8C297691140006478B /* LoginView.swift in Sources */,
 				3625FB6B297668740006478B /* Dairy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,9 +410,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
+				DEVELOPMENT_TEAM = AU882HP6MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -420,9 +440,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
+				DEVELOPMENT_TEAM = AU882HP6MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

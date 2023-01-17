@@ -9,7 +9,13 @@ import SwiftUI
 
 struct GoogleLogIn: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        RoundedRectangle(cornerRadius: 5)
+            .fill(Color.indigo)
+            .frame(maxWidth: .infinity, maxHeight: 30)
+            .overlay {
+                Text("구글 로그인")
+                    .foregroundColor(.white)
+            }
     }
 }
 

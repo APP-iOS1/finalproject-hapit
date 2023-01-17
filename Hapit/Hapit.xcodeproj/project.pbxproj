@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
 		F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49E28CE29762CA0009EEB1A /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
 		F49E28CC29762C9C009EEB1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +34,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C38AFC229763327002D5ADF /* HomeTab */ = {
+			isa = PBXGroup;
+			children = (
+				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
+			);
+			path = HomeTab;
+			sourceTree = "<group>";
+		};
 		F49E28BE29762C9B009EEB1A = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3C38AFC229763327002D5ADF /* HomeTab */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -161,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 			);

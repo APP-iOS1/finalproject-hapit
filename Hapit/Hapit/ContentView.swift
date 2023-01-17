@@ -22,7 +22,7 @@ struct ContentView: View {
                .tabItem {
                    VStack{
                        Image(systemName: "globe.europe.africa.fill")
-                       Text("챌린지")
+                       Text("소셜")
                    }
                 }
              MyPageView()

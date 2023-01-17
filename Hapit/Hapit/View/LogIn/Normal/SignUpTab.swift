@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct SignUpTab: View {
+    @State var step: Int = 0
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        TabView(selection: $step) {
+            RegisterView(step: $step)
+                .tag(0)
+            ToSView(step: $step)
+                .tag(1)
+        }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
 }
 

@@ -13,6 +13,9 @@ struct ToSView: View {
     @State private var agreePrivate: Bool = false
     @State private var agreeAD: Bool = false
     
+    @Binding var step: Int
+    var totalPage: Int = 3
+    
     var body: some View {
         VStack(spacing: 20) {
             Spacer().frame(height: 40)
@@ -117,7 +120,15 @@ struct ToSView: View {
                 
                 Spacer().frame(height: 270)
             }
-            Button(action: {}){
+            Button(action: {
+                withAnimation(.easeInOut) {
+                    if step < totalPage {
+                        step += 1
+                    } else {
+                        step = 1
+                    }
+                }
+            }){
                 RoundedRectangle(cornerRadius: 10)
                     .fill(isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD) ? .pink : .gray)
                     .frame(maxWidth: .infinity, maxHeight: 50)
@@ -145,6 +156,6 @@ struct ToSView: View {
 
 struct ToSView_Previews: PreviewProvider {
     static var previews: some View {
-        ToSView()
+        ToSView(step: .constant(2))
     }
 }

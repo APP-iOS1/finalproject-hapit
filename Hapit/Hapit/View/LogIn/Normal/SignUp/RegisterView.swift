@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct SignUpView: View {
+struct RegisterView: View {
     @State private var email: String = ""
     @State private var pw: String = ""
     @State private var pwCheck: String = ""
     @State private var nickName: String = ""
-
     
+    @Binding var step: Int
+    var totalPage: Int = 3
+
     var body: some View {
         VStack {
             Group {
@@ -82,12 +84,20 @@ struct SignUpView: View {
             
             Spacer().frame(height: 40)
             
-            Button(action: {}){
+            Button(action: {
+                withAnimation(.easeInOut) {
+                    if step < totalPage {
+                        step += 1
+                    } else {
+                        step = 1
+                    }
+                }
+            }){
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.pink)
                     .frame(maxWidth: .infinity, maxHeight: 40)
                     .overlay {
-                        Text("가입하기")
+                        Text("완료")
                             .foregroundColor(.white)
                     }
             }
@@ -98,6 +108,6 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        RegisterView(step: .constant(0))
     }
 }

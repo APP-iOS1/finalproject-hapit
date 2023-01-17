@@ -94,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Model;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		F49E28D929762CD6009EEB1A /* View */ = {
@@ -109,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = ViewModel;
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		F49E28DF2976395F009EEB1A /* LogIn */ = {

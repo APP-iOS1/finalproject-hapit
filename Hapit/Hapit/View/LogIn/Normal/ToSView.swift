@@ -15,12 +15,20 @@ struct ToSView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Hapit 이용 약관에")
-                Text("동의해주세요")
+            Spacer().frame(height: 40)
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("Hapit")
+                            .foregroundColor(.pink)
+                        Text("이용 약관에")
+                    }
+                    Text("동의해주세요")
+                }
+                .font(.largeTitle)
+                .bold()
+                Spacer()
             }
-            .font(.largeTitle)
-            .bold()
             
             Spacer().frame(height: 30)
             
@@ -83,7 +91,7 @@ struct ToSView: View {
                         }
                         Text("(필수) 개인정보 수집 및 이용동의")
                         Spacer()
-                        NavigationLink(destination: ServiceToS()){
+                        NavigationLink(destination: PrivateToS()){
                             Image(systemName: "chevron.right")
                         }
                     }
@@ -107,19 +115,18 @@ struct ToSView: View {
                 }
                 .padding(.horizontal, 10)
                 
-                Spacer().frame(height: 70)
-                
-                Button(action: {}){
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD) ? .pink : .gray)
-                        .frame(maxWidth: .infinity, maxHeight: 40)
-                        .overlay {
-                            Text("가입하기")
-                                .foregroundColor(.white)
-                        }
-                }
-                .disabled(!isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD))
+                Spacer().frame(height: 270)
             }
+            Button(action: {}){
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD) ? .pink : .gray)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
+                    .overlay {
+                        Text("가입하기")
+                            .foregroundColor(.white)
+                    }
+            }
+            .disabled(!isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD))
         }
         .padding(.horizontal, 20)
     }

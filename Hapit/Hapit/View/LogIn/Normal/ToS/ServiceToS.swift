@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ServiceToS: View {
     var body: some View {
-        Text("서비스 이용약관")
+        Text("1")
     }
 }
 

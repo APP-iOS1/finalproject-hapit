@@ -78,9 +78,9 @@ struct SignUpView: View {
                             }
                     }
                 }
-                
-                Spacer().frame(height: 40)
             }
+            
+            Spacer().frame(height: 40)
             
             Button(action: {}){
                 RoundedRectangle(cornerRadius: 10)

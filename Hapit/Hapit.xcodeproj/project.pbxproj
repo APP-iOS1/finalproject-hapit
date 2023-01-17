@@ -17,6 +17,8 @@
 		F49E28E3297639D3009EEB1A /* AppleLogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28E2297639D3009EEB1A /* AppleLogIn.swift */; };
 		F49E28E5297639F4009EEB1A /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28E4297639F4009EEB1A /* SignUpView.swift */; };
 		F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28E829765DFA009EEB1A /* ToSView.swift */; };
+		F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28EB29766335009EEB1A /* ServiceToS.swift */; };
+		F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28ED29766500009EEB1A /* PrivateToS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		F49E28E2297639D3009EEB1A /* AppleLogIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLogIn.swift; sourceTree = "<group>"; };
 		F49E28E4297639F4009EEB1A /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		F49E28E829765DFA009EEB1A /* ToSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSView.swift; sourceTree = "<group>"; };
+		F49E28EB29766335009EEB1A /* ServiceToS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceToS.swift; sourceTree = "<group>"; };
+		F49E28ED29766500009EEB1A /* PrivateToS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateToS.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +133,18 @@
 				F49E28E4297639F4009EEB1A /* SignUpView.swift */,
 				F49E28DB297633A7009EEB1A /* LogInView.swift */,
 				F49E28E829765DFA009EEB1A /* ToSView.swift */,
+				F49E28EA29766319009EEB1A /* ToS */,
 			);
 			path = Normal;
+			sourceTree = "<group>";
+		};
+		F49E28EA29766319009EEB1A /* ToS */ = {
+			isa = PBXGroup;
+			children = (
+				F49E28EB29766335009EEB1A /* ServiceToS.swift */,
+				F49E28ED29766500009EEB1A /* PrivateToS.swift */,
+			);
+			path = ToS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,11 +219,13 @@
 			files = (
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
+				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				F49E28E3297639D3009EEB1A /* AppleLogIn.swift in Sources */,
 				F49E28E5297639F4009EEB1A /* SignUpView.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
+				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

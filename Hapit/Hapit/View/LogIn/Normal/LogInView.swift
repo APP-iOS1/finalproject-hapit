@@ -48,6 +48,8 @@ struct LogInView: View {
                         .frame(maxWidth: .infinity, maxHeight: 40)
                         .overlay {
                             Text("로그인")
+                                .foregroundColor(.white)
+                                .bold()
                         }
                 }
                 

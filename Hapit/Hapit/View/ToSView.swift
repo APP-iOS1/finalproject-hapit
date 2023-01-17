@@ -73,9 +73,9 @@ struct ToSView: View {
                         }
                         Text("(필수) 서비스 이용약관 동의")
                         Spacer()
-                        NavigationLink(destination: ServiceToS()){
-                            Image(systemName: "chevron.right")
-                        }
+//                        NavigationLink(destination: ServiceToS()){
+//                            Image(systemName: "chevron.right")
+//                        }
                     }
                     .padding(.horizontal, 10)
                     
@@ -91,9 +91,9 @@ struct ToSView: View {
                         }
                         Text("(필수) 개인정보 수집 및 이용동의")
                         Spacer()
-                        NavigationLink(destination: PrivateToS()){
-                            Image(systemName: "chevron.right")
-                        }
+//                        NavigationLink(destination: PrivateToS()){
+//                            Image(systemName: "chevron.right")
+//                        }
                     }
                     .padding(.horizontal, 10)
                     
@@ -107,9 +107,9 @@ struct ToSView: View {
                         }
                         Text("(선택) E-mail 광고성 정보 수신동의")
                         Spacer()
-                        NavigationLink(destination: ServiceToS()){
-                            Image(systemName: "chevron.right")
-                        }
+//                        NavigationLink(destination: ServiceToS()){
+//                            Image(systemName: "chevron.right")
+//                        }
                     }
                     .padding(.horizontal, 10)
                 }

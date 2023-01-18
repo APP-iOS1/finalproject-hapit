@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
-		3625FB6B297668740006478B /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6A297668740006478B /* Dairy.swift */; };
-		3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB6C2976688A0006478B /* DiaryViewModel.swift */; };
+		369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D429777E72004CB739 /* DiaryViewModel.swift */; };
+		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
@@ -42,8 +42,8 @@
 
 /* Begin PBXFileReference section */
 		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
-		3625FB6A297668740006478B /* Dairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dairy.swift; sourceTree = "<group>"; };
-		3625FB6C2976688A0006478B /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
+		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 		F49E28D829762CCF009EEB1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3625FB6A297668740006478B /* Dairy.swift */,
+				369D01D629777E97004CB739 /* Dairy.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -193,12 +193,10 @@
 		F49E28D929762CD6009EEB1A /* View */ = {
 			isa = PBXGroup;
 			children = (
-
 				F49E28DF2976395F009EEB1A /* LogIn */,
 				C9CBC7FF2976835100D530CC /* SocialTab */,
 				C5FAC87E29765E1D00E58C84 /* MyPageTab */,
 				3C38AFC229763327002D5ADF /* HomeTab */,
-
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -206,7 +204,7 @@
 		F49E28DA29762CE0009EEB1A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				3625FB6C2976688A0006478B /* DiaryViewModel.swift */,
+				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -332,7 +330,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
@@ -353,6 +350,7 @@
 				C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */,
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
+				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */,
@@ -362,8 +360,7 @@
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
-				3625FB6D2976688A0006478B /* DiaryViewModel.swift in Sources */,
-				3625FB6B297668740006478B /* Dairy.swift in Sources */,
+				369D01D729777E97004CB739 /* Dairy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

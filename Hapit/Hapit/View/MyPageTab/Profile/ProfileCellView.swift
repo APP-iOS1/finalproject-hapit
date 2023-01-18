@@ -12,8 +12,8 @@ struct ProfileCellView: View {
     @State private var email = "minju@world.com"
     @State private var isSelectedJelly = 0
     @State var showModal = false
-    // TODO: bearArray 나중에 Enum으로 관리
-    let bearArray = ["bearYellow", "bearBlue", "bearGreen", "bearPurple", "bearTurquoise", "bearRed", "bearWhite"]
+    @State var jellyBadge: Jelly = .bearBlue
+    let bearArray = Jelly.allCases.map({"\($0)"})
     
     var body: some View {
         HStack {

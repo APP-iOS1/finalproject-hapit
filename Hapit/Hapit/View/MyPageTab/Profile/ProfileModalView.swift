@@ -9,10 +9,8 @@ import SwiftUI
 
 struct ProfileModalView: View {
     @Binding var showModal: Bool
-    // TODO: 현재 사용자가 선택한 프로필 사진 인덱스로 초기화
     @Binding var isSelectedJelly : Int
-    // TODO: bearArray 나중에 Enum으로 관리
-    let bearArray = ["bearYellow", "bearBlue", "bearGreen", "bearPurple", "bearTurquoise", "bearRed", "bearWhite"]
+    let bearArray = Jelly.allCases.map({"\($0)"})
     let data = Array(1...20).map { "목록 \($0)"}
     
     //화면을 그리드형식으로 꽉채워줌
@@ -29,6 +27,7 @@ struct ProfileModalView: View {
             Text("대표 이미지 설정")
                 .font(.title2)
                 .bold()
+            
             ScrollView {
                 VStack {
                     LazyVGrid(columns: columns, spacing: 10) {
@@ -42,7 +41,9 @@ struct ProfileModalView: View {
                                     .frame(width: 50, height: 50)
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .padding(5)
-                                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(self.isSelectedJelly == index ? Color.blue : Color.gray , lineWidth: 2))
+                                    .overlay(RoundedRectangle(cornerRadius: 20)
+                                        .stroke(self.isSelectedJelly == index ? Color.blue : Color.gray ,
+                                                lineWidth: 2))
                             }
                         }
                     }

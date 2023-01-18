@@ -33,16 +33,21 @@ struct HabitDetailView: View {
         
         VStack {
             HStack {
-                VStack(alignment: .center, spacing: 10) {
+                HStack {
+                    
                     Text("\(Date().formatted(date: .abbreviated, time: .omitted)) 부터 시작한 습관")
                         .foregroundColor(.gray)
                     
-                    Text("N일째 지속중 🔥")
-                        .font(.title.bold())
+                    Spacer()
+//
+//                    Text("N일째 지속중 🔥")
+//                        .font(.title.bold())
                 }
 
             }
             .padding(.leading)
+            
+            
             
             CalendarWeekListView(
                 calendar: calendar,
@@ -139,6 +144,7 @@ struct HabitDetailView: View {
                 DiaryPerDayView()
             }
         }
+        .navigationTitle("N일째 지속중 🔥")
         .fullScreenCover(isPresented: $isWriteSheetOn, content: WriteDiaryView.init)
     }
     

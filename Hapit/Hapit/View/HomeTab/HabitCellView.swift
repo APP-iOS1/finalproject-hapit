@@ -38,6 +38,7 @@ struct HabitCellView: View {
         .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal, 20)
+        .padding(.bottom, 5)
         
     }
 }

@@ -27,13 +27,13 @@ struct HabitSegmentView: View {
         case .Challenge:
             ScrollView{
                 NavigationLink {
-                    Text("디테일이 들어가는 곳")
+                    HabitDetailView(calendar: Calendar.current)
                 } label: {
                     ChallengeCellView(challenge: $dummyChallenge)
                 }
 
                 NavigationLink {
-                    Text("디테일이 들어가는 곳")
+                    HabitDetailView(calendar: Calendar.current)
                 } label: {
                     ChallengeCellView(challenge: $dummyChallenge2)
                 }
@@ -45,7 +45,7 @@ struct HabitSegmentView: View {
             
             ScrollView{
                 NavigationLink {
-                    Text("디테일이 들어가는 곳")
+                    HabitDetailView(calendar: Calendar.current)
                 } label: {
                     HabitCellView(habit: $dummyChallenge3)
                 }
@@ -84,7 +84,7 @@ struct HomeView: View {
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
 
-            .navigationTitle(getToday())
+            .navigationBarTitle(getToday())
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
                 //                NavigationLink {

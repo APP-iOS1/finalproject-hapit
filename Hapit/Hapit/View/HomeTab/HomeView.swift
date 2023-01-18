@@ -59,12 +59,6 @@ struct HabitSegmentView: View {
                     HabitCellView(habit: $dummyChallenge3)
 
                 }
-                .swipeActions {
-                            Button("습관 완료하기") {
-                                didHabit.toggle()
-                            }
-                            .tint(.green)
-                        }
             }
         }// switch
     }

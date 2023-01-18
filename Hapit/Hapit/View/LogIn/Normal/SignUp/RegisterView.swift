@@ -143,14 +143,14 @@ struct RegisterView: View {
             
             NavigationLink(destination: ToSView()) {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(.pink)
+                    .fill(isOk() ? .gray : .pink)
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .overlay {
                         Text("완료")
                             .foregroundColor(.white)
                     }
             }
-            .disabled(false)
+            .disabled(isOk())
         }
         .padding(.horizontal, 20)
     }
@@ -168,6 +168,15 @@ struct RegisterView: View {
         let passwordFormula = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,20}$"
         
         return password.range(of: passwordFormula, options: .regularExpression) != nil
+    }
+    
+    //다음단계로 넘어갈 수 있는지 검증해주는 함수
+    func isOk() -> Bool {
+        if pw == pwCheck && checkPasswordType(password: pw) && checkEmailType(string: email) && nickName != "" {
+            return false
+        } else {
+            return true
+        }
     }
 }
 

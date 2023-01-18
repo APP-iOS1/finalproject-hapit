@@ -10,6 +10,7 @@ import SwiftUI
 struct LogInView: View {
     @State private var id: String = ""
     @State private var pw: String = ""
+    @Binding var isFullScreen: Bool
     
     var body: some View {
         NavigationStack {
@@ -57,7 +58,7 @@ struct LogInView: View {
                 
                 HStack {
                     Text("아직 회원이 아니신가요?")
-                    NavigationLink(destination: RegisterView()) {
+                    NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
                         Text("회원가입")
                     }
                 }
@@ -75,8 +76,8 @@ struct LogInView: View {
     }
 }
 
-struct LogInView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogInView()
-    }
-}
+//struct LogInView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LogInView()
+//    }
+//}

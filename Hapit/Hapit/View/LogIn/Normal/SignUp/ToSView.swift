@@ -13,6 +13,8 @@ struct ToSView: View {
     @State private var agreePrivate: Bool = false
     @State private var agreeAD: Bool = false
     
+    @Binding var isFullScreen: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -125,7 +127,7 @@ struct ToSView: View {
                 
                 Spacer().frame(height: 160)
                 
-                NavigationLink(destination: GetStartView()) {
+                NavigationLink(destination: GetStartView(isFullScreen: $isFullScreen)) {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD) ? .pink : .gray)
                         .frame(maxWidth: .infinity, maxHeight: 50)
@@ -152,8 +154,8 @@ struct ToSView: View {
     }
 }
 
-struct ToSView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToSView()
-    }
-}
+//struct ToSView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ToSView()
+//    }
+//}

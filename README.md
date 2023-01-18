@@ -16,6 +16,10 @@
 ## 주요기능 및 스크린샷
 
 
+https://user-images.githubusercontent.com/69499549/213133465-7eed3b41-4127-4f7e-8bfe-87ff505aa867.mp4
+
+
+
 현재까지 설정한 주요기능
 
 - 로그인 및 회원가입

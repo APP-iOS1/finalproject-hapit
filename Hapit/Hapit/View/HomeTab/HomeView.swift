@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+//TODO: 체크버튼 분리하기: 현재 한 습관만 달성해도 모든 습관이 다 체크되는 이슈가 있음.
+
+
 enum HabitTypes: String, CaseIterable{
+
     case Challenge = "챌린지"
     case Habit = "습관"
+
 }
 // MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
 struct HabitSegmentView: View {
@@ -24,8 +29,10 @@ struct HabitSegmentView: View {
     
     var body: some View {
         switch habitType {
+
         case .Challenge:
             ScrollView{
+
                 NavigationLink {
                     HabitDetailView(calendar: Calendar.current)
                 } label: {
@@ -37,8 +44,9 @@ struct HabitSegmentView: View {
                 } label: {
                     ChallengeCellView(challenge: $dummyChallenge2)
                 }
+
             }
-            .listStyle(.insetGrouped)
+   
             
             
         case .Habit:
@@ -47,8 +55,16 @@ struct HabitSegmentView: View {
                 NavigationLink {
                     HabitDetailView(calendar: Calendar.current)
                 } label: {
+
                     HabitCellView(habit: $dummyChallenge3)
+
                 }
+                .swipeActions {
+                            Button("습관 완료하기") {
+                                didHabit.toggle()
+                            }
+                            .tint(.green)
+                        }
             }
         }// switch
     }
@@ -57,13 +73,11 @@ struct HabitSegmentView: View {
 
 
 
-
-
-
 struct HomeView: View {
     
     @State private var isAddHabitViewShown: Bool = false
     @State private var selectedType: HabitTypes = .Challenge
+
     var body: some View {
         
         NavigationStack{
@@ -87,6 +101,7 @@ struct HomeView: View {
             .navigationBarTitle(getToday())
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
+
                 //                NavigationLink {
                 //                    // AddHabitView가 올 자리
                 //                    Text("hello")

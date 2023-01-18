@@ -9,11 +9,16 @@ import SwiftUI
 
 struct RegisterView: View {
     @State private var email: String = ""
+    
     @State private var pw: String = ""
+    @State private var showPw: Bool = false
+    
     @State private var pwCheck: String = ""
+    @State private var showPwCheck: Bool = false
+    
     @State private var nickName: String = ""
   
-
+    
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
     @FocusState private var pwCheckFocusField: Bool
@@ -78,24 +83,76 @@ struct RegisterView: View {
                 }
                 
                 VStack {
-                    SecureField("Password", text: $pw)
-                        .focused($pwFocusField)
-                    Rectangle()
-                        .fill(.gray)
-                        .frame(maxWidth: .infinity, maxHeight: 0.3)
-                    
-                    if pwFocusField {
-                        if !checkPasswordType(password: pw) && !pw.isEmpty {
-                            Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요")
-                                .foregroundColor(.red)
-                                .font(.footnote)
+                    if showPw {
+                        TextField("Password", text: $pw)
+                            .focused($pwFocusField)
+                            .overlay {
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        showPw.toggle()}) {
+                                            Image(systemName: self.showPw ? "eye" : "eye.slash")
+                                        }
+                                }
+                        }
+                        Rectangle()
+                            .fill(.gray)
+                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                    } else {
+                        SecureField("Password", text: $pw)
+                            .focused($pwFocusField)
+                            .overlay {
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        showPw.toggle()}) {
+                                            Image(systemName: self.showPw ? "eye" : "eye.slash")
+                                        }
+                                }
+                            }
+                        Rectangle()
+                            .fill(.gray)
+                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                        
+                        if pwFocusField {
+                            if !checkPasswordType(password: pw) && !pw.isEmpty {
+                                Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요")
+                                    .foregroundColor(.red)
+                                    .font(.footnote)
+                            }
                         }
                     }
                 }
                 
                 VStack {
-                    SecureField("Password Check", text: $pwCheck)
-                        .focused($pwCheckFocusField)
+                    if showPwCheck {
+                        TextField("Password Check", text: $pwCheck)
+                            .focused($pwCheckFocusField)
+                            .overlay {
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        showPwCheck.toggle()}) {
+                                            Image(systemName: self.showPwCheck ? "eye" : "eye.slash")
+                                        }
+                                }
+                            }
+                        Rectangle()
+                            .fill(.gray)
+                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                    } else {
+                        SecureField("Password Check", text: $pwCheck)
+                            .focused($pwCheckFocusField)
+                            .overlay {
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        showPwCheck.toggle()}) {
+                                            Image(systemName: self.showPwCheck ? "eye" : "eye.slash")
+                                        }
+                                }
+                            }
+                    }
                     Rectangle()
                         .fill(.gray)
                         .frame(maxWidth: .infinity, maxHeight: 0.3)

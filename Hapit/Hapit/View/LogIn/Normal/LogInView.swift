@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct LogInView: View {
-    @State private var id: String = ""
+    @State private var email: String = ""
     @State private var pw: String = ""
+    
+    @FocusState private var emailFocusField: Bool
+    @FocusState private var pwFocusField: Bool
     
     var body: some View {
         NavigationStack {
@@ -22,7 +25,8 @@ struct LogInView: View {
                 
                 Group {
                     VStack {
-                        TextField("ID", text: $id)
+                        TextField("Email", text: $email)
+                            .focused($emailFocusField)
                         Rectangle()
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)
@@ -32,6 +36,7 @@ struct LogInView: View {
                     
                     VStack {
                         SecureField("Password", text: $pw)
+                            .focused($pwFocusField)
                         Rectangle()
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)
@@ -41,7 +46,11 @@ struct LogInView: View {
                 Spacer().frame(height: 20)
                 
                 Button(action: {
-                    
+                    if email == "" {
+                        emailFocusField = true
+                    } else if pw == "" {
+                        pwFocusField = true
+                    }
                 }){
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.pink)

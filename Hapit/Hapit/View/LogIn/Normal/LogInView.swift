@@ -10,6 +10,7 @@ import SwiftUI
 struct LogInView: View {
     @State private var email: String = ""
     @State private var pw: String = ""
+    @Binding var isFullScreen: Bool
     
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
@@ -66,7 +67,7 @@ struct LogInView: View {
                 
                 HStack {
                     Text("아직 회원이 아니신가요?")
-                    NavigationLink(destination: RegisterView()) {
+                    NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
                         Text("회원가입")
                     }
                 }
@@ -84,8 +85,8 @@ struct LogInView: View {
     }
 }
 
-struct LogInView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogInView()
-    }
-}
+//struct LogInView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LogInView()
+//    }
+//}

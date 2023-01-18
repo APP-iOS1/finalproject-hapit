@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JellyGridView: View {
-    let data = Array(1...40).map { "목록 \($0)"}
+    let data = Array(1...20).map { "목록 \($0)"}
     
     //화면을 그리드형식으로 꽉채워줌
     let columns = [

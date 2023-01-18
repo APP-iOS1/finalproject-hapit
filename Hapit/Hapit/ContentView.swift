@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isFullScreen = true
     var body: some View {
         TabView{
             HomeView()
@@ -32,6 +33,8 @@ struct ContentView: View {
                         Text("마이페이지")
                     }
                 }
+        }.fullScreenCover(isPresented: $isFullScreen) {
+            LogInView(isFullScreen: $isFullScreen)
         }
     }
 }

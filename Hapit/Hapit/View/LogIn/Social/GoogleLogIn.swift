@@ -9,13 +9,8 @@ import SwiftUI
 
 struct GoogleLogIn: View {
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(Color.indigo)
-            .frame(maxWidth: .infinity, maxHeight: 30)
-            .overlay {
-                Text("구글 로그인")
-                    .foregroundColor(.white)
-            }
+        Image("btn_google_light_normal_ios")
+            .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
     }
 }
 

@@ -75,9 +75,10 @@ struct LogInView: View {
                 Spacer().frame(height: 35)
                 
                 Group {
-                    KakaoLogIn()
-                    AppleLogIn()
-                    GoogleLogIn()
+                    HStack {
+                        AppleLogIn()
+                        GoogleLogIn()
+                    }
                 }
             }
             .padding(.horizontal, 20)

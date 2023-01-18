@@ -9,13 +9,8 @@ import SwiftUI
 
 struct AppleLogIn: View {
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(.black)
-            .frame(maxWidth: .infinity, maxHeight: 30)
-            .overlay {
-                Text("애플 로그인")
-                    .foregroundColor(.white)
-            }
+        Image("Logo - SIWA - Logo-only - White")
+            .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
     }
 }
 

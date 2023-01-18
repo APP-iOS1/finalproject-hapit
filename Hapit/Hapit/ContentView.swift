@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.white
+    }
+
+    @State private var isFullScreen = true
+
     var body: some View {
         TabView{
             HomeView()
@@ -16,13 +22,12 @@ struct ContentView: View {
                         Image(systemName: "teddybear.fill")
                         Text("홈")
                     }
-                   
                 }
             SocialView()
                .tabItem {
                    VStack{
                        Image(systemName: "globe.europe.africa.fill")
-                       Text("챌린지")
+                       Text("소셜")
                    }
                 }
              MyPageView()
@@ -32,6 +37,8 @@ struct ContentView: View {
                         Text("마이페이지")
                     }
                 }
+        }.fullScreenCover(isPresented: $isFullScreen) {
+            LogInView(isFullScreen: $isFullScreen)
         }
     }
 }

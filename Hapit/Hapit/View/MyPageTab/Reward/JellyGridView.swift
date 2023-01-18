@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JellyGridView: View {
-    let data = Array(1...40).map { "목록 \($0)"}
+    let data = Array(1...20).map { "목록 \($0)"}
     
     //화면을 그리드형식으로 꽉채워줌
     let columns = [
@@ -21,14 +21,23 @@ struct JellyGridView: View {
         ScrollView{
             VStack{
                 LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(data, id: \.self) {i in
+                    ForEach(0..<data.count, id: \.self) { index in
                         // TODO: 뱃지 존재 여부에 따라 색깔 바꾸기
-                        JellyBadgeView(jellyImage: "bearWhite")
+                        if index == 1 {
+                            JellyBadgeView(jellyImage: "bearBlue")
+                        } else if index == 2 {
+                            JellyBadgeView(jellyImage: "bearTurquoise")
+                        } else if index == 4 {
+                            JellyBadgeView(jellyImage: "bearGreen")
+                        } else {
+                            JellyBadgeView(jellyImage: "bearWhite")
+                        }
                         
                     }
                 }
                 
-            }.padding(.horizontal)
+            }
+            .padding()
         }
     }
 }

@@ -17,7 +17,9 @@ struct HabitDetailView: View {
     private let timeFormatter: DateFormatter
     
     @State private var selectedDate = Self.now
-    private static var now = Date() // Cache now
+    private static var now = Date()
+    //글쓰기 이동용
+    @State private var isWriteSheetOn: Bool = false
     
     init(calendar: Calendar) {
         self.calendar = calendar
@@ -28,128 +30,136 @@ struct HabitDetailView: View {
     }
     
     var body: some View {
+        
         VStack {
-            ScrollView() {
+            HStack {
                 HStack {
-                    VStack(alignment: .center, spacing: 10) {
-                        Text("\(Date().formatted(date: .abbreviated, time: .omitted)) 부터 시작한 습관")
-                            .foregroundColor(.gray)
-                        
-                        Text("N일째 지속중 🔥")
-                            .font(.title.bold())
-                    }
+                    
+                    Text("\(Date().formatted(date: .abbreviated, time: .omitted)) 부터 시작한 습관")
+                        .foregroundColor(.gray)
                     
                     Spacer()
+//
+//                    Text("N일째 지속중 🔥")
+//                        .font(.title.bold())
                 }
-                .padding(.leading)
-                
-                CalendarWeekListView(
-                    calendar: calendar,
-                    date: $selectedDate,
-                    content: { date in
-                        Button(action: {
-                            selectedDate = date
+
+            }
+            .padding(.leading)
+            
+            
+            
+            CalendarWeekListView(
+                calendar: calendar,
+                date: $selectedDate,
+                content: { date in
+                    Button(action: {
+                        selectedDate = date
+                        
+                        withAnimation {
+                            dairyModel.currentDay = date
+                        }
+                    }) {
+                        VStack(spacing: 10) {
+                            Text(dayFormatter.string(from: date))
+                                .font(.system(size: 15))
+                                .fontWeight(.semibold)
                             
-                            withAnimation {
-                                dairyModel.currentDay = date
-                            }
-                        }) {
-                            VStack(spacing: 10) {
-                                Text(dayFormatter.string(from: date))
-                                    .font(.system(size: 15))
-                                    .fontWeight(.semibold)
-                                
-                                Text(weekDayFormatter.string(from: date))
-                                    .font(.system(size: 14))
-                                
-                                Circle()
-                                    .fill(.white)
-                                    .frame(width: 8, height: 8)
-                                    .opacity(calendar.isDate(date, inSameDayAs: selectedDate) ? 1 : 0)
-                                
-                            }
-                            .foregroundStyle(calendar.isDate(date, inSameDayAs: selectedDate) ? .primary : .secondary)
-                            .foregroundColor(calendar.isDate(date, inSameDayAs: selectedDate) ? .white : .black)
-                            .frame(width: 45, height: 90)
-                            .background(
-                                ZStack {
-                                    if calendar.isDate(date, inSameDayAs: selectedDate) {
-                                        Capsule()
-                                            .fill(Color.black)
-                                    }
+                            Text(weekDayFormatter.string(from: date))
+                                .font(.system(size: 14))
+                            
+                            Circle()
+                                .fill(.white)
+                                .frame(width: 8, height: 8)
+                                .opacity(calendar.isDate(date, inSameDayAs: selectedDate) ? 1 : 0)
+                            
+                        }
+                        .foregroundStyle(calendar.isDate(date, inSameDayAs: selectedDate) ? .primary : .secondary)
+                        .foregroundColor(calendar.isDate(date, inSameDayAs: selectedDate) ? .white : .black)
+                        .frame(width: 45, height: 90)
+                        .background(
+                            ZStack {
+                                if calendar.isDate(date, inSameDayAs: selectedDate) {
+                                    Capsule()
+                                        .fill(Color.black)
                                 }
-                            )
-                        }
-                    },
-                    title: { date in
-                        HStack {
-                            Text(monthDayFormatter.string(from: selectedDate))
-                                .font(.headline)
-                                .padding(5)
-                            Spacer()
-                        }
-                        .padding([.bottom, .leading], 10)
-                    }, weekSwitcher: { date in
-                        Button {
-                            withAnimation(.easeIn) {
-                                guard let newDate = calendar.date(
-                                    byAdding: .weekOfMonth,
-                                    value: -1,
-                                    to: selectedDate
-                                ) else {
-                                    return
-                                }
-                                
-                                selectedDate = newDate
                             }
-                        } label: {
-                            Label(
-                                title: { Text("Previous") },
-                                icon: { Image(systemName: "chevron.left") }
-                            )
-                                .labelStyle(IconOnlyLabelStyle())
-                                .padding(.horizontal)
-                        }
-                        Button {
-                            withAnimation(.easeIn) {
-                                guard let newDate = calendar.date(
-                                    byAdding: .weekOfMonth,
-                                    value: 1,
-                                    to: selectedDate
-                                ) else {
-                                    return
-                                }
-                                
-                                selectedDate = newDate
-                            }
-                        } label: {
-                            Label(
-                                title: { Text("Next") },
-                                icon: { Image(systemName: "chevron.right") }
-                            )
-                                .labelStyle(IconOnlyLabelStyle())
-                                .padding(.horizontal)
-                        }
+                        )
                     }
-                )
+                },
+                title: { date in
+                    HStack {
+                        Text(monthDayFormatter.string(from: selectedDate))
+                            .font(.headline)
+                            .padding(5)
+                        Spacer()
+                    }
+                    .padding([.bottom, .leading], 10)
+                }, weekSwitcher: { date in
+                    Button {
+                        withAnimation(.easeIn) {
+                            guard let newDate = calendar.date(
+                                byAdding: .weekOfMonth,
+                                value: -1,
+                                to: selectedDate
+                            ) else {
+                                return
+                            }
+                            
+                            selectedDate = newDate
+                        }
+                    } label: {
+                        Label(
+                            title: { Text("Previous") },
+                            icon: { Image(systemName: "chevron.left") }
+                        )
+                            .labelStyle(IconOnlyLabelStyle())
+                            .padding(.horizontal)
+                    }
+                    Button {
+                        withAnimation(.easeIn) {
+                            guard let newDate = calendar.date(
+                                byAdding: .weekOfMonth,
+                                value: 1,
+                                to: selectedDate
+                            ) else {
+                                return
+                            }
+                            
+                            selectedDate = newDate
+                        }
+                    } label: {
+                        Label(
+                            title: { Text("Next") },
+                            icon: { Image(systemName: "chevron.right") }
+                        )
+                            .labelStyle(IconOnlyLabelStyle())
+                            .padding(.horizontal)
+                    }
+                }
+            )
+            
+            ScrollView() {
                 
-                TasksView()
+                DiaryPerDayView()
             }
         }
+        .navigationTitle("N일째 지속중 🔥")
+        .fullScreenCover(isPresented: $isWriteSheetOn, content: WriteDiaryView.init)
     }
     
-    func TasksView() -> some View {
+    func DiaryPerDayView() -> some View {
         LazyVStack(spacing: 10) {
             if let tasks = dairyModel.filteredDiary {
                 if tasks.isEmpty {
-                    Text("No Task")
-                        .font(.system(size: 16))
-                        .fontWeight(.light)
-                        .offset(y: 100)
-                } else {
-                    ForEach(tasks) { task in
-                        TaskCardView(task: task)
+                    Button {
+                        isWriteSheetOn = true
+                    } label: {
+                        Text("챌린지 일지 작성")
                     }
+
+                } else {
+                    DiaryView()
                 }
             } else {
                 ProgressView()
@@ -162,58 +172,6 @@ struct HabitDetailView: View {
         .onChange(of: dairyModel.currentDay) { newValue in
             dairyModel.filterTodayDiary()
         }
-    }
-    
-    func TaskCardView(task: Dairy) -> some View {
-        HStack(alignment: .top, spacing: 25) {
-            VStack(spacing: 10) {
-                Button(action: {
-
-                }, label: {
-                    Image(systemName: task.doneFlag ? "checkmark" : "")
-                        .font(.caption)
-                        .frame(width: 5, height: 5)
-                        .foregroundColor(.black)
-                        .padding(10)
-                        .background(
-                            Circle()
-                                .foregroundColor(.blue.opacity(0.38))
-                        )
-                })
-
-                Rectangle()
-                    .fill(.black)
-                    .frame(width: 3)
-            }
-
-            VStack {
-                HStack(alignment: .top, spacing: 10) {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text(task.title)
-                            .font(.title2).bold()
-
-                        Text(task.description)
-                            .font(.callout)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(task.date.formatted(date: .omitted, time: .shortened))
-                }
-
-                Divider()
-
-            }
-            .foregroundStyle(dairyModel.isCurrentHour(date: task.date) ? .white : .black)
-            .padding(dairyModel.isCurrentHour(date: task.date) ? 15 : 0)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .background(
-                Color.black
-//                LinearGradient(gradient: Gradient(colors: [Color.black, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    .opacity(dairyModel.isCurrentHour(date: task.date) ? 1 : 0)
-                    .cornerRadius(20)
-            )
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        
     }
 }
     
@@ -263,7 +221,7 @@ public struct CalendarWeekListView<Day: View, Title: View, WeekSwiter: View>: Vi
             
             Divider()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, alignment: .top)
     }
 }
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileModalView: View {
+struct BearModalView: View {
     @Binding var showModal: Bool
     @Binding var isSelectedJelly : Int
     let bearArray = Jelly.allCases.map({"\($0)"})
@@ -65,8 +65,8 @@ struct ProfileModalView: View {
     }
 }
 
-struct ProfileModalView_Previews: PreviewProvider {
+struct BearModalView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileModalView(showModal: .constant(false), isSelectedJelly: .constant(Int(1)))
+        BearModalView(showModal: .constant(false), isSelectedJelly: .constant(Int(1)))
     }
 }

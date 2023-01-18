@@ -52,6 +52,8 @@ struct LogInView: View {
                     } else if pw == "" {
                         pwFocusField = true
                     }
+                    
+                    isFullScreen = false
                 }){
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.pink)
@@ -88,6 +90,6 @@ struct LogInView: View {
 
 //struct LogInView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        LogInView()
+//        LogInView(isFullScreen: .constant(true))
 //    }
 //}

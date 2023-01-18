@@ -11,7 +11,7 @@ import SwiftUI
 struct HapitApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LogInView()
         }
     }
 }

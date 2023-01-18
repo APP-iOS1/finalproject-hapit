@@ -18,6 +18,8 @@ struct HabitDetailView: View {
     
     @State private var selectedDate = Self.now
     private static var now = Date()
+    //글쓰기 이동용
+    @State private var isWriteSheetOn: Bool = false
     
     init(calendar: Calendar) {
         self.calendar = calendar
@@ -137,16 +139,19 @@ struct HabitDetailView: View {
                 DiaryPerDayView()
             }
         }
+        .fullScreenCover(isPresented: $isWriteSheetOn, content: WriteDiaryView.init)
     }
     
     func DiaryPerDayView() -> some View {
         LazyVStack(spacing: 10) {
             if let tasks = dairyModel.filteredDiary {
                 if tasks.isEmpty {
-                    Text("실천 일지가 없습니다!")
-                        .font(.system(size: 16))
-                        .fontWeight(.light)
-                        .offset(y: 100)
+                    Button {
+                        isWriteSheetOn = true
+                    } label: {
+                        Text("챌린지 일지 작성")
+                    }
+
                 } else {
                     DiaryView()
                 }

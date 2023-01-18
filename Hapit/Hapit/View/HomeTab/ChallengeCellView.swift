@@ -8,22 +8,23 @@
 import SwiftUI
 
 struct ChallengeCellView: View {
-    
-    @Binding var didHabit: Bool
-    
     //MARK: 습관 모델이 만들어지면 수정할 부분
     var title: String = "나의 습관명"
     var dateFromStart: Int = 20
     var dayWithOutStop: Int = 5
     var dayStarted: String = "2023년 1월 1일 ~"
+    
+    @Binding var challenge: Challenge
+    
+    // MARK: - Body
     var body: some View {
         HStack{
             VStack(alignment:.leading, spacing: 5){
                 VStack(alignment: .leading, spacing: 2){
-                    Text(dayStarted)
+                    Text(challenge.createdDate)
                         .font(.footnote)
                         .foregroundColor(.gray)
-                    Text(title)
+                    Text(challenge.challengeTitle)
                         .bold()
                         .font(.title2)
                 }//VStack
@@ -31,7 +32,7 @@ struct ChallengeCellView: View {
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
-                    Text("연속 \(dayWithOutStop)일째")
+                    Text("연속 \(challenge.count)일째")
                     
 
                 }
@@ -40,11 +41,11 @@ struct ChallengeCellView: View {
             }//VStack
             Spacer()
             Button {
-                didHabit.toggle()
+                challenge.isChecked.toggle()
             } label: {
-                Image(systemName: didHabit ? "checkmark.circle.fill" : "circle")
+                Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor(didHabit ? .green : .gray)
+                    .foregroundColor(challenge.isChecked ? .green : .gray)
             }
             
             .buttonStyle(PlainButtonStyle())
@@ -55,6 +56,7 @@ struct ChallengeCellView: View {
         .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal, 20)
+        .padding(.bottom, 5)
         
     }
     
@@ -64,6 +66,6 @@ struct ChallengeCellView: View {
 
 struct ChallengeCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ChallengeCellView(didHabit: .constant(true))
+        ChallengeCellView(challenge: .constant(Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 0, isChecked: false)))
     }
 }

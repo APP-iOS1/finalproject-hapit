@@ -15,34 +15,27 @@ enum HabitTypes: String, CaseIterable{
 struct HabitSegmentView: View {
     var habitType: HabitTypes
     
-    @State var didHabit: Bool = false
+    // MARK: 더미 데이터
+    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
+    
+    @State var dummyChallenge2: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "금연하기", createdAt: Date(), count: 1, isChecked: false)
+    
+    @State var dummyChallenge3: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "블로그쓰기", createdAt: Date(), count: 1, isChecked: false)
     
     var body: some View {
         switch habitType {
         case .Challenge:
             ScrollView{
                 NavigationLink {
-                    Text("디테일이 들어가는 곳")
+                    HabitDetailView(calendar: Calendar.current)
                 } label: {
-                    ChallengeCellView(didHabit: $didHabit)
+                    ChallengeCellView(challenge: $dummyChallenge)
                 }
-                
-                .swipeActions {
-                    Button("완료하기") {
-                        didHabit.toggle()
-                    }
-                    .tint(.green)
-                }
+
                 NavigationLink {
-                    Text("디테일이 들어가는 곳")
+                    HabitDetailView(calendar: Calendar.current)
                 } label: {
-                    ChallengeCellView(didHabit: $didHabit)
-                }
-                .swipeActions {
-                    Button("완료하기") {
-                        didHabit.toggle()
-                    }
-                    .tint(.green)
+                    ChallengeCellView(challenge: $dummyChallenge2)
                 }
             }
             .listStyle(.insetGrouped)
@@ -52,9 +45,9 @@ struct HabitSegmentView: View {
             
             ScrollView{
                 NavigationLink {
-                    Text("디테일이 들어가는 곳")
+                    HabitDetailView(calendar: Calendar.current)
                 } label: {
-                    HabitCellView(didHabit: $didHabit)
+                    HabitCellView(habit: $dummyChallenge3)
                 }
             }
         }// switch
@@ -91,7 +84,7 @@ struct HomeView: View {
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
 
-            .navigationTitle(getToday())
+            .navigationBarTitle(getToday())
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
                 //                NavigationLink {

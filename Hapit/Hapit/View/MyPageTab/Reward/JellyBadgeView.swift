@@ -14,6 +14,7 @@ struct JellyBadgeView: View {
             VStack{
                 Image(jellyImage)
                     .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 65, height: 80)
                     .background(Circle()
                         .fill(Color(.systemGray6))

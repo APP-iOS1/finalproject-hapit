@@ -21,9 +21,17 @@ struct JellyGridView: View {
         ScrollView{
             VStack{
                 LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(data, id: \.self) {i in
+                    ForEach(0..<data.count, id: \.self) { index in
                         // TODO: 뱃지 존재 여부에 따라 색깔 바꾸기
-                        JellyBadgeView(jellyImage: "bearWhite")
+                        if index == 1 {
+                            JellyBadgeView(jellyImage: "bearBlue")
+                        } else if index == 2 {
+                            JellyBadgeView(jellyImage: "bearTurquoise")
+                        } else if index == 4 {
+                            JellyBadgeView(jellyImage: "bearGreen")
+                        } else {
+                            JellyBadgeView(jellyImage: "bearWhite")
+                        }
                         
                     }
                 }

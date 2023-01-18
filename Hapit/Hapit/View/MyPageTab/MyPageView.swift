@@ -20,7 +20,7 @@ struct MyPageView: View {
                     ToolbarItem(placement: .navigationBarTrailing){
                         Button{
                             
-                        }label:{
+                        } label:{
                             Image(systemName: "gearshape.fill")
                                 .resizable()
                                 .frame(width: 30,height: 30)

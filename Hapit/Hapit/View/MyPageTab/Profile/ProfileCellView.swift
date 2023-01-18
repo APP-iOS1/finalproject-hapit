@@ -10,7 +10,10 @@ import SwiftUI
 struct ProfileCellView: View {
     @State private var nickName = "릴루"
     @State private var email = "minju@world.com"
+    @State private var isSelectedJelly = 0
     @State var showModal = false
+    // TODO: bearArray 나중에 Enum으로 관리
+    let bearArray = ["bearYellow", "bearBlue", "bearGreen", "bearPurple", "bearTurquoise", "bearRed", "bearWhite"]
     
     var body: some View {
         HStack {
@@ -23,17 +26,19 @@ struct ProfileCellView: View {
                         Button {
                             showModal = true
                         } label: {
-                            Image("bearBlue")
+                            Image(bearArray[isSelectedJelly % 7])
                                 .resizable()
+                                .aspectRatio(contentMode: .fill)
                                 .frame(width: 45, height: 60)
                                 .background(Circle()
                                     .fill(Color(.systemGray6))
-                                    .frame(width: 100, height: 100))
+                                    .frame(width: 90, height: 90))
                         }
                         .disabled(showModal)
                         .padding(30)
-                    }.sheet(isPresented: $showModal) { ProfileModalView(showModal: $showModal)
+                    }.sheet(isPresented: $showModal) { ProfileModalView(showModal: $showModal, isSelectedJelly: $isSelectedJelly)
                             .presentationDetents([.medium])
+                            .interactiveDismissDisabled()
                     }
                     
                     VStack {
@@ -42,20 +47,22 @@ struct ProfileCellView: View {
                                 Text("\(nickName)")
                                     .font(.title3)
                                     .bold()
+
                                 
                                 Text("\(email)")
-                                    .font(.title3)
+                                    .font(.caption)
                             }
-                            .padding(.leading, 10)
+                            .padding(.leading, 12)
                             Spacer()
                         }
                         
+                        // TODO: 프로필 편집 - 닉네임 변경
                         Button {
                             
                         } label: {
                             RoundedRectangle(cornerRadius: 5)
                                 .stroke()
-                                .frame(width: 220, height: 25)
+                                .frame(width: 210, height: 25)
                                 .overlay{
                                     Text("프로필 편집")
                                         .foregroundColor(.accentColor)
@@ -63,7 +70,6 @@ struct ProfileCellView: View {
                                         .fontWeight(.bold)
                                 }
                         }
-                        .padding(.leading, 5)
                     }
                 }
             }

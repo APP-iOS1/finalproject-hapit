@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RegisterView: View {
     @State private var email: String = ""
+
     
     @State private var pw: String = ""
     @State private var showPw: Bool = false
@@ -17,18 +18,17 @@ struct RegisterView: View {
     @State private var showPwCheck: Bool = false
     
     @State private var nickName: String = ""
-  
     
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
     @FocusState private var pwCheckFocusField: Bool
     @FocusState private var nickNameFocusField: Bool
     
-
+    
     var body: some View {
         VStack(spacing: 20) {
             
-            Spacer().frame(height: 20)
+            Spacer().frame(height: 10)
             
             HStack() {
                 StepBar(nowStep: 1)
@@ -47,7 +47,8 @@ struct RegisterView: View {
                 Spacer()
             }
             
-            Spacer().frame(height: 30)
+            Spacer().frame(height: 20)
+            
             
             Group {
                 HStack {
@@ -56,7 +57,9 @@ struct RegisterView: View {
                             .focused($emailFocusField)
                         Rectangle()
                             .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                            .frame(width: .infinity, height: 1)
+                        //maxWidth: 가로가 가변적일때 최대 크기 한정
+                        //width 없을 때 maxWidth 정해주면 0으로 처리해서,...
                     }
                     
                     Button(action: {
@@ -64,56 +67,41 @@ struct RegisterView: View {
                     }){
                         RoundedRectangle(cornerRadius: 5)
                             .fill(.gray)
-                            .frame(maxWidth: 80, maxHeight: 30)
+                            .frame(maxWidth: 80, maxHeight: 25)
                             .overlay {
                                 Text("중복확인")
+                                    .font(.subheadline)
                                     .foregroundColor(.white)
                             }
                     }
                 }
-                
-                // 이메일 쳤는데 타입이 잘못된 경우
-                if emailFocusField {
-                    if !email.isEmpty && !checkEmailType(string: email) {
-                        HStack(spacing: 5) {
-                            Text("이메일 형식이 올바르지 않습니다")
-                                .foregroundColor(.red)
+
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: .infinity, height: 5)
+                    .overlay {
+                        if emailFocusField {
+                            if !email.isEmpty && !checkEmailType(string: email) {
+                                Text("올바른 이메일 형식이 아닙니다")
+                                    .foregroundColor(.red)
+                                    .font(.footnote)
+                            }
                         }
                     }
-                }
+            
                 
                 VStack {
-                    if showPw {
-                        TextField("Password", text: $pw)
-                            .focused($pwFocusField)
-                            .overlay {
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        showPw.toggle()}) {
-                                            Image(systemName: self.showPw ? "eye" : "eye.slash")
-                                        }
-                                }
-                        }
-                        Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
-                    } else {
-                        SecureField("Password", text: $pw)
-                            .focused($pwFocusField)
-                            .overlay {
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        showPw.toggle()}) {
-                                            Image(systemName: self.showPw ? "eye" : "eye.slash")
-                                        }
-                                }
-                            }
-                        Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
-                        
+                    SecureField("Password", text: $pw)
+                        .focused($pwFocusField)
+                    Rectangle()
+                        .fill(.gray)
+                        .frame(width: .infinity, height: 1)
+                }
+                
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: .infinity, height: 5)
+                    .overlay {
                         if pwFocusField {
                             if !checkPasswordType(password: pw) && !pw.isEmpty {
                                 Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요")
@@ -122,80 +110,64 @@ struct RegisterView: View {
                             }
                         }
                     }
-                }
+            
                 
+
                 VStack {
-                    if showPwCheck {
-                        TextField("Password Check", text: $pwCheck)
-                            .focused($pwCheckFocusField)
-                            .overlay {
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        showPwCheck.toggle()}) {
-                                            Image(systemName: self.showPwCheck ? "eye" : "eye.slash")
-                                        }
-                                }
-                            }
-                        Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
-                    } else {
-                        SecureField("Password Check", text: $pwCheck)
-                            .focused($pwCheckFocusField)
-                            .overlay {
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        showPwCheck.toggle()}) {
-                                            Image(systemName: self.showPwCheck ? "eye" : "eye.slash")
-                                        }
-                                }
-                            }
-                    }
+                    SecureField("Password check", text: $pwCheck)
+                        .focused($pwCheckFocusField)
                     Rectangle()
                         .fill(.gray)
-                        .frame(maxWidth: .infinity, maxHeight: 0.3)
-                    if pwCheckFocusField {
-                        if pw != pwCheck && pw != "" {
-                            Text("비밀번호가 일치하지 않습니다")
-                                .foregroundColor(.red)
-                                .font(.footnote)
-                        } else if pw != pwCheck && pw == "" {
-                            Text("비밀번호를 먼저 입력해주세요")
-                                .foregroundColor(.red)
-                                .font(.footnote)
+                        .frame(width: .infinity, height: 1)
+                }
+                
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: .infinity, height: 5)
+                    .overlay {
+                        if pwCheckFocusField {
+                            if pw != pwCheck && pw != "" {
+                                Text("비밀번호가 일치하지 않습니다")
+                                    .foregroundColor(.red)
+                                    .font(.footnote)
+                            } else if pw != pwCheck && pw == "" {
+                                Text("비밀번호를 먼저 입력해주세요")
+                                    .foregroundColor(.red)
+                                    .font(.footnote)
+                            }
                         }
                     }
-                }
-
+            
+                
                 HStack {
                     VStack {
                         TextField("Nickname", text: $nickName)
                             .focused($nickNameFocusField)
                         Rectangle()
                             .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                            .frame(width: .infinity, height: 1)
                     }
-
+                    
                     Spacer().frame(width: 10)
-
+                    
                     Button(action: {}){
                         RoundedRectangle(cornerRadius: 5)
                             .fill(.gray)
-                            .frame(maxWidth: 80, maxHeight: 30)
+                            .frame(maxWidth: 80, maxHeight: 25)
                             .overlay {
                                 Text("중복확인")
+                                    .font(.subheadline)
                                     .foregroundColor(.white)
                             }
                     }
                 }
+                .padding(.bottom)
             }
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             
             
-            Spacer().frame(height: 160)
+            Spacer().frame(height: 80)
             
             
             NavigationLink(destination: ToSView()) {
@@ -210,6 +182,11 @@ struct RegisterView: View {
             .disabled(isOk())
         }
         .padding(.horizontal, 20)
+        .onAppear {
+            Task {
+                emailFocusField = true
+            }
+        }
     }
     
     
@@ -235,6 +212,7 @@ struct RegisterView: View {
             return true
         }
     }
+
 }
 
 struct SignUpView_Previews: PreviewProvider {

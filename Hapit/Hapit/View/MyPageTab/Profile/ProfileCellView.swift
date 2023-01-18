@@ -41,7 +41,7 @@ struct ProfileCellView: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(nickName)")
-                                .font(.title3)
+                                .font(.title2)
                                 .bold()
                             
                             Text("\(email)")
@@ -74,8 +74,7 @@ struct ProfileCellView: View {
         }
         .background()
         .cornerRadius(20)
-        .shadow(color: Color(.systemGray4), radius:3)
-        .padding(.horizontal)
+        .padding(.horizontal, 20)
         .padding(.top)
     }
 }

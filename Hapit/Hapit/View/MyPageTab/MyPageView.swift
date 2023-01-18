@@ -27,6 +27,7 @@ struct MyPageView: View {
                     }
                 }
             }
+            .background(Color("BackgroundColor"))
         }
     }
 }

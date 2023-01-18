@@ -27,8 +27,8 @@ struct RewardView: View {
                         .bold()
                 }
             }
-            .padding(.horizontal)
-            .padding(.top)
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
             //                .padding()
             Divider()
             // 이미지 그리드
@@ -37,8 +37,7 @@ struct RewardView: View {
         }
         .background()
         .cornerRadius(20)
-        .shadow(color: Color(.systemGray4), radius:3)
-        .padding()
+        .padding(EdgeInsets(top: 5, leading: 20, bottom: 20, trailing: 20))
     }
 }
 

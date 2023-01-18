@@ -36,7 +36,8 @@ struct JellyGridView: View {
                     }
                 }
                 
-            }.padding(.horizontal)
+            }
+            .padding()
         }
     }
 }

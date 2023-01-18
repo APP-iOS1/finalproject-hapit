@@ -13,7 +13,6 @@ struct MyPageView: View {
             ScrollView {
                 VStack {
                     ProfileCellView()
-                        .padding(.vertical, 10)
                     RewardView()
                 }
                 .toolbar {

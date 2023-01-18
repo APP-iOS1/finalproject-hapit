@@ -19,7 +19,8 @@ struct RegisterView: View {
     @FocusState private var pwCheckFocusField: Bool
     @FocusState private var nickNameFocusField: Bool
     
-
+    @Binding var isFullScreen: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -141,7 +142,7 @@ struct RegisterView: View {
             Spacer().frame(height: 160)
             
             
-            NavigationLink(destination: ToSView()) {
+            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen)) {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(isOk() ? .gray : .pink)
                     .frame(maxWidth: .infinity, maxHeight: 50)
@@ -180,8 +181,8 @@ struct RegisterView: View {
     }
 }
 
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView()
-    }
-}
+//struct SignUpView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RegisterView()
+//    }
+//}

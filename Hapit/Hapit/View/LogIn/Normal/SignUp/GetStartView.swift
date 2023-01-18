@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GetStartView: View {
     
+    @Binding var isFullScreen: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -40,7 +42,9 @@ struct GetStartView: View {
             
             Spacer().frame(height: 104)
             
-            NavigationLink(destination: LogInView()) {
+            Button {
+                isFullScreen = false
+            } label: {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.pink)
                     .frame(maxWidth: .infinity, maxHeight: 50)
@@ -49,15 +53,14 @@ struct GetStartView: View {
                             .foregroundColor(.white)
                     }
             }
-            .disabled(false)
             
         }
         .padding(.horizontal, 20)
     }
 }
 
-struct GetStartView_Previews: PreviewProvider {
-    static var previews: some View {
-        GetStartView()
-    }
-}
+//struct GetStartView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GetStartView()
+//    }
+//}

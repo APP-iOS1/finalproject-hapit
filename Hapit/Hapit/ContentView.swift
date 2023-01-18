@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
-    
+
+    @State private var isFullScreen = true
+
     var body: some View {
         TabView{
             HomeView()
@@ -36,6 +37,8 @@ struct ContentView: View {
                         Text("마이페이지")
                     }
                 }
+        }.fullScreenCover(isPresented: $isFullScreen) {
+            LogInView(isFullScreen: $isFullScreen)
         }
     }
 }

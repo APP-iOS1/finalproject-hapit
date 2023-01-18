@@ -9,21 +9,22 @@ import SwiftUI
 
 struct FriendChallengeView: View {
     // TODO: 나중에 Binding 값으로
-    @State var didHabit: Bool = false
-    
+    // MARK: 더미 데이터
+    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false)
+
     var body: some View {
         ZStack {
             ScrollView{
                 NavigationLink {
                     Text("디테일이 들어가는 곳")
                 } label: {
-                    ChallengeCellView(didHabit: $didHabit)
+                    ChallengeCellView(challenge: $dummyChallenge)
                 }
                 
                 NavigationLink {
                     Text("디테일이 들어가는 곳")
                 } label: {
-                    ChallengeCellView(didHabit: $didHabit)
+                    ChallengeCellView(challenge: $dummyChallenge)
                 }
             }
         }.background(Color("BackgroundColor"))

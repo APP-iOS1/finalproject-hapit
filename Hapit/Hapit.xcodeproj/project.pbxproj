@@ -12,6 +12,8 @@
 		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
+		3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAA29779347003D4809 /* ChallengeCellView.swift */; };
+		3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAC29779359003D4809 /* HabitCellView.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
 		C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC879297632D400E58C84 /* DiaryView.swift */; };
@@ -46,6 +48,8 @@
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
+		3CF39BAA29779347003D4809 /* ChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellView.swift; sourceTree = "<group>"; };
+		3CF39BAC29779359003D4809 /* HabitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellView.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
 		C5FAC879297632D400E58C84 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
@@ -91,6 +95,8 @@
 			children = (
 				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
 				6774979329763C29003F9D6C /* AddChallengeView.swift */,
+				3CF39BAA29779347003D4809 /* ChallengeCellView.swift */,
+				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
 			);
 			path = HomeTab;
@@ -345,7 +351,9 @@
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
+				3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
+				3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				C5FAC88829766C6800E58C84 /* ProfileModalView.swift in Sources */,
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,

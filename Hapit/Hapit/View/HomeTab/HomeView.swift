@@ -54,7 +54,6 @@ struct HabitSegmentView: View {
                     HabitCellView(habit: $dummyChallenge3)
 
                 }
-                
             }
         default : Text("something wrong")
         }// switch

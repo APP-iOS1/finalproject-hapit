@@ -18,8 +18,23 @@ struct ChallengeCellView: View {
     
     // MARK: - Body
     var body: some View {
+        
+        
         HStack{
-            VStack(alignment:.leading, spacing: 5){
+            Button {
+                challenge.isChecked.toggle()
+            } label: {
+                Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
+                    .font(.title)
+                    .foregroundColor(challenge.isChecked ? .green : .gray)
+                
+            }
+            
+            .buttonStyle(PlainButtonStyle())
+            .padding(.trailing, 5)
+            //checkButton
+            
+            VStack(alignment:.leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
                     Text(challenge.createdDate)
                         .font(.footnote)
@@ -33,36 +48,66 @@ struct ChallengeCellView: View {
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
                     Text("연속 \(challenge.count)일째")
+                    Spacer()
+                    ForEach(0..<3){ bear in
+                        Image("bearBlue")
+                        
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .offset(y:5)
+                            .frame(width: 25)
+                            .background(Color(.white))
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke())
+                            .foregroundColor(.gray)
+                            .padding(.trailing, -12)
+                        
+                    }
                     
-
                 }
-                
                 .font(.subheadline)//HStack
+                
             }//VStack
             Spacer()
-            Button {
-                challenge.isChecked.toggle()
-            } label: {
-                Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
-                    .font(.title)
-                    .foregroundColor(challenge.isChecked ? .green : .gray)
-            }
             
-            .buttonStyle(PlainButtonStyle())
         }//HStack
-
         .padding(20)
         .foregroundColor(.black)
-        .background(Color("CellColor"))
+        .background(
+            .white
+        )
+        .overlay(
+            VStack{
+                Spacer()
+                ZStack{
+                    Rectangle()
+                        .frame(height: 4)
+                        .padding([.top, .leading, .trailing], 10)
+                        .foregroundColor(Color(UIColor.lightGray))
+                    
+                    HStack{
+                        //                    Image("duckBoat")
+                        //                        .resizable()
+                        //                        .aspectRatio(contentMode: .fit)
+                        //                        .frame(width: 20)
+                        
+                        
+                        Rectangle()
+                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
+                            .padding([.top, .leading, .trailing], 10)
+                        Spacer()
+                    }
+                }
+            }
+        )
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.bottom, 5)
         
-    }
-    
+        
+        
+    }// body
 }
-
-
 
 struct ChallengeCellView_Previews: PreviewProvider {
     static var previews: some View {

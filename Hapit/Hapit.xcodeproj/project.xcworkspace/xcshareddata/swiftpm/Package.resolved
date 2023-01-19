@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftysegmentedpicker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KazaiMazai/SwiftySegmentedPicker.git",
+      "state" : {
+        "revision" : "c3c63962939c161aeef1bcef40ee97bd57eca943",
+        "version" : "0.0.2"
+      }
+    }
+  ],
+  "version" : 2
+}

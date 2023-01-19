@@ -27,166 +27,201 @@ struct RegisterView: View {
     @Binding var isFullScreen: Bool
     
     var body: some View {
-        VStack(spacing: 20) {
-            
-            Spacer().frame(height: 10)
-            
-            HStack() {
-                StepBar(nowStep: 1)
-                    .padding(.leading, -8)
-                Spacer()
-            }
-            
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("기본정보를")
-                        .foregroundColor(.pink)
-                    Text("입력해주세요")
+            VStack(spacing: 20) {
+                
+                Spacer().frame(height: 10)
+                
+                HStack() {
+                    StepBar(nowStep: 1)
+                        .padding(.leading, -8)
+                    Spacer()
                 }
-                .font(.largeTitle)
-                .bold()
-                Spacer()
-            }
-            
-            Spacer().frame(height: 20)
-            
-            
-            Group {
+                
+                // MARK: TITLE
                 HStack {
-                    VStack {
-                        TextField("Email", text: $email)
-                            .focused($emailFocusField)
-                        Rectangle()
-                            .fill(.gray)
-                            .frame(width: .infinity, height: 1)
-                        //maxWidth: 가로가 가변적일때 최대 크기 한정
-                        //width 없을 때 maxWidth 정해주면 0으로 처리해서,...
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("기본정보를")
+                            .foregroundColor(.pink)
+                        Text("입력해주세요")
                     }
-                    
-                    Button(action: {
+                    .font(.largeTitle)
+                    .bold()
+                    Spacer()
+                }
+                
+                Spacer().frame(height: 20)
+                
+                
+                Group {
+                    HStack {
+                        VStack {
+                            //MARK: 이메일 입력
+                            TextField("이메일을 입력해주세요", text: $email)
+                                .focused($emailFocusField)
+                                .overlay {
+                                    HStack {
+                                        Spacer()
+                                        if checkEmailType(string: email) {
+                                            Image(systemName: "checkmark.circle")
+                                                .foregroundColor(.green)
+                                        }
+                                    }
+                                }
+                            Rectangle()
+                                .fill(.gray)
+                                .frame(width: .infinity, height: 1)
+                            //maxWidth: 가로가 가변적일때 최대 크기 한정
+                            //width 없을 때 maxWidth 정해주면 0으로 처리해서,...
+                        }
                         
-                    }){
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(.gray)
-                            .frame(maxWidth: 80, maxHeight: 25)
-                            .overlay {
-                                Text("중복확인")
-                                    .font(.subheadline)
-                                    .foregroundColor(.white)
-                            }
+                        Button(action: {
+                            
+                        }){
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(.gray)
+                                .frame(maxWidth: 80, maxHeight: 25)
+                                .overlay {
+                                    Text("중복확인")
+                                        .font(.subheadline)
+                                        .foregroundColor(.white)
+                                }
+                        }
                     }
-                }
 
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: .infinity, height: 5)
-                    .overlay {
-                        if emailFocusField {
-                            if !email.isEmpty && !checkEmailType(string: email) {
-                                Text("올바른 이메일 형식이 아닙니다")
-                                    .foregroundColor(.red)
-                                    .font(.footnote)
-                            }
-                        }
-                    }
-            
-                
-                VStack {
-                    SecureField("Password", text: $pw)
-                        .focused($pwFocusField)
+                    // MARK: 이메일 형식 체크
                     Rectangle()
-                        .fill(.gray)
-                        .frame(width: .infinity, height: 1)
-                }
-                
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: .infinity, height: 5)
-                    .overlay {
-                        if pwFocusField {
-                            if !checkPasswordType(password: pw) && !pw.isEmpty {
-                                Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요")
-                                    .foregroundColor(.red)
-                                    .font(.footnote)
+                        .fill(.white)
+                        .frame(width: .infinity, height: 5)
+                        .overlay {
+                            if emailFocusField {
+                                if !email.isEmpty && !checkEmailType(string: email) {
+                                    Text("올바른 이메일 형식이 아닙니다")
+                                        .foregroundColor(.red)
+                                        .font(.footnote)
+                                }
                             }
                         }
-                    }
-            
                 
-
-                VStack {
-                    SecureField("Password check", text: $pwCheck)
-                        .focused($pwCheckFocusField)
-                    Rectangle()
-                        .fill(.gray)
-                        .frame(width: .infinity, height: 1)
-                }
-                
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: .infinity, height: 5)
-                    .overlay {
-                        if pwCheckFocusField {
-                            if pw != pwCheck && pw != "" {
-                                Text("비밀번호가 일치하지 않습니다")
-                                    .foregroundColor(.red)
-                                    .font(.footnote)
-                            } else if pw != pwCheck && pw == "" {
-                                Text("비밀번호를 먼저 입력해주세요")
-                                    .foregroundColor(.red)
-                                    .font(.footnote)
-                            }
-                        }
-                    }
-            
-                
-                HStack {
+                    // MARK: 비밀번호 입력
                     VStack {
-                        TextField("Nickname", text: $nickName)
-                            .focused($nickNameFocusField)
+                        SecureField("비밀번호 (영문, 숫자, 특수문자 포함 8~20자 이내)", text: $pw)
+                            .textContentType(.oneTimeCode)
+                            .focused($pwFocusField)
+                            .overlay {
+                                HStack {
+                                    Spacer()
+                                    if checkPasswordType(password: pw) {
+                                        Image(systemName: "checkmark.circle")
+                                            .foregroundColor(.green)
+                                    }
+                                }
+                            }
                         Rectangle()
                             .fill(.gray)
                             .frame(width: .infinity, height: 1)
                     }
                     
-                    Spacer().frame(width: 10)
-                    
-                    Button(action: {}){
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(.gray)
-                            .frame(maxWidth: 80, maxHeight: 25)
-                            .overlay {
-                                Text("중복확인")
-                                    .font(.subheadline)
-                                    .foregroundColor(.white)
+                    // MARK: 비밀번호 형식 체크
+                    Rectangle()
+                        .fill(.white)
+                        .frame(width: .infinity, height: 5)
+                        .overlay {
+                            if pwFocusField {
+                                if !checkPasswordType(password: pw) && !pw.isEmpty {
+                                    Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요")
+                                        .foregroundColor(.red)
+                                        .font(.footnote)
+                                }
                             }
+                        }
+                
+                    // MARK: 비밀번호 확인 입력
+                    VStack {
+                        SecureField("비밀번호를 한 번 더 똑같이 입력해주세요", text: $pwCheck)
+                            .textContentType(.oneTimeCode)
+                            .focused($pwCheckFocusField)
+                            .overlay {
+                                HStack {
+                                    Spacer()
+                                    if pw == pwCheck && pw != "" && pwCheck != "" {
+                                        Image(systemName: "checkmark.circle")
+                                            .foregroundColor(.green)
+                                    }
+                                }
+                            }
+                        Rectangle()
+                            .fill(.gray)
+                            .frame(width: .infinity, height: 1)
                     }
+                    
+                    // MARK: 비밀번호 확인 체크
+                    Rectangle()
+                        .fill(.white)
+                        .frame(width: .infinity, height: 5)
+                        .overlay {
+                            if pwCheckFocusField {
+                                if pw != pwCheck && pw != "" {
+                                    Text("비밀번호가 일치하지 않습니다")
+                                        .foregroundColor(.red)
+                                        .font(.footnote)
+                                } else if pw != pwCheck && pw == "" {
+                                    Text("비밀번호를 먼저 입력해주세요")
+                                        .foregroundColor(.red)
+                                        .font(.footnote)
+                                }
+                            }
+                        }
+                
+                    // MARK: 닉네임 입력
+                    HStack {
+                        VStack {
+                            TextField("닉네임을 입력해주세요", text: $nickName)
+                                .textContentType(.oneTimeCode)
+                                .focused($nickNameFocusField)
+                            Rectangle()
+                                .fill(.gray)
+                                .frame(width: .infinity, height: 1)
+                        }
+                        
+                        Spacer().frame(width: 10)
+                        
+                        Button(action: {}){
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(.gray)
+                                .frame(maxWidth: 80, maxHeight: 25)
+                                .overlay {
+                                    Text("중복확인")
+                                        .font(.subheadline)
+                                        .foregroundColor(.white)
+                                }
+                        }
+                    }
+                    .padding(.bottom)
                 }
-                .padding(.bottom)
+                
+                
+                Spacer().frame(height: 80)
+                
+                // MARK: 완료 버튼
+                NavigationLink(destination: ToSView(isFullScreen: $isFullScreen)) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(isOk() ? .gray : .pink)
+                        .frame(width: .infinity, height: 50)
+                        .overlay {
+                            Text("완료")
+                                .foregroundColor(.white)
+                        }
+                }
+                .disabled(isOk())
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
-            
-            
-            Spacer().frame(height: 80)
-            
-            
-            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen)) {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(isOk() ? .gray : .pink)
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    .overlay {
-                        Text("완료")
-                            .foregroundColor(.white)
-                    }
-            }
-            .disabled(isOk())
-        }
-        .padding(.horizontal, 20)
-        .onAppear {
-            Task {
-                emailFocusField = true
-            }
+            .padding(.horizontal, 20)
+            .onAppear {
+                Task {
+                    emailFocusField = true
+                }
         }
     }
     

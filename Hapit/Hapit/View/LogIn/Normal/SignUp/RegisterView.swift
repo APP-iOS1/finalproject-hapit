@@ -37,6 +37,7 @@ struct RegisterView: View {
                     Spacer()
                 }
                 
+                // MARK: TITLE
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("기본정보를")
@@ -54,7 +55,8 @@ struct RegisterView: View {
                 Group {
                     HStack {
                         VStack {
-                            TextField("Email", text: $email)
+                            //MARK: 이메일 입력
+                            TextField("이메일을 입력해주세요", text: $email)
                                 .focused($emailFocusField)
                                 .overlay {
                                     HStack {
@@ -86,6 +88,7 @@ struct RegisterView: View {
                         }
                     }
 
+                    // MARK: 이메일 형식 체크
                     Rectangle()
                         .fill(.white)
                         .frame(width: .infinity, height: 5)
@@ -99,9 +102,9 @@ struct RegisterView: View {
                             }
                         }
                 
-                    
+                    // MARK: 비밀번호 입력
                     VStack {
-                        SecureField("Password", text: $pw)
+                        SecureField("비밀번호 (영문, 숫자, 특수문자 포함 8~20자 이내)", text: $pw)
                             .textContentType(.oneTimeCode)
                             .focused($pwFocusField)
                             .overlay {
@@ -118,6 +121,7 @@ struct RegisterView: View {
                             .frame(width: .infinity, height: 1)
                     }
                     
+                    // MARK: 비밀번호 형식 체크
                     Rectangle()
                         .fill(.white)
                         .frame(width: .infinity, height: 5)
@@ -131,10 +135,9 @@ struct RegisterView: View {
                             }
                         }
                 
-                    
-
+                    // MARK: 비밀번호 확인 입력
                     VStack {
-                        SecureField("Password check", text: $pwCheck)
+                        SecureField("비밀번호를 한 번 더 똑같이 입력해주세요", text: $pwCheck)
                             .textContentType(.oneTimeCode)
                             .focused($pwCheckFocusField)
                             .overlay {
@@ -151,6 +154,7 @@ struct RegisterView: View {
                             .frame(width: .infinity, height: 1)
                     }
                     
+                    // MARK: 비밀번호 확인 체크
                     Rectangle()
                         .fill(.white)
                         .frame(width: .infinity, height: 5)
@@ -168,10 +172,10 @@ struct RegisterView: View {
                             }
                         }
                 
-                    
+                    // MARK: 닉네임 입력
                     HStack {
                         VStack {
-                            TextField("Nickname", text: $nickName)
+                            TextField("닉네임을 입력해주세요", text: $nickName)
                                 .textContentType(.oneTimeCode)
                                 .focused($nickNameFocusField)
                             Rectangle()
@@ -198,7 +202,7 @@ struct RegisterView: View {
                 
                 Spacer().frame(height: 80)
                 
-                
+                // MARK: 완료 버튼
                 NavigationLink(destination: ToSView(isFullScreen: $isFullScreen)) {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(isOk() ? .gray : .pink)
@@ -210,7 +214,6 @@ struct RegisterView: View {
                 }
                 .disabled(isOk())
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)

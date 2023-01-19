@@ -69,7 +69,9 @@ struct LogInView: View {
                 
                 HStack {
                     Text("아직 회원이 아니신가요?")
-                    NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen).navigationBarTitleDisplayMode(.automatic)) {
+                    NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen).navigationBarTitleDisplayMode(.automatic)
+                        .toolbarBackground(Color.white, for: .navigationBar)
+                                                .toolbarBackground(.visible, for: .navigationBar)) {
                         Text("회원가입")
                     }
                 }

@@ -6,19 +6,14 @@
 //
 
 import SwiftUI
-
+import SegmentedPicker
 //TODO: 체크버튼 분리하기: 현재 한 습관만 달성해도 모든 습관이 다 체크되는 이슈가 있음.
 
 
-enum HabitTypes: String, CaseIterable{
 
-    case Challenge = "챌린지"
-    case Habit = "습관"
-
-}
 // MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
 struct HabitSegmentView: View {
-    var habitType: HabitTypes
+    @Binding var selectedIndex: Int
     
     // MARK: 더미 데이터
     @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
@@ -28,9 +23,9 @@ struct HabitSegmentView: View {
     @State var dummyChallenge3: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "블로그쓰기", createdAt: Date(), count: 1, isChecked: false)
     
     var body: some View {
-        switch habitType {
+        switch selectedIndex {
 
-        case .Challenge:
+        case 0:
             ScrollView{
 
                 NavigationLink {
@@ -49,7 +44,7 @@ struct HabitSegmentView: View {
    
             
             
-        case .Habit:
+        case 1:
             
             ScrollView{
                 NavigationLink {
@@ -59,13 +54,9 @@ struct HabitSegmentView: View {
                     HabitCellView(habit: $dummyChallenge3)
 
                 }
-                .swipeActions {
-                            Button("습관 완료하기") {
-                                didHabit.toggle()
-                            }
-                            .tint(.green)
-                        }
+                
             }
+        default : Text("something wrong")
         }// switch
     }
 }
@@ -76,22 +67,47 @@ struct HabitSegmentView: View {
 struct HomeView: View {
     
     @State private var isAddHabitViewShown: Bool = false
-    @State private var selectedType: HabitTypes = .Challenge
-
+    @State private var habitTypeList: [String] = ["챌린지", "습관"]
+    @State var selectedIndex: Int = 0
     var body: some View {
+        
+        
         
         NavigationStack{
             VStack {
-                Picker("습관의 종류를 골라주세요", selection: $selectedType){
-                    ForEach(HabitTypes.allCases, id: \.self){ habitType in
-                        Text(habitType.rawValue)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                //Text("스와이프 해서 오늘의 챌린지를 달성하세요")
+                SegmentedPicker(
+                          habitTypeList,
+                           selectedIndex: Binding(
+                                           get: { selectedIndex },
+                                           set: { selectedIndex = $0 ?? 0 }),
+                                       selectionAlignment: .bottom,
+                                       content: { item, isSelected in
+                                           Text(item)
+                                               .foregroundColor(isSelected ? Color.accentColor : Color.gray )
+                                               //.padding(.horizontal, 70)
+                                               .padding(.vertical, 8)
+                                               .frame(maxWidth: .infinity)
+                                               .bold()
+                                           
+                                       },
+                                       selection: {
+                                           VStack(spacing: 0) {
+                                               Spacer()
+                                               Color.accentColor.frame(height: 2)
+                                                   .clipShape(Capsule())
+                                                   .frame(maxWidth: .infinity)
+                                           }
+                                           
+                                       })
+                                       .onAppear {
+                                           selectedIndex = 0
+                                       }
+                                       .animation(.easeInOut(duration: 0.3))
+                                       .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+                                       
+                // 세그먼트 뷰
                 Spacer()
-                HabitSegmentView(habitType: selectedType)
+                HabitSegmentView(selectedIndex: $selectedIndex)
                 Spacer()
                 
                 

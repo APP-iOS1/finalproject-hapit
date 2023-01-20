@@ -30,7 +30,6 @@ struct HabitDetailView: View {
     }
     
     var body: some View {
-        
         VStack {
             HStack {
                 HStack {
@@ -153,6 +152,23 @@ struct HabitDetailView: View {
         }
         .navigationTitle("물 500ml 마시기 🔥")
         .fullScreenCover(isPresented: $isWriteSheetOn, content: WriteDiaryView.init)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack {
+                    Button {
+                        
+                    } label: {
+                        Text("수정")
+                    }
+                    
+                    Button {
+
+                    } label: {
+                        Text("삭제")
+                    }
+                }
+            }
+        }
     }
     
     func DiaryPerDayView() -> some View {

@@ -12,6 +12,9 @@ import PhotosUI
 struct WriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @State var text = ""
+    @State private var date = "2023년 01월 20일 금요일"
+    @State private var habitName = "물마시기"
+
     @State private var selectedItem: PhotosPickerItem?
     @State private var selectedImageData: Data? = nil
     let maxCharacterLength = Int(300)
@@ -26,10 +29,14 @@ struct WriteDiaryView: View {
                 } label: {
                     Image(systemName: "xmark.square")
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: 25, height: 25)
                 }.padding(.leading, 20)
+                    .padding(.trailing,10)// 등록 버튼과 x버튼 크기차이를 맞춤
                 Spacer()
-                //
+                Text("습관 일지")
+                    .bold()
+                    .font(.title2)
+                Spacer()
                 Button {
                     dismiss()
                 } label: {
@@ -40,16 +47,27 @@ struct WriteDiaryView: View {
             }
             .padding(.bottom, 10)
             
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("\(habitName)")
+                        .font(.title3)
+                        .bold()
+                    Text("\(date)")
+
+                }
+                .padding()
+                Spacer()
+            }
             Spacer()
             // Contents
             VStack {
+                
                 if let uiImage = UIImage(data: wrappedSelectedImageData) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFit()
                         .padding()
                 } else {
-                    // 등록한 사진 없을 때
                     PhotosPicker(selection: $selectedItem, matching: .images ,photoLibrary: .shared()) {
                         VStack {
                             Image("defaultPhoto")
@@ -63,9 +81,8 @@ struct WriteDiaryView: View {
             }.frame(width: 200, height: 150)
             VStack {
                 // 글자수 300자 제한
-                TextField("", text: $text, axis: .vertical)
-                    .frame(width: 330)
-                    .lineLimit(6, reservesSpace: false)
+                TextField("릴루님의 습관일지를 작성해보세요!", text: $text, axis: .vertical)
+                   // .lineLimit(9, reservesSpace: false)
                     .padding()
                     .onReceive(Just(text), perform: { _ in
                                     if maxCharacterLength < text.count {

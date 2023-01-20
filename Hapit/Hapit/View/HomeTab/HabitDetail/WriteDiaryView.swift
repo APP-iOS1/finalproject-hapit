@@ -11,74 +11,150 @@ import PhotosUI
 
 struct WriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
-    @State var text = ""
-    @State private var selectedItem: PhotosPickerItem?
-    @State private var selectedImageData: Data? = nil
+    @State var content = ""
+    
+    // MARK: 더미 데이터 - 데이터 연동 후 지우기 !!
+    @State private var date = "2023년 01월 20일 금요일"
+    @State private var habitName = "물마시기"
+    
+    @State private var selectedImage: PhotosPickerItem?
+    @State private var selectedImageData: Data? = nil // 뿌려주기 위한 이미지 데이터 변수
+    
     let maxCharacterLength = Int(300)
+    
     var wrappedSelectedImageData: Data {
         return selectedImageData ?? Data()
     }
+    
     var body: some View {
-        VStack {
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark.square")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                }.padding(.leading, 20)
-                Spacer()
-                //
-                Button {
-                    dismiss()
-                } label: {
-                    Text("등록")
-                        .font(.title3)
-                        .bold()
-                }.padding(.trailing, 20)
-            }
-            .padding(.bottom, 10)
-            
-            Spacer()
-            // Contents
-            VStack {
-                if let uiImage = UIImage(data: wrappedSelectedImageData) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                } else {
-                    // 등록한 사진 없을 때
-                    PhotosPicker(selection: $selectedItem, matching: .images ,photoLibrary: .shared()) {
-                        VStack {
-                            Image("defaultPhoto")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50)
-                            Text("사진을 추가해주세요.")
-                        }
+        NavigationStack {
+            ScrollView {
+                HStack {
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("\(habitName)")
+                            .font(.title2)
+                            .bold()
+                        Text("\(date)")
                     }
+                    Spacer()
                 }
-            }.frame(width: 200, height: 150)
-            VStack {
-                // 글자수 300자 제한
-                TextField("", text: $text, axis: .vertical)
-                    .frame(width: 330)
-                    .lineLimit(6, reservesSpace: false)
-                    .padding()
-                    .onReceive(Just(text), perform: { _ in
-                                    if maxCharacterLength < text.count {
-                                        text = String(text.prefix(maxCharacterLength))
+                .padding(EdgeInsets(top: 30, leading: 20, bottom: 0, trailing: 20))
+                
+                Divider().padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                
+                VStack {
+                    // 선택된 이미지 출력.
+                    if let image = UIImage(data: wrappedSelectedImageData) {
+                        ZStack {
+                            Image(uiImage: image)
+                            
+                                .resizable()
+                                .cornerRadius(10)
+                                .scaledToFit()
+                                .frame(maxWidth: .infinity)
+                                .padding(10)
+                                .overlay(alignment: .topTrailing) {
+                                    Button {
+                                        selectedImageData = nil
+                                    } label: {
+                                        Image(systemName: "circle.fill")
+                                            .foregroundColor(.white)
+                                            .font(.title3)
+                                            .overlay {
+                                                Image(systemName: "multiply.circle.fill")
+                                                    .foregroundColor(.gray)
+                                                    .font(.title3)
+                                            }
                                     }
-                                })
-                Spacer()
+                                }
+                                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                        }
+                    } // if let
+                    
+                    
+              
+                    
+                    // 글자수 300자 제한
+                    TextField("릴루님의 습관일지를 작성해보세요!", text: $content, axis: .vertical)
+                    // .lineLimit(9, reservesSpace: false)
+                        .font(.subheadline)
+                        .padding(.horizontal, 20)
+                        .onReceive(Just(content), perform: { _ in
+                            if maxCharacterLength < content.count {
+                                content = String(content.prefix(maxCharacterLength))
+                            }
+                        })
+                    
+                    // 현재 글자수
+                    HStack {
+                        Spacer()
+                        Text("\(content.count)/\(maxCharacterLength)")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    Spacer()
+                    
+                    
+                    
+                    
+                } // VStack
+                .formStyle(.columns)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "multiply")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 17)
+                                .foregroundColor(.gray)
+                                .fontWeight(.light)
+                        } // label
+                    } // ToolbarItem
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        PhotosPicker(
+                            selection: $selectedImage,
+                            matching: .images,
+                            photoLibrary: .shared()) {
+                                Image(systemName: "photo")
+                            }
+                            .onChange(of: selectedImage) { newItem in
+                                Task {
+                                    // Retrieve selected asset in the form of Data
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                        selectedImageData = data
+                                    }
+                                }
+                            }
+                        
+                    } // ToolbarItem
+                } // toolbar
+                
+            } // ScrollView
+            
+            // 작성 완료 버튼
+            Button {
+                // 작성완료 액션
+            } label: {
+                Text("작성 완료")
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .bold()
+                    .background(Color.accentColor)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
             }
-            .frame(width: 350, height: 200)
-            .border(.gray)
-            Spacer()
-        }
-    }
+
+            
+        } // Nav Stack
+    
+    } // body
 }
 
 struct WriteDiaryView_Previews: PreviewProvider {

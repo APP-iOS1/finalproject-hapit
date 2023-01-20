@@ -202,6 +202,7 @@
 				F49E28D929762CD6009EEB1A /* View */,
 				F49E28D829762CCF009EEB1A /* Model */,
 				F49E28CE29762CA0009EEB1A /* Assets.xcassets */,
+				3CE9DFF52979AFAA00E76147 /* duckBoat.png */,
 				F49E28D029762CA0009EEB1A /* Preview Content */,
 			);
 			path = Hapit;

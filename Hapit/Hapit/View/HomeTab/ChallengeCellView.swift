@@ -30,9 +30,9 @@ struct ChallengeCellView: View {
                 Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
                     .foregroundColor(challenge.isChecked ? .green : .gray)
-                    
+                
             }
-
+            
             .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
             //checkButton
@@ -54,7 +54,7 @@ struct ChallengeCellView: View {
                     Spacer()
                     ForEach(0..<3){ bear in
                         Image("bearBlue")
-                            
+                        
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .offset(y:5)
@@ -64,12 +64,12 @@ struct ChallengeCellView: View {
                             .overlay(Circle().stroke())
                             .foregroundColor(.gray)
                             .padding(.trailing, -12)
-                            
+                        
                     }
                     
                 }
-                
                 .font(.subheadline)//HStack
+                
             }//VStack
             Spacer()
             
@@ -79,15 +79,37 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
+        .overlay(
+            VStack{
+                Spacer()
+                ZStack{
+                    Rectangle()
+                        .frame(height: 4)
+                        .padding([.top, .leading, .trailing], 10)
+                        .foregroundColor(Color(UIColor.lightGray))
+                    
+                    HStack{
+                        //                    Image("duckBoat")
+                        //                        .resizable()
+                        //                        .aspectRatio(contentMode: .fit)
+                        //                        .frame(width: 20)
+                        
+                        
+                        Rectangle()
+                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
+                            .padding([.top, .leading, .trailing], 10)
+                        Spacer()
+                    }
+                }
+            }
+        )
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.bottom, 5)
         
-    }
         
-    
-    
-    
+        
+    }// body
 }
 
 //struct ChallengeCellView_Previews: PreviewProvider {

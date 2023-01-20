@@ -93,7 +93,7 @@ struct ToSView: View {
                             agreePrivate.toggle()
                             
                             isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
-                
+    
                         }){
                             Image(systemName: "checkmark")
                                 .foregroundColor(agreePrivate ? Color.accentColor : .gray)

@@ -35,6 +35,7 @@
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
+		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
 		F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49E28CE29762CA0009EEB1A /* Assets.xcassets */; };
@@ -78,6 +79,7 @@
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
 		F49E28CC29762C9C009EEB1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 		F49E28DA29762CE0009EEB1A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				F47BA14E297A67FE000222EE /* AuthManager.swift */,
 				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
 			);
@@ -382,6 +385,7 @@
 				C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */,
 				F49E28E5297639F4009EEB1A /* RegisterView.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
+				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,

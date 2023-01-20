@@ -10,7 +10,6 @@ import SwiftUI
 struct RegisterView: View {
     @State private var email: String = ""
     
-    
     @State private var pw: String = ""
     @State private var showPw: Bool = false
     

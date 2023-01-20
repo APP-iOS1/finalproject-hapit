@@ -14,18 +14,17 @@ struct GetStartView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Spacer().frame(height: 27)
-            
             HStack() {
                 StepBar(nowStep: 3)
                     .padding(.leading, -8)
                 Spacer()
             }
+            .padding(.top, 30)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Hapit")
-                        .foregroundColor(.pink)
+                        .foregroundColor(Color.accentColor)
                     Text("회원가입 완료!")
                 }
                 .font(.largeTitle)
@@ -33,26 +32,28 @@ struct GetStartView: View {
                 Spacer()
             }
             
-            Spacer().frame(height: 80)
+            Spacer()
             
             Image("fourbears")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: 310, maxHeight: 170)
             
-            Spacer().frame(height: 104)
+            Spacer()
             
             Button {
                 isFullScreen = false
             } label: {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.pink)
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    .overlay {
-                        Text("시작하기")
-                            .foregroundColor(.white)
+                Text("시작하기")
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.accentColor)
                     }
             }
+            .padding(.vertical, 5)
             
         }
         .padding(.horizontal, 20)

@@ -12,13 +12,17 @@
 		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3CE9DFF329792FFB00E76147 /* SegmentedPicker */; };
-		3CE9DFF62979AFAA00E76147 /* duckBoat.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE9DFF52979AFAA00E76147 /* duckBoat.png */; };
+		3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9DFF7297A512300E76147 /* EmptyCellView.swift */; };
 		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
 		3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAA29779347003D4809 /* ChallengeCellView.swift */; };
 		3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAC29779359003D4809 /* HabitCellView.swift */; };
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
 		674F28B32977C4C000390405 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B22977C4C000390405 /* Post.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
+		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
+		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
+		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
+		95D067A5297A2B6B003447EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D067A4297A2B6B003447EA /* GoogleService-Info.plist */; };
 		C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55142977A7C9008BB0CF /* Jelly.swift */; };
 		C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55162977B782008BB0CF /* NicknameModalView.swift */; };
 		C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55182977CD17008BB0CF /* FriendChallengeView.swift */; };
@@ -54,13 +58,15 @@
 		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		3CE9DFF52979AFAA00E76147 /* duckBoat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = duckBoat.png; sourceTree = "<group>"; };
+		3CE9DFF7297A512300E76147 /* EmptyCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCellView.swift; sourceTree = "<group>"; };
 		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		3CF39BAA29779347003D4809 /* ChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellView.swift; sourceTree = "<group>"; };
 		3CF39BAC29779359003D4809 /* HabitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellView.swift; sourceTree = "<group>"; };
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		674F28B22977C4C000390405 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
+		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
+		95D067A4297A2B6B003447EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C59D55142977A7C9008BB0CF /* Jelly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jelly.swift; sourceTree = "<group>"; };
 		C59D55162977B782008BB0CF /* NicknameModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModalView.swift; sourceTree = "<group>"; };
 		C59D55182977CD17008BB0CF /* FriendChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeView.swift; sourceTree = "<group>"; };
@@ -98,6 +104,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */,
+				95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */,
+				95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +119,7 @@
 				6774979329763C29003F9D6C /* AddChallengeView.swift */,
 				3CF39BAA29779347003D4809 /* ChallengeCellView.swift */,
 				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
+				3CE9DFF7297A512300E76147 /* EmptyCellView.swift */,
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
 			);
 			path = HomeTab;
@@ -186,6 +195,7 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,
 				F49E28CA29762C9C009EEB1A /* HapitApp.swift */,
 				F49E28CC29762C9C009EEB1A /* ContentView.swift */,
 				F49E28DA29762CE0009EEB1A /* ViewModel */,
@@ -232,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
+				95D0679D297A1FB1003447EA /* HabitManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -304,6 +315,8 @@
 			name = Hapit;
 			packageProductDependencies = (
 				3CE9DFF329792FFB00E76147 /* SegmentedPicker */,
+				95D067A0297A252B003447EA /* FirebaseFirestore */,
+				95D067A2297A252B003447EA /* FirebaseFirestoreSwift */,
 			);
 			productName = Hapit;
 			productReference = F49E28C729762C9C009EEB1A /* Hapit.app */;
@@ -335,6 +348,7 @@
 			mainGroup = F49E28BE29762C9B009EEB1A;
 			packageReferences = (
 				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
+				95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = F49E28C829762C9C009EEB1A /* Products */;
 			projectDirPath = "";
@@ -352,7 +366,7 @@
 			files = (
 				F49E28D229762CA0009EEB1A /* Preview Assets.xcassets in Resources */,
 				F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */,
-				3CE9DFF62979AFAA00E76147 /* duckBoat.png in Resources */,
+				95D067A5297A2B6B003447EA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +393,7 @@
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
+				3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */,
 				674F28B32977C4C000390405 /* Post.swift in Sources */,
 				3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
@@ -396,6 +411,7 @@
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
+				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
@@ -529,6 +545,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
+				DEVELOPMENT_TEAM = PLJU724YCG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
@@ -558,6 +575,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
+				DEVELOPMENT_TEAM = PLJU724YCG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
@@ -611,6 +629,14 @@
 				minimumVersion = 0.0.2;
 			};
 		};
+		95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -618,6 +644,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */;
 			productName = SegmentedPicker;
+		};
+		95D067A0297A252B003447EA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		95D067A2297A252B003447EA /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

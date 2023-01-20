@@ -18,13 +18,13 @@ struct FriendChallengeView: View {
                 NavigationLink {
                     Text("디테일이 들어가는 곳")
                 } label: {
-                    ChallengeCellView(challenge: $dummyChallenge)
+                   // ChallengeCellView(challenge: $dummyChallenge)
                 }
                 
                 NavigationLink {
                     Text("디테일이 들어가는 곳")
                 } label: {
-                    ChallengeCellView(challenge: $dummyChallenge)
+                   // ChallengeCellView(challenge: $dummyChallenge)
                 }
             }
         }.background(Color("BackgroundColor"))

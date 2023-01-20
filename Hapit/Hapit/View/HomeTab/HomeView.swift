@@ -13,65 +13,76 @@ import SegmentedPicker
 
 // MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
 struct HabitSegmentView: View {
+    
     @Binding var selectedIndex: Int
     
-    // MARK: 더미 데이터
-    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
-    
-    @State var dummyChallenge2: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "금연하기", createdAt: Date(), count: 1, isChecked: false)
-    
-    @State var dummyChallenge3: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "블로그쓰기", createdAt: Date(), count: 1, isChecked: false)
-    
+    // 챌린지와 습관을 관리하는 객체
+    @EnvironmentObject var habitManager: HabitManager
+
     var body: some View {
         switch selectedIndex {
 
         case 0:
             ScrollView{
+                
+                ForEach(habitManager.challenges) { challenge in
 
-                NavigationLink {
-                    HabitDetailView(calendar: Calendar.current)
-                } label: {
-                    ChallengeCellView(challenge: $dummyChallenge)
+                    NavigationLink {
+                        HabitDetailView(calendar: Calendar.current)
+                    } label: {
+
+                        ChallengeCellView(challenge: challenge)
+                    }
+                    
                 }
-
-                NavigationLink {
-                    HabitDetailView(calendar: Calendar.current)
-                } label: {
-                    ChallengeCellView(challenge: $dummyChallenge2)
+            }
+            .onAppear{
+                Task{
+                    await habitManager.fetchChallenge()
                 }
-
+                print(habitManager.habits)
+                
             }
    
-            
-            
         case 1:
             
             ScrollView{
-                NavigationLink {
-                    HabitDetailView(calendar: Calendar.current)
-                } label: {
-
-                    HabitCellView(habit: $dummyChallenge3)
-
+                
+                ForEach(habitManager.habits) { habit in
+                    
+                    NavigationLink {
+                        HabitDetailView(calendar: Calendar.current)
+                    } label: {
+                        HabitCellView(habit: habit)
+                    }
+                    
                 }
+            }
+            .onAppear{
+                Task{
+                    await habitManager.fetchChallenge()
+                }
+                print(habitManager.habits)
+                
             }
         default : Text("something wrong")
         }// switch
     }
 }
 
-
-
-
 struct HomeView: View {
     
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
+    
+    @EnvironmentObject var habitManager: HabitManager
+    
+    
     var body: some View {
         
         
-        
+
         NavigationStack{
             VStack {
                 SegmentedPicker(
@@ -136,6 +147,7 @@ struct HomeView: View {
             AddHabitView()
         }
         
+        
     }//body
     
     
@@ -151,8 +163,17 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView()
+//    }
+//}
+
+
+
+//    // MARK: 더미 데이터
+//    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
+//
+//    @State var dummyChallenge2: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "금연하기", createdAt: Date(), count: 1, isChecked: false)
+//
+//    @State var dummyChallenge3: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "블로그쓰기", createdAt: Date(), count: 1, isChecked: false)

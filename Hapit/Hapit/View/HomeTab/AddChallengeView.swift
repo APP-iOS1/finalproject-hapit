@@ -11,14 +11,20 @@ import SwiftUI
 struct AddHabitView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
-    @State private var habitName: String = ""
+        
+    @EnvironmentObject var habitManager: HabitManager
+    
+    
+    @State private var challengeTitle: String = ""
     @State private var isAlarmOn: Bool = false
     @State private var currentDate = Date()
+    
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack(spacing: 15) {
-                TextField("챌린지 이름을 입력해주세요.", text: $habitName)
+                TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                     .font(.title3)
                     .bold()
                     .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
@@ -74,7 +80,14 @@ struct AddHabitView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        
+                        Task{
+                            await habitManager.createChallenge(challengeTitle: challengeTitle)
+                            
+                        }
 
+                        dismiss()
+                        
                     } label: {
                         Image(systemName: "checkmark")
                     } // label
@@ -85,9 +98,12 @@ struct AddHabitView: View {
 }
 
 
-// MARK: - AddHabitView Previews
-struct AddHabitView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddHabitView()
-    }
-}
+//// MARK: - AddHabitView Previews
+//struct AddHabitView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddHabitView()
+//    }
+//}
+//
+//
+

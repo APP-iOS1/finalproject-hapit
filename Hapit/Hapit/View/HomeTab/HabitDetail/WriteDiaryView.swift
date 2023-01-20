@@ -89,6 +89,7 @@ struct WriteDiaryView: View {
                                         text = String(text.prefix(maxCharacterLength))
                                     }
                                 })
+                
                 Spacer()
             }
             .frame(width: 350, height: 200)

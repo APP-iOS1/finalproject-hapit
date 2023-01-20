@@ -43,17 +43,33 @@ struct WriteDiaryView: View {
                 Divider().padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                 
                 VStack {
-                    HStack(spacing: 10) {
-                        // 선택된 이미지 출력.
-                        if let image = UIImage(data: wrappedSelectedImageData) {
+                    // 선택된 이미지 출력.
+                    if let image = UIImage(data: wrappedSelectedImageData) {
+                        ZStack {
                             Image(uiImage: image)
+                            
                                 .resizable()
                                 .cornerRadius(10)
                                 .scaledToFit()
-                                .frame(maxWidth: .infinity, maxHeight: 300)
-                        } // if let
-                    } // HStack
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 10, trailing: 20))
+                                .frame(maxWidth: .infinity)
+                                .padding(10)
+                                .overlay(alignment: .topTrailing) {
+                                    Button {
+                                        selectedImageData = nil
+                                    } label: {
+                                        Image(systemName: "circle.fill")
+                                            .foregroundColor(.white)
+                                            .font(.title3)
+                                            .overlay {
+                                                Image(systemName: "multiply.circle.fill")
+                                                    .foregroundColor(.gray)
+                                                    .font(.title3)
+                                            }
+                                    }
+                                }
+                                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                        }
+                    } // if let
                     
                     
               

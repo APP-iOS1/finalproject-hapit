@@ -18,56 +18,74 @@ struct HabitSegmentView: View {
     
     // 챌린지와 습관을 관리하는 객체
     @EnvironmentObject var habitManager: HabitManager
-
+    
     var body: some View {
         switch selectedIndex {
-
-        case 0:
-            ScrollView{
-                
-                ForEach(habitManager.challenges) { challenge in
-
-                    NavigationLink {
-                        HabitDetailView(calendar: Calendar.current)
-                    } label: {
-
-                        ChallengeCellView(challenge: challenge)
-                    }
-                    
-                }
-            }
-            .onAppear{
-                Task{
-                    await habitManager.fetchChallenge()
-                }
-                print(habitManager.habits)
-                
-            }
-   
-        case 1:
             
-            ScrollView{
+        case 0:
+            
+           
+                ScrollView{
+                    if habitManager.challenges.count < 1{
+                        
+                        EmptyCellView()
+                        
+                    }
+                    else{
+                    ForEach(habitManager.challenges) { challenge in
+                        
+                        NavigationLink {
+                            HabitDetailView(calendar: Calendar.current)
+                        } label: {
+                            
+                            ChallengeCellView(challenge: challenge)
+                        }
+                        
+                    }
+                }
                 
-                ForEach(habitManager.habits) { habit in
+            }
+                .onAppear{
+                    Task{
+                        await habitManager.fetchChallenge()
+                    }
+                    print(habitManager.habits)
                     
-                    NavigationLink {
-                        HabitDetailView(calendar: Calendar.current)
-                    } label: {
-                        HabitCellView(habit: habit)
+                }
+        case 1:
+
+                if habitManager.habits.count < 1{
+                    EmptyCellView()
+                }
+                else{
+                    ScrollView{
+                        ForEach(habitManager.habits) { habit in
+                            
+                            NavigationLink {
+                                HabitDetailView(calendar: Calendar.current)
+                            } label: {
+                                HabitCellView(habit: habit)
+                            }
+                            
+                        }
+                    }
+                    .onAppear{
+                        Task{
+                            await habitManager.fetchChallenge()
+                        }
+                        print(habitManager.habits)
+                        
                     }
                     
-                }
             }
-            .onAppear{
-                Task{
-                    await habitManager.fetchChallenge()
-                }
-                print(habitManager.habits)
-                
-            }
+            
+            
         default : Text("something wrong")
         }// switch
+        
     }
+    
+    
 }
 
 struct HomeView: View {
@@ -81,40 +99,38 @@ struct HomeView: View {
     
     var body: some View {
         
-        
-
         NavigationStack{
             VStack {
                 SegmentedPicker(
-                          habitTypeList,
-                           selectedIndex: Binding(
-                                           get: { selectedIndex },
-                                           set: { selectedIndex = $0 ?? 0 }),
-                                       selectionAlignment: .bottom,
-                                       content: { item, isSelected in
-                                           Text(item)
-                                               .foregroundColor(isSelected ? Color.accentColor : Color.gray )
-                                               //.padding(.horizontal, 70)
-                                               .padding(.vertical, 8)
-                                               .frame(maxWidth: .infinity)
-                                               .bold()
-                                           
-                                       },
-                                       selection: {
-                                           VStack(spacing: 0) {
-                                               Spacer()
-                                               Color.accentColor.frame(height: 2)
-                                                   .clipShape(Capsule())
-                                                   .frame(maxWidth: .infinity)
-                                           }
-                                           
-                                       })
-                                       .onAppear {
-                                           selectedIndex = 0
-                                       }
-                                       .animation(.easeInOut(duration: 0.3))
-                                       .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
-                                       
+                    habitTypeList,
+                    selectedIndex: Binding(
+                        get: { selectedIndex },
+                        set: { selectedIndex = $0 ?? 0 }),
+                    selectionAlignment: .bottom,
+                    content: { item, isSelected in
+                        Text(item)
+                            .foregroundColor(isSelected ? Color.accentColor : Color.gray )
+                        //.padding(.horizontal, 70)
+                            .padding(.vertical, 8)
+                            .frame(maxWidth: .infinity)
+                            .bold()
+                        
+                    },
+                    selection: {
+                        VStack(spacing: 0) {
+                            Spacer()
+                            Color.accentColor.frame(height: 2)
+                                .clipShape(Capsule())
+                                .frame(maxWidth: .infinity)
+                        }
+                        
+                    })
+                .onAppear {
+                    selectedIndex = 0
+                }
+                .animation(.easeInOut(duration: 0.3))
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+                
                 // 세그먼트 뷰
                 Spacer()
                 HabitSegmentView(selectedIndex: $selectedIndex)
@@ -123,11 +139,11 @@ struct HomeView: View {
                 
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
-
+            
             .navigationBarTitle(getToday())
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
-
+                
                 //                NavigationLink {
                 //                    // AddHabitView가 올 자리
                 //                    Text("hello")
@@ -146,6 +162,7 @@ struct HomeView: View {
         .sheet(isPresented: $isAddHabitViewShown) {
             AddHabitView()
         }
+        
         
         
     }//body

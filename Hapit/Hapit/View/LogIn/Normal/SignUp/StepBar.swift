@@ -16,7 +16,7 @@ struct StepBar: View {
                 if index <= nowStep {
                     Spacer().frame(width: 8)
                     Circle()
-                        .fill(Color.pink)
+                        .fill(Color.accentColor)
                         .frame(width: 30)
                         .overlay {
                             Text("\(index)")
@@ -41,13 +41,13 @@ struct StepBar: View {
                     if index < nowStep {
                         HStack {
                             Circle()
-                                .fill(Color.pink)
+                                .fill(Color.accentColor)
                                 .frame(width: 3)
                             Circle()
-                                .fill(Color.pink)
+                                .fill(Color.accentColor)
                                 .frame(width: 3)
                             Circle()
-                                .fill(Color.pink)
+                                .fill(Color.accentColor)
                                 .frame(width: 3)
                         }
                     } else {

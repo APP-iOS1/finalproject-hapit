@@ -17,14 +17,14 @@ struct WriteDiaryView: View {
     @State private var date = "2023년 01월 20일 금요일"
     @State private var habitName = "물마시기"
     
-    @State private var selectedImages: [PhotosPickerItem] = [] // 이미지 변수
-    @State private var selectedImageData: [Data] = [] // 뿌려주기 위한 이미지 데이터 변수
+    @State private var selectedImage: PhotosPickerItem?
+    @State private var selectedImageData: Data? = nil // 뿌려주기 위한 이미지 데이터 변수
     
     let maxCharacterLength = Int(300)
     
-    //    var wrappedSelectedImageData: Data {
-    //        return selectedImageData ?? Data()
-    //    }
+    var wrappedSelectedImageData: Data {
+        return selectedImageData ?? Data()
+    }
     
     var body: some View {
         NavigationStack {
@@ -43,36 +43,17 @@ struct WriteDiaryView: View {
                 Divider().padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                 
                 VStack {
-                    // 선택된 이미지가 하나라면 이미지가 꽉 차게 출력시켜준다.
-                    if selectedImageData.count == 1 {
+                    HStack(spacing: 10) {
                         // 선택된 이미지 출력.
-                        ForEach(selectedImageData, id: \.self) { imageData in
-                            if let image = UIImage(data: imageData) {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .cornerRadius(10)
-                                    .scaledToFit()
-                                    .frame(maxWidth: .infinity, maxHeight: 300)
-                                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 10, trailing: 20))
-                            } // if let
-                        } // ForEach
-                    } else { // 여러개면 스크롤뷰로 작게 보여준다.
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 10) {
-                                // 선택된 이미지 출력.
-                                ForEach(selectedImageData, id: \.self) { imageData in
-                                    if let image = UIImage(data: imageData) {
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .cornerRadius(10)
-                                            .scaledToFit()
-                                            .frame(maxHeight: 200)
-                                    } // if let
-                                } // ForEach
-                            } // HStack
-                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 10, trailing: 20))
-                        }
-                    }
+                        if let image = UIImage(data: wrappedSelectedImageData) {
+                            Image(uiImage: image)
+                                .resizable()
+                                .cornerRadius(10)
+                                .scaledToFit()
+                                .frame(maxWidth: .infinity, maxHeight: 300)
+                        } // if let
+                    } // HStack
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 10, trailing: 20))
                     
                     
               
@@ -119,25 +100,20 @@ struct WriteDiaryView: View {
                     } // ToolbarItem
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        // 갤러리
-                        PhotosPicker(selection: $selectedImages, matching: .images, photoLibrary: .shared()) {
-                            Image(systemName: "photo")
-                        }
-                        .onChange(of: selectedImages) { newImages in
-                            // 선택된 이미지가 없다면 비워줘야 함.
-                            if newImages.isEmpty { selectedImageData = [] }
-                            // 선택된 이미지가 있다면 뿌려주기 위해 배열에 담기.
-                            for newImage in newImages {
+                        PhotosPicker(
+                            selection: $selectedImage,
+                            matching: .images,
+                            photoLibrary: .shared()) {
+                                Image(systemName: "photo")
+                            }
+                            .onChange(of: selectedImage) { newItem in
                                 Task {
-                                    // 배열 초기화
-                                    selectedImageData = []
                                     // Retrieve selected asset in the form of Data
-                                    if let data = try? await newImage.loadTransferable(type: Data.self) {
-                                        selectedImageData.append(data)
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                        selectedImageData = data
                                     }
-                                } // Task
-                            } // for
-                        } // onChanged
+                                }
+                            }
                         
                     } // ToolbarItem
                 } // toolbar

@@ -34,14 +34,10 @@ struct HabitDetailView: View {
         VStack {
             HStack {
                 HStack {
-                    
                     Text("\(Date().formatted(date: .abbreviated, time: .omitted)) 부터 시작한 습관")
                         .foregroundColor(.gray)
                     
                     Spacer()
-//
-//                    Text("N일째 지속중 🔥")
-//                        .font(.title.bold())
                 }
 
             }
@@ -61,30 +57,41 @@ struct HabitDetailView: View {
                         }
                     }) {
                         VStack(spacing: 10) {
-                            Text(dayFormatter.string(from: date))
-                                .font(.system(size: 15))
-                                .fontWeight(.semibold)
-                            
                             Text(weekDayFormatter.string(from: date))
                                 .font(.system(size: 14))
                             
-                            Circle()
-                                .fill(.white)
-                                .frame(width: 8, height: 8)
-                                .opacity(calendar.isDate(date, inSameDayAs: selectedDate) ? 1 : 0)
-                            
+                            Text(dayFormatter.string(from: date))
+                                .font(.system(size: 15))
+                                .fontWeight(.semibold)
+                                .background(
+                                    ZStack {
+                                        if calendar.isDate(date, inSameDayAs: selectedDate) {
+                                            Circle()
+                                                .fill(Color("MiddlePinkColor"))
+                                                .frame(width: 30, height: 30)
+                                        }
+                                    }
+                                )
+
+                                HStack {
+                                    ForEach(0..<3){ bear in
+                                        Image("bearBlue")
+                                        
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .offset(y:5)
+                                            .frame(width: 15)
+                                            .background(Color(.white))
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke())
+                                            .foregroundColor(.gray)
+                                            .padding(.trailing, -12)
+                                    }
+                                }.offset(x:-5)
                         }
                         .foregroundStyle(calendar.isDate(date, inSameDayAs: selectedDate) ? .primary : .secondary)
-                        .foregroundColor(calendar.isDate(date, inSameDayAs: selectedDate) ? .white : .black)
+                        .foregroundColor(calendar.isDate(date, inSameDayAs: selectedDate) ? .black : .black)
                         .frame(width: 45, height: 90)
-                        .background(
-                            ZStack {
-                                if calendar.isDate(date, inSameDayAs: selectedDate) {
-                                    Capsule()
-                                        .fill(Color.black)
-                                }
-                            }
-                        )
                     }
                 },
                 title: { date in
@@ -144,7 +151,7 @@ struct HabitDetailView: View {
                 DiaryPerDayView()
             }
         }
-        .navigationTitle("N일째 지속중 🔥")
+        .navigationTitle("물 500ml 마시기 🔥")
         .fullScreenCover(isPresented: $isWriteSheetOn, content: WriteDiaryView.init)
     }
     
@@ -159,6 +166,8 @@ struct HabitDetailView: View {
                     }
 
                 } else {
+                    DiaryView()
+                    DiaryView()
                     DiaryView()
                 }
             } else {

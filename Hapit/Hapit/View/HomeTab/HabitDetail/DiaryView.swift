@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct DiaryView: View {
-    @State var imageURL = "https://i.pinimg.com/564x/ac/0a/9b/ac0a9b6c84d82e7cb1d02a67f1f0f1a5.jpg"
-    @State var diaryText = "오늘은 물도 마시고 운동도 하고 책도 읽었다 ! 갓생산 것 같아서 너무너무 뿌듯했다 ! djfkejlklkfjlekwfjklw wjfklwe"
+    @State var imageURL = "https://avatars.githubusercontent.com/u/82339184?v=4"
+//    "https://i.pinimg.com/564x/ac/0a/9b/ac0a9b6c84d82e7cb1d02a67f1f0f1a5.jpg"
+    @State var diaryText = "오늘은 물도 마시고 운동도 하고 책도 읽었다 ! 갓생산 것 같아서 너무너무 뿌듯했다 ! 릴루 ! 릴루 ! 릴루 ! 릴루 !"
     //    "오늘은 물도 마시고 운동도 하고 책도 읽었다 ! 갓생산 것 같아서 너무너무 뿌듯했다 !"
     let screenWidth = UIScreen.main.bounds.size.width
     var body: some View {
@@ -25,7 +26,7 @@ struct DiaryView: View {
                     .overlay(Circle().stroke())
                     .foregroundColor(.gray)
                 
-                Text("릴루")
+                Text("민주왕자님")
                     .foregroundColor(Color.accentColor)
                 Spacer()
             }

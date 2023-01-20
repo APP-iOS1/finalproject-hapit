@@ -65,7 +65,7 @@ class HabitManager: ObservableObject{
     // MARK: - Add a Habit
     //func createHabit(creator: String) async {
     @MainActor
-    func createChallenge() async {
+    func createChallenge(challengeTitle: String) async {
         
         let id = UUID().uuidString
         //let creatorId = "0b5MlIZzQxJzTbyyEEF2"
@@ -75,15 +75,18 @@ class HabitManager: ObservableObject{
                 .document(id)
                 .setData([
                     "id": id,
-                    "creator": "신현준",
-                    "mateArray": ["가나다", "라마바"],
-                    "habitTitle": "물 많이 마시기",
+                    "creator": "추원준",
+                    "mateArray": [""],
+                    "challengeTitle": challengeTitle,
                     "createdAt": Date.now.timeIntervalSince1970,
-                    "count": 3
+                    "count": 0,
+                    "isChecked": false
                 ])
         } catch {
             print(error.localizedDescription)
         }
+        
+        await fetchChallenge()
     }
     
     

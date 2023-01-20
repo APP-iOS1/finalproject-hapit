@@ -13,6 +13,8 @@ struct ContentView: View {
     }
 
     @State private var isFullScreen = true
+    
+    //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
         TabView{

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct HabitCellView: View {
     //MARK: 습관 모델이 만들어지면 수정할 부분
-    @Binding var habit: Challenge
+    var habit: Challenge
+    
+    @EnvironmentObject var habitManager: HabitManager
     
     var body: some View {
         HStack{
@@ -25,7 +27,13 @@ struct HabitCellView: View {
             }//VStack
             Spacer()
             Button {
-                habit.isChecked.toggle()
+                // 업데이트 함수 요망
+                // habit.isChecked.toggle()
+//                Task{
+//                    await habitManager.updateChallengeIsChecked(challenge: )
+//
+//                }
+                
             } label: {
                 Image(systemName: habit.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)

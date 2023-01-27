@@ -37,6 +37,7 @@
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
+		F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47BA153297A75EE000222EE /* FirebaseAuth */; };
 		F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CA29762C9C009EEB1A /* HapitApp.swift */; };
 		F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
 		F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49E28CE29762CA0009EEB1A /* Assets.xcassets */; };
@@ -108,6 +109,7 @@
 				3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */,
 				95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */,
 				95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */,
+				F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,11 +179,19 @@
 			path = SocialTab;
 			sourceTree = "<group>";
 		};
+		F47BA152297A75EE000222EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F49E28BE29762C9B009EEB1A = {
 			isa = PBXGroup;
 			children = (
 				F49E28C929762C9C009EEB1A /* Hapit */,
 				F49E28C829762C9C009EEB1A /* Products */,
+				F47BA152297A75EE000222EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -319,6 +329,7 @@
 				3CE9DFF329792FFB00E76147 /* SegmentedPicker */,
 				95D067A0297A252B003447EA /* FirebaseFirestore */,
 				95D067A2297A252B003447EA /* FirebaseFirestoreSwift */,
+				F47BA153297A75EE000222EE /* FirebaseAuth */,
 			);
 			productName = Hapit;
 			productReference = F49E28C729762C9C009EEB1A /* Hapit.app */;
@@ -657,6 +668,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		F47BA153297A75EE000222EE /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

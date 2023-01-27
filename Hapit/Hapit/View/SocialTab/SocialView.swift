@@ -12,9 +12,11 @@ struct User: Identifiable {
     let name: String
     let profileImage: String
     let challenge: [String]
-    
 }
-struct Users {
+
+
+
+struct Users1 {
     let users = [
         User(id: "1",name: "박민주", profileImage: "bearBlue",challenge: ["물마시기","물마시기2","물마시기3"]),
         User(id: "2",name: "김예원", profileImage: "bearGreen",challenge: ["아침먹기","아침먹기2","아침먹기3"]),
@@ -24,7 +26,7 @@ struct Users {
 }
 
 struct SocialView: View {
-    let friends = Users()
+    let friends = Users1()
     
     var body: some View {
         NavigationStack {

@@ -273,7 +273,7 @@ struct RegisterView: View {
             .padding(.top, 30)
                 
             // MARK: 완료 버튼
-            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen)) {
+            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)) {
                 
                 Text("완료")
                     .foregroundColor(.white)

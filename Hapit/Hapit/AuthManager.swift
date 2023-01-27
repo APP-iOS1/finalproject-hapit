@@ -76,6 +76,29 @@ class AuthManager: ObservableObject {
     }
     
     
-    // MARK
+    // MARK: - 닉네임 중복확인을 해주는 함수
+    @MainActor
+    func isNicknameDuplicated(nickName: String) -> Bool {
+        var result = false
+        
+        database.collection("User").whereField("name", isEqualTo: nickName)
+            .getDocuments() { (snapshot, err) in
+                if let error = err {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    return
+                }
+                
+                if snapshot.documents.isEmpty {
+                    result = true
+                } else {
+                    result = false
+                }
+            }
+        return result
+    }
 }
 

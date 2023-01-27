@@ -182,7 +182,6 @@ struct ToSView: View {
     }
     
     func isAllChecked(service: Bool, privates: Bool, ad: Bool) {
-        
         if service && privates {
             agreeAll = true
         } else {

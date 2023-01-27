@@ -29,9 +29,9 @@ class AuthManager: ObservableObject {
             
             // firestore에 신규회원 등록
             await uploadUserInfo(userInfo: newby)
-        
+            
         } catch {
-            print(error.localizedDescription)
+            throw(error)
         }
     }
     
@@ -50,4 +50,32 @@ class AuthManager: ObservableObject {
         }
     }
     
+    // MARK: - 이메일 중복확인을 해주는 함수
+    @MainActor
+    func isEmailDuplicated(email: String) -> Bool {
+        var result = false
+        
+        database.collection("User").whereField("email", isEqualTo: email)
+            .getDocuments() { (snapshot, err) in
+                if let error = err {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    return
+                }
+                
+                if snapshot.documents.isEmpty {
+                    result = true
+                } else {
+                    result = false
+                }
+            }
+        return result
+    }
+    
+    
+    // MARK
 }
+

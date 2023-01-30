@@ -7,11 +7,15 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 import FirebaseFirestoreSwift
 import Combine
 
 
 final class HabitManager: ObservableObject{
+    
+    let firebaseAuth = Auth.auth()
+    let currentUser = Auth.auth().currentUser ?? nil
     
     enum FirebaseError: Error{
         case badSnapshot
@@ -100,9 +104,6 @@ final class HabitManager: ObservableObject{
             
         }
         .eraseToAnyPublisher()
-        
-        
-        
     }
     
     func loadChallenge(){
@@ -134,7 +135,8 @@ final class HabitManager: ObservableObject{
                     "challengeTitle": challenge.challengeTitle,
                     "createdAt": challenge.createdAt,
                     "count": challenge.count,
-                    "isChecked": challenge.isChecked
+                    "isChecked": challenge.isChecked,
+                    "uid": challenge.uid
                 ]) { error in
                     if let error = error {
                         promise(.failure(error))

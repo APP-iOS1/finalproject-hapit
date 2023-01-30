@@ -19,35 +19,31 @@ struct HabitSegmentView: View {
     // 챌린지와 습관을 관리하는 객체
     @EnvironmentObject var habitManager: HabitManager
     
+    
     var body: some View {
         switch selectedIndex {
             
         case 0:
-            
-           
                 ScrollView{
                     if habitManager.challenges.count < 1{
-                        
                         EmptyCellView()
-                        
                     }
                     else{
                     ForEach(habitManager.challenges) { challenge in
-                        
-                        NavigationLink {
-                            HabitDetailView(calendar: Calendar.current)
-                        } label: {
-                            
-                            ChallengeCellView(challenge: challenge)
+                        if challenge.uid == habitManager.currentUser?.uid {
+                            NavigationLink {
+                                HabitDetailView(calendar: Calendar.current)
+                            } label: {
+                                ChallengeCellView(challenge: challenge)
+                            }
                         }
-                        
                     }
                 }
                 
             }
-                .onAppear{
-                    habitManager.loadChallenge()
-                }
+            .onAppear{
+                habitManager.loadChallenge()
+            }
         case 1:
 
                 if habitManager.habits.count < 1{

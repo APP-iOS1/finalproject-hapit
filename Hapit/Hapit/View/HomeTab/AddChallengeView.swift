@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 //MARK: - ChallengeType : 개인/그룹
 enum ChallengeType: String, CaseIterable{
     case personal = "개인"
     case group = "그룹"
 }
+
+let firebaseAuth = Auth.auth()
+let currentUser = Auth.auth().currentUser ?? nil
 
 // MARK: - AddHabitView Struct
 struct AddHabitView: View {
@@ -20,9 +24,8 @@ struct AddHabitView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     
-   // @State private var createdAt: Date = Date()
-    // 생성
- //   var createdDate: String {
+    @State private var createdAt: Date = Date()
+    var createdDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -40,33 +43,16 @@ struct AddHabitView: View {
         NavigationStack {
             Spacer()
             
-            init{
-                
-            }
-            
             VStack(spacing: 15) {
                 
                 Picker ("개인 그룹 중 선택해주세요",selection: $challengetype){
-                        ForEach(ChallengeType.allCases, id: \.self) { option in
-                            Text(option.rawValue)
-                        }
+                    ForEach(ChallengeType.allCases, id: \.self) { option in
+                        Text(option.rawValue)
                     }
-                    .accentColor(Color("DarkPinkColor"))
-                    .background(Color("BackgroundColor"))
-                    .pickerStyle(SegmentedPickerStyle())
-              
-             /*   HStack {
-                    Spacer()
-                    Text("\(createdDate)")
-                        .bold()
-                    Spacer()
-                        
-                }.frame(height: 20)
-                    .padding()
-                    .background(Color("CellColor"))
-                    .cornerRadius(10)
-                    .padding(.horizontal, 20)
-                */
+                }
+                .accentColor(Color("DarkPinkColor"))
+                .background(Color("BackgroundColor"))
+                .pickerStyle(SegmentedPickerStyle())
                 
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                     .font(.title3)
@@ -132,11 +118,12 @@ struct AddHabitView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         let id = UUID().uuidString
-                        habitManager.createChallenge(challenge: Challenge(id: id, creator: "추추맨", mateArray: ["신현준"], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false))
+                        print(currentUser)
                         
-
+                        habitManager.createChallenge(challenge: Challenge(id: id, creator: "", mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser!.uid ?? ""))
+                        
                         habitManager.loadChallenge()
-
+                        
                         dismiss()
                         
                     } label: {

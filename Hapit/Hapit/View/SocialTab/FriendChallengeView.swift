@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct FriendChallengeView: View {
     // TODO: 나중에 Binding 값으로
     // MARK: 더미 데이터
-    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false)
+    
+    let firebaseAuth = Auth.auth()
+    let currentUser = Auth.auth().currentUser ?? nil
+    
+//    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: currentUser.uid ?? "")
 
     var body: some View {
         ZStack {

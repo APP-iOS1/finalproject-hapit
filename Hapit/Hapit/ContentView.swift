@@ -25,13 +25,13 @@ struct ContentView: View {
                         Text("홈")
                     }
                 }
-            SocialView()
-               .tabItem {
-                   VStack{
-                       Image(systemName: "globe.europe.africa.fill")
-                       Text("소셜")
-                   }
-                }
+//            SocialView()
+//               .tabItem {
+//                   VStack{
+//                       Image(systemName: "globe.europe.africa.fill")
+//                       Text("소셜")
+//                   }
+//                }
              MyPageView()
                 .tabItem {
                     VStack{

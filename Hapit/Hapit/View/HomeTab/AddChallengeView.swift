@@ -20,9 +20,8 @@ struct AddHabitView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     
-   // @State private var createdAt: Date = Date()
-    // 생성
- //   var createdDate: String {
+    @State private var createdAt: Date = Date()
+    var createdDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -39,11 +38,6 @@ struct AddHabitView: View {
     var body: some View {
         NavigationStack {
             Spacer()
-            
-            init{
-                
-            }
-            
             VStack(spacing: 15) {
                 
                 Picker ("개인 그룹 중 선택해주세요",selection: $challengetype){

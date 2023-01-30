@@ -36,7 +36,6 @@
 		C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55182977CD17008BB0CF /* FriendChallengeView.swift */; };
 		C59D551B2977D149008BB0CF /* MessageFullscreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D551A2977D149008BB0CF /* MessageFullscreenView.swift */; };
 		C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */; };
-		C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC879297632D400E58C84 /* DiaryView.swift */; };
 		C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC87C29765BAC00E58C84 /* MyPageView.swift */; };
 		C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88029765E7500E58C84 /* RewardView.swift */; };
 		C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */; };
@@ -94,7 +93,6 @@
 		C59D55182977CD17008BB0CF /* FriendChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeView.swift; sourceTree = "<group>"; };
 		C59D551A2977D149008BB0CF /* MessageFullscreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFullscreenView.swift; sourceTree = "<group>"; };
 		C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryView.swift; sourceTree = "<group>"; };
-		C5FAC879297632D400E58C84 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 		C5FAC87C29765BAC00E58C84 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		C5FAC88029765E7500E58C84 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
 		C5FAC88229765EAB00E58C84 /* ProfileCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellView.swift; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
 				3CE9DFF7297A512300E76147 /* EmptyCellView.swift */,
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
-				368AE79D29878DA7005088E5 /* DiaryModalView.swift */,
 			);
 			path = HomeTab;
 			sourceTree = "<group>";
@@ -211,8 +208,8 @@
 		C9CBC7FE2976831600D530CC /* HabitDetail */ = {
 			isa = PBXGroup;
 			children = (
+				368AE79D29878DA7005088E5 /* DiaryModalView.swift */,
 				3625FB66297634AC0006478B /* HabitDetailView.swift */,
-				C5FAC879297632D400E58C84 /* DiaryView.swift */,
 				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
 				3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */,
 				3C811D1C2987628A0005539A /* CustomDatePickerView.swift */,
@@ -521,7 +518,6 @@
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
-				C5FAC87A297632D400E58C84 /* DiaryView.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
@@ -671,6 +667,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -702,6 +699,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -27,7 +27,7 @@ struct AddFriendView: View {
     
     
     var body: some View {
-        NavigationStack{
+        NavigationView{
             List(filteredData){ data in
                 Text(data.name)
             }

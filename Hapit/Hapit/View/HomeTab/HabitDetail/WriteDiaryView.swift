@@ -27,7 +27,7 @@ struct WriteDiaryView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
@@ -111,7 +111,7 @@ struct WriteDiaryView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 17)
                                 .foregroundColor(.gray)
-                                .fontWeight(.light)
+                                .font(.custom("IMHyemin-Bold", size: 17))
                         } // label
                     } // ToolbarItem
                     
@@ -145,7 +145,7 @@ struct WriteDiaryView: View {
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .bold()
+                    .font(.custom("IMHyemin-Bold", size: 17))
                     .background(Color.accentColor)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))

@@ -28,6 +28,8 @@ struct RegisterView: View {
     
     @Binding var isFullScreen: Bool
     
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
         VStack(spacing: 20) {
 
@@ -68,17 +70,6 @@ struct RegisterView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20.5)
                                         .foregroundColor(.green)
-                                }
-                                
-                                Button(action: {}){
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(.gray)
-                                        .frame(maxWidth: 80, maxHeight: 25)
-                                        .overlay {
-                                            Text("중복확인")
-                                                .font(.subheadline)
-                                                .foregroundColor(.white)
-                                        }
                                 }
                             } // HStack - TextField, Secured Image, Check Image
                             .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
@@ -236,17 +227,7 @@ struct RegisterView: View {
                                         .frame(width: 20.5)
                                         .foregroundColor(.green)
                                 }
-                                
-                                Button(action: {}){
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(.gray)
-                                        .frame(maxWidth: 80, maxHeight: 25)
-                                        .overlay {
-                                            Text("중복확인")
-                                                .font(.subheadline)
-                                                .foregroundColor(.white)
-                                        }
-                                }
+                                                         
                             } // HStack - TextField, Secured Image, Check Image
                             .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                             

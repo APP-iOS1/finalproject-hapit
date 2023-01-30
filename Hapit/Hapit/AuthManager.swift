@@ -30,10 +30,6 @@ class AuthManager: ObservableObject {
         return isLoggedin
     }
     
-    
-    
-    
-    
     // MARK: - 신규회원 생성
     @MainActor
     func register(email: String, pw: String, name: String) async throws {

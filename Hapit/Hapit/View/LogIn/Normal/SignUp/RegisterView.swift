@@ -276,8 +276,8 @@ struct RegisterView: View {
             Button(action: {
                 Task {
                     
-                    authManager.isEmailDuplicated(email: email)
-                    print(authManager.result)
+                    mailDuplicated = await authManager.isEmailDuplicated(email: email)
+                    print(mailDuplicated)
                     nameCheck = authManager.isNicknameDuplicated(nickName: nickName)
                     
                     if mailDuplicated {

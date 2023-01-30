@@ -18,7 +18,7 @@ struct LogInView: View {
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 Image("logo")
                     .resizable()
@@ -30,6 +30,8 @@ struct LogInView: View {
                     VStack {
                         TextField("Email", text: $email)
                             .focused($emailFocusField)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
                         Rectangle()
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)
@@ -40,6 +42,8 @@ struct LogInView: View {
                     VStack {
                         SecureField("Password", text: $pw)
                             .focused($pwFocusField)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
                         Rectangle()
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)

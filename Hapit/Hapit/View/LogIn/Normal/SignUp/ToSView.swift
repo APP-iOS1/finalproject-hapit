@@ -27,12 +27,13 @@ struct ToSView: View {
     var body: some View {
         VStack(spacing: 20) {
             
+            Spacer()
+            
             HStack() {
                 StepBar(nowStep: 2)
                     .padding(.leading, -8)
                 Spacer()
             }
-            .padding(.top, 30)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
@@ -44,7 +45,7 @@ struct ToSView: View {
                     Text("동의해주세요")
                 }
                 .font(.largeTitle)
-                .bold()
+                .font(.custom("IMHyemin-Bold", size: 17))
                 Spacer()
             }
             
@@ -136,24 +137,11 @@ struct ToSView: View {
                 Spacer()
                 Spacer()
                 
-                
-                
                 // 회원가입 버튼을 누르면 progress view가 나타남
-                
-                Button(action: {
-                    Task {
-                        isClicked.toggle()
-                        
-                        do {
-                            try await authManager.register(email: email, pw: pw, name: nickName)
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-                        isActive.toggle()
-                    }
-                }){
+                // Fallback on earlier versions
+                NavigationLink {
+                    GetStartView(isFullScreen: $isFullScreen)
+                } label: {
                     if isClicked {
                         ProgressView()
                             .padding()
@@ -172,10 +160,21 @@ struct ToSView: View {
                                     .fill(agreeAll ? Color.accentColor : .gray)
                             }
                     }
-                }
-                .navigationDestination(isPresented: $isActive) {
-                    GetStartView(isFullScreen: $isFullScreen)
-                }
+                } // Nav Link
+                .simultaneousGesture(TapGesture().onEnded {
+                    Task {
+                        isClicked.toggle()
+                        
+                        do {
+                            try await authManager.register(email: email, pw: pw, name: nickName)
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                        isActive.toggle()
+                    }
+                })
             }
         }
         .padding(.horizontal, 20)

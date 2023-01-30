@@ -9,8 +9,6 @@ import SwiftUI
 import SegmentedPicker
 //TODO: 체크버튼 분리하기: 현재 한 습관만 달성해도 모든 습관이 다 체크되는 이슈가 있음.
 
-
-
 // MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
 struct HabitSegmentView: View {
     
@@ -23,8 +21,6 @@ struct HabitSegmentView: View {
         switch selectedIndex {
             
         case 0:
-            
-           
                 ScrollView{
                     if habitManager.challenges.count < 1{
                         
@@ -35,7 +31,7 @@ struct HabitSegmentView: View {
                     ForEach(habitManager.challenges) { challenge in
                         
                         NavigationLink {
-                            HabitDetailView(calendar: Calendar.current)
+                            //HabitDetailView(calendar: Calendar.current)
                         } label: {
                             
                             ChallengeCellView(challenge: challenge)
@@ -58,7 +54,9 @@ struct HabitSegmentView: View {
                         ForEach(habitManager.habits) { habit in
                             
                             NavigationLink {
-                                HabitDetailView(calendar: Calendar.current)
+                                // MARK: 버전 분기
+                                
+                                //HabitDetailView(calendar: Calendar.current)
                             } label: {
                                 HabitCellView(habit: habit)
                             }
@@ -74,14 +72,10 @@ struct HabitSegmentView: View {
 //                    }
                     
             }
-            
-            
         default : Text("something wrong")
         }// switch
         
     }
-    
-    
 }
 
 struct HomeView: View {
@@ -92,10 +86,9 @@ struct HomeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     
-    
     var body: some View {
         
-        NavigationStack{
+        NavigationView{
             VStack {
                 SegmentedPicker(
                     habitTypeList,
@@ -109,7 +102,7 @@ struct HomeView: View {
                         //.padding(.horizontal, 70)
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
-                            .bold()
+                            .font(.custom("IMHyemin-Bold", size: 17))
                         
                     },
                     selection: {

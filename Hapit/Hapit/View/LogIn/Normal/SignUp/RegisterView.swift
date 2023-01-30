@@ -66,7 +66,7 @@ struct RegisterView: View {
                             Text("입력해주세요")
                         }
                         .font(.largeTitle)
-                        .bold()
+                        .font(.custom("IMHyemin-Bold", size: 17))
                         Spacer()
                     }
                     .padding(.bottom, 100)
@@ -286,8 +286,23 @@ struct RegisterView: View {
             .padding(.top, 30)
                 
             // MARK: 완료 버튼
-            
-            Button(action: {
+            // Fallback on earlier versions
+            NavigationLink {
+                ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)
+            } label: {
+                Text("완료")
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(isOk() ? .gray : Color.accentColor)
+                    }
+                
+            } // Nav Link
+            .disabled(isOk())
+            .padding(.vertical, 5)
+            .simultaneousGesture(TapGesture().onEnded{
                 Task {
                     mailDuplicated = await authManager.isEmailDuplicated(email: email)
                     print(mailDuplicated)
@@ -310,21 +325,7 @@ struct RegisterView: View {
                     }
                     canGoNext = isDuplicated() // false --> 다음으로 못감
                 }
-            }){
-                Text("완료")
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(isOk() ? .gray : Color.accentColor)
-                    }
-            }
-            .disabled(isOk())
-            .padding(.vertical, 5)
-            .navigationDestination(isPresented: $canGoNext) {
-                ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)
-            }
+            })
             
             
             

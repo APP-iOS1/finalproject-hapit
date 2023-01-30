@@ -36,7 +36,7 @@ struct AddHabitView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Spacer()
             VStack(spacing: 15) {
                 
@@ -63,8 +63,7 @@ struct AddHabitView: View {
                 */
                 
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                    .font(.title3)
-                    .bold()
+                    .font(.custom("IMHyemin-Bold", size: 17))
                     .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                     .background(Color("CellColor"))
                     .cornerRadius(15)

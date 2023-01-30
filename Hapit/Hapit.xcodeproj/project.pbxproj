@@ -23,6 +23,8 @@
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
 		674F28B32977C4C000390405 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B22977C4C000390405 /* Post.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
+		67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */; };
+		67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE832987EF2A0020212F /* PhotoPicker.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
@@ -81,6 +83,8 @@
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		674F28B22977C4C000390405 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
+		67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DedicatedWriteDiaryView.swift; sourceTree = "<group>"; };
+		67A5AE832987EF2A0020212F /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		95D067A4297A2B6B003447EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +217,8 @@
 				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
 				3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */,
 				3C811D1C2987628A0005539A /* CustomDatePickerView.swift */,
+				67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */,
+				67A5AE832987EF2A0020212F /* PhotoPicker.swift */,
 			);
 			path = HabitDetail;
 			sourceTree = "<group>";
@@ -515,9 +521,11 @@
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
+				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
+				67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
@@ -585,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -639,7 +647,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

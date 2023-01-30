@@ -7,9 +7,18 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
+import Combine
 
 
-class HabitManager: ObservableObject{
+final class HabitManager: ObservableObject{
+    
+    enum FirebaseError: Error{
+        case badSnapshot
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
+    
     
     
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
@@ -23,71 +32,161 @@ class HabitManager: ObservableObject{
     
     // MARK: - Fetch Habits
     //func fetchHabits(uesrID: String) async{
-    @MainActor
-    func fetchChallenge() async{
+//    @MainActor
+//    func fetchChallenge() async{
+//
+//        do {
+//
+//            let documentHabit = try await database.collection("Challenge").getDocuments()
+//
+//            //[<FIRQueryDocumentSnapshot: 0x600001640e60>, <FIRQueryDocumentSnapshot: 0x600001640f00>, <FIRQueryDocumentSnapshot: 0x600001640fa0>, <FIRQueryDocumentSnapshot: 0x600001641040>]
+//            //print(documentHabit.documents)
+//            challenges.removeAll()
+//
+//            for document in documentHabit.documents {
+//
+//                let documentData = document.data()
+//                // id: nil, we should define it in a firestore
+//                // print("id: \(documentData["id"])")
+//
+//                let id = documentData["id"] as? String ?? "unknown id"
+//                let creator = documentData["creator"] as? String ?? "unknown creator"
+//                let mateArray = documentData["mateArray"] as? [String] ?? ["unkown mates"]
+//                let challengeTitle = documentData["challengeTitle"] as? String ?? "unknown habit title"
+//                // It is not working
+//                //var createdAt = documentData["createdAt"] as? Date ?? Date()
+//                // Solution
+//                // Firebase가 주는 Timestamp 형식의 값
+//                let createdAtTimeStamp: Timestamp = documentData["createdAt"] as? Timestamp ?? Timestamp()
+//                let createdAt: Date = createdAtTimeStamp.dateValue()
+//
+//                let count = documentData["count"] as? Int ?? 0
+//
+//                let isChecked = documentData["isChecked"] as? Bool ?? false
+//
+//                challenges.append(Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: createdAt, count: count, isChecked: isChecked))
+//            }
+//        }catch{
+//            dump(error)
+//        }
+//    }
+    
+    
+    func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
         
-        do {
+        Future<[Challenge], Error> {  promise in
             
-            let documentHabit = try await database.collection("Challenge").getDocuments()
-            
-            //[<FIRQueryDocumentSnapshot: 0x600001640e60>, <FIRQueryDocumentSnapshot: 0x600001640f00>, <FIRQueryDocumentSnapshot: 0x600001640fa0>, <FIRQueryDocumentSnapshot: 0x600001641040>]
-            //print(documentHabit.documents)
-            challenges.removeAll()
-            
-            for document in documentHabit.documents {
+            self.database.collection("Challenge").getDocuments{(snapshot, error) in
                 
-                let documentData = document.data()
-                // id: nil, we should define it in a firestore
-                // print("id: \(documentData["id"])")
+                if let error = error {
+                    promise(.failure (error))
+                    return
+                }
                 
-                let id = documentData["id"] as? String ?? "unknown id"
-                let creator = documentData["creator"] as? String ?? "unknown creator"
-                let mateArray = documentData["mateArray"] as? [String] ?? ["unkown mates"]
-                let challengeTitle = documentData["challengeTitle"] as? String ?? "unknown habit title"
-                // It is not working
-                //var createdAt = documentData["createdAt"] as? Date ?? Date()
-                // Solution
-                // Firebase가 주는 Timestamp 형식의 값
-                let createdAtTimeStamp: Timestamp = documentData["createdAt"] as? Timestamp ?? Timestamp()
-                let createdAt: Date = createdAtTimeStamp.dateValue()
+                guard let snapshot = snapshot else {
+                    promise(.failure (FirebaseError.badSnapshot))
+                    return
+                }
                 
-                let count = documentData["count"] as? Int ?? 0
+                snapshot.documents.forEach { document in
+                    if let challenge = try? document.data(as: Challenge.self){
+                        self.challenges.append(challenge)
+                    }
+                }
                 
-                let isChecked = documentData["isChecked"] as? Bool ?? false
+                promise(.success(self.challenges))
                 
-                challenges.append(Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: createdAt, count: count, isChecked: isChecked))
             }
-        }catch{
-            dump(error)
+            
         }
+        .eraseToAnyPublisher()
+        
+        
+        
     }
+    
+    func loadChallenge(){
+        
+        challenges.removeAll()
+        
+        self.fetchChallengeCombine()
+            .sink { (completion) in
+                switch completion{
+                    case .failure(let error):
+                        print(error)
+                        return
+                    case .finished:
+                        return
+                }
+            } receiveValue: { [weak self] (challenges) in
+                self?.challenges = challenges
+            }
+            .store(in: &cancellables)
+    }
+    
+    func create(_ challenge: Challenge) -> AnyPublisher<Void, Error> {
+        Future<Void, Error> { promise in
+            self.database.collection("Challenge")
+                .addDocument(data: [
+                    "id": challenge.id,
+                    "creator": challenge.creator,
+                    "mateArray": challenge.mateArray,
+                    "challengeTitle": challenge.challengeTitle,
+                    "createdAt": challenge.createdAt,
+                    "count": challenge.count,
+                    "isChecked": challenge.isChecked
+                ]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func createChallenge(challenge: Challenge){
+        self.create(challenge)
+            .sink { (completion) in
+                switch completion{
+                    case .failure(let error):
+                        print(error)
+                        return
+                    case .finished:
+                        return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
+    
     
     // MARK: - Add a Habit
     //func createHabit(creator: String) async {
-    @MainActor
-    func createChallenge(challengeTitle: String) async {
-        
-        let id = UUID().uuidString
-        //let creatorId = "0b5MlIZzQxJzTbyyEEF2"
-        
-        do {
-            try await database.collection("Challenge")
-                .document(id)
-                .setData([
-                    "id": id,
-                    "creator": "추원준",
-                    "mateArray": [""],
-                    "challengeTitle": challengeTitle,
-                    "createdAt": Date.now.timeIntervalSince1970,
-                    "count": 0,
-                    "isChecked": false
-                ])
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        await fetchChallenge()
-    }
+//    @MainActor
+//    func createChallenge(challengeTitle: String) async {
+//
+//        let id = UUID().uuidString
+//        //let creatorId = "0b5MlIZzQxJzTbyyEEF2"
+//
+//        do {
+//            try await database.collection("Challenge")
+//                .document(id)
+//                .setData([
+//                    "id": id,
+//                    "creator": "추원준",
+//                    "mateArray": [""],
+//                    "challengeTitle": challengeTitle,
+//                    "createdAt": Date.now.timeIntervalSince1970,
+//                    "count": 0,
+//                    "isChecked": false
+//                ])
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//
+//        await fetchChallengeCombine()
+//    }
     
     
     // MARK: - Delete a Habit
@@ -127,7 +226,7 @@ class HabitManager: ObservableObject{
                 return true
             }
         }
-    
+        
         do{
             try await database.collection("Challenge")
                 .document(challenge.id)
@@ -136,7 +235,7 @@ class HabitManager: ObservableObject{
             print(error)
         }
         
-        await fetchChallenge()
+        await fetchChallengeCombine()
     }
     
 }

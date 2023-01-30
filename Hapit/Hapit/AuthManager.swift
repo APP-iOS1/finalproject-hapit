@@ -13,9 +13,26 @@ import FirebaseFirestore
 class AuthManager: ObservableObject {
     var userInfoStore: User1 = User1(id: "", name: "", email: "", pw: "")
     
+    @Published var isLoggedin = false
+    
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     let currentUser = Auth.auth().currentUser ?? nil
+    
+    // MARK: - 로그인 
+    public func login(with email: String, _ password: String) async -> Bool {
+        do{
+            try await firebaseAuth.signIn(withEmail: email, password: password)
+            isLoggedin = true
+        } catch{
+            print(error.localizedDescription)
+        }
+        return isLoggedin
+    }
+    
+    
+    
+    
     
     // MARK: - 신규회원 생성
     @MainActor

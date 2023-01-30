@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RegisterView: View {
     @State private var email: String = ""
-
     
     @State private var pw: String = ""
     @State private var showPw: Bool = false
@@ -19,6 +18,9 @@ struct RegisterView: View {
     
     @State private var nickName: String = ""
     
+    @State private var isSecuredPassword: Bool = true
+    @State private var isSecuredCheckPassword: Bool = true
+    
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
     @FocusState private var pwCheckFocusField: Bool
@@ -27,202 +29,268 @@ struct RegisterView: View {
     @Binding var isFullScreen: Bool
     
     var body: some View {
-            VStack(spacing: 20) {
-                
-                Spacer().frame(height: 10)
-                
-                HStack() {
-                    StepBar(nowStep: 1)
-                        .padding(.leading, -8)
-                    Spacer()
-                }
-                
-                // MARK: TITLE
-                HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("기본정보를")
-                            .foregroundColor(.pink)
-                        Text("입력해주세요")
-                    }
-                    .font(.largeTitle)
-                    .bold()
-                    Spacer()
-                }
-                
-                Spacer().frame(height: 20)
-                
-                
-                Group {
-                    HStack {
-                        VStack {
-                            //MARK: 이메일 입력
-                            TextField("이메일을 입력해주세요", text: $email)
-                                .focused($emailFocusField)
-                                .overlay {
-                                    HStack {
-                                        Spacer()
-                                        if checkEmailType(string: email) {
-                                            Image(systemName: "checkmark.circle")
-                                                .foregroundColor(.green)
-                                        }
-                                    }
-                                }
-                            Rectangle()
-                                .fill(.gray)
-                                .frame(width: .infinity, height: 1)
-                            //maxWidth: 가로가 가변적일때 최대 크기 한정
-                            //width 없을 때 maxWidth 정해주면 0으로 처리해서,...
-                        }
-                        
-                        Button(action: {
-                            
-                        }){
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(.gray)
-                                .frame(maxWidth: 80, maxHeight: 25)
-                                .overlay {
-                                    Text("중복확인")
-                                        .font(.subheadline)
-                                        .foregroundColor(.white)
-                                }
-                        }
-                    }
+        VStack(spacing: 20) {
 
-                    // MARK: 이메일 형식 체크
-                    Rectangle()
-                        .fill(.white)
-                        .frame(width: .infinity, height: 5)
-                        .overlay {
-                            if emailFocusField {
-                                if !email.isEmpty && !checkEmailType(string: email) {
-                                    Text("올바른 이메일 형식이 아닙니다")
-                                        .foregroundColor(.red)
-                                        .font(.footnote)
-                                }
-                            }
-                        }
-                
-                    // MARK: 비밀번호 입력
-                    VStack {
-                        SecureField("비밀번호 (영문, 숫자, 특수문자 포함 8~20자 이내)", text: $pw)
-                            .textContentType(.oneTimeCode)
-                            .focused($pwFocusField)
-                            .overlay {
-                                HStack {
-                                    Spacer()
-                                    if checkPasswordType(password: pw) {
-                                        Image(systemName: "checkmark.circle")
-                                            .foregroundColor(.green)
-                                    }
-                                }
-                            }
-                        Rectangle()
-                            .fill(.gray)
-                            .frame(width: .infinity, height: 1)
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    
+                    HStack() {
+                        StepBar(nowStep: 1)
+                            .padding(.leading, -8)
+                        Spacer()
                     }
                     
-                    // MARK: 비밀번호 형식 체크
-                    Rectangle()
-                        .fill(.white)
-                        .frame(width: .infinity, height: 5)
-                        .overlay {
-                            if pwFocusField {
-                                if !checkPasswordType(password: pw) && !pw.isEmpty {
-                                    Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요")
-                                        .foregroundColor(.red)
-                                        .font(.footnote)
-                                }
-                            }
-                        }
-                
-                    // MARK: 비밀번호 확인 입력
-                    VStack {
-                        SecureField("비밀번호를 한 번 더 똑같이 입력해주세요", text: $pwCheck)
-                            .textContentType(.oneTimeCode)
-                            .focused($pwCheckFocusField)
-                            .overlay {
-                                HStack {
-                                    Spacer()
-                                    if pw == pwCheck && pw != "" && pwCheck != "" {
-                                        Image(systemName: "checkmark.circle")
-                                            .foregroundColor(.green)
-                                    }
-                                }
-                            }
-                        Rectangle()
-                            .fill(.gray)
-                            .frame(width: .infinity, height: 1)
-                    }
-                    
-                    // MARK: 비밀번호 확인 체크
-                    Rectangle()
-                        .fill(.white)
-                        .frame(width: .infinity, height: 5)
-                        .overlay {
-                            if pwCheckFocusField {
-                                if pw != pwCheck && pw != "" {
-                                    Text("비밀번호가 일치하지 않습니다")
-                                        .foregroundColor(.red)
-                                        .font(.footnote)
-                                } else if pw != pwCheck && pw == "" {
-                                    Text("비밀번호를 먼저 입력해주세요")
-                                        .foregroundColor(.red)
-                                        .font(.footnote)
-                                }
-                            }
-                        }
-                
-                    // MARK: 닉네임 입력
+                    // MARK: TITLE
                     HStack {
-                        VStack {
-                            TextField("닉네임을 입력해주세요", text: $nickName)
-                                .textContentType(.oneTimeCode)
-                                .focused($nickNameFocusField)
-                            Rectangle()
-                                .fill(.gray)
-                                .frame(width: .infinity, height: 1)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("기본정보를")
+                                .foregroundColor(Color.accentColor)
+                            Text("입력해주세요")
                         }
-                        
-                        Spacer().frame(width: 10)
-                        
-                        Button(action: {}){
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(.gray)
-                                .frame(maxWidth: 80, maxHeight: 25)
-                                .overlay {
-                                    Text("중복확인")
-                                        .font(.subheadline)
-                                        .foregroundColor(.white)
-                                }
-                        }
+                        .font(.largeTitle)
+                        .bold()
+                        Spacer()
                     }
-                    .padding(.bottom)
-                }
-                
-                
-                Spacer().frame(height: 80)
-                
-                // MARK: 완료 버튼
-                NavigationLink(destination: ToSView(isFullScreen: $isFullScreen)) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(isOk() ? .gray : .pink)
-                        .frame(width: .infinity, height: 50)
-                        .overlay {
-                            Text("완료")
-                                .foregroundColor(.white)
+                    .padding(.bottom, 100)
+                    //Spacer()
+                    
+                    VStack(spacing: 50) {
+                        VStack(alignment: .leading, spacing: 5) {
+                            HStack {
+                                TextField("이메일을 입력해주세요.", text: $email)
+                                    .focused($emailFocusField)
+                                    .modifier(ClearTextFieldModifier())
+                                
+                                // email이 비어있지 않으면서, 형식이 올바를 때 체크 아이콘 띄움.
+                                if !email.isEmpty && checkEmailType(string: email) {
+                                    Image(systemName: "checkmark.circle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20.5)
+                                        .foregroundColor(.green)
+                                }
+                                
+                                Button(action: {}){
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(.gray)
+                                        .frame(maxWidth: 80, maxHeight: 25)
+                                        .overlay {
+                                            Text("중복확인")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white)
+                                        }
+                                }
+                            } // HStack - TextField, Secured Image, Check Image
+                            .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
+                            
+                            Rectangle()
+                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
+                            
+                            if !email.isEmpty && !checkEmailType(string: email) {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("올바른 이메일 형식이 아닙니다.")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else {
+                                Text("") // TextField 자리 고정
+                            }
                         }
+                        .frame(height: 30)
+                        
+                        // MARK: 비밀번호 입력
+                        VStack(alignment: .leading, spacing: 5) {
+                            HStack {
+                                // 비밀번호 숨김 아이콘일 때
+                                if isSecuredPassword {
+                                    SecureField("비밀번호를 입력해주세요.", text: $pw)
+                                        .textContentType(.oneTimeCode)
+                                        .textContentType(.newPassword)
+                                        .focused($pwFocusField) // 커서가 올라가있을 때 상태를 저장.
+                                        .modifier(ClearTextFieldModifier())
+                                } else { // 비밀번호 보임 아이콘일 때
+                                    TextField("비밀번호를 입력해주세요.", text: $pw)
+                                        .focused($pwFocusField)
+                                        .modifier(ClearTextFieldModifier())
+                                }
+                                
+                                Button(action: {
+                                    // 비밀번호 보임/숨김을 설정함.
+                                    isSecuredPassword.toggle()
+                                }) {
+                                    Image(systemName: self.isSecuredPassword ? "eye.slash" : "eye")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20.5)
+                                        .accentColor(.gray)
+                                }
+                                // password가 비어있지 않으면서, 6자리 이상일 때 체크 아이콘 띄움.
+                                if !pw.isEmpty && checkPasswordType(password: pw) {
+                                    Image(systemName: "checkmark.circle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20.5)
+                                        .foregroundColor(.green)
+                                }
+                            } // HStack - TextField, Secured Image, Check Image
+                            .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
+
+                            
+                            Rectangle()
+                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
+                            
+                            // 비밀번호 형식이 아닐 경우 경고 메시지
+                            if !pw.isEmpty && !checkPasswordType(password: pw) {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요.")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            }
+                            else {
+                                Text("") // TextField 자리 고정
+                            }
+                        } // VStack - HStack과 밑줄 Rectangle
+                        .frame(height: 30)
+                        
+                        
+                        
+                        // MARK: 비밀번호 확인 입력
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            HStack {
+                                // 비밀번호 숨김 아이콘일 때
+                                if isSecuredCheckPassword {
+                                    SecureField("비밀번호를 다시 입력해주세요.", text: $pwCheck)
+                                        .textContentType(.oneTimeCode)
+                                        .textContentType(.newPassword)
+                                        .focused($pwCheckFocusField) // 커서가 올라가있을 때 상태를 저장.
+                                        .modifier(ClearTextFieldModifier())
+                                } else { // 비밀번호 보임 아이콘일 때
+                                    TextField("비밀번호를 다시 입력해주세요", text: $pwCheck)
+                                        .focused($pwCheckFocusField)
+                                        .modifier(ClearTextFieldModifier())
+                                }
+                                
+                                Button(action: {
+                                    // 비밀번호 보임/숨김을 설정함.
+                                    isSecuredCheckPassword.toggle()
+                                }) {
+                                    Image(systemName: self.isSecuredCheckPassword ? "eye.slash" : "eye")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20.5)
+                                        .accentColor(.gray)
+                                }
+                                // password가 비어있지 않으면서, 6자리 이상일 때 체크 아이콘 띄움.
+                                if !pwCheck.isEmpty && checkPasswordType(password: pwCheck) {
+                                    Image(systemName: "checkmark.circle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20.5)
+                                        .foregroundColor(.green)
+                                }
+                            } // HStack - TextField, Secured Image, Check Image
+                            .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
+                            
+                            Rectangle()
+                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwCheckFocusField))
+                            
+                            
+                            // 비밀번호 형식이 아닐 경우 경고 메시지
+                            if pw != pwCheck && pw != "" && pwCheck != "" {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("비밀번호가 일치하지 않습니다")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else if pw != pwCheck && pw == "" {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("비밀번호를 먼저 입력해주세요")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else {
+                                Text("") // TextField 자리 고정
+                            }
+                        } // VStack - HStack과 밑줄 Rectangle
+                        .frame(height: 30)
+                        
+                        
+                        // MARK: 닉네임 입력
+                        VStack(alignment: .leading, spacing: 5) {
+                            HStack {
+                                TextField("닉네임을 입력해주세요.", text: $nickName)
+                                    .focused($nickNameFocusField)
+                                    .modifier(ClearTextFieldModifier())
+                                
+                                // email이 비어있지 않으면서, 형식이 올바를 때 체크 아이콘 띄움.
+                                if !nickName.isEmpty && nickName.count >= 2 {
+                                    Image(systemName: "checkmark.circle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20.5)
+                                        .foregroundColor(.green)
+                                }
+                                
+                                Button(action: {}){
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(.gray)
+                                        .frame(maxWidth: 80, maxHeight: 25)
+                                        .overlay {
+                                            Text("중복확인")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white)
+                                        }
+                                }
+                            } // HStack - TextField, Secured Image, Check Image
+                            .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
+                            
+                            Rectangle()
+                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: nickNameFocusField))
+                            
+                            if nickName != "" && nickName.count < 2 {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("닉네임을 2글자 이상 입력해주세요")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else {
+                                Text("")
+                            }
+                        }
+                        .frame(height: 30)
+                    }
+                    
+                    Spacer()
                 }
-                .disabled(isOk())
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-            .autocorrectionDisabled()
-            .textInputAutocapitalization(.never)
-            .padding(.horizontal, 20)
-            .onAppear {
-                Task {
-                    emailFocusField = true
-                }
+            .padding(.top, 30)
+                
+            // MARK: 완료 버튼
+            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)) {
+                
+                Text("완료")
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(isOk() ? .gray : Color.accentColor)
+                    }
+            }
+            .disabled(isOk())
+            .padding(.vertical, 5)
+            
         }
+        .autocorrectionDisabled()
+        .textInputAutocapitalization(.never)
+        .padding(.horizontal, 20)
     }
     
     
@@ -248,11 +316,32 @@ struct RegisterView: View {
             return true
         }
     }
-
+    
 }
 
-//struct SignUpView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        RegisterView()
-//    }
-//}
+struct ClearTextFieldModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
+            .font(.subheadline)
+    }
+}
+
+// MARK: - Modifier : TextField 아래 밑줄을 표현하기 위한 Rectangle 속성
+struct TextFieldUnderLineRectangleModifier: ViewModifier {
+    let stateTyping: Bool
+    var padding: CGFloat = 20
+    func body(content: Content) -> some View {
+        content
+            .frame(height: (stateTyping ? 1.5 : 1.0))
+            .foregroundColor(stateTyping ? .accentColor : .gray)
+    }
+}
+
+struct SignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        RegisterView(isFullScreen: .constant(true))
+    }
+}
+

@@ -9,12 +9,8 @@ import SwiftUI
 
 struct HabitCellView: View {
     //MARK: 습관 모델이 만들어지면 수정할 부분
-    var title: String = "나의 습관명"
-    var dateFromStart: Int = 20
-    var dayWithOutStop: Int = 5
-    var dayStarted: String = "2023년 1월 1일 ~"
-    
-    @Binding var habit: Challenge
+    var habit: Challenge
+    @EnvironmentObject var habitManager: HabitManager
     
     // MARK: - Body
     var body: some View {
@@ -22,7 +18,13 @@ struct HabitCellView: View {
         
         HStack{
             Button {
-                habit.isChecked.toggle()
+                // 업데이트 함수 요망
+                // habit.isChecked.toggle()
+//                Task{
+//                    await habitManager.updateChallengeIsChecked(challenge: )
+//
+//                }
+                
             } label: {
                 Image(systemName: habit.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)

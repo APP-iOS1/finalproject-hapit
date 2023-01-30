@@ -13,24 +13,32 @@ struct ToSView: View {
     @State private var agreePrivate: Bool = false
     @State private var agreeAD: Bool = false
     
+    @State private var isActive: Bool = false
+    @State private var isClicked: Bool = false
+    
     @Binding var isFullScreen: Bool
+    
+    @Binding var email: String
+    @Binding var pw: String
+    @Binding var nickName: String
+    
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         VStack(spacing: 20) {
-            
-            Spacer().frame(height: 20)
             
             HStack() {
                 StepBar(nowStep: 2)
                     .padding(.leading, -8)
                 Spacer()
             }
+            .padding(.top, 30)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text("Hapit")
-                            .foregroundColor(.pink)
+                            .foregroundColor(Color.accentColor)
                         Text("이용 약관에")
                     }
                     Text("동의해주세요")
@@ -40,7 +48,7 @@ struct ToSView: View {
                 Spacer()
             }
             
-            Spacer().frame(height: 30)
+            Spacer()
             
             Group {
                 HStack {
@@ -58,7 +66,7 @@ struct ToSView: View {
                         }
                     }){
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD) ? .pink : .gray)
+                            .foregroundColor(agreeAll ? Color.accentColor : .gray)
                             .font(.title)
                     }
                     Text("약관 전체동의")
@@ -75,11 +83,11 @@ struct ToSView: View {
                         Button(action: {
                             agreeService.toggle()
                             
-                            agreeAll = isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
+                            isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
                             
                         }){
                             Image(systemName: "checkmark")
-                                .foregroundColor(agreeService ? .pink : .gray)
+                                .foregroundColor(agreeService ? Color.accentColor : .gray)
                         }
                         Text("(필수) 서비스 이용약관 동의")
                         Spacer()
@@ -93,11 +101,11 @@ struct ToSView: View {
                         Button(action: {
                             agreePrivate.toggle()
                             
-                            agreeAll = isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
-                
+                            isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
+                            
                         }){
                             Image(systemName: "checkmark")
-                                .foregroundColor(agreePrivate ? .pink : .gray)
+                                .foregroundColor(agreePrivate ? Color.accentColor : .gray)
                         }
                         Text("(필수) 개인정보 수집 및 이용동의")
                         Spacer()
@@ -113,7 +121,7 @@ struct ToSView: View {
                             
                         }){
                             Image(systemName: "checkmark")
-                                .foregroundColor(agreeAD ? .pink : .gray)
+                                .foregroundColor(agreeAD ? Color.accentColor : .gray)
                         }
                         Text("(선택) E-mail 광고성 정보 수신동의")
                         Spacer()
@@ -125,37 +133,65 @@ struct ToSView: View {
                 }
                 .padding(.horizontal, 10)
                 
-                Spacer().frame(height: 160)
+                Spacer()
+                Spacer()
                 
-                NavigationLink(destination: GetStartView(isFullScreen: $isFullScreen)) {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD) ? .pink : .gray)
-                        .frame(maxWidth: .infinity, maxHeight: 50)
-                        .overlay {
-                            Text("가입하기")
-                                .foregroundColor(.white)
+                
+                
+                // 회원가입 버튼을 누르면 progress view가 나타남
+                
+                Button(action: {
+                    Task {
+                        isClicked.toggle()
+                        
+                        do {
+                            try await authManager.register(email: email, pw: pw, name: nickName)
+                        } catch {
+                            print(error.localizedDescription)
                         }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                        isActive.toggle()
+                    }
+                }){
+                    if isClicked {
+                        ProgressView()
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(agreeAll ? Color.accentColor : .gray)
+                            }
+                    } else {
+                        Text("가입하기")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(agreeAll ? Color.accentColor : .gray)
+                            }
+                    }
                 }
-                .disabled(!agreeAll)
+                .navigationDestination(isPresented: $isActive) {
+                    GetStartView(isFullScreen: $isFullScreen)
+                }
             }
         }
         .padding(.horizontal, 20)
     }
     
-    func isAllChecked(service: Bool, privates: Bool, ad: Bool) -> Bool {
-        
+    func isAllChecked(service: Bool, privates: Bool, ad: Bool) {
         if service && privates {
             agreeAll = true
         } else {
             agreeAll = false
         }
-        
-        return agreeAll
     }
 }
 
 //struct ToSView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ToSView()
+//        ToSView(isFullScreen: .constant(false))
 //    }
 //}

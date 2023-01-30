@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct ChallengeCellView: View {
-    //MARK: 습관 모델이 만들어지면 수정할 부분
-    var title: String = "나의 습관명"
-    var dateFromStart: Int = 20
-    var dayWithOutStop: Int = 5
-    var dayStarted: String = "2023년 1월 1일 ~"
+ 
+    var challenge: Challenge
     
-    @Binding var challenge: Challenge
+    @EnvironmentObject var habitManager: HabitManager
     
     // MARK: - Body
     var body: some View {
@@ -22,7 +19,13 @@ struct ChallengeCellView: View {
         
         HStack{
             Button {
-                challenge.isChecked.toggle()
+                // firestore에 업데이트 함수 제작 요망
+                //challenge.isChecked.toggle()
+                Task{
+                    await habitManager.updateChallengeIsChecked(challenge: challenge)
+                    
+                }
+                
             } label: {
                 Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
@@ -109,8 +112,15 @@ struct ChallengeCellView: View {
     }// body
 }
 
-struct ChallengeCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChallengeCellView(challenge: .constant(Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 0, isChecked: false)))
-    }
-}
+//struct ChallengeCellView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChallengeCellView(challenge: .constant(Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 0, isChecked: false)))
+//    }
+//}
+
+
+//MARK: 습관 모델이 만들어지면 수정할 부분
+//    var title: String = "나의 습관명"
+//    var dateFromStart: Int = 20
+//    var dayWithOutStop: Int = 5
+//    var dayStarted: String = "2023년 1월 1일 ~"

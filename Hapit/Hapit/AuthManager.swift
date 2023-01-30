@@ -17,7 +17,8 @@ class AuthManager: ObservableObject {
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
-    let currentUser = Auth.auth().currentUser ?? nil
+    
+    @Published var currentUser = firebaseAuth.currentUser ?? nil
     
     // MARK: - 로그인 
     public func login(with email: String, _ password: String) async -> Bool {
@@ -81,8 +82,6 @@ class AuthManager: ObservableObject {
             return true
         }
     }
-    
-    
     // MARK: - 닉네임 중복확인을 해주는 함수
     @MainActor
     func isNicknameDuplicated(nickName: String) async -> Bool {
@@ -99,6 +98,28 @@ class AuthManager: ObservableObject {
         } catch {
             print(error.localizedDescription)
             return true
+        }
+    }
+    
+    // MARK: - 사용 중인 유저의 닉네임, 이메일을 가져와서 --> currentUser에 투입
+    func fetchUserInfo(user: User) {
+        database.collection("User").getDocuments { snapshot, error in
+            if let snapshot {
+                for document in snapshot.documents {
+                    let id: String = document.documentID
+                    let docData = document.data()
+                    
+                    if id == user.id {
+                        let userNickname: String = docData["name"] as? String ?? ""
+                        let userEmail: String = docData["email"] as? String ?? ""
+                        let userPw: String = docData["pw"] as? String ?? ""
+
+                        self.currentUser = User(id: user.id, name: userNickname, email: userEmail, pw: userPw)
+
+                        print(self.currentUser!)
+                    }
+                }
+            }
         }
     }
 }

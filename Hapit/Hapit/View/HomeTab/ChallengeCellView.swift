@@ -104,8 +104,12 @@ struct ChallengeCellView: View {
 //                }
 //            }
 //        )
-
-
+        .cornerRadius(20)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 5)
+        
+        
+        
     }// body
 }
 

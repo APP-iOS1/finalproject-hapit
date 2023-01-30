@@ -78,9 +78,9 @@ class AuthManager: ObservableObject {
                 .whereField("name", isEqualTo: nickName).getDocuments()
             
             if target.isEmpty {
-                return false
+                return false //중복되지 않은 닉네임
             } else {
-                return true
+                return true //중복된 닉네임
             }
             
         } catch {

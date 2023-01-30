@@ -24,6 +24,12 @@ struct RegisterView: View {
     
     @State private var nickName: String = ""
     @State private var nameCheck: Bool = false
+    @State private var nameTmp: String = ""
+    
+    var dupName: Bool {
+        return nickName == nameTmp
+    }
+
     
     @State private var isSecuredPassword: Bool = true
     @State private var isSecuredCheckPassword: Bool = true
@@ -252,7 +258,15 @@ struct RegisterView: View {
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: nickNameFocusField))
                             
-                            if nickName != "" && nickName.count < 2 {
+                            
+                            if nickName != "" && nickName.count >= 2 && nameCheck && dupName {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("이미 사용중인 닉네임입니다.")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else if nickName != "" && nickName.count < 2 {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("닉네임을 2글자 이상 입력해주세요")
@@ -275,22 +289,26 @@ struct RegisterView: View {
             
             Button(action: {
                 Task {
-                    
                     mailDuplicated = await authManager.isEmailDuplicated(email: email)
                     print(mailDuplicated)
-                    nameCheck = authManager.isNicknameDuplicated(nickName: nickName)
+                    nameCheck = await authManager.isNicknameDuplicated(nickName: nickName)
+                    print(nameCheck)
+                    //False면 사용가능, true면 중복이라 사용불가
                     
+                    //이메일 중복인경우
                     if mailDuplicated {
                         emailTmp = email
                         emailFocusField = true
                     }
                     
+                    //닉네임 중복인 경우
                     if nameCheck {
-                        
+                        nameTmp = nickName
+                        if !mailDuplicated {
+                            nickNameFocusField = true
+                        }
                     }
                     canGoNext = isDuplicated() // false --> 다음으로 못감
-                    isClicked = true
-                    
                 }
             }){
                 Text("완료")
@@ -398,7 +416,7 @@ struct RegisterView: View {
     
     //이메일과 닉네임이 중복되지 않았는가를 검증해주어 -> 완료버튼 활성화 결정해주는 함수
     func isDuplicated() -> Bool {
-        //mailDuplicated = true --> 중복
+        //메일 닉네임 둘 중 하나가 중복이면 navigationDestination 비활성화
         if mailDuplicated || nameCheck {
             return false
         } else {

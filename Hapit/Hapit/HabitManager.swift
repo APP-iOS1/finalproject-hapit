@@ -80,7 +80,9 @@ final class HabitManager: ObservableObject{
         
         Future<[Challenge], Error> {  promise in
             
-            self.database.collection("Challenge").getDocuments{(snapshot, error) in
+            self.database.collection("Challenge")
+                .order(by: "createdAt", descending: true)
+                .getDocuments{(snapshot, error) in
                 
                 if let error = error {
                     promise(.failure (error))

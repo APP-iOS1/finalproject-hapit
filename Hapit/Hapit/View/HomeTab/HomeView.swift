@@ -45,13 +45,6 @@ struct HabitSegmentView: View {
                 }
                 
             }
-//                .onAppear{
-//                    Task{
-//                        await habitManager.fetchChallenge()
-//                    }
-//                    print(habitManager.habits)
-//
-//                }
                 .onAppear{
                     habitManager.loadChallenge()
                 }

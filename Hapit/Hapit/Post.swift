@@ -6,7 +6,6 @@
 import Foundation
 //import FirebaseFirestoreSwift
 
-
 struct Post: Identifiable, Codable {
     
     // 고유 아이디
@@ -24,5 +23,4 @@ struct Post: Identifiable, Codable {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: createdAt)
     }
-
 }

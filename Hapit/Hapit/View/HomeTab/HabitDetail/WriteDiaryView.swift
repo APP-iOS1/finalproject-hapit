@@ -71,9 +71,6 @@ struct WriteDiaryView: View {
                         }
                     } // if let
                     
-                    
-              
-                    
                     // 글자수 300자 제한
                     TextField("릴루님의 습관일지를 작성해보세요!", text: $content, axis: .vertical)
                     // .lineLimit(9, reservesSpace: false)
@@ -95,10 +92,6 @@ struct WriteDiaryView: View {
                     .padding(.horizontal, 20)
                     
                     Spacer()
-                    
-                    
-                    
-                    
                 } // VStack
                 .formStyle(.columns)
                 .toolbar {

@@ -38,7 +38,6 @@ struct AddHabitView: View {
     
     @State private var currentDate = Date()
     
-    
     // MARK: - Body
     var body: some View {
         NavigationStack {
@@ -78,8 +77,6 @@ struct AddHabitView: View {
                             .fontWeight(.thin)
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.trailing)
-                        
-                        
                     }
                     Toggle("", isOn: $isAlarmOn)
                         .labelsHidden()
@@ -99,8 +96,7 @@ struct AddHabitView: View {
                 .foregroundColor(.gray)
                 .font(.caption2)
                 .padding(.top, 5)
-                
-                
+                  
                 Spacer()
             } // VStack
             .background(Color("BackgroundColor")) // 라이트 모드
@@ -125,10 +121,8 @@ struct AddHabitView: View {
                             habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
                             
                             habitManager.loadChallenge()
-                            
                             dismiss()
                         }
-                        
                     } label: {
                         Image(systemName: "checkmark")
                     } // label
@@ -138,15 +132,9 @@ struct AddHabitView: View {
     } // Body
 }
 
-
 // MARK: - AddHabitView Previews
 struct AddHabitView_Previews: PreviewProvider {
-    
-    
     static var previews: some View {
         AddHabitView()
     }
 }
-
-
-

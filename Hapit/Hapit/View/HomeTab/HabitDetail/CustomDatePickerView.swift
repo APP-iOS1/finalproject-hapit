@@ -87,7 +87,6 @@ struct CustomDatePickerView: View {
         return date.components(separatedBy: " ")
     }
     
-    
     func getCurrentMonth() -> Date{
         
         let calendar = Calendar.current

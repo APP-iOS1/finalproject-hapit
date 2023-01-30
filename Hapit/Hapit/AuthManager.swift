@@ -31,6 +31,15 @@ class AuthManager: ObservableObject {
         return isLoggedin
     }
     
+    public func logout() {
+        do {
+            try firebaseAuth.signOut()
+            isLoggedin = false
+        } catch {
+            dump("DEBUG: CANT SIGN OUT")
+        }
+    }
+    
     // MARK: - 신규회원 생성
     @MainActor
     func register(email: String, pw: String, name: String) async throws {
@@ -103,7 +112,6 @@ class AuthManager: ObservableObject {
     
     // MARK: - 사용 중인 유저의 닉네임을 반환
     func getNickName(uid: String) async -> String {
-        
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -119,4 +127,3 @@ class AuthManager: ObservableObject {
         }
     }
 }
-

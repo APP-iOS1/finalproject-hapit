@@ -200,7 +200,6 @@ struct HabitDetailView: View {
     }
 }
     
-    
 // MARK: - Component
 
 public struct CalendarWeekListView<Day: View, Title: View, WeekSwiter: View>: View {

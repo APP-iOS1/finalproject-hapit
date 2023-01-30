@@ -16,6 +16,7 @@ struct DiaryView: View {
     var body: some View {
         VStack {
             HStack {
+                // User > profileImage 불러오고
                 Image("bearBlue")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -26,6 +27,7 @@ struct DiaryView: View {
                     .overlay(Circle().stroke())
                     .foregroundColor(.gray)
                 
+                // User > name 불러오고
                 Text("민주왕자님")
                     .foregroundColor(Color.accentColor)
                 Spacer()

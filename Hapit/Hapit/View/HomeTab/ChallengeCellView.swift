@@ -79,30 +79,30 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
-        .overlay(
-            VStack{
-                Spacer()
-                ZStack{
-                    Rectangle()
-                        .frame(height: 4)
-                        .padding([.top, .leading, .trailing], 10)
-                        .foregroundColor(Color(UIColor.lightGray))
-                    
-                    HStack{
-                        //                    Image("duckBoat")
-                        //                        .resizable()
-                        //                        .aspectRatio(contentMode: .fit)
-                        //                        .frame(width: 20)
-                        
-                        
-                        Rectangle()
-                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
-                            .padding([.top, .leading, .trailing], 10)
-                        Spacer()
-                    }
-                }
-            }
-        )
+//        .overlay(
+//            VStack{
+//                Spacer()
+//                ZStack{
+//                    Rectangle()
+//                        .frame(height: 4)
+//                        .padding([.top, .leading, .trailing], 10)
+//                        .foregroundColor(Color(UIColor.lightGray))
+//                    
+//                    HStack{
+//                        //                    Image("duckBoat")
+//                        //                        .resizable()
+//                        //                        .aspectRatio(contentMode: .fit)
+//                        //                        .frame(width: 20)
+//                        
+//                        
+//                        Rectangle()
+//                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
+//                            .padding([.top, .leading, .trailing], 10)
+//                        Spacer()
+//                    }
+//                }
+//            }
+//        )
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.bottom, 5)

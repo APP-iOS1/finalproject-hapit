@@ -10,6 +10,7 @@
 		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
 		369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D429777E72004CB739 /* DiaryViewModel.swift */; };
 		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
+		36F8D277298779D300DD971B /* DiaryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F8D276298779D300DD971B /* DiaryModalView.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3CE9DFF329792FFB00E76147 /* SegmentedPicker */; };
 		3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9DFF7297A512300E76147 /* EmptyCellView.swift */; };
@@ -60,6 +61,7 @@
 		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
 		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
+		36F8D276298779D300DD971B /* DiaryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModalView.swift; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3CE9DFF7297A512300E76147 /* EmptyCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCellView.swift; sourceTree = "<group>"; };
 		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				3625FB66297634AC0006478B /* HabitDetailView.swift */,
 				C5FAC879297632D400E58C84 /* DiaryView.swift */,
 				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
+				36F8D276298779D300DD971B /* DiaryModalView.swift */,
 			);
 			path = HabitDetail;
 			sourceTree = "<group>";
@@ -216,7 +219,6 @@
 				F49E28D929762CD6009EEB1A /* View */,
 				F49E28D829762CCF009EEB1A /* Model */,
 				F49E28CE29762CA0009EEB1A /* Assets.xcassets */,
-				3CE9DFF52979AFAA00E76147 /* duckBoat.png */,
 				F49E28D029762CA0009EEB1A /* Preview Content */,
 			);
 			path = Hapit;
@@ -407,6 +409,7 @@
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
+				36F8D277298779D300DD971B /* DiaryModalView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,

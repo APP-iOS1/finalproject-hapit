@@ -23,6 +23,7 @@ struct AddHabitView: View {
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var authManager: AuthManager
     
     @State private var createdAt: Date = Date()
     var createdDate: String {
@@ -117,14 +118,16 @@ struct AddHabitView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        let id = UUID().uuidString
-                        print(currentUser)
-                        
-                        habitManager.createChallenge(challenge: Challenge(id: id, creator: "", mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser!.uid ?? ""))
-                        
-                        habitManager.loadChallenge()
-                        
-                        dismiss()
+                        Task {
+                            let id = UUID().uuidString
+                            let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
+                            
+                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                            
+                            habitManager.loadChallenge()
+                            
+                            dismiss()
+                        }
                         
                     } label: {
                         Image(systemName: "checkmark")

@@ -59,6 +59,9 @@ struct LogInView: View {
                             let loginResult = await authManager.login(with: email, pw)
                             
                             if loginResult {
+//                                authManager.fetchUserInfo(user: User(authManager.currentUser!))
+//                                print(authManager.currentUser!.name)
+//                                print(authManager.currentUser!.email)
                                 isFullScreen = false
                             } else {
                                 print("로그인 실패")

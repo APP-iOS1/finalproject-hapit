@@ -9,6 +9,12 @@ import SwiftUI
 
 struct RegisterView: View {
     @State private var email: String = ""
+    @State private var mailDuplicated: Bool = false
+    @State private var emailTmp: String = ""
+    
+    var dupEmail: Bool {
+        return email == emailTmp
+    }
     
     @State private var pw: String = ""
     @State private var showPw: Bool = false
@@ -17,6 +23,13 @@ struct RegisterView: View {
     @State private var showPwCheck: Bool = false
     
     @State private var nickName: String = ""
+    @State private var nameCheck: Bool = false
+    @State private var nameTmp: String = ""
+    
+    var dupName: Bool {
+        return nickName == nameTmp
+    }
+
     
     @State private var isSecuredPassword: Bool = true
     @State private var isSecuredCheckPassword: Bool = true
@@ -26,7 +39,12 @@ struct RegisterView: View {
     @FocusState private var pwCheckFocusField: Bool
     @FocusState private var nickNameFocusField: Bool
     
+    @State private var canGoNext: Bool = false
+    @State private var isClicked: Bool = false
+    
     @Binding var isFullScreen: Bool
+    
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         VStack(spacing: 20) {
@@ -69,24 +87,21 @@ struct RegisterView: View {
                                         .frame(width: 20.5)
                                         .foregroundColor(.green)
                                 }
-                                
-                                Button(action: {}){
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(.gray)
-                                        .frame(maxWidth: 80, maxHeight: 25)
-                                        .overlay {
-                                            Text("중복확인")
-                                                .font(.subheadline)
-                                                .foregroundColor(.white)
-                                        }
-                                }
                             } // HStack - TextField, Secured Image, Check Image
                             .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                             
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
                             
-                            if !email.isEmpty && !checkEmailType(string: email) {
+                            //이메일 형식은 맞는데, 중복판정받았고, email이 중복판정받은 email로 쓰여있을 때
+                            if !email.isEmpty && checkEmailType(string: email) && mailDuplicated && dupEmail {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("이미 사용중인 이메일입니다.")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else if !email.isEmpty && !checkEmailType(string: email) {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("올바른 이메일 형식이 아닙니다.")
@@ -236,24 +251,22 @@ struct RegisterView: View {
                                         .frame(width: 20.5)
                                         .foregroundColor(.green)
                                 }
-                                
-                                Button(action: {}){
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(.gray)
-                                        .frame(maxWidth: 80, maxHeight: 25)
-                                        .overlay {
-                                            Text("중복확인")
-                                                .font(.subheadline)
-                                                .foregroundColor(.white)
-                                        }
-                                }
+                                                         
                             } // HStack - TextField, Secured Image, Check Image
                             .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                             
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: nickNameFocusField))
                             
-                            if nickName != "" && nickName.count < 2 {
+                            
+                            if nickName != "" && nickName.count >= 2 && nameCheck && dupName {
+                                HStack(alignment: .center, spacing: 5) {
+                                    Image(systemName: "exclamationmark.circle")
+                                    Text("이미 사용중인 닉네임입니다.")
+                                }
+                                .foregroundColor(.red)
+                                .font(.caption)
+                            } else if nickName != "" && nickName.count < 2 {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("닉네임을 2글자 이상 입력해주세요")
@@ -273,8 +286,31 @@ struct RegisterView: View {
             .padding(.top, 30)
                 
             // MARK: 완료 버튼
-            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)) {
-                
+            
+            Button(action: {
+                Task {
+                    mailDuplicated = await authManager.isEmailDuplicated(email: email)
+                    print(mailDuplicated)
+                    nameCheck = await authManager.isNicknameDuplicated(nickName: nickName)
+                    print(nameCheck)
+                    //False면 사용가능, true면 중복이라 사용불가
+                    
+                    //이메일 중복인경우
+                    if mailDuplicated {
+                        emailTmp = email
+                        emailFocusField = true
+                    }
+                    
+                    //닉네임 중복인 경우
+                    if nameCheck {
+                        nameTmp = nickName
+                        if !mailDuplicated {
+                            nickNameFocusField = true
+                        }
+                    }
+                    canGoNext = isDuplicated() // false --> 다음으로 못감
+                }
+            }){
                 Text("완료")
                     .foregroundColor(.white)
                     .padding()
@@ -286,7 +322,68 @@ struct RegisterView: View {
             }
             .disabled(isOk())
             .padding(.vertical, 5)
+            .navigationDestination(isPresented: $canGoNext) {
+                ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)
+            }
             
+            
+            
+            
+            
+            
+            
+//            Button(action: {
+//                Task {
+//                    isClicked.toggle()
+//
+//                    do {
+//                        try await authManager.register(email: email, pw: pw, name: nickName)
+//                    } catch {
+//                        print(error.localizedDescription)
+//                    }
+//                }
+//                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+//                    isActive.toggle()
+//                }
+//            }){
+//                if isClicked {
+//                    ProgressView()
+//                        .padding()
+//                        .frame(maxWidth: .infinity)
+//                        .background {
+//                            RoundedRectangle(cornerRadius: 10)
+//                                .fill(agreeAll ? Color.accentColor : .gray)
+//                        }
+//                } else {
+//                    Text("가입하기")
+//                        .foregroundColor(.white)
+//                        .padding()
+//                        .frame(maxWidth: .infinity)
+//                        .background {
+//                            RoundedRectangle(cornerRadius: 10)
+//                                .fill(agreeAll ? Color.accentColor : .gray)
+//                        }
+//                }
+//            }
+//            .navigationDestination(isPresented: $isActive) {
+//                GetStartView(isFullScreen: $isFullScreen)
+//            }
+//        }
+
+//            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)) {
+//
+//                Text("완료")
+//                    .foregroundColor(.white)
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .background {
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .fill(isOk() ? .gray : Color.accentColor)
+//                    }
+//            }
+//            .disabled(isOk())
+//            .padding(.vertical, 5)
+
         }
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
@@ -311,6 +408,16 @@ struct RegisterView: View {
     //다음단계로 넘어갈 수 있는지 검증해주는 함수
     func isOk() -> Bool {
         if pw == pwCheck && checkPasswordType(password: pw) && checkEmailType(string: email) && nickName != "" {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    //이메일과 닉네임이 중복되지 않았는가를 검증해주어 -> 완료버튼 활성화 결정해주는 함수
+    func isDuplicated() -> Bool {
+        //메일 닉네임 둘 중 하나가 중복이면 navigationDestination 비활성화
+        if mailDuplicated || nameCheck {
             return false
         } else {
             return true

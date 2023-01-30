@@ -79,6 +79,7 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
+
 //        .overlay(
 //            VStack{
 //                Spacer()
@@ -103,12 +104,8 @@ struct ChallengeCellView: View {
 //                }
 //            }
 //        )
-        .cornerRadius(20)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 5)
-        
-        
-        
+
+  
     }// body
 }
 

@@ -5,6 +5,7 @@
 
 import Foundation
 
+
 // MARK: - 습관
 struct Challenge: Hashable, Codable, Identifiable {
     

@@ -101,8 +101,7 @@ class AuthManager: ObservableObject {
         }
     }
     
-    
-    // MARK: - 사용 중인 유저의 닉네임을 반환 
+    // MARK: - 사용 중인 유저의 닉네임을 반환
     func getNickName(uid: String) async -> String {
         
         do {

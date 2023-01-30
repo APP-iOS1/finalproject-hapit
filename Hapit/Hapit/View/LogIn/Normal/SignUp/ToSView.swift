@@ -13,11 +13,20 @@ struct ToSView: View {
     @State private var agreePrivate: Bool = false
     @State private var agreeAD: Bool = false
     
+    @State private var isActive: Bool = false
+    @State private var isClicked: Bool = false
+    
     @Binding var isFullScreen: Bool
+    
+    @Binding var email: String
+    @Binding var pw: String
+    @Binding var nickName: String
+    
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         VStack(spacing: 20) {
-
+            
             HStack() {
                 StepBar(nowStep: 2)
                     .padding(.leading, -8)
@@ -93,7 +102,7 @@ struct ToSView: View {
                             agreePrivate.toggle()
                             
                             isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
-                
+                            
                         }){
                             Image(systemName: "checkmark")
                                 .foregroundColor(agreePrivate ? Color.accentColor : .gray)
@@ -127,26 +136,52 @@ struct ToSView: View {
                 Spacer()
                 Spacer()
                 
-                NavigationLink(destination: GetStartView(isFullScreen: $isFullScreen)) {
-                    
-                    Text("가입하기")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(agreeAll ? Color.accentColor : .gray)
+                
+                
+                // 회원가입 버튼을 누르면 progress view가 나타남
+                
+                Button(action: {
+                    Task {
+                        isClicked.toggle()
+                        
+                        do {
+                            try await authManager.register(email: email, pw: pw, name: nickName)
+                        } catch {
+                            print(error.localizedDescription)
                         }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                        isActive.toggle()
+                    }
+                }){
+                    if isClicked {
+                        ProgressView()
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(agreeAll ? Color.accentColor : .gray)
+                            }
+                    } else {
+                        Text("가입하기")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(agreeAll ? Color.accentColor : .gray)
+                            }
+                    }
                 }
-                .disabled(!agreeAll)
-                .padding(.vertical, 5)
+                .navigationDestination(isPresented: $isActive) {
+                    GetStartView(isFullScreen: $isFullScreen)
+                }
             }
         }
         .padding(.horizontal, 20)
     }
     
     func isAllChecked(service: Bool, privates: Bool, ad: Bool) {
-        
         if service && privates {
             agreeAll = true
         } else {
@@ -155,8 +190,8 @@ struct ToSView: View {
     }
 }
 
-struct ToSView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToSView(isFullScreen: .constant(false))
-    }
-}
+//struct ToSView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ToSView(isFullScreen: .constant(false))
+//    }
+//}

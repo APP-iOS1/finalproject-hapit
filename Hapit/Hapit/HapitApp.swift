@@ -25,6 +25,7 @@ struct HapitApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(HabitManager())
+                .environmentObject(AuthManager())
         }
     }
 }

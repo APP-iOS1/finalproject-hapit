@@ -20,9 +20,8 @@ struct AddHabitView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     
-   // @State private var createdAt: Date = Date()
-    // 생성
- //   var createdDate: String {
+    @State private var createdAt: Date = Date()
+    var createdDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -37,13 +36,8 @@ struct AddHabitView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Spacer()
-            
-            init{
-                
-            }
-            
             VStack(spacing: 15) {
                 
                 Picker ("개인 그룹 중 선택해주세요",selection: $challengetype){
@@ -69,8 +63,7 @@ struct AddHabitView: View {
                 */
                 
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                    .font(.title3)
-                    .bold()
+                    .font(.custom("IMHyemin-Bold", size: 17))
                     .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                     .background(Color("CellColor"))
                     .cornerRadius(15)
@@ -134,7 +127,6 @@ struct AddHabitView: View {
                         let id = UUID().uuidString
                         habitManager.createChallenge(challenge: Challenge(id: id, creator: "추추맨", mateArray: ["신현준"], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false))
                         
-
                         habitManager.loadChallenge()
 
                         dismiss()

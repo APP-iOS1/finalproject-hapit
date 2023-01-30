@@ -29,7 +29,7 @@ struct SocialView: View {
     let friends = Users1()
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 VStack {                    
                     HStack {

@@ -1,17 +1,17 @@
 //
-//  WriteDiaryView.swift
+//  DedicatedWriteDiaryView.swift
 //  Hapit
 //
-//  Created by 이주희 on 2023/01/17.
+//  Created by 박민주 on 2023/01/30.
 //
 
+import Foundation
 import SwiftUI
 import Combine
 import PhotosUI
+import class PhotosUI.PHPickerViewController
 
-// MARK: 다운그레이드 중 ...
-@available(iOS 16.0, *)
-struct WriteDiaryView: View {
+struct DedicatedWriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @State var content = ""
     
@@ -19,14 +19,12 @@ struct WriteDiaryView: View {
     @State private var date = "2023년 01월 20일 금요일"
     @State private var habitName = "물마시기"
     
-    @State private var selectedImage: PhotosPickerItem? // ios 15
-    @State private var selectedImageData: Data? = nil // 뿌려주기 위한 이미지 데이터 변수
+    // MARK: 옵셔널 타입으로 변경하기
+    @State private var selectedImage: UIImage = UIImage(named: "bearBlue")! // ios 15
+    
+    @State private var isShowingPhotoPicker: Bool = false
     
     let maxCharacterLength = Int(300)
-    
-    var wrappedSelectedImageData: Data {
-        return selectedImageData ?? Data()
-    }
     
     var body: some View {
         NavigationView {
@@ -46,47 +44,25 @@ struct WriteDiaryView: View {
                 
                 VStack {
                     // 선택된 이미지 출력.
-                    if let image = UIImage(data: wrappedSelectedImageData) {
-                        ZStack {
-                            Image(uiImage: image)
-                            
-                                .resizable()
-                                .cornerRadius(10)
-                                .scaledToFit()
-                                .frame(maxWidth: .infinity)
-                                .padding(10)
-                                .overlay(alignment: .topTrailing) {
-                                    Button {
-                                        selectedImageData = nil
-                                    } label: {
-                                        Image(systemName: "circle.fill")
-                                            .foregroundColor(.white)
-                                            .font(.title3)
-                                            .overlay {
-                                                Image(systemName: "multiply.circle.fill")
-                                                    .foregroundColor(.gray)
-                                                    .font(.title3)
-                                            }
-                                    }
-                                }
-                                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-                        }
-                    } // if let
-                    
-                    
-                    
-                    
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .cornerRadius(10)
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
+
                     // 글자수 300자 제한
-                    TextField("릴루님의 습관일지를 작성해보세요!", text: $content, axis: .vertical) // ios 15
+                    TextField("릴루님의 습관일지를 작성해보세요!", text: $content) // ios 15
                     // .lineLimit(9, reservesSpace: false)
                         .font(.subheadline)
+                        .frame(width: UIScreen.main.bounds.size.width)
                         .padding(.horizontal, 20)
                         .onReceive(Just(content), perform: { _ in
                             if maxCharacterLength < content.count {
                                 content = String(content.prefix(maxCharacterLength))
                             }
                         })
-                    
+                        
                     // 현재 글자수
                     HStack {
                         Spacer()
@@ -99,7 +75,7 @@ struct WriteDiaryView: View {
                     Spacer()
      
                 } // VStack
-                .formStyle(.columns) // ios 15
+                //.formStyle(.columns) // ios 15
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -115,20 +91,12 @@ struct WriteDiaryView: View {
                     } // ToolbarItem
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        PhotosPicker( // ios 15
-                            selection: $selectedImage,
-                            matching: .images,
-                            photoLibrary: .shared()) {
-                                Image(systemName: "photo")
-                            }
-                            .onChange(of: selectedImage) { newItem in
-                                Task {
-                                    // Retrieve selected asset in the form of Data
-                                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                        selectedImageData = data
-                                    }
-                                }
-                            }
+                        Button {
+                            isShowingPhotoPicker.toggle()
+                            
+                        } label: {
+                            Image(systemName: "photo")
+                        }
                     } // ToolbarItem
                 } // toolbar
                 
@@ -148,14 +116,15 @@ struct WriteDiaryView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
             }
-        } // Nav Stack
-        
+        } // Nav View
+        .sheet(isPresented: $isShowingPhotoPicker) {
+            PhotoPicker(selectedImage: $selectedImage)
+        }
     } // body
 }
 
-@available(iOS 16.0, *)
-struct WriteDiaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteDiaryView()
-    }
-}
+//struct DedicatedWriteDiaryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DedicatedWriteDiaryView(selectedImage: .constant(nil))
+//    }
+//}

@@ -32,9 +32,8 @@ struct ProfileCellView: View {
                     }
                     .disabled(showBearModal)
                     .padding(30)
-                }.sheet(isPresented: $showBearModal) { BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
-                        .presentationDetents([.medium])
-                        .interactiveDismissDisabled()
+                }.halfSheet(showSheet: $showBearModal) {
+                    BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
                 }
                 
                 VStack {
@@ -50,7 +49,7 @@ struct ProfileCellView: View {
                         .padding(.leading, 10)
                         Spacer()
                     }
-
+                    
                     Button {
                         showNicknameModal = true
                     } label: {
@@ -64,9 +63,8 @@ struct ProfileCellView: View {
                                     .fontWeight(.bold)
                             }
                     }
-                    .sheet(isPresented: $showNicknameModal) { NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
-                            .presentationDetents([.medium])
-                            .interactiveDismissDisabled()
+                    .halfSheet(showSheet: $showNicknameModal) {
+                        NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
                     }
                 }
             }
@@ -76,6 +74,54 @@ struct ProfileCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)
+    }
+}
+
+extension View {
+    
+    func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping () -> SheetView) -> some View {
+        
+        return self
+            .background(
+                HalfSheetHelper(sheetView: sheetView(), showSheet: showSheet)
+            )
+    }
+}
+
+struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
+    
+    var sheetView: SheetView
+    @Binding var showSheet: Bool
+    
+    let controller = UIViewController()
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        controller.view.backgroundColor = .clear
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        
+        if showSheet {
+            let sheetController = CustomHostingController(rootView: sheetView)
+            uiViewController.present(sheetController, animated: true) {
+                DispatchQueue.main.async {
+                    self.showSheet.toggle()
+                }
+            }
+        }
+    }
+}
+
+class CustomHostingController<Content: View>: UIHostingController<Content> {
+    override func viewDidLoad() {
+        if let presentationController = presentationController as?
+            UISheetPresentationController {
+            presentationController.detents = [
+                .medium()
+                
+            ]
+        }
     }
 }
 

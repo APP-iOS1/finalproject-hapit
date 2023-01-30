@@ -28,7 +28,7 @@ struct GetStartView: View {
                     Text("회원가입 완료!")
                 }
                 .font(.largeTitle)
-                .bold()
+                .font(.custom("IMHyemin-Bold", size: 17))
                 Spacer()
             }
             

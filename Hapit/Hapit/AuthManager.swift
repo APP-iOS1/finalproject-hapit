@@ -11,11 +11,24 @@ import FirebaseFirestore
 
 @MainActor
 class AuthManager: ObservableObject {
-    var userInfoStore: User1 = User1(id: "", name: "", email: "", pw: "")
+    var userInfoStore: User = User(id: "", name: "", email: "", pw: "")
+    
+    @Published var isLoggedin = false
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     let currentUser = Auth.auth().currentUser ?? nil
+    
+    // MARK: - 로그인 
+    public func login(with email: String, _ password: String) async -> Bool {
+        do{
+            try await firebaseAuth.signIn(withEmail: email, password: password)
+            isLoggedin = true
+        } catch{
+            print(error.localizedDescription)
+        }
+        return isLoggedin
+    }
     
     // MARK: - 신규회원 생성
     @MainActor
@@ -25,7 +38,7 @@ class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User1(id: target.uid, name: name, email: email, pw: pw)
+            let newby = User(id: target.uid, name: name, email: email, pw: pw)
             
             // firestore에 신규회원 등록
             await uploadUserInfo(userInfo: newby)
@@ -36,7 +49,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 유저데이터 firestore에 업로드하는 함수
-    func uploadUserInfo(userInfo: User1) async {
+    func uploadUserInfo(userInfo: User) async {
         do {
             try await database.collection("User")
                 .document(userInfo.id)
@@ -52,53 +65,41 @@ class AuthManager: ObservableObject {
     
     // MARK: - 이메일 중복확인을 해주는 함수
     @MainActor
-    func isEmailDuplicated(email: String) -> Bool {
-        var result = false
-        
-        database.collection("User").whereField("email", isEqualTo: email)
-            .getDocuments() { (snapshot, err) in
-                if let error = err {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    return
-                }
-                
-                if snapshot.documents.isEmpty {
-                    result = true
-                } else {
-                    result = false
-                }
+    func isEmailDuplicated(email: String) async -> Bool {
+        do {
+            let target = try await database.collection("User")
+                .whereField("email", isEqualTo: email).getDocuments()
+            
+            if target.isEmpty {
+                return false
+            } else {
+                return true
             }
-        return result
+            
+        } catch {
+            print(error.localizedDescription)
+            return true
+        }
     }
     
     
     // MARK: - 닉네임 중복확인을 해주는 함수
     @MainActor
-    func isNicknameDuplicated(nickName: String) -> Bool {
-        var result = false
-        
-        database.collection("User").whereField("name", isEqualTo: nickName)
-            .getDocuments() { (snapshot, err) in
-                if let error = err {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    return
-                }
-                
-                if snapshot.documents.isEmpty {
-                    result = true
-                } else {
-                    result = false
-                }
+    func isNicknameDuplicated(nickName: String) async -> Bool {
+        do {
+            let target = try await database.collection("User")
+                .whereField("name", isEqualTo: nickName).getDocuments()
+            
+            if target.isEmpty {
+                return false //중복되지 않은 닉네임
+            } else {
+                return true //중복된 닉네임
             }
-        return result
+            
+        } catch {
+            print(error.localizedDescription)
+            return true
+        }
     }
 }
 

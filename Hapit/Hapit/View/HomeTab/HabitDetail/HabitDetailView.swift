@@ -42,108 +42,108 @@ struct HabitDetailView: View {
             }
             .padding(.leading)
             
-            
-            
-            CalendarWeekListView(
-                calendar: calendar,
-                date: $selectedDate,
-                content: { date in
-                    Button(action: {
-                        selectedDate = date
-                        
-                        withAnimation {
-                            dairyModel.currentDay = date
-                        }
-                    }) {
-                        VStack(spacing: 10) {
-                            Text(weekDayFormatter.string(from: date))
-                                .font(.system(size: 14))
-                            
-                            Text(dayFormatter.string(from: date))
-                                .font(.system(size: 15))
-                                .fontWeight(.semibold)
-                                .background(
-                                    ZStack {
-                                        if calendar.isDate(date, inSameDayAs: selectedDate) {
-                                            Circle()
-                                                .fill(Color("MiddlePinkColor"))
-                                                .frame(width: 30, height: 30)
-                                        }
-                                    }
-                                )
-
-                                HStack {
-                                    ForEach(0..<3){ bear in
-                                        Image("bearBlue")
-                                        
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .offset(y:5)
-                                            .frame(width: 15)
-                                            .background(Color(.white))
-                                            .clipShape(Circle())
-                                            .overlay(Circle().stroke())
-                                            .foregroundColor(.gray)
-                                            .padding(.trailing, -12)
-                                    }
-                                }.offset(x:-5)
-                        }
-                        .foregroundStyle(calendar.isDate(date, inSameDayAs: selectedDate) ? .primary : .secondary)
-                        .foregroundColor(calendar.isDate(date, inSameDayAs: selectedDate) ? .black : .black)
-                        .frame(width: 45, height: 90)
-                    }
-                },
-                title: { date in
-                    HStack {
-                        Text(monthDayFormatter.string(from: selectedDate))
-                            .font(.headline)
-                            .padding(5)
-                        Spacer()
-                    }
-                    .padding([.bottom, .leading], 10)
-                }, weekSwitcher: { date in
-                    Button {
-                        withAnimation(.easeIn) {
-                            guard let newDate = calendar.date(
-                                byAdding: .weekOfMonth,
-                                value: -1,
-                                to: selectedDate
-                            ) else {
-                                return
-                            }
-                            
-                            selectedDate = newDate
-                        }
-                    } label: {
-                        Label(
-                            title: { Text("Previous") },
-                            icon: { Image(systemName: "chevron.left") }
-                        )
-                            .labelStyle(IconOnlyLabelStyle())
-                            .padding(.horizontal)
-                    }
-                    Button {
-                        withAnimation(.easeIn) {
-                            guard let newDate = calendar.date(
-                                byAdding: .weekOfMonth,
-                                value: 1,
-                                to: selectedDate
-                            ) else {
-                                return
-                            }
-                            
-                            selectedDate = newDate
-                        }
-                    } label: {
-                        Label(
-                            title: { Text("Next") },
-                            icon: { Image(systemName: "chevron.right") }
-                        )
-                            .labelStyle(IconOnlyLabelStyle())
-                            .padding(.horizontal)
-                    }
-                }
-            )
+            //CustomDatePickerView()
+            //MARK: 주간 캘린더. 기획의 변경으로 월간 캘린더로 변경
+//            CalendarWeekListView(
+//                calendar: calendar,
+//                date: $selectedDate,
+//                content: { date in
+//                    Button(action: {
+//                        selectedDate = date
+//
+//                        withAnimation {
+//                            dairyModel.currentDay = date
+//                        }
+//                    }) {
+//                        VStack(spacing: 10) {
+//                            Text(weekDayFormatter.string(from: date))
+//                                .font(.system(size: 14))
+//
+//                            Text(dayFormatter.string(from: date))
+//                                .font(.system(size: 15))
+//                                .fontWeight(.semibold)
+//                                .background(
+//                                    ZStack {
+//                                        if calendar.isDate(date, inSameDayAs: selectedDate) {
+//                                            Circle()
+//                                                .fill(Color("MiddlePinkColor"))
+//                                                .frame(width: 30, height: 30)
+//                                        }
+//                                    }
+//                                )
+//
+//                                HStack {
+//                                    ForEach(0..<3){ bear in
+//                                        Image("bearBlue")
+//
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .offset(y:5)
+//                                            .frame(width: 15)
+//                                            .background(Color(.white))
+//                                            .clipShape(Circle())
+//                                            .overlay(Circle().stroke())
+//                                            .foregroundColor(.gray)
+//                                            .padding(.trailing, -12)
+//                                    }
+//                                }.offset(x:-5)
+//                        }
+//                        .foregroundStyle(calendar.isDate(date, inSameDayAs: selectedDate) ? .primary : .secondary)
+//                        .foregroundColor(calendar.isDate(date, inSameDayAs: selectedDate) ? .black : .black)
+//                        .frame(width: 45, height: 90)
+//                    }
+//                },
+//                title: { date in
+//                    HStack {
+//                        Text(monthDayFormatter.string(from: selectedDate))
+//                            .font(.headline)
+//                            .padding(5)
+//                        Spacer()
+//                    }
+//                    .padding([.bottom, .leading], 10)
+//                }, weekSwitcher: { date in
+//                    Button {
+//                        withAnimation(.easeIn) {
+//                            guard let newDate = calendar.date(
+//                                byAdding: .weekOfMonth,
+//                                value: -1,
+//                                to: selectedDate
+//                            ) else {
+//                                return
+//                            }
+//
+//                            selectedDate = newDate
+//                        }
+//                    } label: {
+//                        Label(
+//                            title: { Text("Previous") },
+//                            icon: { Image(systemName: "chevron.left") }
+//                        )
+//                            .labelStyle(IconOnlyLabelStyle())
+//                            .padding(.horizontal)
+//                    }
+//                    Button {
+//                        withAnimation(.easeIn) {
+//                            guard let newDate = calendar.date(
+//                                byAdding: .weekOfMonth,
+//                                value: 1,
+//                                to: selectedDate
+//                            ) else {
+//                                return
+//                            }
+//
+//                            selectedDate = newDate
+//                        }
+//                    } label: {
+//                        Label(
+//                            title: { Text("Next") },
+//                            icon: { Image(systemName: "chevron.right") }
+//                        )
+//                            .labelStyle(IconOnlyLabelStyle())
+//                            .padding(.horizontal)
+//                    }
+//                }
+//            )
             
             ScrollView() {
                 

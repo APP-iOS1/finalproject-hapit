@@ -79,6 +79,7 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
+
 //        .overlay(
 //            VStack{
 //                Spacer()

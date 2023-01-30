@@ -5,6 +5,7 @@
 
 import Foundation
 
+
 // MARK: - 습관
 struct Challenge: Hashable, Codable, Identifiable {
     
@@ -24,6 +25,9 @@ struct Challenge: Hashable, Codable, Identifiable {
     
     // MARK: 임시 - 챌린지 체크 여부
     var isChecked: Bool
+    
+    // 챌린지 소유 유저의 id 값
+    var uid: String
     
     
     // 챌린지 체크 여부 [체크한 날짜]

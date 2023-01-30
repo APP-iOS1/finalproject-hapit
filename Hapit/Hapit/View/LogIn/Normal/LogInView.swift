@@ -60,6 +60,7 @@ struct LogInView: View {
                         .frame(maxWidth: .infinity, maxHeight: 40)
                         .overlay {
                             Text("로그인")
+                                .font(.custom("IMHyemin-Regular", size: 17))
                                 .foregroundColor(.white)
                                 .bold()
                         }
@@ -69,8 +70,11 @@ struct LogInView: View {
                 
                 HStack {
                     Text("아직 회원이 아니신가요?")
+                        .font(.custom("IMHyemin-Regular", size: 17))
                     NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
                         Text("회원가입")
+                            .font(.custom("IMHyemin-Regular", size: 17))
+                        // IMHyemin-Bold
                     }
                 }
                 

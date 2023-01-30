@@ -23,6 +23,8 @@
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
 		95D067A5297A2B6B003447EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95D067A4297A2B6B003447EA /* GoogleService-Info.plist */; };
+		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
+		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
 		C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55142977A7C9008BB0CF /* Jelly.swift */; };
 		C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55162977B782008BB0CF /* NicknameModalView.swift */; };
 		C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55182977CD17008BB0CF /* FriendChallengeView.swift */; };
@@ -70,6 +72,9 @@
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		95D067A4297A2B6B003447EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
+		C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
+		C5482987298751EC000C743E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C59D55142977A7C9008BB0CF /* Jelly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jelly.swift; sourceTree = "<group>"; };
 		C59D55162977B782008BB0CF /* NicknameModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModalView.swift; sourceTree = "<group>"; };
 		C59D55182977CD17008BB0CF /* FriendChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeView.swift; sourceTree = "<group>"; };
@@ -129,6 +134,15 @@
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
 			);
 			path = HomeTab;
+			sourceTree = "<group>";
+		};
+		C54829822987503B000C743E /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */,
+				C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		C5FAC87E29765E1D00E58C84 /* MyPageTab */ = {
@@ -209,6 +223,8 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				C54829822987503B000C743E /* Font */,
+				C5482987298751EC000C743E /* Info.plist */,
 				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,
 				F49E28CA29762C9C009EEB1A /* HapitApp.swift */,
 				F49E28CC29762C9C009EEB1A /* ContentView.swift */,
@@ -216,7 +232,6 @@
 				F49E28D929762CD6009EEB1A /* View */,
 				F49E28D829762CCF009EEB1A /* Model */,
 				F49E28CE29762CA0009EEB1A /* Assets.xcassets */,
-				3CE9DFF52979AFAA00E76147 /* duckBoat.png */,
 				F49E28D029762CA0009EEB1A /* Preview Content */,
 			);
 			path = Hapit;
@@ -383,7 +398,9 @@
 			files = (
 				F49E28D229762CA0009EEB1A /* Preview Assets.xcassets in Resources */,
 				F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */,
+				C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */,
 				95D067A5297A2B6B003447EA /* GoogleService-Info.plist in Resources */,
+				C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +584,7 @@
 				DEVELOPMENT_TEAM = PLJU724YCG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = Hapit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -597,7 +614,7 @@
 				DEVELOPMENT_TEAM = PLJU724YCG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = Hapit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

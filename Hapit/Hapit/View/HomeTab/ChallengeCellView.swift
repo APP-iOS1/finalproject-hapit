@@ -96,7 +96,7 @@ struct ChallengeCellView: View {
                         
                         
                         Rectangle()
-                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
+//                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
                             .padding([.top, .leading, .trailing], 10)
                         Spacer()
                     }

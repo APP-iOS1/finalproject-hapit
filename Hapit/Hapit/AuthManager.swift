@@ -13,6 +13,8 @@ import FirebaseFirestore
 class AuthManager: ObservableObject {
     var userInfoStore: User1 = User1(id: "", name: "", email: "", pw: "")
     
+    @Published var result = false
+    
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     let currentUser = Auth.auth().currentUser ?? nil
@@ -52,27 +54,31 @@ class AuthManager: ObservableObject {
     
     // MARK: - 이메일 중복확인을 해주는 함수
     @MainActor
-    func isEmailDuplicated(email: String) -> Bool {
-        var result = false
+    func isEmailDuplicated(email: String) {
         
+        let mail = database.collection("User").whereField("email", isEqualTo: email)
+ 
         database.collection("User").whereField("email", isEqualTo: email)
-            .getDocuments() { (snapshot, err) in
+            .getDocuments { [self] (qs, err) in
                 if let error = err {
                     print(error.localizedDescription)
                     return
-                }
-                
-                guard let snapshot = snapshot else {
-                    return
-                }
-                
-                if snapshot.documents.isEmpty {
-                    result = true
                 } else {
-                    result = false
+                    
+                    //document 비었을 경우
+                    guard let qs = qs else {
+                        return
+                    }
+                    
+                    if qs.documents.isEmpty {
+                        print("After: \(self.result)")
+                        result = false
+                    } else {
+                        print("After: \(result)")
+                        result = true
+                    }
                 }
             }
-        return result
     }
     
     
@@ -82,7 +88,7 @@ class AuthManager: ObservableObject {
         var result = false
         
         database.collection("User").whereField("name", isEqualTo: nickName)
-            .getDocuments() { (snapshot, err) in
+            .getDocuments { (snapshot, err) in
                 if let error = err {
                     print(error.localizedDescription)
                     return

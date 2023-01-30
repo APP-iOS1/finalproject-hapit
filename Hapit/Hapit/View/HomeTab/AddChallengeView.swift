@@ -128,7 +128,6 @@ struct AddHabitView: View {
                         let id = UUID().uuidString
                         habitManager.createChallenge(challenge: Challenge(id: id, creator: "추추맨", mateArray: ["신현준"], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false))
                         
-
                         habitManager.loadChallenge()
 
                         dismiss()

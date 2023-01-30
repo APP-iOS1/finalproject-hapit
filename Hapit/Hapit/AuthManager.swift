@@ -52,53 +52,41 @@ class AuthManager: ObservableObject {
     
     // MARK: - 이메일 중복확인을 해주는 함수
     @MainActor
-    func isEmailDuplicated(email: String) -> Bool {
-        var result = false
-        
-        database.collection("User").whereField("email", isEqualTo: email)
-            .getDocuments() { (snapshot, err) in
-                if let error = err {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    return
-                }
-                
-                if snapshot.documents.isEmpty {
-                    result = true
-                } else {
-                    result = false
-                }
+    func isEmailDuplicated(email: String) async -> Bool {
+        do {
+            let target = try await database.collection("User")
+                .whereField("email", isEqualTo: email).getDocuments()
+            
+            if target.isEmpty {
+                return false
+            } else {
+                return true
             }
-        return result
+            
+        } catch {
+            print(error.localizedDescription)
+            return true
+        }
     }
     
     
     // MARK: - 닉네임 중복확인을 해주는 함수
     @MainActor
-    func isNicknameDuplicated(nickName: String) -> Bool {
-        var result = false
-        
-        database.collection("User").whereField("name", isEqualTo: nickName)
-            .getDocuments() { (snapshot, err) in
-                if let error = err {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    return
-                }
-                
-                if snapshot.documents.isEmpty {
-                    result = true
-                } else {
-                    result = false
-                }
+    func isNicknameDuplicated(nickName: String) async -> Bool {
+        do {
+            let target = try await database.collection("User")
+                .whereField("name", isEqualTo: nickName).getDocuments()
+            
+            if target.isEmpty {
+                return false //중복되지 않은 닉네임
+            } else {
+                return true //중복된 닉네임
             }
-        return result
+            
+        } catch {
+            print(error.localizedDescription)
+            return true
+        }
     }
 }
 

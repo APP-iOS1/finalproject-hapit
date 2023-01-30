@@ -105,7 +105,7 @@ struct ChallengeCellView: View {
 //            }
 //        )
 
-  
+
     }// body
 }
 

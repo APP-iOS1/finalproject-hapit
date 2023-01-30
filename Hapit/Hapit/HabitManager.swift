@@ -7,9 +7,17 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
+import Combine
 
 
 class HabitManager: ObservableObject{
+    
+    enum FirebaseError: Error{
+        case badSnapshot
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
@@ -61,6 +69,60 @@ class HabitManager: ObservableObject{
             dump(error)
         }
     }
+    
+    
+    func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
+        
+        Future<[Challenge], Error> {  promise in
+            
+            self.database.collection("Challenge").getDocuments{(snapshot, error) in
+                
+                if let error = error {
+                    promise(.failure (error))
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    promise(.failure (FirebaseError.badSnapshot))
+                    return
+                }
+                
+                snapshot.documents.forEach { document in
+                    if let challenge = try? document.data(as: Challenge.self){
+                        self.challenges.append(challenge)
+                    }
+                }
+                
+                promise(.success(self.challenges))
+                
+            }
+            
+        }
+        .eraseToAnyPublisher()
+        
+        
+        
+    }
+    
+    func loadChallenge(){
+        
+        challenges.removeAll()
+        
+        self.fetchChallengeCombine()
+            .sink { (completion) in
+                switch completion{
+                    case .failure(let error):
+                        print(error)
+                        return
+                    case .finished:
+                        return
+                }
+            } receiveValue: { [weak self] (challenges) in
+                self?.challenges = challenges
+            }
+            .store(in: &cancellables)
+    }
+    
     
     // MARK: - Add a Habit
     //func createHabit(creator: String) async {
@@ -127,7 +189,7 @@ class HabitManager: ObservableObject{
                 return true
             }
         }
-    
+        
         do{
             try await database.collection("Challenge")
                 .document(challenge.id)

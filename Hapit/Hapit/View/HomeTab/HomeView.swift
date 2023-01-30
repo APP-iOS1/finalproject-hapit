@@ -45,12 +45,15 @@ struct HabitSegmentView: View {
                 }
                 
             }
+//                .onAppear{
+//                    Task{
+//                        await habitManager.fetchChallenge()
+//                    }
+//                    print(habitManager.habits)
+//
+//                }
                 .onAppear{
-                    Task{
-                        await habitManager.fetchChallenge()
-                    }
-                    print(habitManager.habits)
-                    
+                    habitManager.loadChallenge()
                 }
         case 1:
 
@@ -69,13 +72,13 @@ struct HabitSegmentView: View {
                             
                         }
                     }
-                    .onAppear{
-                        Task{
-                            await habitManager.fetchChallenge()
-                        }
-                        print(habitManager.habits)
-                        
-                    }
+//                    .onAppear{
+//                        Task{
+//                            await habitManager.fetchChallenge()
+//                        }
+//                        print(habitManager.habits)
+//
+//                    }
                     
             }
             

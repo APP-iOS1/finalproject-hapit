@@ -7,23 +7,67 @@
 
 import SwiftUI
 
+//MARK: - ChallengeType : 개인/그룹
+enum ChallengeType: String, CaseIterable{
+    case personal = "개인"
+    case group = "그룹"
+}
+
 // MARK: - AddHabitView Struct
 struct AddHabitView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
-        
+    
     @EnvironmentObject var habitManager: HabitManager
     
-    
+   // @State private var createdAt: Date = Date()
+    // 생성
+ //   var createdDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: createdAt)
+    }
     @State private var challengeTitle: String = ""
     @State private var isAlarmOn: Bool = false
+    @State private var challengetype: ChallengeType = .personal
+    
     @State private var currentDate = Date()
     
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
+            Spacer()
+            
+            init{
+                
+            }
+            
             VStack(spacing: 15) {
+                
+                Picker ("개인 그룹 중 선택해주세요",selection: $challengetype){
+                        ForEach(ChallengeType.allCases, id: \.self) { option in
+                            Text(option.rawValue)
+                        }
+                    }
+                    .accentColor(Color("DarkPinkColor"))
+                    .background(Color("BackgroundColor"))
+                    .pickerStyle(SegmentedPickerStyle())
+              
+             /*   HStack {
+                    Spacer()
+                    Text("\(createdDate)")
+                        .bold()
+                    Spacer()
+                        
+                }.frame(height: 20)
+                    .padding()
+                    .background(Color("CellColor"))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 20)
+                */
+                
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                     .font(.title3)
                     .bold()
@@ -41,7 +85,15 @@ struct AddHabitView: View {
                         DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                     }
-                    
+                    else{
+                        Text("챌린지 달성을 위해\n알림을 활용해보세요!")
+                            .font(.caption2)
+                            .fontWeight(.thin)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.trailing)
+                        
+                        
+                    }
                     Toggle("", isOn: $isAlarmOn)
                         .labelsHidden()
                         .padding(.leading, 5)
@@ -64,7 +116,6 @@ struct AddHabitView: View {
                 
                 Spacer()
             } // VStack
-            .padding(.top, 30)
             .background(Color("BackgroundColor")) // 라이트 모드
             .navigationTitle("새로운 챌린지")
             .navigationBarTitleDisplayMode(.inline)
@@ -77,7 +128,7 @@ struct AddHabitView: View {
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
-
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         
@@ -85,7 +136,7 @@ struct AddHabitView: View {
                             await habitManager.createChallenge(challengeTitle: challengeTitle)
                             
                         }
-
+                        
                         dismiss()
                         
                     } label: {
@@ -98,12 +149,14 @@ struct AddHabitView: View {
 }
 
 
-//// MARK: - AddHabitView Previews
-//struct AddHabitView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddHabitView()
-//    }
-//}
-//
-//
+// MARK: - AddHabitView Previews
+struct AddHabitView_Previews: PreviewProvider {
+    
+    
+    static var previews: some View {
+        AddHabitView()
+    }
+}
+
+
 

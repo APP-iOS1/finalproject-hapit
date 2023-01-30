@@ -15,6 +15,8 @@ struct LogInView: View {
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
     
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -47,13 +49,22 @@ struct LogInView: View {
                 Spacer().frame(height: 20)
                 
                 Button(action: {
-                    if email == "" {
-                        emailFocusField = true
-                    } else if pw == "" {
-                        pwFocusField = true
+                    Task {
+                        //이메일 또는 비밀번호를 입력하지 않았을 경우
+                        if email == "" {
+                            emailFocusField = true
+                        } else if pw == "" {
+                            pwFocusField = true
+                        } else {
+                            let loginResult = await authManager.login(with: email, pw)
+                            
+                            if loginResult {
+                                isFullScreen = false
+                            } else {
+                                print("로그인 실패")
+                            }
+                        } 
                     }
-                    
-                    isFullScreen = false
                 }){
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.pink)

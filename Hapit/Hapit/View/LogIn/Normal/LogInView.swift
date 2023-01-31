@@ -29,6 +29,7 @@ struct LogInView: View {
                 Group {
                     VStack {
                         TextField("이메일", text: $email)
+                            .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($emailFocusField)
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
@@ -41,6 +42,7 @@ struct LogInView: View {
                     
                     VStack {
                         SecureField("비밀번호", text: $pw)
+                            .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($pwFocusField)
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
@@ -75,9 +77,8 @@ struct LogInView: View {
                         .frame(maxWidth: .infinity, maxHeight: 40)
                         .overlay {
                             Text("로그인")
-                                .font(.custom("IMHyemin-Regular", size: 17))
+                                .font(.custom("IMHyemin-Bold", size: 16))
                                 .foregroundColor(.white)
-                                .bold()
                         }
                 }
                 
@@ -85,11 +86,10 @@ struct LogInView: View {
                 
                 HStack {
                     Text("아직 회원이 아니신가요?")
-                        .font(.custom("IMHyemin-Regular", size: 17))
+                        .font(.custom("IMHyemin-Regular", size: 16))
                     NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
                         Text("회원가입")
-                            .font(.custom("IMHyemin-Regular", size: 17))
-                        // IMHyemin-Bold
+                            .font(.custom("IMHyemin-Regular", size: 16))
                     }
                 }
                 

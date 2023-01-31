@@ -11,7 +11,7 @@ struct EmptyCellView: View {
     var body: some View {
         VStack{
             Image(systemName: "tray")
-                .scaleEffect(x:3,y:3)
+                .scaleEffect(x: 3,y: 3)
                 .padding()
             Text("텅")
                 .font(.largeTitle)

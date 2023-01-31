@@ -35,8 +35,7 @@ struct ChallengeCellView: View {
             .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
             //checkButton
-            
-            VStack(alignment:.leading, spacing: 1){
+            VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
                     Text(challenge.createdDate)
                         .font(.footnote)
@@ -56,7 +55,7 @@ struct ChallengeCellView: View {
                         
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .offset(y:5)
+                            .offset(y: 5)
                             .frame(width: 25)
                             .background(Color(.white))
                             .clipShape(Circle())
@@ -103,8 +102,6 @@ struct ChallengeCellView: View {
 //                }
 //            }
 //        )
-
-
     }// body
 }
 
@@ -113,7 +110,6 @@ struct ChallengeCellView: View {
 //        ChallengeCellView(challenge: .constant(Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 0, isChecked: false)))
 //    }
 //}
-
 
 //MARK: 습관 모델이 만들어지면 수정할 부분
 //    var title: String = "나의 습관명"

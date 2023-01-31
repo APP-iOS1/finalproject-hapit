@@ -53,15 +53,16 @@ struct LogInView: View {
                     }
                 }
                 
-                Spacer().frame(height: 20)
+                Spacer().frame(height: 22)
                 
-                HStack() {
+                HStack(alignment: .center, spacing: 5) {
                     if !logInResult && verified {
                         Image(systemName: "exclamationmark.circle")
                         Text("이메일과 비밀번호가 일치하지 않습니다")
                         Spacer()
                     } else {
-                        Text("")
+                        Text("이")
+                            .foregroundColor(.white)
                     }
                 }
                 .font(.custom("IMHyemin-Regular", size: 12))

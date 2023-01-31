@@ -51,29 +51,28 @@ struct HabitSegmentView: View {
                                   ChallengeCellView(challenge: challenge)
                                       .padding(.vertical)
                               }
+                              .swipeActions(edge: .leading, allowsFullSwipe: true) { // 왼쪽 -> 오른쪽 스와이프 시 알림 설정
+                                  Button {
+                                      isOnAlarm.toggle()
+                                  } label: {
+                                      Image(systemName: isOnAlarm ? "bell.fill" : "bell.slash.fill")
+                                  }
+                                  .tint(.indigo)
+                              }
+                              .swipeActions(edge: .trailing, allowsFullSwipe: true) { // 오른쪽 -> 왼쪽 스와이프 시 삭제
+                                  Button(role: .destructive) {
+                                      // 데이터 삭제
+                                  } label: {
+                                      Image(systemName: "trash.fill")
+                                  }
+                              }
+                              .listRowSeparator(.hidden)
+                              .listRowBackground(
+                                  Color("CellColor")
+                                      .cornerRadius(20)
+                                      .padding(.vertical, 7)
+                              )
                             }
-//                            .swipeActions(edge: .leading, allowsFullSwipe: true) { // 왼쪽 -> 오른쪽 스와이프 시 알림 설정
-//                                Button {
-//                                    isOnAlarm.toggle()
-//                                } label: {
-//                                    Image(systemName: isOnAlarm ? "bell.fill" : "bell.slash.fill")
-//                                }
-//                                .tint(.indigo)
-//                            }
-//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) { // 오른쪽 -> 왼쪽 스와이프 시 삭제
-//                                Button(role: .destructive) {
-//                                    // 데이터 삭제
-//                                } label: {
-//                                    Image(systemName: "trash.fill")
-//                                }
-//                            }
-//                            .listRowSeparator(.hidden)
-//                            .listRowBackground(
-//                                Color("CellColor")
-//                                    .cornerRadius(20)
-//                                    .padding(.vertical, 7)
-//                            )
-                            
                         } // ForEach
                     } // List
                 }

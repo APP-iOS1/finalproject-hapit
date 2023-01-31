@@ -30,6 +30,16 @@ class AuthManager: ObservableObject {
         return isLoggedin
     }
     
+    //MARK: - 로그아웃
+    final func logOut() async throws {
+        do {
+            try await firebaseAuth.signOut()
+            isLoggedin = false
+        } catch {
+            throw(error)
+        }
+    }
+    
     // MARK: - 신규회원 생성
     func register(email: String, pw: String, name: String) async throws {
         do {

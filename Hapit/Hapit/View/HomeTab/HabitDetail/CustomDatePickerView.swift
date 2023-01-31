@@ -132,6 +132,9 @@ struct CustomDatePickerView: View {
             currentDate = getCurrentMonth()
                 
         }
+        .onAppear{
+               habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
+        }
     }
     
     //MARK: Methods

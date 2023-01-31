@@ -422,6 +422,7 @@ struct ClearTextFieldModifier: ViewModifier {
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
             .font(.subheadline)
+            //.frame(height: 30)
     }
 }
 

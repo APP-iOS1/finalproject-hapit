@@ -7,16 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		210EB05CEC7AD9C148F90F752DE74C48 /* OneSignal */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = C4BEDE8419E52BD08B0E6C875B5CD08A /* Build configuration list for PBXAggregateTarget "OneSignal" */;
-			buildPhases = (
-				2CC561DE65F0F66F6AE8852576B8C8B7 /* [CP] Copy XCFrameworks */,
-			);
-			dependencies = (
-			);
-			name = OneSignal;
-		};
 		52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
@@ -26,132 +16,133 @@
 			);
 			name = SwiftLint;
 		};
+		F783E7E9F8591E6CF73ED67143335F50 /* OneSignalXCFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 657B4D7F7B361A2CAED883966F438D9D /* Build configuration list for PBXAggregateTarget "OneSignalXCFramework" */;
+			buildPhases = (
+				97C4B591DA43144ED549676B0FF14C11 /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+			);
+			name = OneSignalXCFramework;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		08DE50A0842E69EDE7AF812D96DBB05B /* Pods-Hapit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 500C4C4E9AB2212DC7008FC0864F5C62 /* Pods-Hapit-dummy.m */; };
-		4DB3196B4C73D4BE40B37A1DC0F85FC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		BE05A5930D3E466E36DF0D7F7FA222D2 /* Pods-Hapit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F37B4E37AB335C48030A75F2C24F0 /* Pods-Hapit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		385319DDB5EE9A2A4E6C18E91E0D3FC3 /* Pods-OneSignalNotificationServiceExtension-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FBB1B55EBC368D397CE5392E624BCF6E /* Pods-OneSignalNotificationServiceExtension-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A3998390E81A331B048B1DA18847861 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		896ABE382F2C24248C9AA0965F18D7A6 /* Pods-Hapit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9350DB7096A2D9917D8E3E2E07786D12 /* Pods-Hapit-dummy.m */; };
+		A5D96618C1637BE85231BB5FC4A6F0B5 /* Pods-Hapit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D31B0458CCE95AC025162B9A7016EF9F /* Pods-Hapit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B8D3FEB58DCE4143764AC635CD7869BA /* Pods-OneSignalNotificationServiceExtension-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A13BE6A7BCEE16D8DECC37724D367F53 /* Pods-OneSignalNotificationServiceExtension-dummy.m */; };
+		C83C6EE12A0FCC5D8E77882C82240A23 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4373BCF9084E619B6F541EFD12369865 /* PBXContainerItemProxy */ = {
+		08BE1BA3B28683678B2475C2ADB915F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F783E7E9F8591E6CF73ED67143335F50;
+			remoteInfo = OneSignalXCFramework;
+		};
+		8A1D5D6B54D28B70936EF0D3E51DAD2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F783E7E9F8591E6CF73ED67143335F50;
+			remoteInfo = OneSignalXCFramework;
+		};
+		A44EF885DCC1472AA6BF57D1CD19A921 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
 			remoteInfo = SwiftLint;
 		};
-		7200047EC418BA959D3077B2248A56A3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 210EB05CEC7AD9C148F90F752DE74C48;
-			remoteInfo = OneSignal;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D637525F09E306259653E2B7DEF2491 /* OneSignalXCFramework-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "OneSignalXCFramework-xcframeworks.sh"; sourceTree = "<group>"; };
 		220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Hapit"; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		500C4C4E9AB2212DC7008FC0864F5C62 /* Pods-Hapit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Hapit-dummy.m"; sourceTree = "<group>"; };
-		51D8478E161F7969A1F656AA595E4459 /* OneSignalExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalExtension.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework; sourceTree = "<group>"; };
-		554F37B4E37AB335C48030A75F2C24F0 /* Pods-Hapit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Hapit-umbrella.h"; sourceTree = "<group>"; };
-		5864488E3A45AE8DDCAA753FC2B4144E /* OneSignal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OneSignal.release.xcconfig; sourceTree = "<group>"; };
-		6AD1DD159E8D676EA4E1406191BB7FF7 /* Pods-Hapit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Hapit-acknowledgements.markdown"; sourceTree = "<group>"; };
+		356F2D1C1E266F197FCDA34D93A5B068 /* Pods-OneSignalNotificationServiceExtension.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-OneSignalNotificationServiceExtension.modulemap"; sourceTree = "<group>"; };
+		35C850965494DC8C88DB37C61A576E0A /* Pods-Hapit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Hapit.modulemap"; sourceTree = "<group>"; };
+		3DB8B2F57683C47C1BBA3D65B21D44EB /* Pods-OneSignalNotificationServiceExtension-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-OneSignalNotificationServiceExtension-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4AF3B972C94DFF11700E306F18F01DF3 /* Pods-OneSignalNotificationServiceExtension */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-OneSignalNotificationServiceExtension"; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		56DEB1F73BA7512920DC315A81ACE198 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		62A77BA8BF54474403120D3D2B73A5B1 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
+		630BAB5434502AF47C9FF959C1110E5A /* Pods-Hapit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-acknowledgements.plist"; sourceTree = "<group>"; };
+		6ABBFDB0D066531F7BA6745060191CA2 /* Pods-OneSignalNotificationServiceExtension-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OneSignalNotificationServiceExtension-acknowledgements.plist"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7D5107E29EEBAC84BD4AE6B32C263140 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
-		9263E5467343F818A035F71A84927EF8 /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
-		95D6B9131193B0027AC55A58A2304B68 /* Pods-Hapit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-Info.plist"; sourceTree = "<group>"; };
+		7CFFB50D865E1C552CE8E5F0BE1AD590 /* OneSignalExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalExtension.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework; sourceTree = "<group>"; };
+		8927C45DB1CF40F18D769F7CA5047EDC /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
+		9350DB7096A2D9917D8E3E2E07786D12 /* Pods-Hapit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Hapit-dummy.m"; sourceTree = "<group>"; };
+		97A86FCE005ACD9E8424AE67979C231A /* Pods-Hapit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Hapit-acknowledgements.markdown"; sourceTree = "<group>"; };
+		9BBEBFE7D2B65FB363A527A591517AC1 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A1F8FC03173C9D9AB518CA30846D424A /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
-		A7562004C1D0F34CFF4534A81A57AC7B /* OneSignalOutcomes.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalOutcomes.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Outcomes/OneSignalOutcomes.xcframework; sourceTree = "<group>"; };
-		B0E51FC72D566F90D0752E424A6F69DA /* Pods-Hapit-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Hapit-frameworks.sh"; sourceTree = "<group>"; };
-		C6597540F9AC1AF44DFD3238DF364F24 /* OneSignal.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignal.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_XCFramework/OneSignal.xcframework; sourceTree = "<group>"; };
-		CA177E4686BD3ED2BEC8DC0C8633AB4A /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
-		D4F73BFFC5D312137A8469033994962E /* OneSignalCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalCore.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Core/OneSignalCore.xcframework; sourceTree = "<group>"; };
-		E39B188E83F34E6CD52F1563DBFD62C5 /* OneSignal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OneSignal.debug.xcconfig; sourceTree = "<group>"; };
-		F147DA21288FB199D69850DFE5EAC710 /* Pods-Hapit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-acknowledgements.plist"; sourceTree = "<group>"; };
-		F992CD1E52BF642A067650CC8BB100C7 /* Pods-Hapit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Hapit.modulemap"; sourceTree = "<group>"; };
-		F9F1F54D850E7A378DF69A426C3757CC /* OneSignal-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "OneSignal-xcframeworks.sh"; sourceTree = "<group>"; };
+		A13BE6A7BCEE16D8DECC37724D367F53 /* Pods-OneSignalNotificationServiceExtension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-OneSignalNotificationServiceExtension-dummy.m"; sourceTree = "<group>"; };
+		B1CDD93A061F8C23A1D854D17EA4D96C /* OneSignalCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalCore.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Core/OneSignalCore.xcframework; sourceTree = "<group>"; };
+		B38A840AA1AE9A988FA72FE75292EB59 /* Pods-Hapit-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Hapit-frameworks.sh"; sourceTree = "<group>"; };
+		B47994283BDBBB0E4B3138B8484D26BB /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
+		B78B511A30E4A5F4197F9104F860CED2 /* OneSignalXCFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OneSignalXCFramework.debug.xcconfig; sourceTree = "<group>"; };
+		BAB0050CF6060055FF09669D4BA8843C /* OneSignal.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignal.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_XCFramework/OneSignal.xcframework; sourceTree = "<group>"; };
+		D31B0458CCE95AC025162B9A7016EF9F /* Pods-Hapit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Hapit-umbrella.h"; sourceTree = "<group>"; };
+		D5B3E81588E396C63693D8C53FBF02A1 /* OneSignalXCFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OneSignalXCFramework.release.xcconfig; sourceTree = "<group>"; };
+		D7A09A9038D329A928FE4617640EF6E3 /* Pods-OneSignalNotificationServiceExtension-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OneSignalNotificationServiceExtension-Info.plist"; sourceTree = "<group>"; };
+		DCD839A4E83E24940624FA6FB0B35258 /* OneSignalOutcomes.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalOutcomes.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Outcomes/OneSignalOutcomes.xcframework; sourceTree = "<group>"; };
+		E7FF74A44B5FC277DDD091AA20828604 /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
+		FBB1B55EBC368D397CE5392E624BCF6E /* Pods-OneSignalNotificationServiceExtension-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-OneSignalNotificationServiceExtension-umbrella.h"; sourceTree = "<group>"; };
+		FF596D575152379B4B5999D09024B8DE /* Pods-Hapit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5CB181D10903DCEF26CE120C0905E2B8 /* Frameworks */ = {
+		3A9D2DE257AC379C5138B50ADF242802 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DB3196B4C73D4BE40B37A1DC0F85FC3 /* Foundation.framework in Frameworks */,
+				C83C6EE12A0FCC5D8E77882C82240A23 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69F7556F3B2EE4A33AD1EDCEF2028501 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A3998390E81A331B048B1DA18847861 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		041D41BD4A4F2AB2AB98ECFE8761B062 /* SwiftLint */ = {
+		4D52A881173C6DB826EDAB02ACEBF7EF /* OneSignalOutcomes */ = {
 			isa = PBXGroup;
 			children = (
-				7971F8FA96107635A53C58111B58411F /* Support Files */,
-			);
-			name = SwiftLint;
-			path = SwiftLint;
-			sourceTree = "<group>";
-		};
-		054B88F3FC1B64F5AA9A83DDCF452EA3 /* Pods-Hapit */ = {
-			isa = PBXGroup;
-			children = (
-				F992CD1E52BF642A067650CC8BB100C7 /* Pods-Hapit.modulemap */,
-				6AD1DD159E8D676EA4E1406191BB7FF7 /* Pods-Hapit-acknowledgements.markdown */,
-				F147DA21288FB199D69850DFE5EAC710 /* Pods-Hapit-acknowledgements.plist */,
-				500C4C4E9AB2212DC7008FC0864F5C62 /* Pods-Hapit-dummy.m */,
-				B0E51FC72D566F90D0752E424A6F69DA /* Pods-Hapit-frameworks.sh */,
-				95D6B9131193B0027AC55A58A2304B68 /* Pods-Hapit-Info.plist */,
-				554F37B4E37AB335C48030A75F2C24F0 /* Pods-Hapit-umbrella.h */,
-				A1F8FC03173C9D9AB518CA30846D424A /* Pods-Hapit.debug.xcconfig */,
-				9263E5467343F818A035F71A84927EF8 /* Pods-Hapit.release.xcconfig */,
-			);
-			name = "Pods-Hapit";
-			path = "Target Support Files/Pods-Hapit";
-			sourceTree = "<group>";
-		};
-		14A598009D0C3366CFE54B8837992B69 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		19E9284311CCB9DDEF937E27B597CF51 /* OneSignalOutcomes */ = {
-			isa = PBXGroup;
-			children = (
-				C24E53C298C08D8C9F73BC19939D7667 /* Frameworks */,
+				54C36A8F879FC3FAE84599E4FB4A7F70 /* Frameworks */,
 			);
 			name = OneSignalOutcomes;
 			sourceTree = "<group>";
 		};
-		3E93C38FDC0E51141694B07D9672BC2B /* Frameworks */ = {
+		5071EB36DA2C5CD6E1F0C454232FB8A9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C6597540F9AC1AF44DFD3238DF364F24 /* OneSignal.xcframework */,
+				220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */,
+				4AF3B972C94DFF11700E306F18F01DF3 /* Pods-OneSignalNotificationServiceExtension */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54C36A8F879FC3FAE84599E4FB4A7F70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCD839A4E83E24940624FA6FB0B35258 /* OneSignalOutcomes.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4933BD4254A82B8824B83586EC57BA3F /* Support Files */ = {
+		570020DE914008C8C67B2C9E9C6614A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F9F1F54D850E7A378DF69A426C3757CC /* OneSignal-xcframeworks.sh */,
-				E39B188E83F34E6CD52F1563DBFD62C5 /* OneSignal.debug.xcconfig */,
-				5864488E3A45AE8DDCAA753FC2B4144E /* OneSignal.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/OneSignal";
-			sourceTree = "<group>";
-		};
-		4F7169C822307F1A838BDF5875A72E8A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				51D8478E161F7969A1F656AA595E4459 /* OneSignalExtension.xcframework */,
+				B1CDD93A061F8C23A1D854D17EA4D96C /* OneSignalCore.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -164,76 +155,87 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		5B31A35C530D32B72969E8B9A8324CFA /* Targets Support Files */ = {
+		63C7BB11686567167D94435AB7174217 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				054B88F3FC1B64F5AA9A83DDCF452EA3 /* Pods-Hapit */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		763A71A610D7A2BE6EE34BF8534F3FEE /* OneSignalCore */ = {
-			isa = PBXGroup;
-			children = (
-				983F49D4B28F3B72ACAD45B71D70E64E /* Frameworks */,
-			);
-			name = OneSignalCore;
-			sourceTree = "<group>";
-		};
-		7971F8FA96107635A53C58111B58411F /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				7D5107E29EEBAC84BD4AE6B32C263140 /* SwiftLint.debug.xcconfig */,
-				CA177E4686BD3ED2BEC8DC0C8633AB4A /* SwiftLint.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SwiftLint";
-			sourceTree = "<group>";
-		};
-		895EDE9374DB560F6BE229DDEAA62517 /* OneSignal */ = {
-			isa = PBXGroup;
-			children = (
-				3E93C38FDC0E51141694B07D9672BC2B /* Frameworks */,
-				763A71A610D7A2BE6EE34BF8534F3FEE /* OneSignalCore */,
-				9266708850EDF045AE7466DB4B78E0C0 /* OneSignalExtension */,
-				19E9284311CCB9DDEF937E27B597CF51 /* OneSignalOutcomes */,
-				4933BD4254A82B8824B83586EC57BA3F /* Support Files */,
-			);
-			name = OneSignal;
-			path = OneSignal;
-			sourceTree = "<group>";
-		};
-		9266708850EDF045AE7466DB4B78E0C0 /* OneSignalExtension */ = {
-			isa = PBXGroup;
-			children = (
-				4F7169C822307F1A838BDF5875A72E8A /* Frameworks */,
-			);
-			name = OneSignalExtension;
-			sourceTree = "<group>";
-		};
-		983F49D4B28F3B72ACAD45B71D70E64E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D4F73BFFC5D312137A8469033994962E /* OneSignalCore.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9AC2B8F9756F7B5EC754D4E1B4C668B5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				895EDE9374DB560F6BE229DDEAA62517 /* OneSignal */,
-				041D41BD4A4F2AB2AB98ECFE8761B062 /* SwiftLint */,
+				9F27265013F66C92696CD610D080B266 /* OneSignalXCFramework */,
+				D9F1F599C40EEEC7138E5D14240D3342 /* SwiftLint */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		C24E53C298C08D8C9F73BC19939D7667 /* Frameworks */ = {
+		6A7B2489E7255C66A9A89AE021EBFE7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A7562004C1D0F34CFF4534A81A57AC7B /* OneSignalOutcomes.xcframework */,
+				7CFFB50D865E1C552CE8E5F0BE1AD590 /* OneSignalExtension.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8A8AC2E55501F74A45ED78E9BE532D42 /* OneSignalCore */ = {
+			isa = PBXGroup;
+			children = (
+				570020DE914008C8C67B2C9E9C6614A5 /* Frameworks */,
+			);
+			name = OneSignalCore;
+			sourceTree = "<group>";
+		};
+		8D907C9650BC3918BE63A0D3361AAAC4 /* OneSignalExtension */ = {
+			isa = PBXGroup;
+			children = (
+				6A7B2489E7255C66A9A89AE021EBFE7B /* Frameworks */,
+			);
+			name = OneSignalExtension;
+			sourceTree = "<group>";
+		};
+		9F27265013F66C92696CD610D080B266 /* OneSignalXCFramework */ = {
+			isa = PBXGroup;
+			children = (
+				EAF2F9C839BE0D3E0466AE394067336C /* Frameworks */,
+				8A8AC2E55501F74A45ED78E9BE532D42 /* OneSignalCore */,
+				8D907C9650BC3918BE63A0D3361AAAC4 /* OneSignalExtension */,
+				4D52A881173C6DB826EDAB02ACEBF7EF /* OneSignalOutcomes */,
+				BF151E4705073DA83576AEC500825969 /* Support Files */,
+			);
+			name = OneSignalXCFramework;
+			path = OneSignalXCFramework;
+			sourceTree = "<group>";
+		};
+		BBF79742F609BEA7A57D80C3C99167BB /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BC9CD2D85133AB6221E6170B2306E152 /* Pods-Hapit */,
+				F80D0F18924BD8547E28DF409560BDCD /* Pods-OneSignalNotificationServiceExtension */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		BC9CD2D85133AB6221E6170B2306E152 /* Pods-Hapit */ = {
+			isa = PBXGroup;
+			children = (
+				35C850965494DC8C88DB37C61A576E0A /* Pods-Hapit.modulemap */,
+				97A86FCE005ACD9E8424AE67979C231A /* Pods-Hapit-acknowledgements.markdown */,
+				630BAB5434502AF47C9FF959C1110E5A /* Pods-Hapit-acknowledgements.plist */,
+				9350DB7096A2D9917D8E3E2E07786D12 /* Pods-Hapit-dummy.m */,
+				B38A840AA1AE9A988FA72FE75292EB59 /* Pods-Hapit-frameworks.sh */,
+				FF596D575152379B4B5999D09024B8DE /* Pods-Hapit-Info.plist */,
+				D31B0458CCE95AC025162B9A7016EF9F /* Pods-Hapit-umbrella.h */,
+				E7FF74A44B5FC277DDD091AA20828604 /* Pods-Hapit.debug.xcconfig */,
+				8927C45DB1CF40F18D769F7CA5047EDC /* Pods-Hapit.release.xcconfig */,
+			);
+			name = "Pods-Hapit";
+			path = "Target Support Files/Pods-Hapit";
+			sourceTree = "<group>";
+		};
+		BF151E4705073DA83576AEC500825969 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D637525F09E306259653E2B7DEF2491 /* OneSignalXCFramework-xcframeworks.sh */,
+				B78B511A30E4A5F4197F9104F860CED2 /* OneSignalXCFramework.debug.xcconfig */,
+				D5B3E81588E396C63693D8C53FBF02A1 /* OneSignalXCFramework.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/OneSignalXCFramework";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -241,9 +243,9 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				9AC2B8F9756F7B5EC754D4E1B4C668B5 /* Pods */,
-				14A598009D0C3366CFE54B8837992B69 /* Products */,
-				5B31A35C530D32B72969E8B9A8324CFA /* Targets Support Files */,
+				63C7BB11686567167D94435AB7174217 /* Pods */,
+				5071EB36DA2C5CD6E1F0C454232FB8A9 /* Products */,
+				BBF79742F609BEA7A57D80C3C99167BB /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -255,14 +257,65 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D9F1F599C40EEEC7138E5D14240D3342 /* SwiftLint */ = {
+			isa = PBXGroup;
+			children = (
+				DFEA333D6F669D78BD36BD44A6CF59E6 /* Support Files */,
+			);
+			name = SwiftLint;
+			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		DFEA333D6F669D78BD36BD44A6CF59E6 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				62A77BA8BF54474403120D3D2B73A5B1 /* SwiftLint.debug.xcconfig */,
+				B47994283BDBBB0E4B3138B8484D26BB /* SwiftLint.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftLint";
+			sourceTree = "<group>";
+		};
+		EAF2F9C839BE0D3E0466AE394067336C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BAB0050CF6060055FF09669D4BA8843C /* OneSignal.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F80D0F18924BD8547E28DF409560BDCD /* Pods-OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				356F2D1C1E266F197FCDA34D93A5B068 /* Pods-OneSignalNotificationServiceExtension.modulemap */,
+				3DB8B2F57683C47C1BBA3D65B21D44EB /* Pods-OneSignalNotificationServiceExtension-acknowledgements.markdown */,
+				6ABBFDB0D066531F7BA6745060191CA2 /* Pods-OneSignalNotificationServiceExtension-acknowledgements.plist */,
+				A13BE6A7BCEE16D8DECC37724D367F53 /* Pods-OneSignalNotificationServiceExtension-dummy.m */,
+				D7A09A9038D329A928FE4617640EF6E3 /* Pods-OneSignalNotificationServiceExtension-Info.plist */,
+				FBB1B55EBC368D397CE5392E624BCF6E /* Pods-OneSignalNotificationServiceExtension-umbrella.h */,
+				56DEB1F73BA7512920DC315A81ACE198 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				9BBEBFE7D2B65FB363A527A591517AC1 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+			);
+			name = "Pods-OneSignalNotificationServiceExtension";
+			path = "Target Support Files/Pods-OneSignalNotificationServiceExtension";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		A584F308D8BB61A5453763065B8CFE37 /* Headers */ = {
+		5901485E2DA6D16956BB3836386CD282 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE05A5930D3E466E36DF0D7F7FA222D2 /* Pods-Hapit-umbrella.h in Headers */,
+				385319DDB5EE9A2A4E6C18E91E0D3FC3 /* Pods-OneSignalNotificationServiceExtension-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC8C8E5B4EF0C4210A1C4907842B10C0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5D96618C1637BE85231BB5FC4A6F0B5 /* Pods-Hapit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,22 +324,41 @@
 /* Begin PBXNativeTarget section */
 		B8EE3679087A3358EBC62476A25CE859 /* Pods-Hapit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1E575AAEBC5559CECC2947C3D66F3F12 /* Build configuration list for PBXNativeTarget "Pods-Hapit" */;
+			buildConfigurationList = EC05BDA4191AE26421E5383D3DD3CACA /* Build configuration list for PBXNativeTarget "Pods-Hapit" */;
 			buildPhases = (
-				A584F308D8BB61A5453763065B8CFE37 /* Headers */,
-				2FB8BDEA6C33803C06119EEF7B786D2E /* Sources */,
-				5CB181D10903DCEF26CE120C0905E2B8 /* Frameworks */,
-				2E5A5393B4F95CB71567C6B94D23EFAD /* Resources */,
+				BC8C8E5B4EF0C4210A1C4907842B10C0 /* Headers */,
+				D8BF7B9F4B5D6D9CC0938844EF503913 /* Sources */,
+				3A9D2DE257AC379C5138B50ADF242802 /* Frameworks */,
+				0058574FB52410404EA2E023B6060D07 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				794A3A9CF449102149C7424F360322C3 /* PBXTargetDependency */,
-				DC0556DB7AA361126CC19715BEC06E71 /* PBXTargetDependency */,
+				B2B3E120C21BA72449FE91B022441C7B /* PBXTargetDependency */,
+				3B590F085553F6A4CE31F070F218ED00 /* PBXTargetDependency */,
 			);
 			name = "Pods-Hapit";
 			productName = Pods_Hapit;
 			productReference = 220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */;
+			productType = "com.apple.product-type.framework";
+		};
+		BD0F10574EB554D7E668F50D2A5B77DF /* Pods-OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B1B63A1D5FCA8AF7568D72529B89B22 /* Build configuration list for PBXNativeTarget "Pods-OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				5901485E2DA6D16956BB3836386CD282 /* Headers */,
+				3948024658792518F28AA307C562FD4C /* Sources */,
+				69F7556F3B2EE4A33AD1EDCEF2028501 /* Frameworks */,
+				8EEB0CFAF5DB11CDA466335A922A5066 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80F36D54809BE81D8EB8A5929F4D1314 /* PBXTargetDependency */,
+			);
+			name = "Pods-OneSignalNotificationServiceExtension";
+			productName = Pods_OneSignalNotificationServiceExtension;
+			productReference = 4AF3B972C94DFF11700E306F18F01DF3 /* Pods-OneSignalNotificationServiceExtension */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -307,19 +379,27 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 14A598009D0C3366CFE54B8837992B69 /* Products */;
+			productRefGroup = 5071EB36DA2C5CD6E1F0C454232FB8A9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				210EB05CEC7AD9C148F90F752DE74C48 /* OneSignal */,
+				F783E7E9F8591E6CF73ED67143335F50 /* OneSignalXCFramework */,
 				B8EE3679087A3358EBC62476A25CE859 /* Pods-Hapit */,
+				BD0F10574EB554D7E668F50D2A5B77DF /* Pods-OneSignalNotificationServiceExtension */,
 				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2E5A5393B4F95CB71567C6B94D23EFAD /* Resources */ = {
+		0058574FB52410404EA2E023B6060D07 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8EEB0CFAF5DB11CDA466335A922A5066 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -329,55 +409,107 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2CC561DE65F0F66F6AE8852576B8C8B7 /* [CP] Copy XCFrameworks */ = {
+		97C4B591DA43144ED549676B0FF14C11 /* [CP] Copy XCFrameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/OneSignalXCFramework/OneSignalXCFramework-xcframeworks-input-files.xcfilelist",
 			);
 			name = "[CP] Copy XCFrameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/OneSignalXCFramework/OneSignalXCFramework-xcframeworks-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/OneSignalXCFramework/OneSignalXCFramework-xcframeworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2FB8BDEA6C33803C06119EEF7B786D2E /* Sources */ = {
+		3948024658792518F28AA307C562FD4C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08DE50A0842E69EDE7AF812D96DBB05B /* Pods-Hapit-dummy.m in Sources */,
+				B8D3FEB58DCE4143764AC635CD7869BA /* Pods-OneSignalNotificationServiceExtension-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D8BF7B9F4B5D6D9CC0938844EF503913 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				896ABE382F2C24248C9AA0965F18D7A6 /* Pods-Hapit-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		794A3A9CF449102149C7424F360322C3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OneSignal;
-			target = 210EB05CEC7AD9C148F90F752DE74C48 /* OneSignal */;
-			targetProxy = 7200047EC418BA959D3077B2248A56A3 /* PBXContainerItemProxy */;
-		};
-		DC0556DB7AA361126CC19715BEC06E71 /* PBXTargetDependency */ = {
+		3B590F085553F6A4CE31F070F218ED00 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftLint;
 			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
-			targetProxy = 4373BCF9084E619B6F541EFD12369865 /* PBXContainerItemProxy */;
+			targetProxy = A44EF885DCC1472AA6BF57D1CD19A921 /* PBXContainerItemProxy */;
+		};
+		80F36D54809BE81D8EB8A5929F4D1314 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OneSignalXCFramework;
+			target = F783E7E9F8591E6CF73ED67143335F50 /* OneSignalXCFramework */;
+			targetProxy = 8A1D5D6B54D28B70936EF0D3E51DAD2F /* PBXContainerItemProxy */;
+		};
+		B2B3E120C21BA72449FE91B022441C7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OneSignalXCFramework;
+			target = F783E7E9F8591E6CF73ED67143335F50 /* OneSignalXCFramework */;
+			targetProxy = 08BE1BA3B28683678B2475C2ADB915F4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2964A54F6CF86165D692B4264EBA5535 /* Debug */ = {
+		078F361F9163D48B4014A4FF2790DB8B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E39B188E83F34E6CD52F1563DBFD62C5 /* OneSignal.debug.xcconfig */;
+			baseConfigurationReference = 8927C45DB1CF40F18D769F7CA5047EDC /* Pods-Hapit.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		0D9B3B650A9EE28E7467CEC33F807383 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B78B511A30E4A5F4197F9104F860CED2 /* OneSignalXCFramework.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -391,9 +523,46 @@
 			};
 			name = Debug;
 		};
-		5F84ABAB8E70308D775461FAB638BFF0 /* Release */ = {
+		4A87BCB61EDDE420A7E47B41BAC5F67D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5864488E3A45AE8DDCAA753FC2B4144E /* OneSignal.release.xcconfig */;
+			baseConfigurationReference = E7FF74A44B5FC277DDD091AA20828604 /* Pods-Hapit.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8DA06685788740E6B69226D3E769523C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D5B3E81588E396C63693D8C53FBF02A1 /* OneSignalXCFramework.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -538,7 +707,7 @@
 		};
 		AD81E62ACCB0B7A923FC8AA288F9921E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA177E4686BD3ED2BEC8DC0C8633AB4A /* SwiftLint.release.xcconfig */;
+			baseConfigurationReference = B47994283BDBBB0E4B3138B8484D26BB /* SwiftLint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -553,9 +722,9 @@
 			};
 			name = Release;
 		};
-		B97715DB0ACD3BD7DF5F4734E2E25C14 /* Debug */ = {
+		BFAB1AAB8ABBBE510720883ED7F825AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1F8FC03173C9D9AB518CA30846D424A /* Pods-Hapit.debug.xcconfig */;
+			baseConfigurationReference = 9BBEBFE7D2B65FB363A527A591517AC1 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -567,7 +736,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -576,7 +745,45 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EA0BC08D057250DA8CCE4C09C1B361A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56DEB1F73BA7512920DC315A81ACE198 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -592,7 +799,7 @@
 		};
 		EADD1F50ABC8096A0D6CB18822BB4EE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D5107E29EEBAC84BD4AE6B32C263140 /* SwiftLint.debug.xcconfig */;
+			baseConfigurationReference = 62A77BA8BF54474403120D3D2B73A5B1 /* SwiftLint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -606,52 +813,14 @@
 			};
 			name = Debug;
 		};
-		FE61F4C2B4721DE2E1B6286193F0E528 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9263E5467343F818A035F71A84927EF8 /* Pods-Hapit.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1E575AAEBC5559CECC2947C3D66F3F12 /* Build configuration list for PBXNativeTarget "Pods-Hapit" */ = {
+		2B1B63A1D5FCA8AF7568D72529B89B22 /* Build configuration list for PBXNativeTarget "Pods-OneSignalNotificationServiceExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B97715DB0ACD3BD7DF5F4734E2E25C14 /* Debug */,
-				FE61F4C2B4721DE2E1B6286193F0E528 /* Release */,
+				EA0BC08D057250DA8CCE4C09C1B361A6 /* Debug */,
+				BFAB1AAB8ABBBE510720883ED7F825AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -665,6 +834,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		657B4D7F7B361A2CAED883966F438D9D /* Build configuration list for PBXAggregateTarget "OneSignalXCFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D9B3B650A9EE28E7467CEC33F807383 /* Debug */,
+				8DA06685788740E6B69226D3E769523C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -674,11 +852,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C4BEDE8419E52BD08B0E6C875B5CD08A /* Build configuration list for PBXAggregateTarget "OneSignal" */ = {
+		EC05BDA4191AE26421E5383D3DD3CACA /* Build configuration list for PBXNativeTarget "Pods-Hapit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2964A54F6CF86165D692B4264EBA5535 /* Debug */,
-				5F84ABAB8E70308D775461FAB638BFF0 /* Release */,
+				4A87BCB61EDDE420A7E47B41BAC5F67D /* Debug */,
+				078F361F9163D48B4014A4FF2790DB8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

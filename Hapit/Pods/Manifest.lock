@@ -1,29 +1,29 @@
 PODS:
-  - OneSignal (3.12.3):
-    - OneSignal/OneSignalCore (= 3.12.3)
-    - OneSignal/OneSignalExtension (= 3.12.3)
-    - OneSignal/OneSignalOutcomes (= 3.12.3)
-  - OneSignal/OneSignalCore (3.12.3)
-  - OneSignal/OneSignalExtension (3.12.3):
-    - OneSignal/OneSignalCore
-    - OneSignal/OneSignalOutcomes
-  - OneSignal/OneSignalOutcomes (3.12.3):
-    - OneSignal/OneSignalCore
+  - OneSignalXCFramework (3.12.3):
+    - OneSignalXCFramework/OneSignalCore (= 3.12.3)
+    - OneSignalXCFramework/OneSignalExtension (= 3.12.3)
+    - OneSignalXCFramework/OneSignalOutcomes (= 3.12.3)
+  - OneSignalXCFramework/OneSignalCore (3.12.3)
+  - OneSignalXCFramework/OneSignalExtension (3.12.3):
+    - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalOutcomes
+  - OneSignalXCFramework/OneSignalOutcomes (3.12.3):
+    - OneSignalXCFramework/OneSignalCore
   - SwiftLint (0.50.3)
 
 DEPENDENCIES:
-  - OneSignal
+  - OneSignalXCFramework (< 4.0, >= 3.0.0)
   - SwiftLint (~> 0.27)
 
 SPEC REPOS:
   trunk:
-    - OneSignal
+    - OneSignalXCFramework
     - SwiftLint
 
 SPEC CHECKSUMS:
-  OneSignal: cdff84e3d088caf7952e30140838b2ab296c8cbc
+  OneSignalXCFramework: 75844c29607ca95e6176f6f21257b4382c7fdbfb
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
 
-PODFILE CHECKSUM: 0b0439fc58413881c49c1a6f6c66faa2ca3320f2
+PODFILE CHECKSUM: 62a3de6e673a91d77a15c14ad59c3dee6f5ad495
 
 COCOAPODS: 1.11.3

@@ -76,6 +76,14 @@ struct OptionView: View {
                 
                 Button {
                     // TODO: 회원탈퇴 기능 추가
+                    Task {
+                        do {
+                            try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                            isFullScreen = true
+                        } catch {
+                            throw(error)
+                        }
+                    }
                 } label: {
                     Text("회원탈퇴")
                         .font(.custom("IMHyemin-Regular", size: 16))

@@ -42,15 +42,10 @@ class AuthManager: ObservableObject {
     }
     
     //MARK: - 회원탈퇴
-    final func deleteUser() {
-        
-    }
-    
-    
-    //MARK: - CurrentUserFetch 함수
-    final func fetchCurrentUser() throws {
+    final func deleteUser(uid: String) async throws {
         do {
-            guard let uid = firebaseAuth.currentUser?.uid else { return }
+            try await firebaseAuth.currentUser?.delete()
+            try await database.collection("User").document("\(uid)").delete()
         } catch {
             throw(error)
         }

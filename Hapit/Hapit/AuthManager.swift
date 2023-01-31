@@ -20,7 +20,7 @@ class AuthManager: ObservableObject {
     let currentUser = Auth.auth().currentUser ?? nil
     
     // MARK: - 로그인 
-    public func login(with email: String, _ password: String) async throws -> Bool {
+    final func login(with email: String, _ password: String) async throws -> Bool {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
             isLoggedin = true
@@ -41,7 +41,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 신규회원 생성
-    func register(email: String, pw: String, name: String) async throws {
+    final func register(email: String, pw: String, name: String) async throws {
         do {
             //Auth에 유저등록
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
@@ -58,7 +58,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 유저데이터 firestore에 업로드하는 함수
-    func uploadUserInfo(userInfo: User) async throws {
+    final func uploadUserInfo(userInfo: User) async throws {
         do {
             try await database.collection("User")
                 .document(userInfo.id)
@@ -73,7 +73,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 이메일 중복확인을 해주는 함수
-    func isEmailDuplicated(email: String) async throws -> Bool {
+    final func isEmailDuplicated(email: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
                 .whereField("email", isEqualTo: email).getDocuments()
@@ -90,7 +90,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 닉네임 중복확인을 해주는 함수
-    func isNicknameDuplicated(nickName: String) async throws -> Bool {
+    final func isNicknameDuplicated(nickName: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
                 .whereField("name", isEqualTo: nickName).getDocuments()
@@ -107,7 +107,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 닉네임을 반환
-    func getNickName(uid: String) async -> String {
+    final func getNickName(uid: String) async -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()

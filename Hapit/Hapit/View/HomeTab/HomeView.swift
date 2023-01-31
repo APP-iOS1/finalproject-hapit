@@ -26,9 +26,7 @@ struct HabitSegmentView: View {
         case 0:
             VStack {
                 if habitManager.challenges.count < 1{
-                    
                     EmptyCellView()
-                    
                 }
                 else {
                     ScrollView{
@@ -79,7 +77,7 @@ struct HabitSegmentView: View {
             }
             .onAppear{
                 habitManager.loadChallenge()
-                }
+            }
         case 1:
 
                 if habitManager.habits.count < 1{

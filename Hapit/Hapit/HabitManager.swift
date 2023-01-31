@@ -29,7 +29,6 @@ final class HabitManager: ObservableObject{
     
     let database = Firestore.firestore()
     
-    
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
@@ -211,5 +210,8 @@ final class HabitManager: ObservableObject{
             }
             .store(in: &cancellables)
     }
+    
+    
+    
     
 }

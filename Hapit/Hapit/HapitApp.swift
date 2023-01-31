@@ -44,8 +44,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("Set external user id done with error: " + error.debugDescription)
         })
     }
-    
-    
+
     private func randomString(of length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         var s = ""
@@ -55,7 +54,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return s
     }
     
-    
+
 }
 
 @main

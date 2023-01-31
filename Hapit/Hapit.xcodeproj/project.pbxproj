@@ -50,6 +50,7 @@
 		C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88429766BE100E58C84 /* JellyGridView.swift */; };
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
+		C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
@@ -146,6 +147,7 @@
 		C5FAC88429766BE100E58C84 /* JellyGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyGridView.swift; sourceTree = "<group>"; };
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
+		C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				C5FAC87C29765BAC00E58C84 /* MyPageView.swift */,
 				C5FAC88629766C2B00E58C84 /* Profile */,
 				C5FAC87F29765E6600E58C84 /* Reward */,
+				C5FE7D9F2988F7A900B552E9 /* Option */,
 			);
 			path = MyPageTab;
 			sourceTree = "<group>";
@@ -278,6 +281,14 @@
 				C59D55162977B782008BB0CF /* NicknameModalView.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		C5FE7D9F2988F7A900B552E9 /* Option */ = {
+			isa = PBXGroup;
+			children = (
+				C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */,
+			);
+			path = Option;
 			sourceTree = "<group>";
 		};
 		C9CBC7FE2976831600D530CC /* HabitDetail */ = {
@@ -688,6 +699,7 @@
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
+				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,

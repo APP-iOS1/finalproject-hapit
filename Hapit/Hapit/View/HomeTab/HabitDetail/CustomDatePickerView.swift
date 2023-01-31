@@ -15,13 +15,10 @@ struct CustomDatePickerView: View {
     //MARK: 화살표 버튼을 통해 month를 업데이트 해주는 변수
     @State private var currentMonth: Int = 0
     
+    @EnvironmentObject var habitManager: HabitManager
+    
     var body: some View {
         VStack(spacing: 35){
-            
-            Text(currentChallenge.challengeTitle)
-                .font(.custom("IMHyemin-Bold", size: 28))
-                .padding(.bottom, 0)
-            
             // Days
             let days: [String] = ["일", "월", "화", "수", "목", "금", "토"]
 
@@ -58,10 +55,15 @@ struct CustomDatePickerView: View {
             .padding(.top, -20)
             HStack(spacing: 0){
                 ForEach(days, id: \.self){ day in
-                    Text(day)
-                        .font(.custom("IMHyemin-Bold", size: 16))
-                        .frame(maxWidth: .infinity)
-   
+                    VStack{
+                        Text(day)
+                            .font(.custom("IMHyemin-Bold", size: 16))
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(getDayColor(day))
+                        Rectangle()
+                            .frame(height: 2)
+                            .foregroundColor(getDayColor(day))
+                    }
                 }
             }
             
@@ -75,7 +77,7 @@ struct CustomDatePickerView: View {
                         .background{
                             Circle()
                                 .fill(Color("DarkPinkColor"))
-                                .padding(.top, -5)
+                                .padding(.top, -20)
                                 .opacity(isSameDay(date1: value.date, date2: currentDate) ? 1 : 0)
                         }
                         .onTapGesture {
@@ -126,8 +128,14 @@ struct CustomDatePickerView: View {
 //
             Spacer()
         }//VStack
+        .padding()
+        .padding(.top, 0)
         .onChange(of: currentMonth) { newValue in
             currentDate = getCurrentMonth()
+                
+        }
+        .onAppear{
+               habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
         }
     }
     
@@ -163,6 +171,17 @@ struct CustomDatePickerView: View {
         }
         .padding(.vertical, 8)
         .frame(height: 60, alignment: .top)
+    }
+    func getDayColor(_ day: String) -> Color {
+        if day == "일"{
+            return .red
+        }
+        else if day == "토"{
+            return .blue
+        }
+        else{
+            return Color("AccentColor")
+        }
     }
     
     func isSameDay(date1: Date, date2: Date) -> Bool{
@@ -214,11 +233,11 @@ struct CustomDatePickerView: View {
         return days
     }
 }
-struct CustomDatePicker_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomDatePickerView(currentChallenge: (Challenge(id: UUID().uuidString, creator: "릴루", mateArray: ["현호", "진형", "예원"], challengeTitle: "물 마시기", createdAt: Date(), count: 0, isChecked: true)) , currentDate: .constant(Date()))
-    }
-}
+//struct CustomDatePicker_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CustomDatePickerView(currentChallenge: (Challenge(id: UUID().uuidString, creator: "릴루", mateArray: ["현호", "진형", "예원"], challengeTitle: "물 마시기", createdAt: Date(), count: 0, isChecked: true, uid: "")) , currentDate: .constant(Date()))
+//    }
+//}
 
 extension Date{
     

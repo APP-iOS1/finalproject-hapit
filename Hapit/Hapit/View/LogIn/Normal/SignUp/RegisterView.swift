@@ -29,7 +29,6 @@ struct RegisterView: View {
     var dupName: Bool {
         return nickName == nameTmp
     }
-
     
     @State private var isSecuredPassword: Bool = true
     @State private var isSecuredCheckPassword: Bool = true
@@ -65,17 +64,16 @@ struct RegisterView: View {
                                 .foregroundColor(Color.accentColor)
                             Text("입력해주세요")
                         }
-                        .font(.largeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 17))
+                        .font(.custom("IMHyemin-Bold", size: 34))
                         Spacer()
                     }
                     .padding(.bottom, 100)
-                    //Spacer()
                     
                     VStack(spacing: 50) {
                         VStack(alignment: .leading, spacing: 5) {
                             HStack {
                                 TextField("이메일을 입력해주세요.", text: $email)
+                                    .font(.custom("IMHyemin-Regular", size: 16))
                                     .focused($emailFocusField)
                                     .modifier(ClearTextFieldModifier())
                                 
@@ -98,6 +96,7 @@ struct RegisterView: View {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("이미 사용중인 이메일입니다.")
+                                        .font(.custom("IMHyemin-Regular", size: 12))
                                 }
                                 .foregroundColor(.red)
                                 .font(.caption)
@@ -105,6 +104,7 @@ struct RegisterView: View {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("올바른 이메일 형식이 아닙니다.")
+                                        .font(.custom("IMHyemin-Regular", size: 12))
                                 }
                                 .foregroundColor(.red)
                                 .font(.caption)
@@ -120,12 +120,14 @@ struct RegisterView: View {
                                 // 비밀번호 숨김 아이콘일 때
                                 if isSecuredPassword {
                                     SecureField("비밀번호를 입력해주세요.", text: $pw)
+                                        .font(.custom("IMHyemin-Regular", size: 16))
                                         .textContentType(.oneTimeCode)
                                         .textContentType(.newPassword)
                                         .focused($pwFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
                                     TextField("비밀번호를 입력해주세요.", text: $pw)
+                                        .font(.custom("IMHyemin-Regular", size: 16))
                                         .focused($pwFocusField)
                                         .modifier(ClearTextFieldModifier())
                                 }
@@ -151,7 +153,6 @@ struct RegisterView: View {
                             } // HStack - TextField, Secured Image, Check Image
                             .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
 
-                            
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                             
@@ -162,29 +163,28 @@ struct RegisterView: View {
                                     Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요.")
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                             }
                             else {
                                 Text("") // TextField 자리 고정
                             }
                         } // VStack - HStack과 밑줄 Rectangle
                         .frame(height: 30)
-                        
-                        
-                        
+
                         // MARK: 비밀번호 확인 입력
-                        
                         VStack(alignment: .leading, spacing: 5) {
                             HStack {
                                 // 비밀번호 숨김 아이콘일 때
                                 if isSecuredCheckPassword {
                                     SecureField("비밀번호를 다시 입력해주세요.", text: $pwCheck)
+                                        .font(.custom("IMHyemin-Regular", size: 16))
                                         .textContentType(.oneTimeCode)
                                         .textContentType(.newPassword)
                                         .focused($pwCheckFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
                                     TextField("비밀번호를 다시 입력해주세요", text: $pwCheck)
+                                        .font(.custom("IMHyemin-Regular", size: 16))
                                         .focused($pwCheckFocusField)
                                         .modifier(ClearTextFieldModifier())
                                 }
@@ -212,8 +212,7 @@ struct RegisterView: View {
                             
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwCheckFocusField))
-                            
-                            
+                               
                             // 비밀번호 형식이 아닐 경우 경고 메시지
                             if pw != pwCheck && pw != "" && pwCheck != "" {
                                 HStack(alignment: .center, spacing: 5) {
@@ -221,25 +220,25 @@ struct RegisterView: View {
                                     Text("비밀번호가 일치하지 않습니다")
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                             } else if pw != pwCheck && pw == "" {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("비밀번호를 먼저 입력해주세요")
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                             } else {
                                 Text("") // TextField 자리 고정
                             }
                         } // VStack - HStack과 밑줄 Rectangle
                         .frame(height: 30)
-                        
-                        
+                         
                         // MARK: 닉네임 입력
                         VStack(alignment: .leading, spacing: 5) {
                             HStack {
                                 TextField("닉네임을 입력해주세요.", text: $nickName)
+                                    .font(.custom("IMHyemin-Regular", size: 16))
                                     .focused($nickNameFocusField)
                                     .modifier(ClearTextFieldModifier())
                                 
@@ -258,28 +257,26 @@ struct RegisterView: View {
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: nickNameFocusField))
                             
-                            
                             if nickName != "" && nickName.count >= 2 && nameCheck && dupName {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("이미 사용중인 닉네임입니다.")
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                             } else if nickName != "" && nickName.count < 2 {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
                                     Text("닉네임을 2글자 이상 입력해주세요")
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                             } else {
                                 Text("")
                             }
                         }
                         .frame(height: 30)
                     }
-                    
                     Spacer()
                 }
             }
@@ -291,6 +288,7 @@ struct RegisterView: View {
                 ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)
             } label: {
                 Text("완료")
+                    .font(.custom("IMHyemin-Bold", size: 16))
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -326,13 +324,7 @@ struct RegisterView: View {
                     canGoNext = isDuplicated() // false --> 다음으로 못감
                 }
             })
-            
-            
-            
-            
-            
-            
-            
+                
 //            Button(action: {
 //                Task {
 //                    isClicked.toggle()
@@ -390,8 +382,7 @@ struct RegisterView: View {
         .textInputAutocapitalization(.never)
         .padding(.horizontal, 20)
     }
-    
-    
+        
     // 이메일 유효성 검증
     func checkEmailType(string: String) -> Bool {
         let emailFormula = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
@@ -452,4 +443,3 @@ struct SignUpView_Previews: PreviewProvider {
         RegisterView(isFullScreen: .constant(true))
     }
 }
-

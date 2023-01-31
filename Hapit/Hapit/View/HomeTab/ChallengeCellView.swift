@@ -16,7 +16,6 @@ struct ChallengeCellView: View {
     // MARK: - Body
     var body: some View {
         
-        
         HStack{
             Button {
                 // firestore에 업데이트 함수 제작 요망

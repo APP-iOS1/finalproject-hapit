@@ -302,9 +302,7 @@ struct RegisterView: View {
             .simultaneousGesture(TapGesture().onEnded{
                 Task {
                     mailDuplicated = await authManager.isEmailDuplicated(email: email)
-                    print(mailDuplicated)
                     nameCheck = await authManager.isNicknameDuplicated(nickName: nickName)
-                    print(nameCheck)
                     //False면 사용가능, true면 중복이라 사용불가
                     
                     //이메일 중복인경우

@@ -165,7 +165,7 @@ struct ToSView: View {
                         do {
                             try await authManager.register(email: email, pw: pw, name: nickName)
                         } catch {
-                            print(error.localizedDescription)
+                            throw(error)
                         }
                     }
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {

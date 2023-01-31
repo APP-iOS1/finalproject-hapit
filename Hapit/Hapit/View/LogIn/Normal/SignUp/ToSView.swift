@@ -27,7 +27,7 @@ struct ToSView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Spacer()
+            Spacer().frame(height: 10)
             
             HStack() {
                 StepBar(nowStep: 2)
@@ -44,11 +44,11 @@ struct ToSView: View {
                     }
                     Text("동의해주세요")
                 }
-                .font(.largeTitle)
-                .font(.custom("IMHyemin-Bold", size: 17))
+                .font(.custom("IMHyemin-Bold", size: 34))
                 Spacer()
             }
             
+            Spacer()
             Spacer()
             
             Group {
@@ -71,8 +71,7 @@ struct ToSView: View {
                             .font(.title)
                     }
                     Text("약관 전체동의")
-                        .font(.title2)
-                        .bold()
+                        .font(.custom("IMHyemin-Bold", size: 22))
                     Spacer()
                 }
                 
@@ -83,14 +82,13 @@ struct ToSView: View {
                     HStack {
                         Button(action: {
                             agreeService.toggle()
-                            
                             isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
-                            
                         }){
                             Image(systemName: "checkmark")
                                 .foregroundColor(agreeService ? Color.accentColor : .gray)
                         }
                         Text("(필수) 서비스 이용약관 동의")
+                            .font(.custom("IMHyemin-Regular", size: 16))
                         Spacer()
                         NavigationLink(destination: ServiceToS()){
                             Image(systemName: "chevron.right")
@@ -101,14 +99,13 @@ struct ToSView: View {
                     HStack {
                         Button(action: {
                             agreePrivate.toggle()
-                            
                             isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
-                            
                         }){
                             Image(systemName: "checkmark")
                                 .foregroundColor(agreePrivate ? Color.accentColor : .gray)
                         }
                         Text("(필수) 개인정보 수집 및 이용동의")
+                            .font(.custom("IMHyemin-Regular", size: 16))
                         Spacer()
                         NavigationLink(destination: PrivateToS()){
                             Image(systemName: "chevron.right")
@@ -119,12 +116,12 @@ struct ToSView: View {
                     HStack {
                         Button(action: {
                             agreeAD.toggle()
-                            
                         }){
                             Image(systemName: "checkmark")
                                 .foregroundColor(agreeAD ? Color.accentColor : .gray)
                         }
                         Text("(선택) E-mail 광고성 정보 수신동의")
+                            .font(.custom("IMHyemin-Regular", size: 16))
                         Spacer()
                         NavigationLink(destination: ServiceToS()){
                             Image(systemName: "chevron.right")
@@ -134,7 +131,6 @@ struct ToSView: View {
                 }
                 .padding(.horizontal, 10)
                 
-                Spacer()
                 Spacer()
                 
                 // 회원가입 버튼을 누르면 progress view가 나타남
@@ -152,6 +148,7 @@ struct ToSView: View {
                             }
                     } else {
                         Text("가입하기")
+                            .font(.custom("IMHyemin-Bold", size: 16))
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -168,7 +165,7 @@ struct ToSView: View {
                         do {
                             try await authManager.register(email: email, pw: pw, name: nickName)
                         } catch {
-                            print(error.localizedDescription)
+                            throw(error)
                         }
                     }
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {

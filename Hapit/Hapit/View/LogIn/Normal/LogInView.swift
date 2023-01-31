@@ -15,6 +15,9 @@ struct LogInView: View {
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
     
+    @State private var logInResult: Bool = false
+    @State private var verified: Bool = false
+    
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
@@ -32,26 +35,41 @@ struct LogInView: View {
                 }
                 
                 Group {
-                    VStack(spacing: 5) {
-                        TextField("Email", text: $email)
+                    VStack {
+                        TextField("이메일", text: $email)
+                            .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($emailFocusField)
                             .modifier(ClearTextFieldModifier())
                         Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
                     }
                     
-                    Spacer().frame(height: 22)
+                    Spacer().frame(height: 20)
                     
-                    VStack(spacing: 5) {
-                        SecureField("Password", text: $pw)
+                    VStack {
+                        SecureField("비밀번호", text: $pw)
+                            .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($pwFocusField)
                             .modifier(ClearTextFieldModifier())
                         Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                     }
                 }
+                
+                Spacer().frame(height: 22)
+                
+                HStack(alignment: .center, spacing: 5) {
+                    if !logInResult && verified {
+                        Image(systemName: "exclamationmark.circle")
+                        Text("이메일과 비밀번호가 일치하지 않습니다")
+                        Spacer()
+                    } else {
+                        Text("이")
+                            .foregroundColor(.white)
+                    }
+                }
+                .font(.custom("IMHyemin-Regular", size: 12))
+                .foregroundColor(.red)
                 
                 Spacer().frame(height: 20)
                 
@@ -63,12 +81,11 @@ struct LogInView: View {
                         } else if pw == "" {
                             pwFocusField = true
                         } else {
-                            let loginResult = await authManager.login(with: email, pw)
+                            verified = true
+                            logInResult = await authManager.login(with: email, pw)
                             
-                            if loginResult {
+                            if logInResult {
                                 isFullScreen = false
-                            } else {
-                                print("로그인 실패")
                             }
                         } 
                     }
@@ -78,25 +95,25 @@ struct LogInView: View {
                         .frame(maxWidth: .infinity, maxHeight: 40)
                         .overlay {
                             Text("로그인")
-                                .font(.custom("IMHyemin-Regular", size: 17))
+                                .font(.custom("IMHyemin-Bold", size: 16))
                                 .foregroundColor(.white)
-                                .bold()
                         }
                 }
                 
-                Spacer().frame(height: 15)
-                
-                HStack {
-                    Text("아직 회원이 아니신가요?")
-                        .font(.custom("IMHyemin-Regular", size: 17))
-                    NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
-                        Text("회원가입")
-                            .font(.custom("IMHyemin-Regular", size: 17))
-                        // IMHyemin-Bold
+                Group {
+                    Spacer().frame(height: 15)
+                    
+                    HStack {
+                        Text("아직 회원이 아니신가요?")
+                            .font(.custom("IMHyemin-Regular", size: 16))
+                        NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
+                            Text("회원가입")
+                                .font(.custom("IMHyemin-Regular", size: 16))
+                        }
                     }
+                    
+                    Spacer().frame(height: 35)
                 }
-                
-                Spacer().frame(height: 35)
                 
                 Group {
                     HStack {
@@ -112,8 +129,8 @@ struct LogInView: View {
     }
 }
 
-//struct LogInView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LogInView(isFullScreen: .constant(true))
-//    }
-//}
+struct LogInView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogInView(isFullScreen: .constant(true))
+    }
+}

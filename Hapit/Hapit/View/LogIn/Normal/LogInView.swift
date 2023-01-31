@@ -28,7 +28,7 @@ struct LogInView: View {
                 
                 Group {
                     VStack {
-                        TextField("Email", text: $email)
+                        TextField("이메일", text: $email)
                             .focused($emailFocusField)
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
@@ -40,7 +40,7 @@ struct LogInView: View {
                     Spacer().frame(height: 22)
                     
                     VStack {
-                        SecureField("Password", text: $pw)
+                        SecureField("비밀번호", text: $pw)
                             .focused($pwFocusField)
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)

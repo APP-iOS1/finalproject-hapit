@@ -14,22 +14,21 @@ struct RewardView: View {
             VStack {
                 HStack {
                     Text("곰젤리 전시관")
-                        .font(.title2)
-                        .bold()
+                        .font(.custom("IMHyemin-Bold", size: 22))
                     Spacer()
                 }.padding(.bottom, 5)
                 HStack {
                     Text("획득 젤리")
-                        .bold()
+                        .font(.custom("IMHyemin-Bold", size: 17))
                     Spacer()
                     Text("6 / 30")
                         .foregroundColor(Color.accentColor)
-                        .bold()
+                        .font(.custom("IMHyemin-Bold", size: 17))
                 }
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
-            //                .padding()
+
             Divider()
             // 이미지 그리드
             JellyGridView()

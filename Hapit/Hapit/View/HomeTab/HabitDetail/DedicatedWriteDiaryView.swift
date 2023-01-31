@@ -49,6 +49,7 @@ struct DedicatedWriteDiaryView: View {
                     }
 
                     // 글자수 300자 제한
+                    // TODO: frame 조절
                     TextEditor(text: $content) // ios 15
                         .font(.custom("IMHyemin-Regular", size: 15))
                         .lineSpacing(10)

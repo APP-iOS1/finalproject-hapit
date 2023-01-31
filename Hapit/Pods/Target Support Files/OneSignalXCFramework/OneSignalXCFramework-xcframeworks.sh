@@ -177,8 +177,8 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_XCFramework/OneSignal.xcframework" "OneSignal" "framework" "ios-arm64_i386_x86_64-simulator" "ios-arm64_armv7_armv7s" "ios-arm64_x86_64-maccatalyst"
-install_xcframework "${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_Core/OneSignalCore.xcframework" "OneSignal/OneSignalCore" "framework" "ios-arm64_x86_64-maccatalyst" "ios-arm64_i386_x86_64-simulator" "ios-arm64_armv7_armv7s"
-install_xcframework "${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework" "OneSignal/OneSignalExtension" "framework" "ios-arm64_i386_x86_64-simulator" "ios-arm64_armv7_armv7s" "ios-arm64_x86_64-maccatalyst"
-install_xcframework "${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_Outcomes/OneSignalOutcomes.xcframework" "OneSignal/OneSignalOutcomes" "framework" "ios-arm64_x86_64-maccatalyst" "ios-arm64_armv7_armv7s" "ios-arm64_i386_x86_64-simulator"
+install_xcframework "${PODS_ROOT}/OneSignalXCFramework/iOS_SDK/OneSignalSDK/OneSignal_XCFramework/OneSignal.xcframework" "OneSignalXCFramework" "framework" "ios-arm64_i386_x86_64-simulator" "ios-arm64_armv7_armv7s" "ios-arm64_x86_64-maccatalyst"
+install_xcframework "${PODS_ROOT}/OneSignalXCFramework/iOS_SDK/OneSignalSDK/OneSignal_Core/OneSignalCore.xcframework" "OneSignalXCFramework/OneSignalCore" "framework" "ios-arm64_x86_64-maccatalyst" "ios-arm64_i386_x86_64-simulator" "ios-arm64_armv7_armv7s"
+install_xcframework "${PODS_ROOT}/OneSignalXCFramework/iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework" "OneSignalXCFramework/OneSignalExtension" "framework" "ios-arm64_i386_x86_64-simulator" "ios-arm64_armv7_armv7s" "ios-arm64_x86_64-maccatalyst"
+install_xcframework "${PODS_ROOT}/OneSignalXCFramework/iOS_SDK/OneSignalSDK/OneSignal_Outcomes/OneSignalOutcomes.xcframework" "OneSignalXCFramework/OneSignalOutcomes" "framework" "ios-arm64_x86_64-maccatalyst" "ios-arm64_armv7_armv7s" "ios-arm64_i386_x86_64-simulator"
 

@@ -15,8 +15,7 @@ struct ChallengeCellView: View {
     
     // MARK: - Body
     var body: some View {
-        
-        HStack{
+        HStack {
             Button {
                 // firestore에 업데이트 함수 제작 요망
                 //challenge.isChecked.toggle()
@@ -68,14 +67,13 @@ struct ChallengeCellView: View {
             Spacer()
             
         }//HStack
-        .padding(20)
         .foregroundColor(.black)
         .background(
             .white
         )
-        .cornerRadius(20)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 5)
+//        .cornerRadius(20)
+//        .padding(.horizontal, 20)
+//        .padding(.bottom, 5)
 
 //        .overlay(
 //            VStack{

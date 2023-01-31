@@ -46,6 +46,7 @@
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
+		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
 		F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47BA153297A75EE000222EE /* FirebaseAuth */; };
@@ -106,6 +107,7 @@
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		F47BA150297A697F000222EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,6 +239,14 @@
 			path = SocialTab;
 			sourceTree = "<group>";
 		};
+		F40B9A512988CDFB00385014 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		F49E28BE29762C9B009EEB1A = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +270,8 @@
 			isa = PBXGroup;
 			children = (
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
+				F40B9A512988CDFB00385014 /* Extension */,
+				571a415df71f58868acced0d469ac265c837a04f
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
 				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,
@@ -523,6 +535,7 @@
 				C59D551B2977D149008BB0CF /* MessageFullscreenView.swift in Sources */,
 				C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */,
 				F49E28E5297639F4009EEB1A /* RegisterView.swift in Sources */,
+				F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,

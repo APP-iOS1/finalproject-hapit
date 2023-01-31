@@ -18,9 +18,10 @@ struct ProfileCellView: View {
     var body: some View {
         VStack {
             HStack {
+                // MARK: 프로필 사진 변경
                 VStack {
                     Button {
-                        showBearModal = true
+                        showBearModal.toggle()
                     } label: {
                         Image(bearArray[isSelectedJelly % 7])
                             .resizable()
@@ -30,21 +31,21 @@ struct ProfileCellView: View {
                                 .fill(Color(.systemGray6))
                                 .frame(width: 90, height: 90))
                     }
-                    .disabled(showBearModal)
                     .padding(30)
                 }.halfSheet(showSheet: $showBearModal) {
                     BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
                 }
                 
+                // MARK: 닉네임, 이메일, 닉네임 수정
                 VStack {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(nickName)")
-                                .font(.title2)
-                                .bold()
+                                .font(.custom("IMHyemin-Bold", size: 22))
+                                .padding(.leading, -5)
                             
                             Text("\(email)")
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                         }
                         .padding(.leading, 10)
                         Spacer()
@@ -58,9 +59,9 @@ struct ProfileCellView: View {
                             .frame(width: 210, height: 25)
                             .overlay{
                                 Text("닉네임 수정")
+                                    .font(.custom("IMHyemin-Bold", size: 13))
                                     .foregroundColor(.accentColor)
-                                    .font(.footnote)
-                                    .fontWeight(.bold)
+                                    
                             }
                     }
                     .halfSheet(showSheet: $showNicknameModal) {
@@ -78,7 +79,6 @@ struct ProfileCellView: View {
 }
 
 extension View {
-    
     func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping () -> SheetView) -> some View {
         
         return self
@@ -95,6 +95,10 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
     
     let controller = UIViewController()
     
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
+    
     func makeUIViewController(context: Context) -> UIViewController {
         controller.view.backgroundColor = .clear
         return controller
@@ -104,23 +108,39 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
         
         if showSheet {
             let sheetController = CustomHostingController(rootView: sheetView)
-            uiViewController.present(sheetController, animated: true) {
-                DispatchQueue.main.async {
-                    self.showSheet.toggle()
-                }
-            }
+            sheetController.presentationController?.delegate = context.coordinator
+            uiViewController.present(sheetController, animated: true)
+        } else {
+            // closing view when showSheet toggled again
+            uiViewController.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    // On Dismiss
+    class Coordinator: NSObject, UISheetPresentationControllerDelegate {
+        
+        var parent: HalfSheetHelper
+        
+        init(parent: HalfSheetHelper) {
+            self.parent = parent
+        }
+        
+        func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+            parent.showSheet = false
+        }
+
     }
 }
 
 class CustomHostingController<Content: View>: UIHostingController<Content> {
     override func viewDidLoad() {
+        
         if let presentationController = presentationController as?
             UISheetPresentationController {
             presentationController.detents = [
                 .medium()
-                
             ]
+            
         }
     }
 }

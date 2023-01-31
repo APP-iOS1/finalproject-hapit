@@ -15,6 +15,9 @@ struct LogInView: View {
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
     
+    @State private var logInResult: Bool = false
+    @State private var errorText: String = ""
+    
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
@@ -52,6 +55,18 @@ struct LogInView: View {
                     }
                 }
                 
+                HStack(alignment: .center, spacing: 5) {
+                    if !logInResult {
+                        Image(systemName: "exclamationmark.circle")
+                        Text("이메일과 비밀번호가 일치하지 않습니다")
+                        Spacer()
+                    } else {
+                        Text("")
+                    }
+                }
+                .font(.custom("IMHyemin-Regular", size: 12))
+                .foregroundColor(.red)
+                
                 Spacer().frame(height: 20)
                 
                 Button(action: {
@@ -62,12 +77,10 @@ struct LogInView: View {
                         } else if pw == "" {
                             pwFocusField = true
                         } else {
-                            let loginResult = await authManager.login(with: email, pw)
+                            logInResult = await authManager.login(with: email, pw)
                             
-                            if loginResult {
+                            if logInResult {
                                 isFullScreen = false
-                            } else {
-                                print("로그인 실패")
                             }
                         } 
                     }
@@ -89,7 +102,7 @@ struct LogInView: View {
                         .font(.custom("IMHyemin-Regular", size: 16))
                     NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
                         Text("회원가입")
-                            .font(.custom("IMHyemin-Regular", size: 16))
+                            .font(.custom("IMHyemin-Regular", size: 16)) 
                     }
                 }
                 
@@ -107,8 +120,8 @@ struct LogInView: View {
     }
 }
 
-//struct LogInView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LogInView(isFullScreen: .constant(true))
-//    }
-//}
+struct LogInView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogInView(isFullScreen: .constant(true))
+    }
+}

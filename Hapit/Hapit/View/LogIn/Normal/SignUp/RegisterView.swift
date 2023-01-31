@@ -99,7 +99,6 @@ struct RegisterView: View {
                                         .font(.custom("IMHyemin-Regular", size: 12))
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
                             } else if !email.isEmpty && !checkEmailType(string: email) {
                                 HStack(alignment: .center, spacing: 5) {
                                     Image(systemName: "exclamationmark.circle")
@@ -107,7 +106,6 @@ struct RegisterView: View {
                                         .font(.custom("IMHyemin-Regular", size: 12))
                                 }
                                 .foregroundColor(.red)
-                                .font(.caption)
                             } else {
                                 Text("") // TextField 자리 고정
                             }

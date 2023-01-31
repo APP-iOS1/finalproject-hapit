@@ -94,7 +94,7 @@
 		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
 		C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
 		C5482987298751EC000C743E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		C5706F1429878730001300F5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C5706F1429878730001300F5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 		C59D55142977A7C9008BB0CF /* Jelly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jelly.swift; sourceTree = "<group>"; };
 		C59D55162977B782008BB0CF /* NicknameModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModalView.swift; sourceTree = "<group>"; };
 		C59D55182977CD17008BB0CF /* FriendChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeView.swift; sourceTree = "<group>"; };
@@ -271,7 +271,7 @@
 			children = (
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
 				F40B9A512988CDFB00385014 /* Extension */,
-				571a415df71f58868acced0d469ac265c837a04f
+				571a415df71f58868acced0d469ac265c837a04f,
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
 				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,

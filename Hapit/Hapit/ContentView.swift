@@ -32,7 +32,7 @@ struct ContentView: View {
                        Text("소셜")
                    }
                 }
-             MyPageView()
+            MyPageView(isFullScreen: $isFullScreen)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")

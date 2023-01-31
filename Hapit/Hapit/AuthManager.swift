@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import Firebase
+import FirebaseCore
 
 @MainActor
 class AuthManager: ObservableObject {
@@ -17,7 +19,7 @@ class AuthManager: ObservableObject {
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
-    let currentUser = Auth.auth().currentUser ?? nil
+    var currentUser = Auth.auth().currentUser ?? nil
     
     // MARK: - 로그인 
     final func login(with email: String, _ password: String) async throws -> Bool {
@@ -31,10 +33,19 @@ class AuthManager: ObservableObject {
     }
     
     //MARK: - 로그아웃
-    final func logOut() async throws {
+    func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
             isLoggedin = false
+        } catch {
+            throw(error)
+        }
+    }
+    
+    //MARK: - CurrentUserFetch 함수
+    final func fetchCurrentUser() throws {
+        do {
+            guard let uid = firebaseAuth.currentUser?.uid else { return }
         } catch {
             throw(error)
         }

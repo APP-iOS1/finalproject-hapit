@@ -31,7 +31,8 @@ struct HabitSegmentView: View {
                 else {
                     List {
                         ForEach(habitManager.challenges) { challenge in
-                            if challenge.uid == habitManager.currentUser?.uid {
+                            //Auth의 uid 가져오기
+                            if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
                               ZStack {
                                   NavigationLink {
                                       //HabitDetailView(calendar: Calendar.current)
@@ -79,7 +80,7 @@ struct HabitSegmentView: View {
             }
             .onAppear{
                 habitManager.loadChallenge()
-                }
+            }
         case 1:
 
                 if habitManager.habits.count < 1{

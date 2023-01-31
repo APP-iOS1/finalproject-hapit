@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct OptionView: View {
+    @EnvironmentObject var authManager: AuthManager
+    @Binding var isFullScreen: Bool
+    
     var body: some View {
         VStack {
             List {
@@ -51,7 +54,14 @@ struct OptionView: View {
             
             // TODO: 로그아웃 alert 띄우기
             Button {
-                // TODO: 로그아웃 기능 추가
+                Task {
+                    do {
+                        try await authManager.logOut()
+                        isFullScreen = true
+                    } catch {
+                        throw(error)
+                    }
+                }
             } label: {
                 Text("로그아웃")
                     .font(.custom("IMHyemin-Regular", size: 16))
@@ -88,6 +98,6 @@ struct ListTextModifier: ViewModifier {
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView()
+        OptionView(isFullScreen: .constant(true))
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
+import FirebaseAuth
 
 final class HabitManager: ObservableObject{
     
@@ -18,6 +19,7 @@ final class HabitManager: ObservableObject{
     
     private var cancellables = Set<AnyCancellable>()
     
+    let currentUser = Auth.auth().currentUser ?? nil
     
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
@@ -71,7 +73,9 @@ final class HabitManager: ObservableObject{
         
         Future<[Challenge], Error> {  promise in
             
-            self.database.collection("Challenge").getDocuments{(snapshot, error) in
+            self.database.collection("Challenge")
+                .order(by: "createdAt", descending: true)
+                .getDocuments{(snapshot, error) in
                 
                 if let error = error {
                     promise(.failure (error))
@@ -204,7 +208,7 @@ final class HabitManager: ObservableObject{
     
     // MARK: - Update a Habit
     @MainActor
-    func updateChallengeIsChecked(challenge: Challenge) async{
+    func updateChallengeIsChecked(challenge: Challenge) async {
         // Update a Challenge
         // Local
         var isChecked = challenge.isChecked
@@ -222,7 +226,7 @@ final class HabitManager: ObservableObject{
                 .document(challenge.id)
                 .updateData(["isChecked": check])
         }catch{
-            throw(error)
+            print(error)
         }
         
         await fetchChallengeCombine()

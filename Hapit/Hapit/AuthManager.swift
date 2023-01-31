@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 @MainActor
 class AuthManager: ObservableObject {
-    var userInfoStore: User1 = User1(id: "", name: "", email: "", pw: "")
+    var userInfoStore: User = User(id: "", name: "", email: "", pw: "")
     
     @Published var isLoggedin = false
     
@@ -37,7 +37,7 @@ class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User1(id: target.uid, name: name, email: email, pw: pw)
+            let newby = User(id: target.uid, name: name, email: email, pw: pw)
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -48,7 +48,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 유저데이터 firestore에 업로드하는 함수
-    func uploadUserInfo(userInfo: User1) async throws {
+    func uploadUserInfo(userInfo: User) async throws {
         do {
             try await database.collection("User")
                 .document(userInfo.id)

@@ -77,6 +77,7 @@ struct RegisterView: View {
                                     .font(.custom("IMHyemin-Regular", size: 16))
                                     .focused($emailFocusField)
                                     .modifier(ClearTextFieldModifier())
+                                    .shakeEffect(trigger: mailDuplicated)
                                 
                                 // email이 비어있지 않으면서, 형식이 올바를 때 체크 아이콘 띄움.
                                 if !email.isEmpty && checkEmailType(string: email) {
@@ -240,6 +241,7 @@ struct RegisterView: View {
                                     .font(.custom("IMHyemin-Regular", size: 16))
                                     .focused($nickNameFocusField)
                                     .modifier(ClearTextFieldModifier())
+                                    .shakeEffect(trigger: nameCheck)
                                 
                                 // email이 비어있지 않으면서, 형식이 올바를 때 체크 아이콘 띄움.
                                 if !nickName.isEmpty && nickName.count >= 2 {
@@ -295,7 +297,6 @@ struct RegisterView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(isOk() ? .gray : Color.accentColor)
                     }
-                
             } // Nav Link
             .disabled(isOk())
             .padding(.vertical, 5)

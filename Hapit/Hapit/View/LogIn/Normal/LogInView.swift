@@ -23,19 +23,23 @@ struct LogInView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Image("logo")
-                    .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: 200)
-                
-                Spacer().frame(height: 120)
+                Group {
+                    Spacer()
+                    
+                    Image("logo")
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: 200)
+                    
+                    Spacer()
+                    Spacer()
+                }
                 
                 Group {
                     VStack {
                         TextField("이메일", text: $email)
                             .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($emailFocusField)
-                            .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
+                            .modifier(ClearTextFieldModifier())
                         Rectangle()
                             .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
                     }
@@ -46,8 +50,7 @@ struct LogInView: View {
                         SecureField("비밀번호", text: $pw)
                             .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($pwFocusField)
-                            .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
+                            .modifier(ClearTextFieldModifier())
                         Rectangle()
                             .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                     }
@@ -118,6 +121,8 @@ struct LogInView: View {
                         GoogleLogIn()
                     }
                 }
+                
+                Spacer()
             }
             .padding(.horizontal, 20)
         }

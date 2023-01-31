@@ -18,44 +18,72 @@ struct HabitSegmentView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     
+    @State private var isOnAlarm: Bool = false // 알림 설정
+    
     var body: some View {
         switch selectedIndex {
             
         case 0:
-                ScrollView{
-                    if habitManager.challenges.count < 1{
-                        
-                        EmptyCellView()
-                        
-                    }
-                    else{
-                    ForEach(habitManager.challenges) { challenge in
-
-                        if challenge.uid == habitManager.currentUser?.uid {
-                        NavigationLink {
-                            //HabitDetailView(calendar: Calendar.current)
-                            ScrollView(showsIndicators: false){
-                                CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
-                                    .background(Color("CellColor"))
-                                    .cornerRadius(20)
-                                    .navigationBarTitle("\(challenge.challengeTitle)")
-                            }
-                            .padding()
-                            .background(Color("BackgroundColor"))
-                            //.navigationBarTitle("", displayMode: .automatic)
-                            
-                        } label: {
-                            
-                            ChallengeCellView(challenge: challenge)
-                        }
-                    }
-
-                    }
+            VStack {
+                if habitManager.challenges.count < 1{
+                    
+                    EmptyCellView()
+                    
                 }
-                
+                else {
+                    List {
+                        ForEach(habitManager.challenges) { challenge in
+                          if challenge.uid == habitManager.currentUser?.uid {
+                              ZStack {
+                                  NavigationLink {
+                                      //HabitDetailView(calendar: Calendar.current)
+                                      ScrollView {
+                                          CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
+                                            .background(Color("CellColor"))
+                                            .cornerRadius(20)
+                                            .navigationBarTitle("\(challenge.challengeTitle)")
+                                      }
+                                      .padding()
+                                      .background(Color("BackgroundColor"))
+                                  } label: {
+                                      EmptyView()
+                                  }
+                                  .opacity(0)
+
+                                  ChallengeCellView(challenge: challenge)
+                                      .padding(.vertical)
+
+                              }
+                            }
+                            
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) { // 왼쪽 -> 오른쪽 스와이프 시 알림 설정
+                                Button {
+                                    isOnAlarm.toggle()
+                                } label: {
+                                    Image(systemName: isOnAlarm ? "bell.fill" : "bell.slash.fill")
+                                }
+                                .tint(.indigo)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) { // 오른쪽 -> 왼쪽 스와이프 시 삭제
+                                Button(role: .destructive) {
+                                    // 데이터 삭제
+                                } label: {
+                                    Image(systemName: "trash.fill")
+                                }
+                            }
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(
+                                Color("CellColor")
+                                    .cornerRadius(20)
+                                    .padding(.vertical, 7)
+                            )
+                            
+                        } // ForEach
+                    } // List
+                }
             }
-                .onAppear{
-                    habitManager.loadChallenge()
+            .onAppear{
+                habitManager.loadChallenge()
                 }
         case 1:
 
@@ -134,16 +162,15 @@ struct HomeView: View {
                         }
                         
                     })
-                .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
                 .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
                 }
-                .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+                //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+
                 // 세그먼트 뷰
-                Spacer()
                 HabitSegmentView(selectedIndex: $selectedIndex)
-                Spacer()
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())

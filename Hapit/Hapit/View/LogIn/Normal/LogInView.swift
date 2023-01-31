@@ -34,8 +34,8 @@ struct LogInView: View {
                     Spacer()
                 }
                 
-                Group {
-                    VStack {
+                VStack(spacing: 20) {
+                    VStack(spacing: 5) {
                         TextField("이메일", text: $email)
                             .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($emailFocusField)
@@ -43,10 +43,9 @@ struct LogInView: View {
                         Rectangle()
                             .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
                     }
+                    .frame(height: 40)
                     
-                    Spacer().frame(height: 20)
-                    
-                    VStack {
+                    VStack(spacing: 5) {
                         SecureField("비밀번호", text: $pw)
                             .font(.custom("IMHyemin-Regular", size: 16))
                             .focused($pwFocusField)
@@ -54,9 +53,8 @@ struct LogInView: View {
                         Rectangle()
                             .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                     }
+                    .frame(height: 40)
                 }
-                
-                Spacer().frame(height: 22)
                 
                 HStack(alignment: .center, spacing: 5) {
                     if !logInResult && verified {

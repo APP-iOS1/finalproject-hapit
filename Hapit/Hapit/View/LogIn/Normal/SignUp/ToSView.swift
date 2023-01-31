@@ -27,7 +27,7 @@ struct ToSView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Spacer()
+            Spacer().frame(height: 10)
             
             HStack() {
                 StepBar(nowStep: 2)
@@ -49,6 +49,7 @@ struct ToSView: View {
                 Spacer()
             }
             
+            Spacer()
             Spacer()
             
             Group {
@@ -134,7 +135,6 @@ struct ToSView: View {
                 }
                 .padding(.horizontal, 10)
                 
-                Spacer()
                 Spacer()
                 
                 // 회원가입 버튼을 누르면 progress view가 나타남

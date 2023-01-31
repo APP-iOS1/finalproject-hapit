@@ -16,6 +16,7 @@ struct HabitSegmentView: View {
     @State var date = Date()
     // 챌린지와 습관을 관리하는 객체
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         switch selectedIndex {
@@ -29,7 +30,8 @@ struct HabitSegmentView: View {
                     }
                     else{
                     ForEach(habitManager.challenges) { challenge in
-                        
+
+                        if challenge.uid == habitManager.currentUser?.uid {
                         NavigationLink {
                             //HabitDetailView(calendar: Calendar.current)
                             ScrollView(showsIndicators: false){
@@ -46,6 +48,7 @@ struct HabitSegmentView: View {
                             
                             ChallengeCellView(challenge: challenge)
                         }
+                    }
 
                     }
                 }

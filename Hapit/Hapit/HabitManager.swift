@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
-
+import FirebaseAuth
 
 final class HabitManager: ObservableObject{
     
@@ -19,16 +19,14 @@ final class HabitManager: ObservableObject{
     
     private var cancellables = Set<AnyCancellable>()
     
-    
+    let currentUser = Auth.auth().currentUser ?? nil
     
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
     @Published var challenges: [Challenge] = []
     @Published var habits: [Challenge] = []
     
-    
     let database = Firestore.firestore()
-    
     
     // MARK: - Fetch Habits
     //func fetchHabits(uesrID: String) async{
@@ -71,12 +69,13 @@ final class HabitManager: ObservableObject{
 //        }
 //    }
     
-    
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
             
-            self.database.collection("Challenge").getDocuments{(snapshot, error) in
+            self.database.collection("Challenge")
+                .order(by: "createdAt", descending: true)
+                .getDocuments{(snapshot, error) in
                 
                 if let error = error {
                     promise(.failure (error))
@@ -100,8 +99,6 @@ final class HabitManager: ObservableObject{
             
         }
         .eraseToAnyPublisher()
-        
-        
         
     }
     
@@ -160,7 +157,6 @@ final class HabitManager: ObservableObject{
             .store(in: &cancellables)
     }
     
-    
     // MARK: - Add a Habit
     //func createHabit(creator: String) async {
 //    @MainActor
@@ -188,7 +184,6 @@ final class HabitManager: ObservableObject{
 //        await fetchChallengeCombine()
 //    }
     
-    
     // MARK: - Delete a Habit
     // func deleteHabit(post: Post) {
     @MainActor
@@ -205,7 +200,6 @@ final class HabitManager: ObservableObject{
         //self.daylogList.removeAll { $0.id == daylog.id }
     }
     
-    
     // MARK: - Update a Habit
     @MainActor
     func updateChallenge() async{
@@ -214,7 +208,7 @@ final class HabitManager: ObservableObject{
     
     // MARK: - Update a Habit
     @MainActor
-    func updateChallengeIsChecked(challenge: Challenge) async{
+    func updateChallengeIsChecked(challenge: Challenge) async {
         // Update a Challenge
         // Local
         var isChecked = challenge.isChecked
@@ -239,5 +233,3 @@ final class HabitManager: ObservableObject{
     }
     
 }
-
-

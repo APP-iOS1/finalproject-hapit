@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 //MARK: - ChallengeType(개인/그룹)
 enum ChallengeType: String, CaseIterable{
@@ -13,8 +14,11 @@ enum ChallengeType: String, CaseIterable{
     case group = "그룹"
 }
 
+let currentUser = Auth.auth().currentUser ?? nil
+
 struct PickerView: View {
     @State var challengetype: ChallengeType = .personal
+
     
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color("AccentColor"))
@@ -41,6 +45,7 @@ struct AddHabitView: View {
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var authManager: AuthManager
     
     @State private var challengeTitle: String = ""
     @State private var isAlarmOn: Bool = false
@@ -130,12 +135,16 @@ struct AddHabitView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        let id = UUID().uuidString
-                        habitManager.createChallenge(challenge: Challenge(id: id, creator: "추추맨", mateArray: ["신현준"], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false))
-                        
-                        habitManager.loadChallenge()
-                        
-                        dismiss()
+                        Task {
+                            let id = UUID().uuidString
+                            let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
+                            
+                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                            
+                            dismiss()
+                            
+                            habitManager.loadChallenge()
+                        }
                         
                     } label: {
                         Image(systemName: "checkmark")

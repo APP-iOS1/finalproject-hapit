@@ -228,11 +228,11 @@ struct CustomDatePickerView: View {
         return days
     }
 }
-struct CustomDatePicker_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomDatePickerView(currentChallenge: (Challenge(id: UUID().uuidString, creator: "릴루", mateArray: ["현호", "진형", "예원"], challengeTitle: "물 마시기", createdAt: Date(), count: 0, isChecked: true)) , currentDate: .constant(Date()))
-    }
-}
+//struct CustomDatePicker_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CustomDatePickerView(currentChallenge: (Challenge(id: UUID().uuidString, creator: "릴루", mateArray: ["현호", "진형", "예원"], challengeTitle: "물 마시기", createdAt: Date(), count: 0, isChecked: true, uid: "")) , currentDate: .constant(Date()))
+//    }
+//}
 
 extension Date{
     

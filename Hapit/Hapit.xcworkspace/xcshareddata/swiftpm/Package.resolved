@@ -134,6 +134,15 @@
         "revision" : "c3c63962939c161aeef1bcef40ee97bd57eca943",
         "version" : "0.0.2"
       }
+    },
+    {
+      "identity" : "swipeable-view",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mroffmix/Swipeable-View",
+      "state" : {
+        "revision" : "1d2b22b0c97dbd5ac9e4cb16020ff5d0f4191760",
+        "version" : "0.2.2"
+      }
     }
   ],
   "version" : 2

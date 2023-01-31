@@ -85,14 +85,16 @@ final class HabitManager: ObservableObject{
     func create(_ challenge: Challenge) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { promise in
             self.database.collection("Challenge")
-                .addDocument(data: [
+                .document(challenge.id)
+                .setData([
                     "id": challenge.id,
                     "creator": challenge.creator,
                     "mateArray": challenge.mateArray,
                     "challengeTitle": challenge.challengeTitle,
                     "createdAt": challenge.createdAt,
                     "count": challenge.count,
-                    "isChecked": challenge.isChecked
+                    "isChecked": challenge.isChecked,
+                    "uid": challenge.uid
                 ]) { error in
                     if let error = error {
                         promise(.failure(error))
@@ -116,6 +118,13 @@ final class HabitManager: ObservableObject{
                 }
             } receiveValue: { _ in }
             .store(in: &cancellables)
+    }
+    
+    // MARK: - 서버의 Challenge Collection에서 Challenge 객체 하나를 삭제하는 Method
+    func removeChallenge(challenge: Challenge) {
+        database.collection("Challenge")
+            .document(challenge.id).delete()
+        loadChallenge()
     }
     
     // MARK: - Update a Habit

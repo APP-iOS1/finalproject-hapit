@@ -19,7 +19,6 @@ class AuthManager: ObservableObject {
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
-    var currentUser = Auth.auth().currentUser ?? nil
     
     // MARK: - 로그인 
     final func login(with email: String, _ password: String) async throws -> Bool {
@@ -33,7 +32,7 @@ class AuthManager: ObservableObject {
     }
     
     //MARK: - 로그아웃
-    func logOut() async throws {
+    final func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
             isLoggedin = false
@@ -41,6 +40,12 @@ class AuthManager: ObservableObject {
             throw(error)
         }
     }
+    
+    //MARK: - 회원탈퇴
+    final func deleteUser() {
+        
+    }
+    
     
     //MARK: - CurrentUserFetch 함수
     final func fetchCurrentUser() throws {

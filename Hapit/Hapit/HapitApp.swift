@@ -33,8 +33,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, OSSubscriptionObserver {
             }
         })
     }
-    
-    
 }
 
 @main

@@ -79,7 +79,12 @@ struct LogInView: View {
                         } else if pw == "" {
                             pwFocusField = true
                         } else {
-                            logInResult = await authManager.login(with: email, pw)
+                            do {
+                                let target = try await authManager.login(with: email, pw)
+                                logInResult = target
+                            } catch {
+                                throw(error)
+                            }
                             verified = true
                             if logInResult {
                                 isFullScreen = false

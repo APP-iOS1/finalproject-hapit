@@ -17,8 +17,8 @@ struct MyPageView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
-                        Button{
-                            
+                        NavigationLink {
+                            OptionView()
                         } label: {
                             Image(systemName: "gearshape.fill")
                                 .resizable()

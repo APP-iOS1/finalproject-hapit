@@ -11,10 +11,10 @@ struct CustomDatePickerView: View {
 
     var currentChallenge: Challenge
     @Binding var currentDate: Date
-    
+    @State var isShownModalView: Bool = false
+    @State var postsForModalView: [Post] = []
     //MARK: 화살표 버튼을 통해 month를 업데이트 해주는 변수
     @State private var currentMonth: Int = 0
-    
     @EnvironmentObject var habitManager: HabitManager
     
     var body: some View {
@@ -24,10 +24,10 @@ struct CustomDatePickerView: View {
 
             HStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(extraData()[0])
+                    Text(extraData(currentDate)[0])
                         .font(.custom("IMHyemin-Regular", size: 12))
                         .fontWeight(.semibold)
-                    Text(extraData()[1])
+                    Text(extraData(currentDate)[1])
                         .font(.custom("IMHyemin-Bold", size: 28))
                 }
                                 
@@ -83,49 +83,17 @@ struct CustomDatePickerView: View {
                         .onTapGesture {
                             currentDate = value.date
                             //MARK: 탭 했을 때 해당 날짜에 대한 Diaries가 뜨도록
+                            postsForModalView = []
+                            for post in habitManager.posts{
+                                if isSameDay(date1: currentDate, date2: post.createdAt){
+                                    postsForModalView.append(post)
+                                }
+                            }
+                            isShownModalView.toggle()
                         }
                         .animation(.easeIn, value: currentDate)
                 }
             }
-//
-//            VStack(spacing: 15){
-//                Text("Tasks")
-//                    .font(.title2.bold())
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//
-//                if let task = tasks.first(where: { task in
-//                    return isSameDay(date1: task.taskDate, date2: currentDate)
-//                }){
-//                    ForEach(task.task){task in
-//
-//                        VStack(alignment: .leading, spacing: 10){
-//
-//                            Text(task.time
-//                                .addingTimeInterval(CGFloat.random(in: 0...5000)),style: .time)
-//
-//                            Text(task.title)
-//                                .font(.title2.bold())
-//                        }
-//                        .padding(.vertical, 10)
-//                        .padding(.horizontal)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .background(
-//
-//                            Color.purple
-//                                .opacity(0.5)
-//                                .cornerRadius(10)
-//
-//                        )
-//                    }
-//                }
-//                else{
-//
-//                    Text("No Task Found")
-//                }
-//            }
-//            .padding()
-//            .padding(.top, 20)
-//
             Spacer()
         }//VStack
         .padding()
@@ -135,7 +103,11 @@ struct CustomDatePickerView: View {
                 
         }
         .onAppear{
-               habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
+            habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
+            currentDate = Date()
+        }
+        .sheet(isPresented: $isShownModalView) {
+            PostModalView(postsForModalView: $postsForModalView)
         }
     }
     
@@ -145,28 +117,30 @@ struct CustomDatePickerView: View {
     func CardView(value: DateValue) -> some View{
         VStack{
             if value.day != -1{
-//                if let habit = HabitManager.challenges.first(where: { challenge in
-//                    return isSameDay(date1: challenge.date, date2: value.date)
-//                }){
-//
-//                    Text("\(value.day)")
-//                        .font(.title3.bold())
-//                        .foregroundColor(isSameDay(date1: task.taskDate, date2: currentDate) ? .white : .primary)
-//                        .frame(maxWidth: .infinity)
-//                    Spacer()
-//                    Circle()
-//                        .fill(isSameDay(date1: task.taskDate, date2: currentDate) ? .white : .pink)
-//                        .frame(width: 8, height: 8)
-//
-//                }
-
+                if let diary = habitManager.posts.first(where: { diary in
+                    return isSameDay(date1: diary.createdAt, date2: value.date)
+                }){
+                    Text("\(value.day)")
+                        .font(.custom("IMHyemin-Bold", size: 20))
+                        .foregroundColor(isSameDay(date1: diary.createdAt, date2: currentDate) ? .white : .primary)
+                        .frame(maxWidth: .infinity)
+                    Spacer()
+                    Circle()
+                        //.fill(isSameDay(date1: diary.createdAt, date2: currentDate) ? .pink : .pi)
+                        .fill(.pink)
+                        .frame(width: 8, height: 8)
+                        .padding(.top, 20)
+                    
+                }else {
+                    
                     Text("\(value.day)")
                         .font(.custom("IMHyemin-Bold", size: 20))
                         .foregroundColor(isSameDay(date1: value.date, date2: currentDate) ? .white : .primary)
                         .frame(maxWidth: .infinity)
                     
                     Spacer()
-                
+                    
+                }
             }
         }
         .padding(.vertical, 8)
@@ -191,7 +165,7 @@ struct CustomDatePickerView: View {
     }
     
     // 년 월 추출
-    func extraData() -> [String]{
+    func extraData(_ currentDate: Date) -> [String]{
         
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY M월"

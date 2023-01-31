@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		210EB05CEC7AD9C148F90F752DE74C48 /* OneSignal */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C4BEDE8419E52BD08B0E6C875B5CD08A /* Build configuration list for PBXAggregateTarget "OneSignal" */;
+			buildPhases = (
+				2CC561DE65F0F66F6AE8852576B8C8B7 /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+			);
+			name = OneSignal;
+		};
 		52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
@@ -15,65 +25,89 @@
 			dependencies = (
 			);
 			name = SwiftLint;
-			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		21177266B0FC78C120DD3DFC950DC126 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		2B5DC19A7CBA3603291E707ADA0BCA32 /* Pods-Hapit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 20BD9D215057A7B92BB094FB76820D17 /* Pods-Hapit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B055A5C750699D3513FCB29AE62ED57A /* Pods-Hapit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 014E7ACEB90B7A2082168DA5B1DCABF4 /* Pods-Hapit-dummy.m */; };
+		08DE50A0842E69EDE7AF812D96DBB05B /* Pods-Hapit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 500C4C4E9AB2212DC7008FC0864F5C62 /* Pods-Hapit-dummy.m */; };
+		4DB3196B4C73D4BE40B37A1DC0F85FC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		BE05A5930D3E466E36DF0D7F7FA222D2 /* Pods-Hapit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F37B4E37AB335C48030A75F2C24F0 /* Pods-Hapit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		003635C08CF6CA973F58AA1254F4419C /* PBXContainerItemProxy */ = {
+		4373BCF9084E619B6F541EFD12369865 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
 			remoteInfo = SwiftLint;
 		};
+		7200047EC418BA959D3077B2248A56A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 210EB05CEC7AD9C148F90F752DE74C48;
+			remoteInfo = OneSignal;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		014E7ACEB90B7A2082168DA5B1DCABF4 /* Pods-Hapit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Hapit-dummy.m"; sourceTree = "<group>"; };
-		20BD9D215057A7B92BB094FB76820D17 /* Pods-Hapit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Hapit-umbrella.h"; sourceTree = "<group>"; };
 		220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Hapit"; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
-		585D963CC36D879276ECEF29C67DE6C4 /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
-		5F099B48C1ADC196B4E0491D553B7A40 /* Pods-Hapit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-acknowledgements.plist"; sourceTree = "<group>"; };
+		500C4C4E9AB2212DC7008FC0864F5C62 /* Pods-Hapit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Hapit-dummy.m"; sourceTree = "<group>"; };
+		51D8478E161F7969A1F656AA595E4459 /* OneSignalExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalExtension.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework; sourceTree = "<group>"; };
+		554F37B4E37AB335C48030A75F2C24F0 /* Pods-Hapit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Hapit-umbrella.h"; sourceTree = "<group>"; };
+		5864488E3A45AE8DDCAA753FC2B4144E /* OneSignal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OneSignal.release.xcconfig; sourceTree = "<group>"; };
+		6AD1DD159E8D676EA4E1406191BB7FF7 /* Pods-Hapit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Hapit-acknowledgements.markdown"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7463924BFFAB3E4DCE4FB3BD46ECFD47 /* Pods-Hapit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-Info.plist"; sourceTree = "<group>"; };
-		7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		B196DB913133FFBF0E55E708B4F000DB /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
-		B282FB9EDB5DF9C0E27DE953EDC96934 /* Pods-Hapit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Hapit.modulemap"; sourceTree = "<group>"; };
-		C10D469E15B0A87CC84488BD1F360BEB /* Pods-Hapit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Hapit-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7D5107E29EEBAC84BD4AE6B32C263140 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
+		9263E5467343F818A035F71A84927EF8 /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
+		95D6B9131193B0027AC55A58A2304B68 /* Pods-Hapit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-Info.plist"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A1F8FC03173C9D9AB518CA30846D424A /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
+		A7562004C1D0F34CFF4534A81A57AC7B /* OneSignalOutcomes.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalOutcomes.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Outcomes/OneSignalOutcomes.xcframework; sourceTree = "<group>"; };
+		B0E51FC72D566F90D0752E424A6F69DA /* Pods-Hapit-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Hapit-frameworks.sh"; sourceTree = "<group>"; };
+		C6597540F9AC1AF44DFD3238DF364F24 /* OneSignal.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignal.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_XCFramework/OneSignal.xcframework; sourceTree = "<group>"; };
+		CA177E4686BD3ED2BEC8DC0C8633AB4A /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
+		D4F73BFFC5D312137A8469033994962E /* OneSignalCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OneSignalCore.xcframework; path = iOS_SDK/OneSignalSDK/OneSignal_Core/OneSignalCore.xcframework; sourceTree = "<group>"; };
+		E39B188E83F34E6CD52F1563DBFD62C5 /* OneSignal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OneSignal.debug.xcconfig; sourceTree = "<group>"; };
+		F147DA21288FB199D69850DFE5EAC710 /* Pods-Hapit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-acknowledgements.plist"; sourceTree = "<group>"; };
+		F992CD1E52BF642A067650CC8BB100C7 /* Pods-Hapit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Hapit.modulemap"; sourceTree = "<group>"; };
+		F9F1F54D850E7A378DF69A426C3757CC /* OneSignal-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "OneSignal-xcframeworks.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E773F57CD2AB901D82C1760A10B616DE /* Frameworks */ = {
+		5CB181D10903DCEF26CE120C0905E2B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21177266B0FC78C120DD3DFC950DC126 /* Foundation.framework in Frameworks */,
+				4DB3196B4C73D4BE40B37A1DC0F85FC3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		091A48B0FB5A21AB6200B336CA55831A /* Pods-Hapit */ = {
+		041D41BD4A4F2AB2AB98ECFE8761B062 /* SwiftLint */ = {
 			isa = PBXGroup;
 			children = (
-				B282FB9EDB5DF9C0E27DE953EDC96934 /* Pods-Hapit.modulemap */,
-				C10D469E15B0A87CC84488BD1F360BEB /* Pods-Hapit-acknowledgements.markdown */,
-				5F099B48C1ADC196B4E0491D553B7A40 /* Pods-Hapit-acknowledgements.plist */,
-				014E7ACEB90B7A2082168DA5B1DCABF4 /* Pods-Hapit-dummy.m */,
-				7463924BFFAB3E4DCE4FB3BD46ECFD47 /* Pods-Hapit-Info.plist */,
-				20BD9D215057A7B92BB094FB76820D17 /* Pods-Hapit-umbrella.h */,
-				B196DB913133FFBF0E55E708B4F000DB /* Pods-Hapit.debug.xcconfig */,
-				585D963CC36D879276ECEF29C67DE6C4 /* Pods-Hapit.release.xcconfig */,
+				7971F8FA96107635A53C58111B58411F /* Support Files */,
+			);
+			name = SwiftLint;
+			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		054B88F3FC1B64F5AA9A83DDCF452EA3 /* Pods-Hapit */ = {
+			isa = PBXGroup;
+			children = (
+				F992CD1E52BF642A067650CC8BB100C7 /* Pods-Hapit.modulemap */,
+				6AD1DD159E8D676EA4E1406191BB7FF7 /* Pods-Hapit-acknowledgements.markdown */,
+				F147DA21288FB199D69850DFE5EAC710 /* Pods-Hapit-acknowledgements.plist */,
+				500C4C4E9AB2212DC7008FC0864F5C62 /* Pods-Hapit-dummy.m */,
+				B0E51FC72D566F90D0752E424A6F69DA /* Pods-Hapit-frameworks.sh */,
+				95D6B9131193B0027AC55A58A2304B68 /* Pods-Hapit-Info.plist */,
+				554F37B4E37AB335C48030A75F2C24F0 /* Pods-Hapit-umbrella.h */,
+				A1F8FC03173C9D9AB518CA30846D424A /* Pods-Hapit.debug.xcconfig */,
+				9263E5467343F818A035F71A84927EF8 /* Pods-Hapit.release.xcconfig */,
 			);
 			name = "Pods-Hapit";
 			path = "Target Support Files/Pods-Hapit";
@@ -87,6 +121,41 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		19E9284311CCB9DDEF937E27B597CF51 /* OneSignalOutcomes */ = {
+			isa = PBXGroup;
+			children = (
+				C24E53C298C08D8C9F73BC19939D7667 /* Frameworks */,
+			);
+			name = OneSignalOutcomes;
+			sourceTree = "<group>";
+		};
+		3E93C38FDC0E51141694B07D9672BC2B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C6597540F9AC1AF44DFD3238DF364F24 /* OneSignal.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4933BD4254A82B8824B83586EC57BA3F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F9F1F54D850E7A378DF69A426C3757CC /* OneSignal-xcframeworks.sh */,
+				E39B188E83F34E6CD52F1563DBFD62C5 /* OneSignal.debug.xcconfig */,
+				5864488E3A45AE8DDCAA753FC2B4144E /* OneSignal.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/OneSignal";
+			sourceTree = "<group>";
+		};
+		4F7169C822307F1A838BDF5875A72E8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				51D8478E161F7969A1F656AA595E4459 /* OneSignalExtension.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,22 +164,76 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */ = {
+		5B31A35C530D32B72969E8B9A8324CFA /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */,
-				7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */,
+				054B88F3FC1B64F5AA9A83DDCF452EA3 /* Pods-Hapit */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		763A71A610D7A2BE6EE34BF8534F3FEE /* OneSignalCore */ = {
+			isa = PBXGroup;
+			children = (
+				983F49D4B28F3B72ACAD45B71D70E64E /* Frameworks */,
+			);
+			name = OneSignalCore;
+			sourceTree = "<group>";
+		};
+		7971F8FA96107635A53C58111B58411F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7D5107E29EEBAC84BD4AE6B32C263140 /* SwiftLint.debug.xcconfig */,
+				CA177E4686BD3ED2BEC8DC0C8633AB4A /* SwiftLint.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SwiftLint";
 			sourceTree = "<group>";
 		};
-		965877409E01FB3D85D85E90E6B30185 /* Pods */ = {
+		895EDE9374DB560F6BE229DDEAA62517 /* OneSignal */ = {
 			isa = PBXGroup;
 			children = (
-				D96179D43A67C5D5323B0682D32C133C /* SwiftLint */,
+				3E93C38FDC0E51141694B07D9672BC2B /* Frameworks */,
+				763A71A610D7A2BE6EE34BF8534F3FEE /* OneSignalCore */,
+				9266708850EDF045AE7466DB4B78E0C0 /* OneSignalExtension */,
+				19E9284311CCB9DDEF937E27B597CF51 /* OneSignalOutcomes */,
+				4933BD4254A82B8824B83586EC57BA3F /* Support Files */,
+			);
+			name = OneSignal;
+			path = OneSignal;
+			sourceTree = "<group>";
+		};
+		9266708850EDF045AE7466DB4B78E0C0 /* OneSignalExtension */ = {
+			isa = PBXGroup;
+			children = (
+				4F7169C822307F1A838BDF5875A72E8A /* Frameworks */,
+			);
+			name = OneSignalExtension;
+			sourceTree = "<group>";
+		};
+		983F49D4B28F3B72ACAD45B71D70E64E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4F73BFFC5D312137A8469033994962E /* OneSignalCore.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9AC2B8F9756F7B5EC754D4E1B4C668B5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				895EDE9374DB560F6BE229DDEAA62517 /* OneSignal */,
+				041D41BD4A4F2AB2AB98ECFE8761B062 /* SwiftLint */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C24E53C298C08D8C9F73BC19939D7667 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7562004C1D0F34CFF4534A81A57AC7B /* OneSignalOutcomes.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -118,9 +241,9 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				965877409E01FB3D85D85E90E6B30185 /* Pods */,
+				9AC2B8F9756F7B5EC754D4E1B4C668B5 /* Pods */,
 				14A598009D0C3366CFE54B8837992B69 /* Products */,
-				EAC3ED4722760E692B1A0A069E450117 /* Targets Support Files */,
+				5B31A35C530D32B72969E8B9A8324CFA /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,30 +255,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D96179D43A67C5D5323B0682D32C133C /* SwiftLint */ = {
-			isa = PBXGroup;
-			children = (
-				7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */,
-			);
-			path = SwiftLint;
-			sourceTree = "<group>";
-		};
-		EAC3ED4722760E692B1A0A069E450117 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				091A48B0FB5A21AB6200B336CA55831A /* Pods-Hapit */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		FEAC45A8C6D6429B46AA4A15B24085A0 /* Headers */ = {
+		A584F308D8BB61A5453763065B8CFE37 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B5DC19A7CBA3603291E707ADA0BCA32 /* Pods-Hapit-umbrella.h in Headers */,
+				BE05A5930D3E466E36DF0D7F7FA222D2 /* Pods-Hapit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,17 +271,18 @@
 /* Begin PBXNativeTarget section */
 		B8EE3679087A3358EBC62476A25CE859 /* Pods-Hapit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D6D80F827B192741282033ADA25B25A1 /* Build configuration list for PBXNativeTarget "Pods-Hapit" */;
+			buildConfigurationList = 1E575AAEBC5559CECC2947C3D66F3F12 /* Build configuration list for PBXNativeTarget "Pods-Hapit" */;
 			buildPhases = (
-				FEAC45A8C6D6429B46AA4A15B24085A0 /* Headers */,
-				E189F649CA7BBDC1169EDC071B0A28DD /* Sources */,
-				E773F57CD2AB901D82C1760A10B616DE /* Frameworks */,
-				330CA933854356046992BA847BBCB78B /* Resources */,
+				A584F308D8BB61A5453763065B8CFE37 /* Headers */,
+				2FB8BDEA6C33803C06119EEF7B786D2E /* Sources */,
+				5CB181D10903DCEF26CE120C0905E2B8 /* Frameworks */,
+				2E5A5393B4F95CB71567C6B94D23EFAD /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3584CBF462D179E6516048A1BE5C8320 /* PBXTargetDependency */,
+				794A3A9CF449102149C7424F360322C3 /* PBXTargetDependency */,
+				DC0556DB7AA361126CC19715BEC06E71 /* PBXTargetDependency */,
 			);
 			name = "Pods-Hapit";
 			productName = Pods_Hapit;
@@ -203,6 +311,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				210EB05CEC7AD9C148F90F752DE74C48 /* OneSignal */,
 				B8EE3679087A3358EBC62476A25CE859 /* Pods-Hapit */,
 				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
 			);
@@ -210,7 +319,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		330CA933854356046992BA847BBCB78B /* Resources */ = {
+		2E5A5393B4F95CB71567C6B94D23EFAD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -219,28 +328,87 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2CC561DE65F0F66F6AE8852576B8C8B7 /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		E189F649CA7BBDC1169EDC071B0A28DD /* Sources */ = {
+		2FB8BDEA6C33803C06119EEF7B786D2E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B055A5C750699D3513FCB29AE62ED57A /* Pods-Hapit-dummy.m in Sources */,
+				08DE50A0842E69EDE7AF812D96DBB05B /* Pods-Hapit-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3584CBF462D179E6516048A1BE5C8320 /* PBXTargetDependency */ = {
+		794A3A9CF449102149C7424F360322C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OneSignal;
+			target = 210EB05CEC7AD9C148F90F752DE74C48 /* OneSignal */;
+			targetProxy = 7200047EC418BA959D3077B2248A56A3 /* PBXContainerItemProxy */;
+		};
+		DC0556DB7AA361126CC19715BEC06E71 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftLint;
 			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
-			targetProxy = 003635C08CF6CA973F58AA1254F4419C /* PBXContainerItemProxy */;
+			targetProxy = 4373BCF9084E619B6F541EFD12369865 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		446BA1B9A1F1F2F95D04E5F82EB1B0F4 /* Debug */ = {
+		2964A54F6CF86165D692B4264EBA5535 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E39B188E83F34E6CD52F1563DBFD62C5 /* OneSignal.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5F84ABAB8E70308D775461FAB638BFF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5864488E3A45AE8DDCAA753FC2B4144E /* OneSignal.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -293,7 +461,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -306,44 +474,7 @@
 			};
 			name = Debug;
 		};
-		4A429B454D1FBDE14EF17D6AE4FF7399 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B196DB913133FFBF0E55E708B4F000DB /* Pods-Hapit.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		5D47E2EFAC6FAC81A782D9BFD8736F53 /* Release */ = {
+		9553C89E183877A5CB2F3C6801BEC129 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -393,7 +524,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -405,9 +536,26 @@
 			};
 			name = Release;
 		};
-		8418A302799E3D54BFDD58B905819B0D /* Release */ = {
+		AD81E62ACCB0B7A923FC8AA288F9921E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 585D963CC36D879276ECEF29C67DE6C4 /* Pods-Hapit.release.xcconfig */;
+			baseConfigurationReference = CA177E4686BD3ED2BEC8DC0C8633AB4A /* SwiftLint.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B97715DB0ACD3BD7DF5F4734E2E25C14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1F8FC03173C9D9AB518CA30846D424A /* Pods-Hapit.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -421,7 +569,60 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EADD1F50ABC8096A0D6CB18822BB4EE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D5107E29EEBAC84BD4AE6B32C263140 /* SwiftLint.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FE61F4C2B4721DE2E1B6286193F0E528 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9263E5467343F818A035F71A84927EF8 /* Pods-Hapit.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Hapit/Pods-Hapit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -443,47 +644,23 @@
 			};
 			name = Release;
 		};
-		AD81E62ACCB0B7A923FC8AA288F9921E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		EADD1F50ABC8096A0D6CB18822BB4EE4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1E575AAEBC5559CECC2947C3D66F3F12 /* Build configuration list for PBXNativeTarget "Pods-Hapit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B97715DB0ACD3BD7DF5F4734E2E25C14 /* Debug */,
+				FE61F4C2B4721DE2E1B6286193F0E528 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				446BA1B9A1F1F2F95D04E5F82EB1B0F4 /* Debug */,
-				5D47E2EFAC6FAC81A782D9BFD8736F53 /* Release */,
+				90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */,
+				9553C89E183877A5CB2F3C6801BEC129 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -497,11 +674,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D6D80F827B192741282033ADA25B25A1 /* Build configuration list for PBXNativeTarget "Pods-Hapit" */ = {
+		C4BEDE8419E52BD08B0E6C875B5CD08A /* Build configuration list for PBXAggregateTarget "OneSignal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4A429B454D1FBDE14EF17D6AE4FF7399 /* Debug */,
-				8418A302799E3D54BFDD58B905819B0D /* Release */,
+				2964A54F6CF86165D692B4264EBA5535 /* Debug */,
+				5F84ABAB8E70308D775461FAB638BFF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

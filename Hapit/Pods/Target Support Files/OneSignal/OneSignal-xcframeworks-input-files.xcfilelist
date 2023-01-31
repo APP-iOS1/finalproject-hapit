@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/OneSignal/OneSignal-xcframeworks.sh
+${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_XCFramework/OneSignal.xcframework
+${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_Core/OneSignalCore.xcframework
+${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework
+${PODS_ROOT}/OneSignal/iOS_SDK/OneSignalSDK/OneSignal_Outcomes/OneSignalOutcomes.xcframework

@@ -72,6 +72,7 @@
 		368AE79D29878DA7005088E5 /* DiaryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModalView.swift; sourceTree = "<group>"; };
 		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
+		36F8EC022988D6F70029B701 /* Hapit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hapit.entitlements; sourceTree = "<group>"; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalendarView.swift; sourceTree = "<group>"; };
 		3C811D1C2987628A0005539A /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
@@ -258,6 +259,7 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
 				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,
@@ -376,6 +378,7 @@
 				F49E28C429762C9C009EEB1A /* Frameworks */,
 				F49E28C529762C9C009EEB1A /* Resources */,
 				C548298B2987633E000C743E /* ShellScript */,
+				38FEF7C032CAC6A4CEB5D67E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -418,7 +421,7 @@
 			);
 			mainGroup = F49E28BE29762C9B009EEB1A;
 			packageReferences = (
-				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
+				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker.git" */,
 				95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
@@ -448,6 +451,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		38FEF7C032CAC6A4CEB5D67E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hapit/Pods-Hapit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hapit/Pods-Hapit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hapit/Pods-Hapit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		48D82DE241EBBDCB13EED8D8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -667,10 +687,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
-				DEVELOPMENT_TEAM = K23A78WQAY;
+				DEVELOPMENT_TEAM = AU882HP6MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -685,7 +706,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hapit.final.Hapit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -699,10 +720,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
-				DEVELOPMENT_TEAM = K23A78WQAY;
+				DEVELOPMENT_TEAM = AU882HP6MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -717,7 +739,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hapit.final.Hapit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -749,7 +771,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */ = {
+		3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/KazaiMazai/SwiftySegmentedPicker.git";
 			requirement = {
@@ -778,7 +800,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		3CE9DFF329792FFB00E76147 /* SegmentedPicker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */;
+			package = 3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker.git" */;
 			productName = SegmentedPicker;
 		};
 		95D067A0297A252B003447EA /* FirebaseFirestore */ = {

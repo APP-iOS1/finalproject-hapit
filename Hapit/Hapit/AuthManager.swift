@@ -20,12 +20,12 @@ class AuthManager: ObservableObject {
     let currentUser = Auth.auth().currentUser ?? nil
     
     // MARK: - 로그인 
-    public func login(with email: String, _ password: String) async -> Bool {
+    public func login(with email: String, _ password: String) async throws -> Bool {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
             isLoggedin = true
         } catch{
-            print(error.localizedDescription)
+            throw(error)
         }
         return isLoggedin
     }
@@ -41,7 +41,7 @@ class AuthManager: ObservableObject {
             let newby = User1(id: target.uid, name: name, email: email, pw: pw)
             
             // firestore에 신규회원 등록
-            await uploadUserInfo(userInfo: newby)
+            try await uploadUserInfo(userInfo: newby)
             
         } catch {
             throw(error)
@@ -49,7 +49,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 유저데이터 firestore에 업로드하는 함수
-    func uploadUserInfo(userInfo: User1) async {
+    func uploadUserInfo(userInfo: User1) async throws {
         do {
             try await database.collection("User")
                 .document(userInfo.id)
@@ -59,13 +59,13 @@ class AuthManager: ObservableObject {
                     "name" : userInfo.name,
                 ])
         } catch {
-            print(error.localizedDescription)
+            throw(error)
         }
     }
     
     // MARK: - 이메일 중복확인을 해주는 함수
     @MainActor
-    func isEmailDuplicated(email: String) async -> Bool {
+    func isEmailDuplicated(email: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
                 .whereField("email", isEqualTo: email).getDocuments()
@@ -77,15 +77,13 @@ class AuthManager: ObservableObject {
             }
             
         } catch {
-            print(error.localizedDescription)
-            return true
+            throw(error)
         }
     }
     
-    
     // MARK: - 닉네임 중복확인을 해주는 함수
     @MainActor
-    func isNicknameDuplicated(nickName: String) async -> Bool {
+    func isNicknameDuplicated(nickName: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
                 .whereField("name", isEqualTo: nickName).getDocuments()
@@ -97,9 +95,7 @@ class AuthManager: ObservableObject {
             }
             
         } catch {
-            print(error.localizedDescription)
-            return true
+            throw(error)
         }
     }
 }
-

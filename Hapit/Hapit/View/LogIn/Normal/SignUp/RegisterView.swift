@@ -302,8 +302,19 @@ struct RegisterView: View {
             .padding(.vertical, 5)
             .simultaneousGesture(TapGesture().onEnded{
                 Task {
-                    mailDuplicated = await authManager.isEmailDuplicated(email: email)
-                    nameCheck = await authManager.isNicknameDuplicated(nickName: nickName)
+                    do {
+                        let target = try await authManager.isEmailDuplicated(email: email)
+                        mailDuplicated = target
+                    } catch {
+                        throw(error)
+                    }
+            
+                    do {
+                        let target = try await authManager.isNicknameDuplicated(nickName: nickName)
+                        nameCheck = target
+                    } catch {
+                        throw(error)
+                    }
                     //False면 사용가능, true면 중복이라 사용불가
                     
                     //이메일 중복인경우

@@ -37,22 +37,22 @@ struct HabitCellView: View {
             
             VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
+
                     Text(habit.createdDate)
-                        .font(.footnote)
+                        .font(.custom("IMHyemin-Regular", size: 13))
                         .foregroundColor(.gray)
                     Text(habit.challengeTitle)
-                        .bold()
-                        .font(.title2)
+                        .font(.custom("IMHyemin-Bold", size: 22))
                 }//VStack
                 
-                HStack(spacing: 5){
+                HStack(spacing: 5) {
                     Text(Image(systemName: "sun.max.fill"))
                         .foregroundColor(.orange)
                     Text("\(habit.count + 66)일째 진행중")
                     Spacer()
 
                 }
-                .font(.subheadline)//HStack
+                .font(.custom("IMHyemin-Regular", size: 15))//HStack
                 
             }//VStack
             Spacer()
@@ -66,7 +66,6 @@ struct HabitCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.bottom, 5)
-   
     }// body
 }
 //struct HabitCellView_Previews: PreviewProvider {

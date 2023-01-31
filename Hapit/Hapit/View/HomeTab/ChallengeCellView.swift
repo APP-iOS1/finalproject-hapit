@@ -38,11 +38,10 @@ struct ChallengeCellView: View {
             VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
                     Text(challenge.createdDate)
-                        .font(.footnote)
+                        .font(.custom("IMHyemin-Regular", size: 13))
                         .foregroundColor(.gray)
                     Text(challenge.challengeTitle)
-                        .bold()
-                        .font(.title2)
+                        .font(.custom("IMHyemin-Bold", size: 22))
                 }//VStack
                 
                 HStack(spacing: 5){
@@ -52,7 +51,6 @@ struct ChallengeCellView: View {
                     Spacer()
                     ForEach(0..<3){ bear in
                         Image("bearBlue")
-                        
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .offset(y: 5)
@@ -62,11 +60,9 @@ struct ChallengeCellView: View {
                             .overlay(Circle().stroke())
                             .foregroundColor(.gray)
                             .padding(.trailing, -12)
-                        
                     }
-                    
                 }
-                .font(.subheadline)//HStack
+                .font(.custom("IMHyemin-Regular", size: 15))//HStack
                 
             }//VStack
             Spacer()
@@ -77,6 +73,9 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
+        .cornerRadius(20)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 5)
 
 //        .overlay(
 //            VStack{

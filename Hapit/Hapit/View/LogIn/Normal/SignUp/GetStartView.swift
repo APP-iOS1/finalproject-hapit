@@ -27,8 +27,7 @@ struct GetStartView: View {
                         .foregroundColor(Color.accentColor)
                     Text("회원가입 완료!")
                 }
-                .font(.largeTitle)
-                .font(.custom("IMHyemin-Bold", size: 17))
+                .font(.custom("IMHyemin-Bold", size: 34))
                 Spacer()
             }
             
@@ -45,6 +44,7 @@ struct GetStartView: View {
                 isFullScreen = false
             } label: {
                 Text("시작하기")
+                    .font(.custom("IMHyemin-Bold", size: 16))
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -54,7 +54,6 @@ struct GetStartView: View {
                     }
             }
             .padding(.vertical, 5)
-            
         }
         .padding(.horizontal, 20)
     }

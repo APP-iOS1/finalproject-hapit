@@ -86,8 +86,17 @@ struct HomeView: View {
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
+    @State var isAnimating: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
+    
+    init() {
+        // Use this if NavigationBarTitle is with Large Font
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 34)!]
+        
+        // Use this if NavigationBarTitle is with displayMode = .inline
+        // UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
+    }
     
     var body: some View {
         
@@ -117,6 +126,8 @@ struct HomeView: View {
                         }
                         
                     })
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
                 }
@@ -126,21 +137,12 @@ struct HomeView: View {
                 Spacer()
                 HabitSegmentView(selectedIndex: $selectedIndex)
                 Spacer()
-
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             
             .navigationBarTitle(getToday())
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
-                
-                //                NavigationLink {
-                //                    // AddHabitView가 올 자리
-                //                    Text("hello")
-                //                } label: {
-                //                    Label("Add Habit", systemImage: "plus.app")
-                //                }
-                
                 Button {
                     isAddHabitViewShown.toggle()
                 } label: {
@@ -150,11 +152,13 @@ struct HomeView: View {
             }//toolbar
         }//NavigationStack
         .sheet(isPresented: $isAddHabitViewShown) {
-            AddHabitView()
+            if #available(iOS 16.0, *) {
+                AddHabitView()
+            } else {
+                // Fallback on earlier versions
+            }
         }
-
     }//body
-  
     func getToday() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")

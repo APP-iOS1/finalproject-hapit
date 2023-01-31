@@ -7,63 +7,71 @@
 
 import SwiftUI
 
-//MARK: - ChallengeType : 개인/그룹
+//MARK: - ChallengeType(개인/그룹)
 enum ChallengeType: String, CaseIterable{
     case personal = "개인"
     case group = "그룹"
 }
 
+struct PickerView: View {
+    @State var challengetype: ChallengeType = .personal
+    
+    init() {
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color("AccentColor"))
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemGray], for: .normal)
+    }
+    
+    var body: some View {
+        
+        Picker ("개인 그룹 중 선택해주세요",selection: $challengetype){
+            ForEach(ChallengeType.allCases, id: \.self) { option in
+                Text(option.rawValue)
+                    .fontWeight(.bold)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+    }
+}
+
 // MARK: - AddHabitView Struct
+@available(iOS 16.0, *)
 struct AddHabitView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var habitManager: HabitManager
     
-    @State private var createdAt: Date = Date()
-    var createdDate: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: createdAt)
-    }
     @State private var challengeTitle: String = ""
     @State private var isAlarmOn: Bool = false
     @State private var challengetype: ChallengeType = .personal
     
     @State private var currentDate = Date()
     
-    
     // MARK: - Body
     var body: some View {
         NavigationView {
-            Spacer()
             VStack(spacing: 15) {
                 
-                Picker ("개인 그룹 중 선택해주세요",selection: $challengetype){
-                        ForEach(ChallengeType.allCases, id: \.self) { option in
-                            Text(option.rawValue)
-                        }
-                    }
-                    .accentColor(Color("DarkPinkColor"))
-                    .background(Color("BackgroundColor"))
-                    .pickerStyle(SegmentedPickerStyle())
-              
-             /*   HStack {
-                    Spacer()
-                    Text("\(createdDate)")
-                        .bold()
-                    Spacer()
-                        
-                }.frame(height: 20)
-                    .padding()
-                    .background(Color("CellColor"))
-                    .cornerRadius(10)
-                    .padding(.horizontal, 20)
-                */
+                //  PickerView()
+                PickerView()
+               
+                /*   HStack {
+                 Spacer()
+                 Text("\(createdDate)")
+                 .bold()
+                 Spacer()
+                 
+                 }.frame(height: 20)
+                 .padding()
+                 .background(Color("CellColor"))
+                 .cornerRadius(10)
+                 .padding(.horizontal, 20)
+                 */
                 
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                     .font(.custom("IMHyemin-Bold", size: 17))
+                    
                     .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                     .background(Color("CellColor"))
                     .cornerRadius(15)
@@ -85,7 +93,6 @@ struct AddHabitView: View {
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.trailing)
                         
-                        
                     }
                     Toggle("", isOn: $isAlarmOn)
                         .labelsHidden()
@@ -105,7 +112,6 @@ struct AddHabitView: View {
                 .foregroundColor(.gray)
                 .font(.caption2)
                 .padding(.top, 5)
-                
                 
                 Spacer()
             } // VStack
@@ -128,7 +134,7 @@ struct AddHabitView: View {
                         habitManager.createChallenge(challenge: Challenge(id: id, creator: "추추맨", mateArray: ["신현준"], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false))
                         
                         habitManager.loadChallenge()
-
+                        
                         dismiss()
                         
                     } label: {
@@ -140,15 +146,10 @@ struct AddHabitView: View {
     } // Body
 }
 
-
 // MARK: - AddHabitView Previews
+@available(iOS 16.0, *)
 struct AddHabitView_Previews: PreviewProvider {
-    
-    
     static var previews: some View {
         AddHabitView()
     }
 }
-
-
-

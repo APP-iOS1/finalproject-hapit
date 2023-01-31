@@ -35,8 +35,7 @@ struct ChallengeCellView: View {
             .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
             //checkButton
-            
-            VStack(alignment: .leading, spacing: 1) {
+            VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
                     Text(challenge.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))

@@ -13,4 +13,5 @@ struct Dairy: Identifiable {
     var description: String
     var doneFlag: Bool
     var date: Date
+    
 }

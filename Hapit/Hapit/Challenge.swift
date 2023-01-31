@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 // MARK: - 습관
 struct Challenge: Hashable, Codable, Identifiable {
     
@@ -25,17 +24,13 @@ struct Challenge: Hashable, Codable, Identifiable {
     
     // MARK: 임시 - 챌린지 체크 여부
     var isChecked: Bool
-    
-    
+
     // 챌린지 체크 여부 [체크한 날짜]
     // var isChecked: [String]
     // 18, 19일을 체크. ["1/18", "1/19", "1/21"]
     // 배열에 추가될 때마다 카운트. 연속일로 카운트 출력. 안 하는 날이 생기면 카운트를 초기화.
     // isChecked 배열 변수 따로
     // 연속일 체크하는 변수 따로
-    
-
-    
     // 작성한 시각인 createAt을 String 타입으로 리턴합니다.
     var createdDate: String {
         let dateFormatter = DateFormatter()

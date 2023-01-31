@@ -14,7 +14,7 @@ struct HabitCellView: View {
     
     // MARK: - Body
     var body: some View {
-        
+
         HStack{
             Button {
                 // 업데이트 함수 요망
@@ -35,8 +35,9 @@ struct HabitCellView: View {
             .padding(.trailing, 5)
             //checkButton
             
-            VStack(alignment: .leading, spacing: 1) {
-                VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 1){
+                VStack(alignment: .leading, spacing: 2){
+
                     Text(habit.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))
                         .foregroundColor(.gray)
@@ -65,7 +66,6 @@ struct HabitCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.bottom, 5)
-        
     }// body
 }
 //struct HabitCellView_Previews: PreviewProvider {

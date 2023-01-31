@@ -13,7 +13,7 @@ import SegmentedPicker
 struct HabitSegmentView: View {
     
     @Binding var selectedIndex: Int
-    
+    @State var date = Date()
     // 챌린지와 습관을 관리하는 객체
     @EnvironmentObject var habitManager: HabitManager
     
@@ -32,6 +32,10 @@ struct HabitSegmentView: View {
                         
                         NavigationLink {
                             //HabitDetailView(calendar: Calendar.current)
+                            ScrollView{
+                                CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
+                                    
+                            }
                         } label: {
                             
                             ChallengeCellView(challenge: challenge)
@@ -70,7 +74,6 @@ struct HabitSegmentView: View {
 //                        print(habitManager.habits)
 //
 //                    }
-                    
             }
         default: Text("something wrong")
         }// switch
@@ -128,12 +131,12 @@ struct HomeView: View {
                 .onAppear {
                     selectedIndex = 0
                 }
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
                 // 세그먼트 뷰
                 Spacer()
                 HabitSegmentView(selectedIndex: $selectedIndex)
                 Spacer()
-                
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             
@@ -156,7 +159,6 @@ struct HomeView: View {
             }
         }
     }//body
-    
     func getToday() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")
@@ -174,7 +176,6 @@ struct HomeView: View {
 //        HomeView()
 //    }
 //}
-
 //    // MARK: 더미 데이터
 //    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
 //

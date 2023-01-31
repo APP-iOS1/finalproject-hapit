@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PhotoPicker: UIViewControllerRepresentable {
     
-    @Binding var selectedImage: UIImage
+    @Binding var selectedImage: UIImage?
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
@@ -47,11 +47,8 @@ struct PhotoPicker: UIViewControllerRepresentable {
     }
 }
 
-
 //사용하는 부분에
-
 //@State private var postImage = UIImage(named: "~~")
-
 
 // 글에다가
 // Image(uiImage: postImage)

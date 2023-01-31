@@ -19,9 +19,7 @@ struct DedicatedWriteDiaryView: View {
     @State private var date = "2023년 01월 20일 금요일"
     @State private var habitName = "물마시기"
     
-    // MARK: 옵셔널 타입으로 변경하기
-    @State private var selectedImage: UIImage = UIImage(named: "bearBlue")! // ios 15
-    
+    @State private var selectedImage: UIImage?// ios 15
     @State private var isShowingPhotoPicker: Bool = false
     
     let maxCharacterLength = Int(300)
@@ -32,31 +30,29 @@ struct DedicatedWriteDiaryView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("\(habitName)")
-                            .font(.title2)
-                            .bold()
+                            .font(.custom("IMHyemin-Bold", size: 22))
                         Text("\(date)")
+                            .font(.custom("IMHyemin-Regular", size: 17))
                     }
                     Spacer()
-                }
-                .padding(EdgeInsets(top: 30, leading: 20, bottom: 0, trailing: 20))
+                }.padding(.top, 10)
                 
-                Divider().padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                Divider()
                 
                 VStack {
-                    // 선택된 이미지 출력.
-                    Image(uiImage: selectedImage)
-                        .resizable()
-                        .cornerRadius(10)
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity)
-                        .padding(10)
+                    if let image = selectedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .cornerRadius(10)
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                    }
 
                     // 글자수 300자 제한
-                    TextField("릴루님의 습관일지를 작성해보세요!", text: $content) // ios 15
-                    // .lineLimit(9, reservesSpace: false)
-                        .font(.subheadline)
-                        .frame(width: UIScreen.main.bounds.size.width)
-                        .padding(.horizontal, 20)
+                    TextEditor(text: $content) // ios 15
+                        .font(.custom("IMHyemin-Regular", size: 15))
+                        .lineSpacing(10)
+                        .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 200)
                         .onReceive(Just(content), perform: { _ in
                             if maxCharacterLength < content.count {
                                 content = String(content.prefix(maxCharacterLength))
@@ -70,7 +66,6 @@ struct DedicatedWriteDiaryView: View {
                             .font(.footnote)
                             .foregroundColor(.gray)
                     }
-                    .padding(.horizontal, 20)
                     
                     Spacer()
      
@@ -101,7 +96,7 @@ struct DedicatedWriteDiaryView: View {
                 } // toolbar
                 
             } // ScrollView
-            
+            .padding(.horizontal, 20)
             // 작성 완료 버튼
             Button {
                 // 작성완료 액션

@@ -20,18 +20,22 @@ struct LogInView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Image("logo")
-                    .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: 200)
-                
-                Spacer().frame(height: 120)
+                Group {
+                    Spacer()
+                    
+                    Image("logo")
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: 200)
+                    
+                    Spacer()
+                    Spacer()
+                }
                 
                 Group {
-                    VStack {
+                    VStack(spacing: 5) {
                         TextField("Email", text: $email)
                             .focused($emailFocusField)
-                            .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
+                            .modifier(ClearTextFieldModifier())
                         Rectangle()
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)
@@ -39,11 +43,10 @@ struct LogInView: View {
                     
                     Spacer().frame(height: 22)
                     
-                    VStack {
+                    VStack(spacing: 5) {
                         SecureField("Password", text: $pw)
                             .focused($pwFocusField)
-                            .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
+                            .modifier(ClearTextFieldModifier())
                         Rectangle()
                             .fill(.gray)
                             .frame(maxWidth: .infinity, maxHeight: 0.3)
@@ -101,6 +104,8 @@ struct LogInView: View {
                         GoogleLogIn()
                     }
                 }
+                
+                Spacer()
             }
             .padding(.horizontal, 20)
         }

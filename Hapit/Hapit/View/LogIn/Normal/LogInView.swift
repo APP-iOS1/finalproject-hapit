@@ -16,7 +16,7 @@ struct LogInView: View {
     @FocusState private var pwFocusField: Bool
     
     @State private var logInResult: Bool = false
-    @State private var errorText: String = ""
+    @State private var verified: Bool = false
     
     @EnvironmentObject var authManager: AuthManager
     
@@ -37,11 +37,10 @@ struct LogInView: View {
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
                         Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
                     }
                     
-                    Spacer().frame(height: 22)
+                    Spacer().frame(height: 20)
                     
                     VStack {
                         SecureField("비밀번호", text: $pw)
@@ -50,13 +49,14 @@ struct LogInView: View {
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
                         Rectangle()
-                            .fill(.gray)
-                            .frame(maxWidth: .infinity, maxHeight: 0.3)
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                     }
                 }
                 
-                HStack(alignment: .center, spacing: 5) {
-                    if !logInResult {
+                Spacer().frame(height: 20)
+                
+                HStack() {
+                    if !logInResult && verified {
                         Image(systemName: "exclamationmark.circle")
                         Text("이메일과 비밀번호가 일치하지 않습니다")
                         Spacer()
@@ -77,6 +77,7 @@ struct LogInView: View {
                         } else if pw == "" {
                             pwFocusField = true
                         } else {
+                            verified = true
                             logInResult = await authManager.login(with: email, pw)
                             
                             if logInResult {
@@ -95,18 +96,20 @@ struct LogInView: View {
                         }
                 }
                 
-                Spacer().frame(height: 15)
-                
-                HStack {
-                    Text("아직 회원이 아니신가요?")
-                        .font(.custom("IMHyemin-Regular", size: 16))
-                    NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
-                        Text("회원가입")
-                            .font(.custom("IMHyemin-Regular", size: 16)) 
+                Group {
+                    Spacer().frame(height: 15)
+                    
+                    HStack {
+                        Text("아직 회원이 아니신가요?")
+                            .font(.custom("IMHyemin-Regular", size: 16))
+                        NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
+                            Text("회원가입")
+                                .font(.custom("IMHyemin-Regular", size: 16))
+                        }
                     }
+                    
+                    Spacer().frame(height: 35)
                 }
-                
-                Spacer().frame(height: 35)
                 
                 Group {
                     HStack {

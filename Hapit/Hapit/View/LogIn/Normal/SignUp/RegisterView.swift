@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
+    
     @State private var email: String = ""
     @State private var mailDuplicated: Bool = false
     @State private var emailTmp: String = ""

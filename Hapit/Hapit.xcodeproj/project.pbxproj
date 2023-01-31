@@ -45,6 +45,7 @@
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
+		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
 		F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47BA153297A75EE000222EE /* FirebaseAuth */; };
@@ -134,6 +135,7 @@
 				95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */,
 				F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */,
 				7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */,
+				F40B9A50298827E400385014 /* KakaoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +387,7 @@
 				95D067A0297A252B003447EA /* FirebaseFirestore */,
 				95D067A2297A252B003447EA /* FirebaseFirestoreSwift */,
 				F47BA153297A75EE000222EE /* FirebaseAuth */,
+				F40B9A4F298827E400385014 /* KakaoSDK */,
 			);
 			productName = Hapit;
 			productReference = F49E28C729762C9C009EEB1A /* Hapit.app */;
@@ -417,6 +420,7 @@
 			packageReferences = (
 				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
 				95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = F49E28C829762C9C009EEB1A /* Products */;
 			projectDirPath = "";
@@ -761,6 +765,14 @@
 				kind = branch;
 			};
 		};
+		F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -778,6 +790,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		F40B9A4F298827E400385014 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
 		};
 		F47BA153297A75EE000222EE /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

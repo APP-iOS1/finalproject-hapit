@@ -19,7 +19,6 @@ let currentUser = Auth.auth().currentUser ?? nil
 struct PickerView: View {
     @State var challengetype: ChallengeType = .personal
 
-    
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color("AccentColor"))
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
@@ -141,9 +140,9 @@ struct AddHabitView: View {
                             
                             habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
                             
-                            dismiss()
-                            
                             habitManager.loadChallenge()
+                            
+                            dismiss()
                         }
                         
                     } label: {

@@ -29,7 +29,6 @@ final class HabitManager: ObservableObject{
     
     let database = Firestore.firestore()
     
-    
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
@@ -92,7 +91,8 @@ final class HabitManager: ObservableObject{
                     "challengeTitle": challenge.challengeTitle,
                     "createdAt": challenge.createdAt,
                     "count": challenge.count,
-                    "isChecked": challenge.isChecked
+                    "isChecked": challenge.isChecked,
+                    "uid": challenge.uid
                 ]) { error in
                     if let error = error {
                         promise(.failure(error))

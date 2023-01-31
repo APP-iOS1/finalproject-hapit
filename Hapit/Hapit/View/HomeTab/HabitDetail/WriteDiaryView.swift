@@ -72,10 +72,7 @@ struct WriteDiaryView: View {
                                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                         }
                     } // if let
-                    
-                    
-                    
-                    
+             
                     // 글자수 300자 제한
                     TextField("릴루님의 습관일지를 작성해보세요!", text: $content, axis: .vertical) // ios 15
                     // .lineLimit(9, reservesSpace: false)

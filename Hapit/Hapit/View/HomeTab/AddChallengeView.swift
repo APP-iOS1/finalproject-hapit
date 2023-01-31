@@ -19,7 +19,6 @@ let currentUser = Auth.auth().currentUser ?? nil
 struct PickerView: View {
     @State var challengetype: ChallengeType = .personal
 
-    
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color("AccentColor"))
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)

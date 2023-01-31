@@ -15,6 +15,8 @@ struct CustomDatePickerView: View {
     //MARK: 화살표 버튼을 통해 month를 업데이트 해주는 변수
     @State private var currentMonth: Int = 0
     
+    @EnvironmentObject var habitManager: HabitManager
+    
     var body: some View {
         VStack(spacing: 35){
             // Days

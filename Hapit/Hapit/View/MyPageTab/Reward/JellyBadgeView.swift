@@ -21,7 +21,7 @@ struct JellyBadgeView: View {
                 .padding(.bottom, 15)
             
             Text("내가 가장\n오래 젤리")
-                .font(.caption)
+                .font(.custom("IMHyemin-Regular", size: 12))
                 .frame(width: 60)
         }
         .padding(10)

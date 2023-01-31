@@ -236,6 +236,13 @@
 			path = SocialTab;
 			sourceTree = "<group>";
 		};
+		F40B9A512988CDFB00385014 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		F49E28BE29762C9B009EEB1A = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +265,7 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				F40B9A512988CDFB00385014 /* Extension */,
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
 				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,

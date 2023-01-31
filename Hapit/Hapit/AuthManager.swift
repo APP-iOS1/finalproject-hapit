@@ -138,4 +138,16 @@ class AuthManager: ObservableObject {
             return "error"
         }
     }
+    
+    public func updateUserNickName(uid: String, nickname: String) async -> Void {
+        //        guard let currentUserId else { return }
+        let path = database.collection("User")
+        do {
+            try await path.document(uid).updateData(["name": nickname])
+        } catch {
+#if DEBUG
+            print("\(error.localizedDescription)")
+#endif
+        }
+    }
 }

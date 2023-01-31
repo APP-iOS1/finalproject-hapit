@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileCellView: View {
+    @EnvironmentObject var authManager: AuthManager
     @State private var nickName = "릴루"
     @State private var email = "minju@world.com"
     @State private var isSelectedJelly = 0
@@ -66,6 +67,7 @@ struct ProfileCellView: View {
                     }
                     .halfSheet(showSheet: $showNicknameModal) {
                         NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
+                            .environmentObject(authManager)
                     }
                 }
             }

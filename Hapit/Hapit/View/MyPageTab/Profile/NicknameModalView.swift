@@ -51,9 +51,12 @@ struct NicknameModalView: View {
             
             // TODO: 공백 입력, 글자수 제한
             Button {
-                if isValid {
-                    userNickname = nickname
-                    showModal = false
+                Task {
+                    if isValid {
+                        userNickname = nickname
+                        await authManager.updateUserNickName(uid: currentUser?.uid ?? "", nickname: userNickname)
+                        showModal = false
+                    }
                 }
             } label: {
                 Text("저장")

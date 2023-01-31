@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @EnvironmentObject var authManager: AuthManager
     @Binding var isFullScreen: Bool
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
                     ProfileCellView()
+                        .environmentObject(authManager)
                     RewardView()
                 }
                 .toolbar {

@@ -32,15 +32,21 @@ struct HabitSegmentView: View {
                         
                         NavigationLink {
                             //HabitDetailView(calendar: Calendar.current)
-                            ScrollView{
+                            ScrollView(showsIndicators: false){
                                 CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
-                                    
+                                    .background(Color("CellColor"))
+                                    .cornerRadius(20)
+                                    .navigationBarTitle("\(challenge.challengeTitle)")
                             }
+                            .padding()
+                            .background(Color("BackgroundColor"))
+                            //.navigationBarTitle("", displayMode: .automatic)
+                            
                         } label: {
                             
                             ChallengeCellView(challenge: challenge)
                         }
-                        
+
                     }
                 }
                 
@@ -115,7 +121,6 @@ struct HomeView: View {
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                             .font(.custom("IMHyemin-Bold", size: 17))
-                        
                     },
                     selection: {
                         VStack(spacing: 0) {
@@ -132,14 +137,12 @@ struct HomeView: View {
                     selectedIndex = 0
                 }
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
-                
                 // 세그먼트 뷰
                 Spacer()
                 HabitSegmentView(selectedIndex: $selectedIndex)
                 Spacer()
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
-            
             .navigationBarTitle(getToday())
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
@@ -150,6 +153,7 @@ struct HomeView: View {
                 }
                 
             }//toolbar
+            
         }//NavigationStack
         .sheet(isPresented: $isAddHabitViewShown) {
             if #available(iOS 16.0, *) {

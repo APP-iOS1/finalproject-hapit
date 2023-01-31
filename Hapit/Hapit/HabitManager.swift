@@ -10,7 +10,6 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
-
 final class HabitManager: ObservableObject{
     
     enum FirebaseError: Error{
@@ -20,15 +19,12 @@ final class HabitManager: ObservableObject{
     private var cancellables = Set<AnyCancellable>()
     
     
-    
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
     @Published var challenges: [Challenge] = []
     @Published var habits: [Challenge] = []
     
-    
     let database = Firestore.firestore()
-    
     
     // MARK: - Fetch Habits
     //func fetchHabits(uesrID: String) async{
@@ -71,7 +67,6 @@ final class HabitManager: ObservableObject{
 //        }
 //    }
     
-    
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
@@ -100,8 +95,6 @@ final class HabitManager: ObservableObject{
             
         }
         .eraseToAnyPublisher()
-        
-        
         
     }
     
@@ -160,7 +153,6 @@ final class HabitManager: ObservableObject{
             .store(in: &cancellables)
     }
     
-    
     // MARK: - Add a Habit
     //func createHabit(creator: String) async {
 //    @MainActor
@@ -188,7 +180,6 @@ final class HabitManager: ObservableObject{
 //        await fetchChallengeCombine()
 //    }
     
-    
     // MARK: - Delete a Habit
     // func deleteHabit(post: Post) {
     @MainActor
@@ -204,7 +195,6 @@ final class HabitManager: ObservableObject{
         // 다시 서버에서 불러올 수도 있지만, 그러기엔 비용이 많이 발생하므로 제거된 대상만 배열에서 빼버린다.
         //self.daylogList.removeAll { $0.id == daylog.id }
     }
-    
     
     // MARK: - Update a Habit
     @MainActor
@@ -232,12 +222,10 @@ final class HabitManager: ObservableObject{
                 .document(challenge.id)
                 .updateData(["isChecked": check])
         }catch{
-            print(error)
+            throw(error)
         }
         
         await fetchChallengeCombine()
     }
     
 }
-
-

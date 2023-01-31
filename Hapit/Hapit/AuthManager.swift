@@ -31,7 +31,6 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 신규회원 생성
-    @MainActor
     func register(email: String, pw: String, name: String) async throws {
         do {
             //Auth에 유저등록
@@ -64,7 +63,6 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 이메일 중복확인을 해주는 함수
-    @MainActor
     func isEmailDuplicated(email: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
@@ -82,7 +80,6 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 닉네임 중복확인을 해주는 함수
-    @MainActor
     func isNicknameDuplicated(nickName: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
@@ -96,6 +93,23 @@ class AuthManager: ObservableObject {
             
         } catch {
             throw(error)
+        }
+    }
+    
+    // MARK: - 사용 중인 유저의 닉네임을 반환
+    func getNickName(uid: String) async -> String {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpName: String = docData?["name"] as? String ?? ""
+            
+            return tmpName
+        } catch {
+            print(error.localizedDescription)
+            return "error"
         }
     }
 }

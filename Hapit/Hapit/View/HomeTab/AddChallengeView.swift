@@ -138,7 +138,7 @@ struct AddHabitView: View {
                             let id = UUID().uuidString
                             let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
                             
-                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: authManager.firebaseAuth.currentUser?.uid ?? ""))
                             
                             habitManager.loadChallenge()
                             

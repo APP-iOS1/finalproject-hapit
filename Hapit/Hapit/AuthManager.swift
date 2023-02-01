@@ -51,6 +51,8 @@ class AuthManager: ObservableObject {
         }
     }
     
+    // MARK: - currentUserFetch 함수
+    
     // MARK: - 신규회원 생성
     final func register(email: String, pw: String, name: String) async throws {
         do {

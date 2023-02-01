@@ -29,6 +29,7 @@ struct HabitSegmentView: View {
                     EmptyCellView()
                 }
                 else {
+
                     ScrollView{
                         if habitManager.challenges.count < 1{
                             

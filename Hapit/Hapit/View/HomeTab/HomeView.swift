@@ -31,7 +31,7 @@ struct HabitSegmentView: View {
                     EmptyCellView()
                 }
                 else {
-
+                    
                     ScrollView{
                         if habitManager.challenges.count < 1{
                             
@@ -43,16 +43,32 @@ struct HabitSegmentView: View {
                                 
                                 if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
-                                        //HabitDetailView(calendar: Calendar.current)
-                                        ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
-                                                .background(Color("CellColor"))
-                                                .cornerRadius(20)
-                                                .navigationBarTitle("\(challenge.challengeTitle)")
-                                        }
-                                        .padding()
-                                        .background(Color("BackgroundColor"))
-                                        //.navigationBarTitle("", displayMode: .automatic)
+                                        ZStack {
+                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
+                                                .background(BackgroundClearView())
+                                                .edgesIgnoringSafeArea(.all)
+                                                .transition(.opacity)
+                                            
+                                            //HabitDetailView(calendar: Calendar.current)
+                                            ScrollView(showsIndicators: false){
+                                                CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
+                                            }
+                                            .padding()
+                                            .background(Color("BackgroundColor"))
+                                            
+                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
+                                                .background(BackgroundClearView())
+                                                .edgesIgnoringSafeArea(.all)
+                                                .transition(.opacity)
+                                                .customAlert( // 커스텀 알림창 띄우기
+                                                    isPresented: $showsCustomAlert,
+                                                    title: "챌린지를 삭제하시겠어요?",
+                                                    message: "삭제된 챌린지는 복구할 수 없어요.",
+                                                    primaryButtonTitle: "삭제",
+                                                    primaryAction: { habitManager.removeChallenge(challenge: challenge) },
+                                                    withCancelButton: true)
+                                            //.navigationBarTitle("", displayMode: .automatic)
+                                        } // ZStack
                                         
                                     } label: {
                                         ChallengeCellView(challenge: challenge)
@@ -82,31 +98,31 @@ struct HabitSegmentView: View {
                 habitManager.loadChallenge()
             }
         case 1:
-
-                if habitManager.habits.count < 1{
-                    EmptyCellView()
-                }
-                else{
-                    ScrollView {
-                        ForEach(habitManager.habits) { habit in
+            
+            if habitManager.habits.count < 1{
+                EmptyCellView()
+            }
+            else{
+                ScrollView {
+                    ForEach(habitManager.habits) { habit in
+                        
+                        NavigationLink {
+                            // MARK: 버전 분기
                             
-                            NavigationLink {
-                                // MARK: 버전 분기
-                                
-                                //HabitDetailView(calendar: Calendar.current)
-                            } label: {
-                                HabitCellView(habit: habit)
-                            }
-                            
+                            //HabitDetailView(calendar: Calendar.current)
+                        } label: {
+                            HabitCellView(habit: habit)
                         }
+                        
                     }
-//                    .onAppear{
-//                        Task{
-//                            await habitManager.fetchChallenge()
-//                        }
-//                        print(habitManager.habits)
-//
-//                    }
+                }
+                //                    .onAppear{
+                //                        Task{
+                //                            await habitManager.fetchChallenge()
+                //                        }
+                //                        print(habitManager.habits)
+                //
+                //                    }
             }
         default: Text("something wrong")
         }// switch
@@ -127,14 +143,13 @@ struct HomeView: View {
     
     init() {
         // Use this if NavigationBarTitle is with Large Font
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 34)!]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
         
         // Use this if NavigationBarTitle is with displayMode = .inline
         // UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
     }
     
     var body: some View {
-        
         NavigationView{
             VStack {
                 SegmentedPicker(
@@ -166,7 +181,7 @@ struct HomeView: View {
                     selectedIndex = 0
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
-
+                
                 // 세그먼트 뷰
                 HabitSegmentView(selectedIndex: $selectedIndex, showsCustomAlert: $showsCustomAlert)
             }//VStack
@@ -182,11 +197,12 @@ struct HomeView: View {
                 
             }//toolbar
             
-        }//NavigationStack
+        }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
             AddChallengeView()
         }
     }//body
+    
     func getToday() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")

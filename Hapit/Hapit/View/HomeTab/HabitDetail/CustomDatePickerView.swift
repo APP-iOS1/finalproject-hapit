@@ -129,16 +129,6 @@ struct CustomDatePickerView: View {
                     } // label
                 } // ToolbarItem
             }
-            .customAlert(
-                isPresented: $showsCustomAlert,
-                title: "챌린지를 삭제하시겠어요?",
-                message: "삭제된 챌린지는 복구할 수 없어요.",
-                primaryButtonTitle: "삭제",
-                primaryAction: { habitManager.removeChallenge(challenge: currentChallenge) },
-                withCancelButton: true)
-            
-        }
-        
     }
     //MARK: Methods
     
@@ -236,6 +226,7 @@ struct CustomDatePickerView: View {
         return days
     }
 }
+
 //struct CustomDatePicker_Previews: PreviewProvider {
 //    static var previews: some View {
 //        CustomDatePickerView(currentChallenge: (Challenge(id: UUID().uuidString, creator: "릴루", mateArray: ["현호", "진형", "예원"], challengeTitle: "물 마시기", createdAt: Date(), count: 0, isChecked: true, uid: "")) , currentDate: .constant(Date()))

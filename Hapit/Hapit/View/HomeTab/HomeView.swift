@@ -20,7 +20,7 @@ struct HabitSegmentView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     
-    @Binding var showsCustomAlert: Bool
+    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
     
     var body: some View {
         switch selectedIndex {
@@ -53,9 +53,20 @@ struct HabitSegmentView: View {
                                             }
                                             .padding()
                                             .background(Color("BackgroundColor"))
-                                            ModalAnchorView()
-                                        }
-                                        //.navigationBarTitle("", displayMode: .automatic)
+                                            
+                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
+                                                .edgesIgnoringSafeArea(.all)
+                                                .transition(.opacity)
+                                                .customAlert( // 커스텀 알림창 띄우기
+                                                    isPresented: $showsCustomAlert,
+                                                    title: "챌린지를 삭제하시겠어요?",
+                                                    message: "삭제된 챌린지는 복구할 수 없어요.",
+                                                    primaryButtonTitle: "삭제",
+                                                    primaryAction: { habitManager.removeChallenge(challenge: challenge) },
+                                                    withCancelButton: true)
+                                                    
+                                              ModalAnchorView()
+                                        } // ZStack
                                         
                                     } label: {
                                         ChallengeCellView(challenge: challenge)
@@ -125,19 +136,16 @@ struct HomeView: View {
     @State var isAnimating: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
-    
-    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
-    
+
     init() {
         // Use this if NavigationBarTitle is with Large Font
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 34)!]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
         
         // Use this if NavigationBarTitle is with displayMode = .inline
         // UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
     }
     
     var body: some View {
-        
         NavigationView{
             VStack {
                 SegmentedPicker(
@@ -171,7 +179,7 @@ struct HomeView: View {
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
                 // 세그먼트 뷰
-                HabitSegmentView(selectedIndex: $selectedIndex, showsCustomAlert: $showsCustomAlert)
+                HabitSegmentView(selectedIndex: $selectedIndex)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())
@@ -185,11 +193,12 @@ struct HomeView: View {
                 
             }//toolbar
             
-        }//NavigationStack
+        }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
             AddChallengeView()
         }
     }//body
+    
     func getToday() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")

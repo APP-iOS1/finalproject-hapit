@@ -38,10 +38,6 @@ struct CustomAlertModifier: ViewModifier {
             
             ZStack {
                 if isPresented {
-//                    Color.black.opacity(0.3)
-//                        .edgesIgnoringSafeArea(.all)
-//                        .transition(.opacity)
-                    
                     CustomAlert(
                         isPresented: _isPresented,
                         title: self.title,

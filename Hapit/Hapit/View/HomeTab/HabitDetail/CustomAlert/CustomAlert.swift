@@ -78,4 +78,3 @@ struct CustomAlert_Previews: PreviewProvider {
       withCancelButton: true)
   }
 }
-

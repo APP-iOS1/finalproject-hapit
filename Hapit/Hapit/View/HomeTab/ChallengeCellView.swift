@@ -67,14 +67,12 @@ struct ChallengeCellView: View {
             Spacer()
             
         }//HStack
+        .padding(20)
         .foregroundColor(.black)
         .background(
             .white
         )
-//        .cornerRadius(20)
-//        .padding(.horizontal, 20)
-//        .padding(.bottom, 5)
-
+        .cornerRadius(20)
 //        .overlay(
 //            VStack{
 //                Spacer()

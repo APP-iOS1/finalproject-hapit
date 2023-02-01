@@ -53,9 +53,6 @@ struct DiaryModalView: View {
     }
 }
 
-
-
-
 struct DiaryModalView_Previews: PreviewProvider {
     static var previews: some View {
         DiaryModalView()

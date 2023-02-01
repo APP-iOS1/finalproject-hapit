@@ -19,6 +19,7 @@ struct LogInView: View {
     @State private var verified: Bool = false
     
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var habitManager: HabitManager
     
     var body: some View {
         NavigationView {

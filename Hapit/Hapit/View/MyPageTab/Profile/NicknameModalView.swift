@@ -13,6 +13,8 @@ struct NicknameModalView: View {
     @State private var nickname = ""
     @State private var isValid = false
     
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
         VStack {
             HStack {

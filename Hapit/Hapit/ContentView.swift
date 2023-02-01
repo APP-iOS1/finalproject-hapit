@@ -13,6 +13,7 @@ struct ContentView: View {
     }
 
     @State private var isFullScreen = true
+    @State private var index: Int = 0
     
     //@StateObject var habitManager: HabitManager = HabitManager()
 

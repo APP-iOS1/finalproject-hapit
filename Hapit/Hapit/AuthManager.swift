@@ -24,7 +24,6 @@ class AuthManager: ObservableObject {
     final func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-            isLoggedin = true
         } catch{
             throw(error)
         }

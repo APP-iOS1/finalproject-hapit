@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @EnvironmentObject var authManager: AuthManager
     @Binding var isFullScreen: Bool
     @Binding var index: Int
     
@@ -16,6 +17,7 @@ struct MyPageView: View {
             ScrollView {
                 VStack {
                     ProfileCellView()
+                        .environmentObject(authManager)
                     RewardView()
                 }
                 .toolbar {

@@ -35,7 +35,7 @@ struct ContentView: View {
                    }
                 }
                .tag(1)
-            MyPageView(isFullScreen: $isFullScreen)
+            MyPageView(isFullScreen: $isFullScreen, index: $index)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")

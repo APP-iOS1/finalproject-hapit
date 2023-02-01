@@ -46,6 +46,9 @@
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */; };
+		C90766FB2989F8D000D646F7 /* AddChallengeMateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */; };
+		C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */; };
+		C90766FF2989F8FF00D646F7 /* AddChallengeMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
@@ -125,6 +128,9 @@
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
+		C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateCellView.swift; sourceTree = "<group>"; };
+		C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateProfileView.swift; sourceTree = "<group>"; };
+		C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -177,8 +183,8 @@
 		3C38AFC229763327002D5ADF /* HomeTab */ = {
 			isa = PBXGroup;
 			children = (
+				C90767002989F90900D646F7 /* AddChallenge */,
 				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
-				6774979329763C29003F9D6C /* AddChallengeView.swift */,
 				3CF39BAA29779347003D4809 /* ChallengeCellView.swift */,
 				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
 				3CE9DFF7297A512300E76147 /* EmptyCellView.swift */,
@@ -242,6 +248,17 @@
 				C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */,
 			);
 			path = Option;
+			sourceTree = "<group>";
+		};
+		C90767002989F90900D646F7 /* AddChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				6774979329763C29003F9D6C /* AddChallengeView.swift */,
+				C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */,
+				C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */,
+				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
+			);
+			path = AddChallenge;
 			sourceTree = "<group>";
 		};
 		C9CBC7FE2976831600D530CC /* HabitDetail */ = {
@@ -559,12 +576,15 @@
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
+				C90766FF2989F8FF00D646F7 /* AddChallengeMateView.swift in Sources */,
 				3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */,
 				674F28B32977C4C000390405 /* Post.swift in Sources */,
 				F47BA151297A697F000222EE /* User.swift in Sources */,
 				3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */,
+				C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
 				3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */,
+				C90766FB2989F8D000D646F7 /* AddChallengeMateCellView.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				3C39C493298985D400603149 /* PostModalView.swift in Sources */,
 				3C811D1D2987628A0005539A /* CustomDatePickerView.swift in Sources */,

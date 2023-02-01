@@ -34,7 +34,7 @@ struct PickerView: View {
         
         var body: some View {
             VStack {
-                Picker("개인 그룹 중 선택해주세요", selection: $challengetype) {
+                Picker("", selection: $currentIndex) {
                     ForEach(challengetype.indices, id: \.self) { index in
                         Text(challengetype[index])
                             .font(.custom("IMHyemin-Bold", size: 17))
@@ -71,7 +71,7 @@ struct AddChallengeView: View {
                 PickerView($currentIndex, challengetype: challengetype)
                 switch(currentIndex){
                 case 0:
-                    TextField("", text: $currentIndex)
+                    TextField("챌린지 이름을 입력해주세요", text: $challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 17))
                         
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyPageView: View {
     @Binding var isFullScreen: Bool
+    @Binding var index: Int
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -19,7 +21,7 @@ struct MyPageView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
                         NavigationLink {
-                            OptionView(isFullScreen: $isFullScreen)
+                            OptionView(isFullScreen: $isFullScreen, index: $index)
                         } label: {
                             Image(systemName: "gearshape.fill")
                                 .resizable()
@@ -35,6 +37,6 @@ struct MyPageView: View {
 
 struct MyPageView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageView(isFullScreen: .constant(true))
+        MyPageView(isFullScreen: .constant(true), index: .constant(0))
     }
 }

@@ -21,14 +21,12 @@ class AuthManager: ObservableObject {
     let firebaseAuth = Auth.auth()
     
     // MARK: - 로그인 
-    final func login(with email: String, _ password: String) async throws -> Bool {
+    final func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-            isLoggedin = true
         } catch{
             throw(error)
         }
-        return isLoggedin
     }
     
     //MARK: - 로그아웃

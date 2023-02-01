@@ -6,15 +6,12 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 //MARK: - ChallengeType(개인/그룹)
 enum ChallengeType: String, CaseIterable{
     case personal = "개인"
     case group = "그룹"
 }
-
-let currentUser = Auth.auth().currentUser ?? nil
 
 struct PickerView: View {
     @State var challengetype: ChallengeType = .personal
@@ -136,7 +133,7 @@ struct AddHabitView: View {
                     Button {
                         Task {
                             let id = UUID().uuidString
-                            let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
+                            let creator = await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                             
                             habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: authManager.firebaseAuth.currentUser?.uid ?? ""))
                             

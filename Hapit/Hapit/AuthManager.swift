@@ -13,7 +13,7 @@ import FirebaseCore
 
 @MainActor
 class AuthManager: ObservableObject {
-    var userInfoStore: User = User(id: "", name: "", email: "", pw: "")
+    var userInfoStore: User = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [])
     
     @Published var isLoggedin = false
     
@@ -56,7 +56,7 @@ class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw)
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "", badge: [])
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -75,6 +75,8 @@ class AuthManager: ObservableObject {
                     "email" : userInfo.email,
                     "pw" : userInfo.pw,
                     "name" : userInfo.name,
+                    "image" : userInfo.proImage,
+                    "badge" : userInfo.badge
                 ])
         } catch {
             throw(error)

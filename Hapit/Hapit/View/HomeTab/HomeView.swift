@@ -20,6 +20,8 @@ struct HabitSegmentView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     
+    @Binding var showsCustomAlert: Bool
+    
     var body: some View {
         switch selectedIndex {
             
@@ -43,7 +45,7 @@ struct HabitSegmentView: View {
                                     NavigationLink {
                                         //HabitDetailView(calendar: Calendar.current)
                                         ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
+                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
                                                 .background(Color("CellColor"))
                                                 .cornerRadius(20)
                                                 .navigationBarTitle("\(challenge.challengeTitle)")
@@ -121,6 +123,8 @@ struct HomeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     
+    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
+    
     init() {
         // Use this if NavigationBarTitle is with Large Font
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 34)!]
@@ -164,7 +168,7 @@ struct HomeView: View {
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
 
                 // 세그먼트 뷰
-                HabitSegmentView(selectedIndex: $selectedIndex)
+                HabitSegmentView(selectedIndex: $selectedIndex, showsCustomAlert: $showsCustomAlert)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())

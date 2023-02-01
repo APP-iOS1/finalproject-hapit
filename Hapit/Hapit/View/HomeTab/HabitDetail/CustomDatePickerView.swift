@@ -16,6 +16,7 @@ struct CustomDatePickerView: View {
     //MARK: 화살표 버튼을 통해 month를 업데이트 해주는 변수
     @State private var currentMonth: Int = 0
     @EnvironmentObject var habitManager: HabitManager
+    @Binding var showsCustomAlert: Bool
     
     var body: some View {
         VStack(spacing: 35){
@@ -109,6 +110,24 @@ struct CustomDatePickerView: View {
         .sheet(isPresented: $isShownModalView) {
             PostModalView(postsForModalView: $postsForModalView)
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    // 챌린지 삭제
+                    showsCustomAlert.toggle()
+                } label: {
+                    Image(systemName: "trash")
+                        .foregroundColor(.gray)
+                } // label
+            } // ToolbarItem
+        }
+        .customAlert(
+          isPresented: $showsCustomAlert,
+          title: "챌린지를 삭제하시겠어요?",
+          message: "삭제된 챌린지는 복구할 수 없어요.",
+          primaryButtonTitle: "삭제",
+          primaryAction: { habitManager.removeChallenge(challenge: currentChallenge) },
+          withCancelButton: true)
     }
     
     //MARK: Methods

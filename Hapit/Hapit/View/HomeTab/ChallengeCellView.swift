@@ -18,7 +18,7 @@ struct ChallengeCellView: View {
         HStack {
             Button {
                 // firestore에 업데이트 함수 제작 요망
-                //challenge.isChecked.toggle()
+                // challenge.isChecked.toggle()
                 Task{
                     await habitManager.updateChallengeIsChecked(challenge: challenge)
                     

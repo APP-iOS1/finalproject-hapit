@@ -136,7 +136,7 @@ struct ToSView: View {
                 // 회원가입 버튼을 누르면 progress view가 나타남
                 // Fallback on earlier versions
                 NavigationLink {
-                    GetStartView(isFullScreen: $isFullScreen)
+                    GetStartView(isFullScreen: $isFullScreen, email: $email, pw: $pw)
                 } label: {
                     if isClicked {
                         ProgressView()

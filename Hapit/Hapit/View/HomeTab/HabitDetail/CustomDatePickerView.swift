@@ -113,8 +113,9 @@ struct CustomDatePickerView: View {
                 currentDate = Date()
                 self.modalManager.newModal(position: .closed) {
                     //PostModalView(postsForModalView: $postsForModalView)
-                    Rectangle()
-                        .foregroundColor(.white)
+                    Image("modaldummy")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 300, height: 500)
                 }
             }
@@ -129,6 +130,8 @@ struct CustomDatePickerView: View {
                     } // label
                 } // ToolbarItem
             }
+            
+        }
     }
     //MARK: Methods
     

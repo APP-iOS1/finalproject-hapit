@@ -58,7 +58,7 @@ struct LogInView: View {
                 }
                 
                 HStack(alignment: .center, spacing: 5) {
-                    if !logInResult && verified {
+                    if !authManager.isLoggedin && verified {
                         Image(systemName: "exclamationmark.circle")
                         Text("이메일과 비밀번호가 일치하지 않습니다")
                         Spacer()
@@ -81,13 +81,16 @@ struct LogInView: View {
                             pwFocusField = true
                         } else {
                             do {
-                                let target = try await authManager.login(with: email, pw)
-                                logInResult = target
+                                try await authManager.login(with: email, pw)
+                                authManager.isLoggedin = true
+                                verified = true
                             } catch {
+                                authManager.isLoggedin = false
+                                verified = true
                                 throw(error)
                             }
-                            verified = true
-                            if logInResult {
+                            
+                            if authManager.isLoggedin {
                                 isFullScreen = false
                             }
                         } 

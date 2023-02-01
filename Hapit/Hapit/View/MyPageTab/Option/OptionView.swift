@@ -10,6 +10,7 @@ import SwiftUI
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @Binding var isFullScreen: Bool
+    @Binding var index: Int
     
     var body: some View {
         VStack {
@@ -58,6 +59,7 @@ struct OptionView: View {
                     do {
                         try await authManager.logOut()
                         isFullScreen = true
+                        index = 0
                     } catch {
                         throw(error)
                     }
@@ -76,6 +78,15 @@ struct OptionView: View {
                 
                 Button {
                     // TODO: 회원탈퇴 기능 추가
+                    Task {
+                        do {
+                            try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                            isFullScreen = true
+                            index = 0
+                        } catch {
+                            throw(error)
+                        }
+                    }
                 } label: {
                     Text("회원탈퇴")
                         .font(.custom("IMHyemin-Regular", size: 16))
@@ -98,6 +109,6 @@ struct ListTextModifier: ViewModifier {
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(isFullScreen: .constant(true))
+        OptionView(isFullScreen: .constant(true), index: .constant(0))
     }
 }

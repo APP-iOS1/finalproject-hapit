@@ -14,10 +14,11 @@ struct ContentView: View {
 
     @State private var isFullScreen = true
     @EnvironmentObject var authManager: AuthManager
+    @State private var index: Int = 0
     //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
-        TabView{
+        TabView(selection: $index){
             HomeView()
                 .tabItem {
                     VStack{
@@ -25,6 +26,7 @@ struct ContentView: View {
                         Text("홈")
                     }
                 }
+                .tag(0)
             SocialView()
                .tabItem {
                    VStack{
@@ -32,14 +34,15 @@ struct ContentView: View {
                        Text("소셜")
                    }
                 }
-            MyPageView(isFullScreen: $isFullScreen)
-                .environmentObject(authManager)
+               .tag(1)
+            MyPageView(isFullScreen: $isFullScreen, index: $index).environmentObject(authManager)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")
                         Text("마이페이지")
                     }
                 }
+                .tag(2)
         }.fullScreenCover(isPresented: $isFullScreen) {
             LogInView(isFullScreen: $isFullScreen)
         }

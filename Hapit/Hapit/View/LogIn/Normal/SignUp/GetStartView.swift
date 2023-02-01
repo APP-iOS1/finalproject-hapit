@@ -10,6 +10,10 @@ import SwiftUI
 struct GetStartView: View {
     
     @Binding var isFullScreen: Bool
+    @EnvironmentObject var authManager: AuthManager
+    
+    @Binding var email: String
+    @Binding var pw: String
     
     var body: some View {
         VStack(spacing: 20) {
@@ -41,7 +45,16 @@ struct GetStartView: View {
             Spacer()
             
             Button {
-                isFullScreen = false
+                Task {
+                    do {
+                        try await authManager.login(with: email, pw)
+                        authManager.isLoggedin = true
+                        isFullScreen = false
+                    } catch {
+                        authManager.isLoggedin = false
+                        throw(error)
+                    }
+                }
             } label: {
                 Text("시작하기")
                     .font(.custom("IMHyemin-Bold", size: 16))

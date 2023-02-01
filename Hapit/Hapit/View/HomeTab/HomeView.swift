@@ -20,6 +20,8 @@ struct HabitSegmentView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     
+    @Binding var showsCustomAlert: Bool
+    
     var body: some View {
         switch selectedIndex {
             
@@ -29,54 +31,52 @@ struct HabitSegmentView: View {
                     EmptyCellView()
                 }
                 else {
-                    List {
-                        ForEach(habitManager.challenges) { challenge in
-                            //Auth의 uid 가져오기
-                            if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
-                              ZStack {
-                                  NavigationLink {
-                                      //HabitDetailView(calendar: Calendar.current)
-                                      ScrollView {
-                                          CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
-                                            .background(Color("CellColor"))
-                                            .cornerRadius(20)
-                                            .navigationBarTitle("\(challenge.challengeTitle)")
-                                      }
-                                      .padding()
-                                      .background(Color("BackgroundColor"))
-                                  } label: {
-                                      EmptyView()
-                                  }
-                                  .opacity(0)
 
-                                  ChallengeCellView(challenge: challenge)
-                                      .padding(.vertical)
-                              }
-                              .swipeActions(edge: .leading, allowsFullSwipe: true) { // 왼쪽 -> 오른쪽 스와이프 시 알림 설정
-                                  Button {
-                                      isOnAlarm.toggle()
-                                  } label: {
-                                      Image(systemName: isOnAlarm ? "bell.fill" : "bell.slash.fill")
-                                  }
-                                  .tint(.indigo)
-                              }
-                              .swipeActions(edge: .trailing, allowsFullSwipe: true) { // 오른쪽 -> 왼쪽 스와이프 시 삭제
-                                  Button(role: .destructive) {
-                                      // 데이터 삭제
-                                  } label: {
-                                      Image(systemName: "trash.fill")
-                                  }
-                              }
-                              .listRowSeparator(.hidden)
-                              .listRowBackground(
-                                  Color("CellColor")
-                                      .cornerRadius(20)
-                                      .padding(.vertical, 7)
-                              )
+                    ScrollView{
+                        if habitManager.challenges.count < 1{
+                            
+                            EmptyCellView()
+                            
+                        }
+                        else{
+                            ForEach(habitManager.challenges) { challenge in
+                                
+                                if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
+                                    NavigationLink {
+                                        //HabitDetailView(calendar: Calendar.current)
+                                        ScrollView(showsIndicators: false){
+                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
+                                                .background(Color("CellColor"))
+                                                .cornerRadius(20)
+                                                .navigationBarTitle("\(challenge.challengeTitle)")
+                                        }
+                                        .padding()
+                                        .background(Color("BackgroundColor"))
+                                        //.navigationBarTitle("", displayMode: .automatic)
+                                        
+                                    } label: {
+                                        ChallengeCellView(challenge: challenge)
+                                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
+                                            .contextMenu {
+                                                Button(role: .destructive) {
+                                                    // 챌린지 삭제
+                                                    habitManager.removeChallenge(challenge: challenge)
+                                                } label: {
+                                                    Text("챌린지 지우기")
+                                                        .font(.custom("IMHyemin-Regular", size: 17))
+                                                    Image(systemName: "trash")
+                                                }
+                                            } // contextMenu
+                                        
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.bottom, 5)
+                                } // if
                             }
-                        } // ForEach
-                    } // List
-                }
+                            
+                        }
+                    }
+                } // VStack
             }
             .onAppear{
                 habitManager.loadChallenge()
@@ -87,7 +87,7 @@ struct HabitSegmentView: View {
                     EmptyCellView()
                 }
                 else{
-                    ScrollView{
+                    ScrollView {
                         ForEach(habitManager.habits) { habit in
                             
                             NavigationLink {
@@ -122,6 +122,8 @@ struct HomeView: View {
     @State var isAnimating: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
+    
+    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
     
     init() {
         // Use this if NavigationBarTitle is with Large Font
@@ -166,7 +168,7 @@ struct HomeView: View {
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
 
                 // 세그먼트 뷰
-                HabitSegmentView(selectedIndex: $selectedIndex)
+                HabitSegmentView(selectedIndex: $selectedIndex, showsCustomAlert: $showsCustomAlert)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())
@@ -182,11 +184,7 @@ struct HomeView: View {
             
         }//NavigationStack
         .sheet(isPresented: $isAddHabitViewShown) {
-            if #available(iOS 16.0, *) {
-                AddHabitView()
-            } else {
-                // Fallback on earlier versions
-            }
+            AddChallengeView()
         }
     }//body
     func getToday() -> String {
@@ -206,6 +204,7 @@ struct HomeView: View {
 //        HomeView()
 //    }
 //}
+
 //    // MARK: 더미 데이터
 //    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
 //

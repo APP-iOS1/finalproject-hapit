@@ -285,18 +285,16 @@ struct RegisterView: View {
                 
             // MARK: 완료 버튼
             // Fallback on earlier versions
-            NavigationLink {
-                ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)
-            } label: {
-                Text("완료")
-                    .font(.custom("IMHyemin-Bold", size: 16))
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(isOk() ? .gray : Color.accentColor)
-                    }
+            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
+                    Text("완료")
+                        .font(.custom("IMHyemin-Bold", size: 16))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(isOk() ? .gray : Color.accentColor)
+                        }
             } // Nav Link
             .disabled(isOk())
             .padding(.vertical, 5)
@@ -321,6 +319,7 @@ struct RegisterView: View {
                     if mailDuplicated {
                         emailTmp = email
                         emailFocusField = true
+                        canGoNext = isDuplicated()
                     }
                     
                     //닉네임 중복인 경우
@@ -328,9 +327,9 @@ struct RegisterView: View {
                         nameTmp = nickName
                         if !mailDuplicated {
                             nickNameFocusField = true
+                            canGoNext = isDuplicated()
                         }
                     }
-                    canGoNext = isDuplicated() // false --> 다음으로 못감
                 }
             })
                 

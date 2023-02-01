@@ -21,14 +21,12 @@ class AuthManager: ObservableObject {
     let firebaseAuth = Auth.auth()
     
     // MARK: - 로그인 
-    final func login(with email: String, _ password: String) async throws -> Bool {
+    final func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-            isLoggedin = true
         } catch{
             throw(error)
         }
-        return isLoggedin
     }
     
     //MARK: - 로그아웃
@@ -42,15 +40,10 @@ class AuthManager: ObservableObject {
     }
     
     //MARK: - 회원탈퇴
-    final func deleteUser() {
-        
-    }
-    
-    
-    //MARK: - CurrentUserFetch 함수
-    final func fetchCurrentUser() throws {
+    final func deleteUser(uid: String) async throws {
         do {
-            guard let uid = firebaseAuth.currentUser?.uid else { return }
+            try await firebaseAuth.currentUser?.delete()
+            try await database.collection("User").document("\(uid)").delete()
         } catch {
             throw(error)
         }

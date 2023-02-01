@@ -26,12 +26,13 @@ struct HabitSegmentView: View {
         switch selectedIndex {
             
         case 0:
+            
             VStack {
                 if habitManager.challenges.count < 1{
                     EmptyCellView()
                 }
                 else {
-
+                    
                     ScrollView{
                         if habitManager.challenges.count < 1{
                             
@@ -39,19 +40,21 @@ struct HabitSegmentView: View {
                             
                         }
                         else{
+                            
                             ForEach(habitManager.challenges) { challenge in
                                 
                                 if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
+                                    
                                     NavigationLink {
                                         //HabitDetailView(calendar: Calendar.current)
-                                        ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
-                                                .background(Color("CellColor"))
-                                                .cornerRadius(20)
-                                                .navigationBarTitle("\(challenge.challengeTitle)")
+                                        ZStack{
+                                            ScrollView(showsIndicators: false){
+                                                CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
+                                            }
+                                            .padding()
+                                            .background(Color("BackgroundColor"))
+                                            ModalAnchorView()
                                         }
-                                        .padding()
-                                        .background(Color("BackgroundColor"))
                                         //.navigationBarTitle("", displayMode: .automatic)
                                         
                                     } label: {
@@ -73,40 +76,40 @@ struct HabitSegmentView: View {
                                     .padding(.bottom, 5)
                                 } // if
                             }
-                            
                         }
                     }
                 } // VStack
+                
             }
             .onAppear{
                 habitManager.loadChallenge()
             }
         case 1:
-
-                if habitManager.habits.count < 1{
-                    EmptyCellView()
-                }
-                else{
-                    ScrollView {
-                        ForEach(habitManager.habits) { habit in
+            
+            if habitManager.habits.count < 1{
+                EmptyCellView()
+            }
+            else{
+                ScrollView {
+                    ForEach(habitManager.habits) { habit in
+                        
+                        NavigationLink {
+                            // MARK: 버전 분기
                             
-                            NavigationLink {
-                                // MARK: 버전 분기
-                                
-                                //HabitDetailView(calendar: Calendar.current)
-                            } label: {
-                                HabitCellView(habit: habit)
-                            }
-                            
+                            //HabitDetailView(calendar: Calendar.current)
+                        } label: {
+                            HabitCellView(habit: habit)
                         }
+                        
                     }
-//                    .onAppear{
-//                        Task{
-//                            await habitManager.fetchChallenge()
-//                        }
-//                        print(habitManager.habits)
-//
-//                    }
+                }
+                //                    .onAppear{
+                //                        Task{
+                //                            await habitManager.fetchChallenge()
+                //                        }
+                //                        print(habitManager.habits)
+                //
+                //                    }
             }
         default: Text("something wrong")
         }// switch
@@ -161,12 +164,12 @@ struct HomeView: View {
                         
                     })
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
-                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
+                //                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
-
+                
                 // 세그먼트 뷰
                 HabitSegmentView(selectedIndex: $selectedIndex, showsCustomAlert: $showsCustomAlert)
             }//VStack

@@ -56,12 +56,14 @@ extension AppDelegate: MessagingDelegate {
 @main
 struct HapitApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    private var modalManager: ModalManager = ModalManager()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(HabitManager())
                 .environmentObject(AuthManager())
+                .environmentObject(modalManager)
         }
     }
 }

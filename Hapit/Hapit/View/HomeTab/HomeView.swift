@@ -26,6 +26,7 @@ struct HabitSegmentView: View {
         switch selectedIndex {
             
         case 0:
+            
             VStack {
                 if habitManager.challenges.count < 1{
                     EmptyCellView()
@@ -39,12 +40,14 @@ struct HabitSegmentView: View {
                             
                         }
                         else{
+                            
                             ForEach(habitManager.challenges) { challenge in
                                 
                                 if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
+                                    
                                     NavigationLink {
-                                        ZStack {
-                                            //HabitDetailView(calendar: Calendar.current)
+                                        //HabitDetailView(calendar: Calendar.current)
+                                        ZStack{
                                             ScrollView(showsIndicators: false){
                                                 CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
                                             }
@@ -52,7 +55,6 @@ struct HabitSegmentView: View {
                                             .background(Color("BackgroundColor"))
                                             
                                             Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
-//                                                .background(BackgroundClearView())
                                                 .edgesIgnoringSafeArea(.all)
                                                 .transition(.opacity)
                                                 .customAlert( // 커스텀 알림창 띄우기
@@ -62,7 +64,8 @@ struct HabitSegmentView: View {
                                                     primaryButtonTitle: "삭제",
                                                     primaryAction: { habitManager.removeChallenge(challenge: challenge) },
                                                     withCancelButton: true)
-                                            //.navigationBarTitle("", displayMode: .automatic)
+                                                    
+                                              ModalAnchorView()
                                         } // ZStack
                                         
                                     } label: {
@@ -84,10 +87,10 @@ struct HabitSegmentView: View {
                                     .padding(.bottom, 5)
                                 } // if
                             }
-                            
                         }
                     }
                 } // VStack
+                
             }
             .onAppear{
                 habitManager.loadChallenge()
@@ -169,7 +172,7 @@ struct HomeView: View {
                         
                     })
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
-                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
+                //                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
                 }

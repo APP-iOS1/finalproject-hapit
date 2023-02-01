@@ -131,4 +131,34 @@ class AuthManager: ObservableObject {
             return "error"
         }
     }
+    
+    // MARK: - 사용 중인 유저의 닉네임을 수정
+    final func updateUserNickName(uid: String, nickname: String) async -> Void {
+        //        guard let currentUserId else { return }
+        let path = database.collection("User")
+        do {
+            try await path.document(uid).updateData(["name": nickname])
+        } catch {
+#if DEBUG
+            print("\(error.localizedDescription)")
+#endif
+        }
+    }
+    
+    // MARK: - 사용 중인 유저의 이메일을 반환
+    final func getEmail(uid: String) async -> String {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpEmail: String = docData?["email"] as? String ?? ""
+            
+            return tmpEmail
+        } catch {
+            print(error.localizedDescription)
+            return "error"
+        }
+    }
 }

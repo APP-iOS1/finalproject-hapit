@@ -13,8 +13,8 @@ struct ContentView: View {
     }
 
     @State private var isFullScreen = true
+    @EnvironmentObject var authManager: AuthManager
     @State private var index: Int = 0
-    
     //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
@@ -35,7 +35,7 @@ struct ContentView: View {
                    }
                 }
                .tag(1)
-            MyPageView(isFullScreen: $isFullScreen, index: $index)
+            MyPageView(isFullScreen: $isFullScreen, index: $index).environmentObject(authManager)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")

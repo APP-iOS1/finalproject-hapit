@@ -14,6 +14,10 @@
 		36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 36D4A14B2989EEBD0048309A /* FirebaseMessaging */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3C39C493298985D400603149 /* PostModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C39C492298985D400603149 /* PostModalView.swift */; };
+		3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA85298A376E007C3EAA /* Modal.swift */; };
+		3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA88298A3931007C3EAA /* ModalView.swift */; };
+		3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */; };
+		3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */; };
 		3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */; };
 		3C811D1D2987628A0005539A /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1C2987628A0005539A /* CustomDatePickerView.swift */; };
 		3C811D1F29877AF10005539A /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1E29877AF10005539A /* DateValue.swift */; };
@@ -99,6 +103,10 @@
 		36F8EC0A2988EBB80029B701 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		3C38AFBE297632F5002D5ADF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3C39C492298985D400603149 /* PostModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModalView.swift; sourceTree = "<group>"; };
+		3C5CAA85298A376E007C3EAA /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
+		3C5CAA88298A3931007C3EAA /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalAnchorView.swift; sourceTree = "<group>"; };
+		3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManager.swift; sourceTree = "<group>"; };
 		3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalendarView.swift; sourceTree = "<group>"; };
 		3C811D1C2987628A0005539A /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
 		3C811D1E29877AF10005539A /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
@@ -199,6 +207,15 @@
 			path = HomeTab;
 			sourceTree = "<group>";
 		};
+		3C5CAA87298A3908007C3EAA /* CustomModal */ = {
+			isa = PBXGroup;
+			children = (
+				3C5CAA88298A3931007C3EAA /* ModalView.swift */,
+				3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */,
+			);
+			path = CustomModal;
+			sourceTree = "<group>";
+		};
 		674A917C2989FFA80050CF0B /* CustomAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,6 +305,7 @@
 				67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */,
 				67A5AE832987EF2A0020212F /* PhotoPicker.swift */,
 				3C39C492298985D400603149 /* PostModalView.swift */,
+				3C5CAA87298A3908007C3EAA /* CustomModal */,
 			);
 			path = HabitDetail;
 			sourceTree = "<group>";
@@ -366,6 +384,7 @@
 				674F28B02977C49100390405 /* Challenge.swift */,
 				674F28B22977C4C000390405 /* Post.swift */,
 				F47BA150297A697F000222EE /* User.swift */,
+				3C5CAA85298A376E007C3EAA /* Modal.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -387,6 +406,7 @@
 				F47BA14E297A67FE000222EE /* AuthManager.swift */,
 				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
+				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -577,6 +597,7 @@
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
+				3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */,
 				F49E28CD29762C9C009EEB1A /* ContentView.swift in Sources */,
 				F49E28E3297639D3009EEB1A /* AppleLogIn.swift in Sources */,
 				C59D551B2977D149008BB0CF /* MessageFullscreenView.swift in Sources */,
@@ -588,9 +609,11 @@
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
+				3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				674A917E2989FFCD0050CF0B /* CustomAlert.swift in Sources */,
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
+				3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
@@ -622,6 +645,7 @@
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
+				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,

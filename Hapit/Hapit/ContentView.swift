@@ -18,7 +18,7 @@ struct ContentView: View {
     //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
-        TabView{
+        TabView(selection: $index){
             HomeView()
                 .tabItem {
                     VStack{
@@ -26,6 +26,7 @@ struct ContentView: View {
                         Text("홈")
                     }
                 }
+                .tag(0)
             SocialView()
                .tabItem {
                    VStack{
@@ -33,6 +34,7 @@ struct ContentView: View {
                        Text("소셜")
                    }
                 }
+               .tag(1)
             MyPageView(isFullScreen: $isFullScreen)
                 .tabItem {
                     VStack{
@@ -40,6 +42,7 @@ struct ContentView: View {
                         Text("마이페이지")
                     }
                 }
+                .tag(2)
         }.fullScreenCover(isPresented: $isFullScreen) {
             LogInView(isFullScreen: $isFullScreen)
         }

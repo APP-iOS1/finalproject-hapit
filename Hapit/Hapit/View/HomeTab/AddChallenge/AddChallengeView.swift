@@ -34,7 +34,7 @@ struct PickerView: View {
         
         var body: some View {
             VStack {
-                Picker("개인 그룹 중 선택해주세요", selection: $challengetype) {
+                Picker("", selection: $currentIndex) {
                     ForEach(challengetype.indices, id: \.self) { index in
                         Text(challengetype[index])
                             .font(.custom("IMHyemin-Bold", size: 17))
@@ -71,7 +71,7 @@ struct AddChallengeView: View {
                 PickerView($currentIndex, challengetype: challengetype)
                 switch(currentIndex){
                 case 0:
-                    TextField("", text: $currentIndex)
+                    TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 17))
                         
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
@@ -83,6 +83,7 @@ struct AddChallengeView: View {
                     
                     HStack {
                         Text("알림")
+                            .font(.custom("IMHyemin-Regular", size: 17))
                         Spacer()
                         if isAlarmOn {
                             DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
@@ -90,8 +91,7 @@ struct AddChallengeView: View {
                         }
                         else{
                             Text("챌린지 달성을 위해\n알림을 활용해보세요!")
-                                .font(.caption2)
-                                .fontWeight(.thin)
+                                .font(.custom("IMHyemin-Regular", size: 10))
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                             
@@ -110,9 +110,10 @@ struct AddChallengeView: View {
                     HStack(spacing: 5) {
                         Image(systemName: "exclamationmark.circle")
                         Text("66일 동안의 챌린지를 성공하면 종료일이 없는 습관으로 변경돼요.")
+                        
                     }
+                    .font(.custom("IMHyemin-Regular", size: 10))
                     .foregroundColor(.gray)
-                    .font(.caption2)
                     .padding(.top, 5)
                     
                     Spacer()
@@ -146,6 +147,8 @@ struct AddChallengeView: View {
                     
                     HStack {
                         Text("알림")
+                            .font(.custom("IMHyemin-Regular", size: 17))
+
                         Spacer()
                         if isAlarmOn {
                             DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
@@ -153,8 +156,7 @@ struct AddChallengeView: View {
                         }
                         else{
                             Text("챌린지 달성을 위해\n알림을 활용해보세요!")
-                                .font(.caption2)
-                                .fontWeight(.thin)
+                                .font(.custom("IMHyemin-Regular", size: 10))
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
                             
@@ -175,7 +177,7 @@ struct AddChallengeView: View {
                         Text("66일 동안의 챌린지를 성공하면 종료일이 없는 습관으로 변경돼요.")
                     }
                     .foregroundColor(.gray)
-                    .font(.caption2)
+                    .font(.custom("IMHyemin-Regular", size: 10))
                     .padding(.top, 5)
                     
                     Spacer()
@@ -196,15 +198,30 @@ struct AddChallengeView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        Task {
-                            let id = UUID().uuidString
-                            let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
-                            
-                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
-                            
-                            dismiss()
-                            
-                            habitManager.loadChallenge()
+                        
+                        switch(currentIndex){
+                        case 0:
+                            Task {
+                                let id = UUID().uuidString
+                                let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
+                                
+                                habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                
+                                dismiss()
+                                
+                                habitManager.loadChallenge()
+                            }
+                        default:
+                            Task {
+                                let id = UUID().uuidString
+                                let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
+                                
+                                habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                
+                                dismiss()
+                                
+                                habitManager.loadChallenge()
+                            }
                         }
                         
                     } label: {

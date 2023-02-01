@@ -31,7 +31,6 @@ struct PickerView: View {
             UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: font!], for: .normal)
             
         }
-        
         var body: some View {
             VStack {
                 Picker("", selection: $currentIndex) {

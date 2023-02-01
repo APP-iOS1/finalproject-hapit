@@ -54,8 +54,8 @@ struct NicknameModalView: View {
                 Task {
                     if isValid {
                         userNickname = nickname
-                        await authManager.updateUserNickName(uid: currentUser?.uid ?? "", nickname: userNickname)
                         showModal = false
+                        await authManager.updateUserNickName(uid: currentUser?.uid ?? "", nickname: userNickname)
                     }
                 }
             } label: {

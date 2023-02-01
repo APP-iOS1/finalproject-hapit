@@ -12,4 +12,6 @@ struct User: Identifiable, Codable, Hashable {
     let name: String
     let email: String
     let pw: String
+    let proImage: String
+    let badge: [String]
 }

@@ -20,7 +20,7 @@ struct HabitSegmentView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     
-    @Binding var showsCustomAlert: Bool
+    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
     
     var body: some View {
         switch selectedIndex {
@@ -44,11 +44,6 @@ struct HabitSegmentView: View {
                                 if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
                                         ZStack {
-                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
-                                                .background(BackgroundClearView())
-                                                .edgesIgnoringSafeArea(.all)
-                                                .transition(.opacity)
-                                            
                                             //HabitDetailView(calendar: Calendar.current)
                                             ScrollView(showsIndicators: false){
                                                 CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
@@ -57,7 +52,7 @@ struct HabitSegmentView: View {
                                             .background(Color("BackgroundColor"))
                                             
                                             Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
-                                                .background(BackgroundClearView())
+//                                                .background(BackgroundClearView())
                                                 .edgesIgnoringSafeArea(.all)
                                                 .transition(.opacity)
                                                 .customAlert( // 커스텀 알림창 띄우기
@@ -138,9 +133,7 @@ struct HomeView: View {
     @State var isAnimating: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
-    
-    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
-    
+
     init() {
         // Use this if NavigationBarTitle is with Large Font
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
@@ -183,7 +176,7 @@ struct HomeView: View {
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
                 // 세그먼트 뷰
-                HabitSegmentView(selectedIndex: $selectedIndex, showsCustomAlert: $showsCustomAlert)
+                HabitSegmentView(selectedIndex: $selectedIndex)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())

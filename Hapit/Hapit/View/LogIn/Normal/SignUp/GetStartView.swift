@@ -10,6 +10,10 @@ import SwiftUI
 struct GetStartView: View {
     
     @Binding var isFullScreen: Bool
+    @EnvironmentObject var authManager: AuthManager
+    
+    @Binding var email: String
+    @Binding var pw: String
     
     var body: some View {
         VStack(spacing: 20) {
@@ -27,8 +31,7 @@ struct GetStartView: View {
                         .foregroundColor(Color.accentColor)
                     Text("회원가입 완료!")
                 }
-                .font(.largeTitle)
-                .bold()
+                .font(.custom("IMHyemin-Bold", size: 34))
                 Spacer()
             }
             
@@ -42,9 +45,19 @@ struct GetStartView: View {
             Spacer()
             
             Button {
-                isFullScreen = false
+                Task {
+                    do {
+                        try await authManager.login(with: email, pw)
+                        authManager.isLoggedin = true
+                        isFullScreen = false
+                    } catch {
+                        authManager.isLoggedin = false
+                        throw(error)
+                    }
+                }
             } label: {
                 Text("시작하기")
+                    .font(.custom("IMHyemin-Bold", size: 16))
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -54,7 +67,6 @@ struct GetStartView: View {
                     }
             }
             .padding(.vertical, 5)
-            
         }
         .padding(.horizontal, 20)
     }

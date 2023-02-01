@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ProfileCellView: View {
-    @State private var nickName = "릴루"
-    @State private var email = "minju@world.com"
+    @EnvironmentObject var authManager: AuthManager
+    @State private var nickName = ""
+    @State private var email = ""
     @State private var isSelectedJelly = 0
     @State private var showBearModal = false
     @State private var showNicknameModal = false
@@ -18,9 +19,10 @@ struct ProfileCellView: View {
     var body: some View {
         VStack {
             HStack {
+                // MARK: 프로필 사진 변경
                 VStack {
                     Button {
-                        showBearModal = true
+                        showBearModal.toggle()
                     } label: {
                         Image(bearArray[isSelectedJelly % 7])
                             .resizable()
@@ -30,27 +32,26 @@ struct ProfileCellView: View {
                                 .fill(Color(.systemGray6))
                                 .frame(width: 90, height: 90))
                     }
-                    .disabled(showBearModal)
                     .padding(30)
-                }.sheet(isPresented: $showBearModal) { BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
-                        .presentationDetents([.medium])
-                        .interactiveDismissDisabled()
+                }.halfSheet(showSheet: $showBearModal) {
+                    BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
                 }
                 
+                // MARK: 닉네임, 이메일, 닉네임 수정
                 VStack {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(nickName)")
-                                .font(.title2)
-                                .bold()
+                                .font(.custom("IMHyemin-Bold", size: 22))
+                                .padding(.leading, -5)
                             
                             Text("\(email)")
-                                .font(.caption)
+                                .font(.custom("IMHyemin-Regular", size: 12))
                         }
                         .padding(.leading, 10)
                         Spacer()
                     }
-
+                    
                     Button {
                         showNicknameModal = true
                     } label: {
@@ -59,14 +60,14 @@ struct ProfileCellView: View {
                             .frame(width: 210, height: 25)
                             .overlay{
                                 Text("닉네임 수정")
+                                    .font(.custom("IMHyemin-Bold", size: 13))
                                     .foregroundColor(.accentColor)
-                                    .font(.footnote)
-                                    .fontWeight(.bold)
+                                    
                             }
                     }
-                    .sheet(isPresented: $showNicknameModal) { NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
-                            .presentationDetents([.medium])
-                            .interactiveDismissDisabled()
+                    .halfSheet(showSheet: $showNicknameModal) {
+                        NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
+                            .environmentObject(authManager)
                     }
                 }
             }
@@ -76,6 +77,78 @@ struct ProfileCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)
+        .task {
+            nickName = await authManager.getNickName(uid: currentUser?.uid ?? "")
+            email = await authManager.getEmail(uid: currentUser?.uid ?? "")
+            
+        }
+    }
+}
+
+extension View {
+    func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping () -> SheetView) -> some View {
+        
+        return self
+            .background(
+                HalfSheetHelper(sheetView: sheetView(), showSheet: showSheet)
+            )
+    }
+}
+
+struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
+    
+    var sheetView: SheetView
+    @Binding var showSheet: Bool
+    
+    let controller = UIViewController()
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        controller.view.backgroundColor = .clear
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        
+        if showSheet {
+            let sheetController = CustomHostingController(rootView: sheetView)
+            sheetController.presentationController?.delegate = context.coordinator
+            uiViewController.present(sheetController, animated: true)
+        } else {
+            // closing view when showSheet toggled again
+            uiViewController.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    // On Dismiss
+    class Coordinator: NSObject, UISheetPresentationControllerDelegate {
+        
+        var parent: HalfSheetHelper
+        
+        init(parent: HalfSheetHelper) {
+            self.parent = parent
+        }
+        
+        func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+            parent.showSheet = false
+        }
+
+    }
+}
+
+class CustomHostingController<Content: View>: UIHostingController<Content> {
+    override func viewDidLoad() {
+        
+        if let presentationController = presentationController as?
+            UISheetPresentationController {
+            presentationController.detents = [
+                .medium()
+            ]
+            
+        }
     }
 }
 

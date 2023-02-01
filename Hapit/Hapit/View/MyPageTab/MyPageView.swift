@@ -8,18 +8,23 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @EnvironmentObject var authManager: AuthManager
+    @Binding var isFullScreen: Bool
+    @Binding var index: Int
+    
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView {
                 VStack {
                     ProfileCellView()
+                        .environmentObject(authManager)
                     RewardView()
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
-                        Button{
-                            
-                        } label:{
+                        NavigationLink {
+                            OptionView(isFullScreen: $isFullScreen, index: $index)
+                        } label: {
                             Image(systemName: "gearshape.fill")
                                 .resizable()
                                 .frame(width: 30,height: 30)
@@ -34,6 +39,6 @@ struct MyPageView: View {
 
 struct MyPageView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageView()
+        MyPageView(isFullScreen: .constant(true), index: .constant(0))
     }
 }

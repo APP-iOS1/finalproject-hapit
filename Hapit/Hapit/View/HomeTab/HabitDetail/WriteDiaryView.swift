@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 import PhotosUI
 
+// MARK: 다운그레이드 중 ...
+@available(iOS 16.0, *)
 struct WriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @State var content = ""
@@ -17,7 +19,7 @@ struct WriteDiaryView: View {
     @State private var date = "2023년 01월 20일 금요일"
     @State private var habitName = "물마시기"
     
-    @State private var selectedImage: PhotosPickerItem?
+    @State private var selectedImage: PhotosPickerItem? // ios 15
     @State private var selectedImageData: Data? = nil // 뿌려주기 위한 이미지 데이터 변수
     
     let maxCharacterLength = Int(300)
@@ -27,7 +29,7 @@ struct WriteDiaryView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
@@ -70,12 +72,9 @@ struct WriteDiaryView: View {
                                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                         }
                     } // if let
-                    
-                    
-              
-                    
+             
                     // 글자수 300자 제한
-                    TextField("릴루님의 습관일지를 작성해보세요!", text: $content, axis: .vertical)
+                    TextField("릴루님의 습관일지를 작성해보세요!", text: $content, axis: .vertical) // ios 15
                     // .lineLimit(9, reservesSpace: false)
                         .font(.subheadline)
                         .padding(.horizontal, 20)
@@ -95,12 +94,9 @@ struct WriteDiaryView: View {
                     .padding(.horizontal, 20)
                     
                     Spacer()
-                    
-                    
-                    
-                    
+     
                 } // VStack
-                .formStyle(.columns)
+                .formStyle(.columns) // ios 15
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -111,12 +107,12 @@ struct WriteDiaryView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 17)
                                 .foregroundColor(.gray)
-                                .fontWeight(.light)
+                                .font(.custom("IMHyemin-Bold", size: 17))
                         } // label
                     } // ToolbarItem
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        PhotosPicker(
+                        PhotosPicker( // ios 15
                             selection: $selectedImage,
                             matching: .images,
                             photoLibrary: .shared()) {
@@ -130,7 +126,6 @@ struct WriteDiaryView: View {
                                     }
                                 }
                             }
-                        
                     } // ToolbarItem
                 } // toolbar
                 
@@ -145,18 +140,17 @@ struct WriteDiaryView: View {
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .bold()
+                    .font(.custom("IMHyemin-Bold", size: 17))
                     .background(Color.accentColor)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
             }
-
-            
         } // Nav Stack
-    
+        
     } // body
 }
 
+@available(iOS 16.0, *)
 struct WriteDiaryView_Previews: PreviewProvider {
     static var previews: some View {
         WriteDiaryView()

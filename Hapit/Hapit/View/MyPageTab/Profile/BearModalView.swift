@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BearModalView: View {
     @Binding var showModal: Bool
-    @Binding var isSelectedJelly : Int
+    @Binding var isSelectedJelly: Int
     let bearArray = Jelly.allCases.map({"\($0)"})
     let data = Array(1...20).map { "목록 \($0)"}
     
@@ -25,14 +25,14 @@ struct BearModalView: View {
     var body: some View {
         VStack {
             Text("대표 이미지 설정")
-                .font(.title2)
-                .bold()
+                .font(.custom("IMHyemin-Bold", size: 22))
             
             ScrollView {
                 VStack {
                     LazyVGrid(columns: columns, spacing: 10) {
                         ForEach(Array(zip(0..<data.count, data)), id: \.0) { index, item in
                             Button {
+                                showModal.toggle()
                                 self.isSelectedJelly = index
                             } label: {
                                 Image(bearArray[index % 7])
@@ -50,16 +50,16 @@ struct BearModalView: View {
                 }
                 .padding(10)
             }
-            Button {
-                showModal = false
-            } label: {
-                Text("확인")
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .background(RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.accentColor))
-            }
             
+//            Button {
+//                showModal = false
+//            } label: {
+//                Text("확인")
+//                    .foregroundColor(.white)
+//                    .padding(10)
+//                    .background(RoundedRectangle(cornerRadius: 15)
+//                        .fill(Color.accentColor))
+//            }
         }
         .padding()
     }

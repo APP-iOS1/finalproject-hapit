@@ -10,7 +10,7 @@ import SwiftUI
 struct FriendChallengeView: View {
     // TODO: 나중에 Binding 값으로
     // MARK: 더미 데이터
-    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false)
+    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: "")
 
     var body: some View {
         ZStack {

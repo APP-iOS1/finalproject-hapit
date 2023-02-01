@@ -159,11 +159,7 @@ struct HomeView: View {
             
         }//NavigationStack
         .sheet(isPresented: $isAddHabitViewShown) {
-            if #available(iOS 16.0, *) {
-                AddHabitView()
-            } else {
-                // Fallback on earlier versions
-            }
+                AddChallengeView()
         }
     }//body
     func getToday() -> String {

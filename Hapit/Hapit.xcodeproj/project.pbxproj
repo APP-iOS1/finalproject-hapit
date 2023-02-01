@@ -45,6 +45,9 @@
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */; };
+		C90766F22989615E00D646F7 /* AddChallengeMateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766F12989615E00D646F7 /* AddChallengeMateProfileView.swift */; };
+		C90766F4298961E400D646F7 /* AddChallengeMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766F3298961E400D646F7 /* AddChallengeMateView.swift */; };
+		C90766F7298978C100D646F7 /* AddChallengeMateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766F6298978C100D646F7 /* AddChallengeMateCellView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
@@ -108,6 +111,9 @@
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
+		C90766F12989615E00D646F7 /* AddChallengeMateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateProfileView.swift; sourceTree = "<group>"; };
+		C90766F3298961E400D646F7 /* AddChallengeMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateView.swift; sourceTree = "<group>"; };
+		C90766F6298978C100D646F7 /* AddChallengeMateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateCellView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -158,8 +164,8 @@
 		3C38AFC229763327002D5ADF /* HomeTab */ = {
 			isa = PBXGroup;
 			children = (
+				C90766F5298961F000D646F7 /* AddChallenge */,
 				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
-				6774979329763C29003F9D6C /* AddChallengeView.swift */,
 				3CF39BAA29779347003D4809 /* ChallengeCellView.swift */,
 				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
 				3CE9DFF7297A512300E76147 /* EmptyCellView.swift */,
@@ -225,6 +231,17 @@
 			path = Option;
 			sourceTree = "<group>";
 		};
+		C90766F5298961F000D646F7 /* AddChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				6774979329763C29003F9D6C /* AddChallengeView.swift */,
+				C90766F12989615E00D646F7 /* AddChallengeMateProfileView.swift */,
+				C90766F3298961E400D646F7 /* AddChallengeMateView.swift */,
+				C90766F6298978C100D646F7 /* AddChallengeMateCellView.swift */,
+			);
+			path = AddChallenge;
+			sourceTree = "<group>";
+		};
 		C9CBC7FE2976831600D530CC /* HabitDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +299,6 @@
 			children = (
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
 				F40B9A512988CDFB00385014 /* Extension */,
-				571a415df71f58868acced0d469ac265c837a04f,
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
 				95D067A4297A2B6B003447EA /* GoogleService-Info.plist */,
@@ -444,7 +460,7 @@
 			);
 			mainGroup = F49E28BE29762C9B009EEB1A;
 			packageReferences = (
-				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker.git" */,
+				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
 				95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
@@ -551,6 +567,7 @@
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
+				C90766F22989615E00D646F7 /* AddChallengeMateProfileView.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
@@ -574,9 +591,11 @@
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
+				C90766F4298961E400D646F7 /* AddChallengeMateView.swift in Sources */,
 				67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
+				C90766F7298978C100D646F7 /* AddChallengeMateCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
@@ -796,7 +815,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker.git" */ = {
+		3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/KazaiMazai/SwiftySegmentedPicker.git";
 			requirement = {
@@ -825,7 +844,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		3CE9DFF329792FFB00E76147 /* SegmentedPicker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker.git" */;
+			package = 3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */;
 			productName = SegmentedPicker;
 		};
 		95D067A0297A252B003447EA /* FirebaseFirestore */ = {

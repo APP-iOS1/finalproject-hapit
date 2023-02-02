@@ -56,15 +56,15 @@ struct HabitSegmentView: View {
                                             
                                             Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
                                                 .edgesIgnoringSafeArea(.all)
-                                                .transition(.opacity)
                                                 .customAlert( // 커스텀 알림창 띄우기
                                                     isPresented: $showsCustomAlert,
                                                     title: "챌린지를 삭제하시겠어요?",
-                                                    message: "삭제된 챌린지는 복구할 수 없어요.",
+                                                    message: "삭제된 챌린지는 복구할 수 없어요.\n(받은 젤리는 유지돼요!)",
                                                     primaryButtonTitle: "삭제",
                                                     primaryAction: { habitManager.removeChallenge(challenge: challenge) },
                                                     withCancelButton: true)
-                                                    
+                                                .animation(.easeInOut(duration: 0.07), value: showsCustomAlert)
+                                                 
                                               ModalAnchorView()
                                         } // ZStack
                                         

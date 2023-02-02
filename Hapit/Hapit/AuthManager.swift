@@ -13,7 +13,7 @@ import FirebaseCore
 
 @MainActor
 class AuthManager: ObservableObject {
-    var userInfoStore: User = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [])
+    var userInfoStore: User = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: [])
     
     @Published var isLoggedin = false
     
@@ -56,7 +56,7 @@ class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "", badge: [])
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "", badge: [], friends: [])
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -76,7 +76,8 @@ class AuthManager: ObservableObject {
                     "pw" : userInfo.pw,
                     "name" : userInfo.name,
                     "image" : userInfo.proImage,
-                    "badge" : userInfo.badge
+                    "badge" : userInfo.badge,
+                    "friends" : userInfo.friends
                 ])
         } catch {
             throw(error)
@@ -150,7 +151,7 @@ class AuthManager: ObservableObject {
     // MARK: - 사용 중인 유저의 이메일을 반환
     final func getEmail(uid: String) async -> String {
         do {
-            let target = try await database.collection("User").document("\(uid)")
+            let target = try await database.collection("").document("\(uid)")
                 .getDocument()
             
             let docData = target.data()

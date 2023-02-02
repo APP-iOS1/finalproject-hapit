@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LogInView: View {
+    
     @State private var email: String = ""
     @State private var pw: String = ""
     @Binding var isFullScreen: Bool

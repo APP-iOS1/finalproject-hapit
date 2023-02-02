@@ -151,7 +151,7 @@ class AuthManager: ObservableObject {
     // MARK: - 사용 중인 유저의 이메일을 반환
     final func getEmail(uid: String) async -> String {
         do {
-            let target = try await database.collection("").document("\(uid)")
+            let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
             
             let docData = target.data()

@@ -132,6 +132,7 @@ struct LogInView: View {
             }
             .padding(.horizontal, 20)
         }
+        .environmentObject(authManager)
     }
 }
 

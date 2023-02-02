@@ -11,8 +11,8 @@ struct ContentView: View {
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
-
-    @State private var isFullScreen = true
+    @AppStorage("autoLogIn") var isFullScreen: Bool = true
+    
     @EnvironmentObject var authManager: AuthManager
     @State private var index: Int = 0
     //@StateObject var habitManager: HabitManager = HabitManager()

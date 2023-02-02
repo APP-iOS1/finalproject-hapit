@@ -202,25 +202,33 @@ struct AddChallengeView: View {
                         switch(currentIndex){
                         case 0:
                             Task {
-                                let id = UUID().uuidString
-                                let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
-                                
-                                habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
-                                
-                                dismiss()
-                                
-                                habitManager.loadChallenge()
+                                do {
+                                    let id = UUID().uuidString
+                                    let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
+                                    
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                    
+                                    dismiss()
+                                    
+                                    habitManager.loadChallenge()
+                                } catch {
+                                    throw(error)
+                                }
                             }
                         default:
                             Task {
-                                let id = UUID().uuidString
-                                let creator = await authManager.getNickName(uid: currentUser?.uid ?? "")
-                                
-                                habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
-                                
-                                dismiss()
-                                
-                                habitManager.loadChallenge()
+                                do {
+                                    let id = UUID().uuidString
+                                    let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
+                                    
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                    
+                                    dismiss()
+                                    
+                                    habitManager.loadChallenge()
+                                } catch {
+                                    throw(error)
+                                }
                             }
                         }
                         

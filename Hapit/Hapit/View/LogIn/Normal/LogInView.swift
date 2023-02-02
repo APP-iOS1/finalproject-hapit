@@ -44,7 +44,7 @@ struct LogInView: View {
                     VStack(spacing: 20) {
                         VStack(spacing: 5) {
                             TextField("이메일", text: $email)
-                                .font(.custom("IMHyemin-Regular", size: 16))
+                                .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($emailFocusField)
                                 .modifier(ClearTextFieldModifier())
                                 .onSubmit {
@@ -59,7 +59,7 @@ struct LogInView: View {
                         
                         VStack(spacing: 5) {
                             SecureField("비밀번호", text: $pw)
-                                .font(.custom("IMHyemin-Regular", size: 16))
+                                .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($pwFocusField)
                                 .modifier(ClearTextFieldModifier())
                                 .onSubmit {
@@ -83,7 +83,7 @@ struct LogInView: View {
                                 .foregroundColor(.white)
                         }
                     }
-                    .font(.custom("IMHyemin-Regular", size: 12))
+                    .font(.custom("IMHyemin-Bold", size: 12))
                     .foregroundColor(.red)
                     
                     Button(action: {
@@ -124,10 +124,10 @@ struct LogInView: View {
                     Group {
                         HStack {
                             Text("아직 회원이 아니신가요?")
-                                .font(.custom("IMHyemin-Regular", size: 16))
+                                .font(.custom("IMHyemin-Bold", size: 16))
                             NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
                                 Text("회원가입")
-                                    .font(.custom("IMHyemin-Regular", size: 16))
+                                    .font(.custom("IMHyemin-Bold", size: 16))
                             }
                         }
                     }

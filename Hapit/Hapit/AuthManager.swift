@@ -119,7 +119,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 닉네임을 반환
-    final func getNickName(uid: String) async -> String {
+    final func getNickName(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -130,8 +130,7 @@ class AuthManager: ObservableObject {
             
             return tmpName
         } catch {
-            print(error.localizedDescription)
-            return "error"
+            throw(error)
         }
     }
     
@@ -147,7 +146,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 이메일을 반환
-    final func getEmail(uid: String) async -> String {
+    final func getEmail(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -158,8 +157,7 @@ class AuthManager: ObservableObject {
             
             return tmpEmail
         } catch {
-            print(error.localizedDescription)
-            return "error"
+            throw(error)
         }
     }
 }

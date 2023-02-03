@@ -42,6 +42,7 @@ struct ContentView: View {
                .tag(1)
                  
             MyPageView(isFullScreen: $isFullScreen, index: $index)
+                .environmentObject(authManager)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")

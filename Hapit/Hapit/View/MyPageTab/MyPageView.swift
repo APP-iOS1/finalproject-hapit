@@ -17,6 +17,7 @@ struct MyPageView: View {
             ScrollView {
                 VStack {
                     ProfileCellView()
+                        .environmentObject(authManager)
                     RewardView()
                 }
                 .toolbar {

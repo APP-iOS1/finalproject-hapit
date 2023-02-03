@@ -103,6 +103,8 @@ struct DedicatedWriteDiaryView: View {
                                                                title: currentChallenge.challengeTitle,
                                                                content: content,
                                                                createdAt: Date()))
+                            habitManager.loadPosts(challengeID: currentChallenge.id, userID: currentChallenge.uid)
+                            
                             dismiss()
                         } label: {
                             Image(systemName: "checkmark")

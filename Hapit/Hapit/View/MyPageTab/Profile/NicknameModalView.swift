@@ -57,7 +57,8 @@ struct NicknameModalView: View {
                         showModal = false
                         
                         do {
-                            try await authManager.updateUserNickName(uid: currentUser?.uid ?? "", nickname: userNickname)
+                            let current = authManager.firebaseAuth
+                            try await authManager.updateUserNickName(uid: current.currentUser?.uid ?? "", nickname: userNickname)
                         } catch {
                             throw(error)
                         }

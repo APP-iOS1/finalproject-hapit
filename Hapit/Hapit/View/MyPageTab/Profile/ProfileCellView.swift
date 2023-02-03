@@ -79,8 +79,9 @@ struct ProfileCellView: View {
         .onAppear {
             Task {
                 do {
-                    let nameTarget = try await authManager.getNickName(uid: currentUser?.uid ?? "")
-                    let emailTarget = try await authManager.getEmail(uid: currentUser?.uid ?? "")
+                    let current = authManager.firebaseAuth
+                    let nameTarget = try await authManager.getNickName(uid: current.currentUser?.uid ?? "")
+                    let emailTarget = try await authManager.getEmail(uid: current.currentUser?.uid ?? "")
                     nickName = nameTarget
                     email = emailTarget
                 } catch {

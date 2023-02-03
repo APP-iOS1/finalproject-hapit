@@ -80,10 +80,7 @@ struct HabitSegmentDetailView: View {
                     }
                 }
             } // VStack
-            
-            .onAppear{
-                habitManager.loadChallenge()
-            }
+
         case 1:
             
             if habitManager.habits.count < 1{

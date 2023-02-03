@@ -62,7 +62,12 @@ struct AddChallengeView: View {
     @State var currentIndex: Int = 0
     @State private var notiTime = Date()
     @State private var currentDate = Date()
+    let maximumCount: Int = 12
     
+    private var isOverCount: Bool {
+        challengeTitle.count > maximumCount
+    }
+
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -72,15 +77,37 @@ struct AddChallengeView: View {
                 switch(currentIndex){
                 case 0:
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 17))
+                        .font(.custom("IMHyemin-Bold", size: 20))
                         
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                         .background(Color("CellColor"))
                         .cornerRadius(15)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(isOverCount ? .red : .clear)
+                            )
                         .padding(.horizontal, 20)
+                        .shakeEffect(trigger: isOverCount)
+                        .onChange(of: challengeTitle, perform: {
+                                  challengeTitle = String($0.prefix(maximumCount+1))
+                                })
                     
+                    HStack {
+                      if isOverCount {
+                        Text("최대 \(maximumCount) 글자 까지만 입력해주세요.")
+                          .foregroundColor(.red)
+                          .font(.custom("IMHyemin-Regular", size: 13))
+                      }
+                    
+                      Spacer()
+
+                      Text("\(challengeTitle.count) / \(maximumCount)")
+                        .foregroundColor(isOverCount ? .red : .gray)
+                        .font(.custom("IMHyemin-Regular", size: 17))
+                    }
+                    .padding([.leading, .trailing], 20)
                     HStack {
                         Text("알림")
                             .font(.custom("IMHyemin-Regular", size: 17))
@@ -136,14 +163,34 @@ struct AddChallengeView: View {
                     }
 
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 17))
+                        .font(.custom("IMHyemin-Bold", size: 20))
                         
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                         .background(Color("CellColor"))
                         .cornerRadius(15)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(isOverCount ? .red : .clear)
+                            )
                         .padding(.horizontal, 20)
+                        .shakeEffect(trigger: isOverCount)
+                    
+                    HStack {
+                      if isOverCount {
+                        Text("최대 \(maximumCount) 글자 까지만 입력해주세요.")
+                          .foregroundColor(.red)
+                          .font(.custom("IMHyemin-Regular", size: 17))
+                      }
+
+                      Spacer()
+
+                      Text("\(challengeTitle.count) / \(maximumCount)")
+                        .foregroundColor(isOverCount ? .red : .gray)
+                    }
+                    .font(.custom("IMHyemin-Regular", size: 17))
+                    .padding()
                     
                     HStack {
                         Text("알림")
@@ -243,6 +290,7 @@ struct AddChallengeView: View {
                     } label: {
                         Image(systemName: "checkmark")
                     } // label
+                    .disabled((isOverCount == true) || (challengeTitle.count < 1) )
                 } // ToolbarItem
             } // toolbar
         } // NavigationStack

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import RealmSwift
 
 //MARK: - ChallengeType(개인/그룹)
 enum ChallengeType: String, CaseIterable{
@@ -50,15 +51,16 @@ struct PickerView: View {
 struct AddChallengeView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
-
+    
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
+    @ObservedObject private var notiManager = NotificationManager()
+    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
     
     @State private var challengeTitle: String = ""
-    @State private var isAlarmOn: Bool = false
     @State var challengetype: [String] = ["개인", "그룹"]
     @State var currentIndex: Int = 0
-
+    @State private var notiTime = Date()
     @State private var currentDate = Date()
     
     // MARK: - Body
@@ -83,8 +85,8 @@ struct AddChallengeView: View {
                         Text("알림")
                             .font(.custom("IMHyemin-Regular", size: 17))
                         Spacer()
-                        if isAlarmOn {
-                            DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
+                        if notiManager.isAlarmOn {
+                            DatePicker("", selection: $notiManager.notiTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                         }
                         else{
@@ -94,7 +96,7 @@ struct AddChallengeView: View {
                                 .multilineTextAlignment(.trailing)
                             
                         }
-                        Toggle("", isOn: $isAlarmOn)
+                        Toggle("", isOn: $notiManager.isAlarmOn)
                             .labelsHidden()
                             .padding(.leading, 5)
                         
@@ -148,8 +150,8 @@ struct AddChallengeView: View {
                             .font(.custom("IMHyemin-Regular", size: 17))
 
                         Spacer()
-                        if isAlarmOn {
-                            DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
+                        if notiManager.isAlarmOn {
+                            DatePicker("", selection: $notiManager.notiTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                         }
                         else{
@@ -159,7 +161,7 @@ struct AddChallengeView: View {
                                 .multilineTextAlignment(.trailing)
                             
                         }
-                        Toggle("", isOn: $isAlarmOn)
+                        Toggle("", isOn: $notiManager.isAlarmOn)
                             .labelsHidden()
                             .padding(.leading, 5)
                         
@@ -200,11 +202,12 @@ struct AddChallengeView: View {
                         switch(currentIndex){
                         case 0:
                             Task {
+                                //HapitPushInfo에도 동일하게 담길 id 이기 때문에 do 밖으로 빼줌
+                                let id = UUID().uuidString
                                 do {
-                                    let id = UUID().uuidString
+
                                     let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                                    let current = authManager.firebaseAuth
-                                    
+                                    let current = authManager.firebaseAuth                                    
                                     habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: current.currentUser?.uid ?? ""))
                                     
                                     dismiss()
@@ -213,7 +216,12 @@ struct AddChallengeView: View {
                                 } catch {
                                     throw(error)
                                 }
+                                if notiManager.isAlarmOn {
+                                    let newPushInfo = HapitPushInfo(pushID: id, pushTime: notiManager.notiTime, isChallengeAlarmOn: true)
+                                    $hapitPushInfo.append(newPushInfo)
+                                }
                             }
+                            
                         default:
                             Task {
                                 do {

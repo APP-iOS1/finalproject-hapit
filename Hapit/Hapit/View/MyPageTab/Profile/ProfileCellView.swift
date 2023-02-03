@@ -77,10 +77,17 @@ struct ProfileCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)
-        .task {
-            nickName = await authManager.getNickName(uid: currentUser?.uid ?? "")
-            email = await authManager.getEmail(uid: currentUser?.uid ?? "")
-            
+        .onAppear {
+            Task {
+                do {
+                    let nameTarget = try await authManager.getNickName(uid: currentUser?.uid ?? "")
+                    let emailTarget = try await authManager.getEmail(uid: currentUser?.uid ?? "")
+                    nickName = nameTarget
+                    email = emailTarget
+                } catch {
+                    throw(error)
+                }
+            }
         }
     }
 }

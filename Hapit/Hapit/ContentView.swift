@@ -11,8 +11,8 @@ struct ContentView: View {
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
-
-    @State private var isFullScreen = true
+    @AppStorage("autoLogIn") var isFullScreen: Bool = true
+    
     @EnvironmentObject var authManager: AuthManager
     @State private var index: Int = 0
     //@StateObject var habitManager: HabitManager = HabitManager()
@@ -35,7 +35,7 @@ struct ContentView: View {
                    }
                 }
                .tag(1)
-            MyPageView(isFullScreen: $isFullScreen, index: $index).environmentObject(authManager)
+            MyPageView(isFullScreen: $isFullScreen, index: $index)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")

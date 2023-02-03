@@ -35,27 +35,26 @@ struct CustomAlertModifier: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
             content
-            
-            ZStack {
-                if isPresented {
-                    CustomAlert(
-                        isPresented: _isPresented,
-                        title: self.title,
-                        message: self.message,
-                        primaryButtonTitle: self.primaryButtonTitle,
-                        primaryAction: self.primaryAction,
-                        withCancelButton: self.withCancelButton)
-                    .transition(
-                        .asymmetric(
-                            insertion: .move(edge: .leading).combined(with: .opacity),
-                            removal: .move(edge: .trailing).combined(with: .opacity)))
-                }
+            if isPresented {
+                CustomAlert(
+                    isPresented: _isPresented,
+                    title: self.title,
+                    message: self.message,
+                    primaryButtonTitle: self.primaryButtonTitle,
+                    primaryAction: self.primaryAction,
+                    withCancelButton: self.withCancelButton)
+                .animation(.easeInOut(duration: 0.2), value: isPresented)
+//                .transition(
+//                    .asymmetric(
+//                        insertion: .move(edge: .leading).combined(with: .opacity),
+//                        removal: .move(edge: .trailing).combined(with: .opacity)))
             }
-            .animation(.easeInOut(duration: 0.3), value: isPresented)
+           
         }
     }
 }
 
+// View에서 바로 수정자로 접근할 수 있게 확장
 extension View {
     
     func customAlert(

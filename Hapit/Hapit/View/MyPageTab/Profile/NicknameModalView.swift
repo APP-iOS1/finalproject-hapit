@@ -55,7 +55,12 @@ struct NicknameModalView: View {
                     if isValid {
                         userNickname = nickname
                         showModal = false
-                        await authManager.updateUserNickName(uid: currentUser?.uid ?? "", nickname: userNickname)
+                        
+                        do {
+                            try await authManager.updateUserNickName(uid: currentUser?.uid ?? "", nickname: userNickname)
+                        } catch {
+                            throw(error)
+                        }
                     }
                 }
             } label: {

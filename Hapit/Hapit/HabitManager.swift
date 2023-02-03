@@ -52,14 +52,10 @@ final class HabitManager: ObservableObject{
                             self.challenges.append(challenge)
                         }
                     }
-                    
                     promise(.success(self.challenges))
-                    
                 }
-            
         }
         .eraseToAnyPublisher()
-        
     }
     
     func loadChallenge(){
@@ -69,14 +65,13 @@ final class HabitManager: ObservableObject{
         self.fetchChallengeCombine()
             .sink { (completion) in
                 switch completion{
-                    case .failure(let error):
-                        print(error)
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { [weak self] (challenges) in
-                self?.challenges = challenges
+                //self?.challenges = challenges
             }
             .store(in: &cancellables)
     }
@@ -109,11 +104,10 @@ final class HabitManager: ObservableObject{
         self.create(challenge)
             .sink { (completion) in
                 switch completion{
-                    case .failure(let error):
-                        print(error)
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { _ in }
             .store(in: &cancellables)
@@ -133,53 +127,67 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - Update a Habit
-    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<[Challenge], Error> {
+    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<Void, Error> {
         // Update a Challenge
         // Local
-        let isChecked = challenge.isChecked
-        // TO server
-        var check: Bool{
-            if isChecked == true{
-                return false
-            }else{
-                return true
-            }
-        }
+        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
+        let count = updateCount(count: challenge.count,isChecked: challenge.isChecked)
         
-        return Future<[Challenge], Error> {  promise in
+        return Future<Void, Error> {  promise in
             
             self.database.collection("Challenge")
                 .document(challenge.id)
-                .updateData(["isChecked": check])
-            promise(.success(self.challenges))
+                .updateData(["isChecked": isChecked])
             
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["count": count])
+                //promise(.success())
         }
         .eraseToAnyPublisher()
     }
+    
+    func toggleIsChanged(isChecked: Bool) -> Bool{
+        if isChecked == true{
+            return false
+        }else{
+            return true
+        }
+    }
+    
+    func updateCount(count: Int, isChecked: Bool) -> Int{
+        if isChecked == true{
+            return count - 1
+        }else{
+            return count + 1
+        }
+    }
+
     func loadChallengeIsChecked(challenge: Challenge){
         self.updateChallengeIsChecked(challenge: challenge)
             .sink { (completion) in
                 switch completion{
-                    case .failure( _):
-                        return
-                    case .finished:
-                        return
+                case .failure( _):
+                    return
+                case .finished:
+                    return
                 }
-            } receiveValue: { [weak self] (challenges) in
-                self?.challenges = challenges
+            } receiveValue: { _ in
             }
             .store(in: &cancellables)
-    loadChallenge()
+        loadChallenge()
     }
     
-    // MARK: - About Posts
+    // MARK: - Post CRUD Part
+    // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
-    func fetchPosts(id: String) -> AnyPublisher<[Challenge], Error>{
+    func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
             
             let query = self.database.collection("Post")
-                .whereField("challengeID", isEqualTo: id)
+                .whereField("uid", isEqualTo: userID)
+                .whereField("challengeID", isEqualTo: challengeID)
             
             query.getDocuments{(snapshot, error) in
                 
@@ -198,30 +206,125 @@ final class HabitManager: ObservableObject{
                         self.posts.append(post)
                     }
                 }
-                
                 promise(.success(self.challenges))
-                
             }
-            
         }
         .eraseToAnyPublisher()
     }
     
+    // MARK: - R: Fetch Posts 함수 (ViewModel)
     @MainActor
-    func loadPosts(id: String){
+    func loadPosts(challengeID: String, userID: String){
         posts.removeAll()
         
-        self.fetchPosts(id: id)
+        self.fetchPosts(challengeID: challengeID, userID: userID)
             .sink { (completion) in
                 switch completion{
-                    case .failure(_):
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { [weak self] (challenges) in
                 self?.challenges = challenges
             }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - C: Create Post 함수 (Service)
+    func createService(_ post: Post) -> AnyPublisher<Void, Error> {
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document()
+                .setData([
+                    "id": post.id,
+                    "uid": post.uid,
+                    "challengeID": post.challengeID,
+                    "title": post.title,
+                    "content": post.content,
+                    "createdAt": post.createdAt
+                ]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - C: Post Create 함수 (ViewModel)
+    func createPost(post: Post){
+        self.createService(post)
+            .sink { (completion) in
+                switch completion{
+                case .failure(_):
+                    return
+                case .finished:
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - U: Post Update 함수 (Service)
+    func updatePostService(_ post: Post) -> AnyPublisher<Void, Error> {
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document(post.id)
+                .updateData(["content" : post.content]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - U: Post Update 함수 (ViewModel)
+    func updatePost(post: Post) {
+        self.updatePostService(post)
+            .sink { (completion) in
+                switch completion{
+                case .failure(_):
+                    return
+                case .finished:
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - D: Post Delete 함수 (Service)
+    func deletePostService(_ post: Post) -> AnyPublisher<Void, Error>{
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document(post.id)
+                .delete() { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - D: Post Delete 함수 (ViewModel)
+    func deletePost(post: Post) {
+        self.deletePostService(post)
+            .sink { (completion) in
+                switch completion {
+                case .failure(_):
+                    return
+                case .finished:
+                    return
+                }
+            } receiveValue: { _ in }
             .store(in: &cancellables)
     }
 }

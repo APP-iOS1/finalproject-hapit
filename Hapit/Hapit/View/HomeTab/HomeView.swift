@@ -56,6 +56,7 @@ struct HomeView: View {
                 //                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
+                    //habitManager.loadChallenge()
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 

@@ -15,13 +15,13 @@ struct DedicatedWriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @State var content = ""
     
-    // MARK: 더미 데이터 - 데이터 연동 후 지우기 !!
-    @State private var date = "2023년 01월 20일 금요일"
-    @State private var habitName = "물마시기"
+    var currentChallenge: Challenge
     
     @State private var selectedImage: UIImage?// ios 15
     @State private var isShowingPhotoPicker: Bool = false
     
+    @EnvironmentObject var habitManager: HabitManager
+
     let maxCharacterLength = Int(300)
     
     var body: some View {
@@ -29,9 +29,9 @@ struct DedicatedWriteDiaryView: View {
             ScrollView {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("\(habitName)")
+                        Text("\(currentChallenge.challengeTitle)")
                             .font(.custom("IMHyemin-Bold", size: 22))
-                        Text("\(date)")
+                        Text("\(currentChallenge.createdDate)")
                             .font(.custom("IMHyemin-Regular", size: 17))
                     }
                     Spacer()
@@ -85,13 +85,29 @@ struct DedicatedWriteDiaryView: View {
                                 .font(.custom("IMHyemin-Bold", size: 17))
                         } // label
                     } // ToolbarItem
-                    
+                    // 아직은 사진 구현하지 않음.
+                    // 기본적인 CRUD 제작후에 추가 예정
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button {
+//                            isShowingPhotoPicker.toggle()
+//
+//                        } label: {
+//                            Image(systemName: "photo")
+//                        }
+//                    } // ToolbarItem
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            isShowingPhotoPicker.toggle()
+                            habitManager.createPost(post: Post(id: UUID().uuidString,
+                                                               uid: currentChallenge.uid,
+                                                               challengeID: currentChallenge.id,
+                                                               title: currentChallenge.challengeTitle,
+                                                               content: content,
+                                                               createdAt: Date()))
+                            habitManager.loadPosts(challengeID: currentChallenge.id, userID: currentChallenge.uid)
                             
+                            dismiss()
                         } label: {
-                            Image(systemName: "photo")
+                            Image(systemName: "checkmark")
                         }
                     } // ToolbarItem
                 } // toolbar

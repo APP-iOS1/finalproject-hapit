@@ -51,7 +51,6 @@ struct RegisterView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    
                     HStack() {
                         StepBar(nowStep: 1)
                             .padding(.leading, -8)
@@ -333,21 +332,6 @@ struct RegisterView: View {
             }
             .disabled(isOk())
             .padding(.vertical, 5)
-
-//            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)) {
-//
-//                Text("완료")
-//                    .foregroundColor(.white)
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .background {
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .fill(isOk() ? .gray : Color.accentColor)
-//                    }
-//            }
-//            .disabled(isOk())
-//            .padding(.vertical, 5)
-
         }
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)

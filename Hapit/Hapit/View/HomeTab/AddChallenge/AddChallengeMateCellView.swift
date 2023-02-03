@@ -13,9 +13,12 @@ struct AddChallengeMateCellView: View {
     @State private var showBearModal = false
     let bearArray = Jelly.allCases.map({"\($0)"})
     
-    @State var mateName: String
+   @Binding var tempMate: [ChallengeMate]
 
+  //  @Binding var selectedmateArray: [String]
     @EnvironmentObject var habitManager: HabitManager
+    
+   @State var selectedMateArray: ChallengeMate
     @State var isChecked: Bool = false
     var body: some View {
         VStack {
@@ -29,13 +32,16 @@ struct AddChallengeMateCellView: View {
                         .frame(width: 60, height: 60))
                     .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                 
-                Text(mateName)
+                Text(selectedMateArray.name)
                     .font(.custom("IMHyemin-Bold", size: 17)).padding(10)
+                Text(String(selectedMateArray.isChecked))
                 Spacer()
                 
                 Button {
                     // 친구 선택
                     isChecked.toggle()
+                    selectedMateArray.isChecked.toggle()
+                    tempMate.append(selectedMateArray)
                 } label: {
                     Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
                         .font(.title)
@@ -60,7 +66,8 @@ struct AddChallengeMateCellView: View {
 }
 
 struct AddChallengeMateCellView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        AddChallengeMateCellView(mateName: "김예원")
+        AddChallengeMateCellView(tempMate: .constant([ChallengeMate(name: "dummy")]), selectedMateArray: ChallengeMate(name: "김예원"))
     }
 }

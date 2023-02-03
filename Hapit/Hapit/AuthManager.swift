@@ -160,4 +160,15 @@ class AuthManager: ObservableObject {
             throw(error)
         }
     }
+    
+    // MARK: - 사용 중인 유저의 프로필 사진을 수정
+    final func updateUserProfileImage(uid: String, image: String) async -> Void {
+        //        guard let currentUserId else { return }
+        let path = database.collection("User")
+        do {
+            try await path.document(uid).updateData(["image": image])
+        } catch {
+            throw(error)
+        }
+    }
 }

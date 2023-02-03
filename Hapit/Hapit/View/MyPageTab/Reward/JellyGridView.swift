@@ -23,14 +23,16 @@ struct JellyGridView: View {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(0..<data.count, id: \.self) { index in
                         // TODO: 뱃지 존재 여부에 따라 색깔 바꾸기
-                        if index == 1 {
-                            JellyBadgeView(jellyImage: "bearBlue")
+                        if index == 0 {
+                            JellyBadgeView(jellyImage: "bearBlue", jellyName: "첫 습관 달성")
+                        } else if index == 1 {
+                            JellyBadgeView(jellyImage: "bearTurquoise", jellyName: "작심삼일")
                         } else if index == 2 {
-                            JellyBadgeView(jellyImage: "bearTurquoise")
-                        } else if index == 4 {
-                            JellyBadgeView(jellyImage: "bearGreen")
+                            JellyBadgeView(jellyImage: "bearYellow", jellyName: "첫 친구")
+                        } else if index == 3 {
+                            JellyBadgeView(jellyImage: "bearGreen", jellyName: "마음이 갈대밭")
                         } else {
-                            JellyBadgeView(jellyImage: "bearWhite")
+                            JellyBadgeView(jellyImage: "bearWhite", jellyName: "???")
                         }
                         
                     }

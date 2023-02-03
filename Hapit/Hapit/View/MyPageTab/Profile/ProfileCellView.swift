@@ -36,6 +36,11 @@ struct ProfileCellView: View {
                 }.halfSheet(showSheet: $showBearModal) {
                     BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
                 }
+                .onChange(of: isSelectedJelly) { jelly in
+                    Task {
+                        await authManager.updateUserProfileImage(uid: currentUser?.uid ?? "", image: bearArray[jelly % 7])
+                    }
+                }
                 
                 // MARK: 닉네임, 이메일, 닉네임 수정
                 VStack {

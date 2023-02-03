@@ -14,11 +14,12 @@ struct ContentView: View {
     @AppStorage("autoLogIn") var isFullScreen: Bool = true
     
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @State private var index: Int = 0
     //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
-        TabView(selection: $index){
+        TabView(selection: $index) {
             HomeView()
                 .tabItem {
                     VStack{
@@ -27,6 +28,7 @@ struct ContentView: View {
                     }
                 }
                 .tag(0)
+            
             SocialView()
                .tabItem {
                    VStack{
@@ -35,6 +37,7 @@ struct ContentView: View {
                    }
                 }
                .tag(1)
+                 
             MyPageView(isFullScreen: $isFullScreen, index: $index)
                 .tabItem {
                     VStack{

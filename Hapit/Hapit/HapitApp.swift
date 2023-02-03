@@ -63,7 +63,9 @@ struct HapitApp: App {
             ContentView()
                 .environmentObject(HabitManager())
                 .environmentObject(AuthManager())
+                .environmentObject(UserInfoManager())
                 .environmentObject(modalManager)
+            
         }
     }
 }

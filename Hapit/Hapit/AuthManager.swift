@@ -56,7 +56,7 @@ class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "", badge: [], friends: [])
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [])
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -75,7 +75,7 @@ class AuthManager: ObservableObject {
                     "email" : userInfo.email,
                     "pw" : userInfo.pw,
                     "name" : userInfo.name,
-                    "image" : userInfo.proImage,
+                    "proImage" : userInfo.proImage,
                     "badge" : userInfo.badge,
                     "friends" : userInfo.friends
                 ])
@@ -162,11 +162,11 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 프로필 사진을 수정
-    final func updateUserProfileImage(uid: String, image: String) async -> Void {
+    final func updateUserProfileImage(uid: String, image: String) async throws -> Void {
         //        guard let currentUserId else { return }
         let path = database.collection("User")
         do {
-            try await path.document(uid).updateData(["image": image])
+            try await path.document(uid).updateData(["proImage": image])
         } catch {
             throw(error)
         }

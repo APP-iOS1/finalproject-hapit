@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
@@ -57,7 +58,6 @@ struct OptionView: View {
             // TODO: 로그아웃 alert 띄우기
             Button {
                 isLogoutAlert = true
-                }
             } label: {
                 Text("로그아웃")
                     .font(.custom("IMHyemin-Regular", size: 16))
@@ -66,21 +66,20 @@ struct OptionView: View {
                     .background(RoundedRectangle(cornerRadius: 10).stroke(.gray))
                     .padding()
             }
-            .customAlert( // 커스텀 알림창 띄우기
-                isPresented: $isLogoutAlert,
-                title: "",
-                message: "로그아웃하시겠습니까?",
-                primaryButtonTitle: "로그아웃",
-                primaryAction: { Task {
-                    do {
-                        isFullScreen = true
-                        index = 0
-                        try await authManager.logOut()
-                    } catch {
-                        throw(error)
-                    }
-                } },
-                withCancelButton: true)
+            .customAlert(isPresented: $isLogoutAlert,
+                         title: "",
+                         message: "로그아웃하시겠습니까?",
+                         primaryButtonTitle: "로그아웃",
+                         primaryAction: { Task {
+                do {
+                    isFullScreen = true
+                    index = 0
+                    try await authManager.logOut()
+                } catch {
+                    throw(error)
+                }
+            } },
+                         withCancelButton: true)
             
             HStack {
                 Spacer()

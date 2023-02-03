@@ -22,7 +22,7 @@ struct JellyBadgeView: View {
                     .frame(width: 100, height: 100))
                 .padding(.bottom, 15)
             
-            Text("jellyName")
+            Text(jellyName)
                 .font(.custom("IMHyemin-Regular", size: 12))
                 .frame(width: 60)
         }

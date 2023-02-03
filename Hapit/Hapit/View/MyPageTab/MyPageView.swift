@@ -36,8 +36,8 @@ struct MyPageView: View {
     }
 }
 
-struct MyPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyPageView(isFullScreen: .constant(true), index: .constant(0))
-    }
-}
+//struct MyPageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyPageView(isFullScreen: .constant(true), index: .constant(0))
+//    }
+//}

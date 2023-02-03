@@ -41,26 +41,26 @@ final class HabitManager: ObservableObject{
             self.database.collection("Challenge")
                 .order(by: "createdAt", descending: true)
                 .getDocuments{(snapshot, error) in
-                
-                if let error = error {
-                    promise(.failure (error))
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    promise(.failure (FirebaseError.badSnapshot))
-                    return
-                }
-                
-                snapshot.documents.forEach { document in
-                    if let challenge = try? document.data(as: Challenge.self){
-                        self.challenges.append(challenge)
+                    
+                    if let error = error {
+                        promise(.failure (error))
+                        return
                     }
+                    
+                    guard let snapshot = snapshot else {
+                        promise(.failure (FirebaseError.badSnapshot))
+                        return
+                    }
+                    
+                    snapshot.documents.forEach { document in
+                        if let challenge = try? document.data(as: Challenge.self){
+                            self.challenges.append(challenge)
+                        }
+                    }
+                    
+                    promise(.success(self.challenges))
+                    
                 }
-                
-                promise(.success(self.challenges))
-                
-            }
             
         }
         .eraseToAnyPublisher()
@@ -138,11 +138,10 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - Update a Habit
-    @MainActor
-    func updateChallengeIsChecked(challenge: Challenge) async {
+    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<[Challenge], Error> {
         // Update a Challenge
         // Local
-        var isChecked = challenge.isChecked
+        let isChecked = challenge.isChecked
         // TO server
         var check: Bool{
             if isChecked == true{
@@ -152,15 +151,30 @@ final class HabitManager: ObservableObject{
             }
         }
         
-        do{
-            try await database.collection("Challenge")
+        return Future<[Challenge], Error> {  promise in
+            
+            self.database.collection("Challenge")
                 .document(challenge.id)
                 .updateData(["isChecked": check])
-        }catch{
-            print(error)
+            promise(.success(self.challenges))
+            
         }
-        
-        await fetchChallengeCombine()
+        .eraseToAnyPublisher()
+    }
+    func loadChallengeIsChecked(challenge: Challenge){
+        self.updateChallengeIsChecked(challenge: challenge)
+            .sink { (completion) in
+                switch completion{
+                    case .failure( _):
+                        return
+                    case .finished:
+                        return
+                }
+            } receiveValue: { [weak self] (challenges) in
+                self?.challenges = challenges
+            }
+            .store(in: &cancellables)
+    loadChallenge()
     }
     
     // MARK: - About Posts
@@ -172,7 +186,7 @@ final class HabitManager: ObservableObject{
             let query = self.database.collection("Post")
                 .whereField("challengeID", isEqualTo: id)
             
-                query.getDocuments{(snapshot, error) in
+            query.getDocuments{(snapshot, error) in
                 
                 if let error = error {
                     promise(.failure (error))
@@ -183,7 +197,7 @@ final class HabitManager: ObservableObject{
                     promise(.failure (FirebaseError.badSnapshot))
                     return
                 }
-            
+                
                 snapshot.documents.forEach { document in
                     if let post = try? document.data(as: Post.self){
                         self.posts.append(post)
@@ -215,8 +229,4 @@ final class HabitManager: ObservableObject{
             }
             .store(in: &cancellables)
     }
-    
-    
-    
-    
 }

@@ -7,132 +7,28 @@
 
 import SwiftUI
 import SegmentedPicker
-//TODO: 체크버튼 분리하기: 현재 한 습관만 달성해도 모든 습관이 다 체크되는 이슈가 있음.
-
-// MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
-struct HabitSegmentView: View {
-    
-    @Binding var selectedIndex: Int
-    @State var date = Date()
-    // 챌린지와 습관을 관리하는 객체
-    @EnvironmentObject var habitManager: HabitManager
-    @EnvironmentObject var authManager: AuthManager
-    
-    @State private var isOnAlarm: Bool = false // 알림 설정
-    
-    var body: some View {
-        switch selectedIndex {
-            
-        case 0:
-            VStack {
-                if habitManager.challenges.count < 1{
-                    EmptyCellView()
-                }
-                else {
-
-                    ScrollView{
-                        if habitManager.challenges.count < 1{
-                            
-                            EmptyCellView()
-                            
-                        }
-                        else{
-                            ForEach(habitManager.challenges) { challenge in
-                                
-                                if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
-                                    NavigationLink {
-                                        //HabitDetailView(calendar: Calendar.current)
-                                        ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date)
-                                                .background(Color("CellColor"))
-                                                .cornerRadius(20)
-                                                .navigationBarTitle("\(challenge.challengeTitle)")
-                                        }
-                                        .padding()
-                                        .background(Color("BackgroundColor"))
-                                        //.navigationBarTitle("", displayMode: .automatic)
-                                        
-                                    } label: {
-                                        ChallengeCellView(challenge: challenge)
-                                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-                                            .contextMenu {
-                                                Button(role: .destructive) {
-                                                    // 챌린지 삭제
-                                                    habitManager.removeChallenge(challenge: challenge)
-                                                } label: {
-                                                    Text("챌린지 지우기")
-                                                        .font(.custom("IMHyemin-Regular", size: 17))
-                                                    Image(systemName: "trash")
-                                                }
-                                            } // contextMenu
-                                        
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.bottom, 5)
-                                } // if
-                            }
-                            
-                        }
-                    }
-                } // VStack
-            }
-            .onAppear{
-                habitManager.loadChallenge()
-            }
-        case 1:
-
-                if habitManager.habits.count < 1{
-                    EmptyCellView()
-                }
-                else{
-                    ScrollView {
-                        ForEach(habitManager.habits) { habit in
-                            
-                            NavigationLink {
-                                // MARK: 버전 분기
-                                
-                                //HabitDetailView(calendar: Calendar.current)
-                            } label: {
-                                HabitCellView(habit: habit)
-                            }
-                            
-                        }
-                    }
-//                    .onAppear{
-//                        Task{
-//                            await habitManager.fetchChallenge()
-//                        }
-//                        print(habitManager.habits)
-//
-//                    }
-            }
-        default: Text("something wrong")
-        }// switch
-        
-    }
-}
 
 struct HomeView: View {
     
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
-    @State var isAnimating: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
-    
+
     init() {
         // Use this if NavigationBarTitle is with Large Font
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 34)!]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
         
         // Use this if NavigationBarTitle is with displayMode = .inline
         // UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
     }
     
     var body: some View {
-        
         NavigationView{
             VStack {
+                //MARK: 세그먼트 뷰.
+                //챌린지와 완성된 습관을 세그먼트 뷰로 확인할 수 있습니다.
                 SegmentedPicker(
                     habitTypeList,
                     selectedIndex: Binding(
@@ -157,14 +53,14 @@ struct HomeView: View {
                         
                     })
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
-                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
+                //                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
-
-                // 세그먼트 뷰
-                HabitSegmentView(selectedIndex: $selectedIndex)
+                
+                //MARK: 세그먼트디테일뷰
+                HabitSegmentDetailView(selectedIndex: $selectedIndex)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())
@@ -178,11 +74,12 @@ struct HomeView: View {
                 
             }//toolbar
             
-        }//NavigationStack
+        }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
             AddChallengeView()
         }
     }//body
+    
     func getToday() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")

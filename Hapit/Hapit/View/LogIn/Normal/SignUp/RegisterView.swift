@@ -285,92 +285,54 @@ struct RegisterView: View {
                 
             // MARK: 완료 버튼
             // Fallback on earlier versions
-            NavigationLink {
-                ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)
-            } label: {
-                Text("완료")
-                    .font(.custom("IMHyemin-Bold", size: 16))
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(isOk() ? .gray : Color.accentColor)
+            
+            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
+                Button(action: {
+                    Task {
+                        do {
+                            let target = try await authManager.isEmailDuplicated(email: email)
+                            mailDuplicated = target
+                        } catch {
+                            throw(error)
+                        }
+                
+                        do {
+                            let target = try await authManager.isNicknameDuplicated(nickName: nickName)
+                            nameCheck = target
+                        } catch {
+                            throw(error)
+                        }
+                        //False면 사용가능, true면 중복이라 사용불가
+                        
+                        //이메일 중복인경우
+                        if mailDuplicated {
+                            emailTmp = email
+                            emailFocusField = true
+                        }
+                        
+                        //닉네임 중복인 경우
+                        if nameCheck {
+                            nameTmp = nickName
+                            if !mailDuplicated {
+                                nickNameFocusField = true
+                            }
+                        }
+                        canGoNext = isDuplicated()
                     }
-            } // Nav Link
+                }) {
+                    Text("완료")
+                        .font(.custom("IMHyemin-Bold", size: 16))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(isOk() ? .gray : Color.accentColor)
+                    }
+                }
+            }
             .disabled(isOk())
             .padding(.vertical, 5)
-            .simultaneousGesture(TapGesture().onEnded{
-                Task {
-                    do {
-                        let target = try await authManager.isEmailDuplicated(email: email)
-                        mailDuplicated = target
-                    } catch {
-                        throw(error)
-                    }
-            
-                    do {
-                        let target = try await authManager.isNicknameDuplicated(nickName: nickName)
-                        nameCheck = target
-                    } catch {
-                        throw(error)
-                    }
-                    //False면 사용가능, true면 중복이라 사용불가
-                    
-                    //이메일 중복인경우
-                    if mailDuplicated {
-                        emailTmp = email
-                        emailFocusField = true
-                    }
-                    
-                    //닉네임 중복인 경우
-                    if nameCheck {
-                        nameTmp = nickName
-                        if !mailDuplicated {
-                            nickNameFocusField = true
-                        }
-                    }
-                    canGoNext = isDuplicated() // false --> 다음으로 못감
-                }
-            })
-                
-//            Button(action: {
-//                Task {
-//                    isClicked.toggle()
-//
-//                    do {
-//                        try await authManager.register(email: email, pw: pw, name: nickName)
-//                    } catch {
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-//                    isActive.toggle()
-//                }
-//            }){
-//                if isClicked {
-//                    ProgressView()
-//                        .padding()
-//                        .frame(maxWidth: .infinity)
-//                        .background {
-//                            RoundedRectangle(cornerRadius: 10)
-//                                .fill(agreeAll ? Color.accentColor : .gray)
-//                        }
-//                } else {
-//                    Text("가입하기")
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .frame(maxWidth: .infinity)
-//                        .background {
-//                            RoundedRectangle(cornerRadius: 10)
-//                                .fill(agreeAll ? Color.accentColor : .gray)
-//                        }
-//                }
-//            }
-//            .navigationDestination(isPresented: $isActive) {
-//                GetStartView(isFullScreen: $isFullScreen)
-//            }
-//        }
 
 //            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName)) {
 //

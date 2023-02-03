@@ -11,6 +11,7 @@ struct EmptyCellView: View {
     var body: some View {
         VStack{
             Spacer()
+            //TODO: 트레이에 곰 들어간 사진 만들어보기
             Image(systemName: "tray")
                 .scaleEffect(x: 3,y: 3)
                 .padding()

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ProfileCellView: View {
-    @State private var nickName = "릴루"
-    @State private var email = "minju@world.com"
+    @EnvironmentObject var authManager: AuthManager
+    @State private var nickName = ""
+    @State private var email = ""
     @State private var isSelectedJelly = 0
     @State private var showBearModal = false
     @State private var showNicknameModal = false
@@ -75,6 +76,18 @@ struct ProfileCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)
+        .onAppear {
+            Task {
+                do {
+                    let nameTarget = try await authManager.getNickName(uid: currentUser?.uid ?? "")
+                    let emailTarget = try await authManager.getEmail(uid: currentUser?.uid ?? "")
+                    nickName = nameTarget
+                    email = emailTarget
+                } catch {
+                    throw(error)
+                }
+            }
+        }
     }
 }
 

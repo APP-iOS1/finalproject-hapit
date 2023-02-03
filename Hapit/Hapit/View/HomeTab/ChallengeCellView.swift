@@ -19,11 +19,7 @@ struct ChallengeCellView: View {
             Button {
                 // firestore에 업데이트 함수 제작 요망
                 //challenge.isChecked.toggle()
-                Task{
-                    await habitManager.updateChallengeIsChecked(challenge: challenge)
-                    
-                }
-                
+                habitManager.loadChallengeIsChecked(challenge: challenge)
             } label: {
                 Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
@@ -72,7 +68,33 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
+//        .overlay(
+//            VStack{
+//                Spacer()
+//                ZStack{
+//                    Rectangle()
+//                        .frame(height: 4)
+//                        .padding([.top, .leading, .trailing], 10)
+//                        .foregroundColor(Color(UIColor.lightGray))
+//                    
+//                    HStack{
+//                        //                    Image("duckBoat")
+//                        //                        .resizable()
+//                        //                        .aspectRatio(contentMode: .fit)
+//                        //                        .frame(width: 20)
+//                        
+//                        
+//                        Rectangle()
+//                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
+//                            .padding([.top, .leading, .trailing], 10)
+//                        Spacer()
+//                    }
+//                }
+//            }
+//        )
+
         .cornerRadius(20)
+        //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(
 //            VStack{
 //                Spacer()
@@ -105,9 +127,3 @@ struct ChallengeCellView: View {
 //        ChallengeCellView(challenge: .constant(Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 0, isChecked: false)))
 //    }
 //}
-
-//MARK: 습관 모델이 만들어지면 수정할 부분
-//    var title: String = "나의 습관명"
-//    var dateFromStart: Int = 20
-//    var dayWithOutStop: Int = 5
-//    var dayStarted: String = "2023년 1월 1일 ~"

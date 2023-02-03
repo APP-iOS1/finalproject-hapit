@@ -17,7 +17,7 @@ enum ModalState: CGFloat {
         case .closed:
             return UIScreen.main.bounds.height
         case .partiallyRevealed:
-            return UIScreen.main.bounds.height * 1/4
+            return UIScreen.main.bounds.height * (1 / 4)
         case .open:
             return 0
         }
@@ -25,7 +25,7 @@ enum ModalState: CGFloat {
 }
 
 struct Modal {
-    var position: ModalState  = .closed
+    var position: ModalState = .closed
     var dragOffset: CGSize = .zero
     var content: AnyView?
 }

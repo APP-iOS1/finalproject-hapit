@@ -174,13 +174,14 @@ final class HabitManager: ObservableObject{
     
     // MARK: - About Posts
     @MainActor
-    func fetchPosts(id: String) -> AnyPublisher<[Challenge], Error>{
+    func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
             
             let query = self.database.collection("Post")
-                .whereField("challengeID", isEqualTo: id)
-            
+                .whereField("uid", isEqualTo: userID)
+                .whereField("challengeID", isEqualTo: challengeID)
+
             query.getDocuments{(snapshot, error) in
                 
                 if let error = error {
@@ -208,10 +209,10 @@ final class HabitManager: ObservableObject{
     }
     
     @MainActor
-    func loadPosts(id: String){
+    func loadPosts(challengeID: String, userID: String){
         posts.removeAll()
         
-        self.fetchPosts(id: id)
+        self.fetchPosts(challengeID: challengeID, userID: userID)
             .sink { (completion) in
                 switch completion{
                     case .failure(_):

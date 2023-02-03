@@ -85,13 +85,22 @@ struct DedicatedWriteDiaryView: View {
                                 .font(.custom("IMHyemin-Bold", size: 17))
                         } // label
                     } // ToolbarItem
-                    
+                    // 아직은 사진 구현하지 않음.
+                    // 기본적인 CRUD 제작후에 추가 예정
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button {
+//                            isShowingPhotoPicker.toggle()
+//
+//                        } label: {
+//                            Image(systemName: "photo")
+//                        }
+//                    } // ToolbarItem
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            isShowingPhotoPicker.toggle()
-                            
+                            dismiss()
+
                         } label: {
-                            Image(systemName: "photo")
+                            Image(systemName: "checkmark")
                         }
                     } // ToolbarItem
                 } // toolbar

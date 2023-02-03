@@ -7,133 +7,12 @@
 
 import SwiftUI
 import SegmentedPicker
-//TODO: 체크버튼 분리하기: 현재 한 습관만 달성해도 모든 습관이 다 체크되는 이슈가 있음.
-
-// MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
-struct HabitSegmentView: View {
-    
-    @Binding var selectedIndex: Int
-    @State var date = Date()
-    // 챌린지와 습관을 관리하는 객체
-    @EnvironmentObject var habitManager: HabitManager
-    @EnvironmentObject var authManager: AuthManager
-    
-    @State private var isOnAlarm: Bool = false // 알림 설정
-    
-    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
-    
-    var body: some View {
-        switch selectedIndex {
-            
-        case 0:
-            
-            VStack {
-                if habitManager.challenges.count < 1{
-                    EmptyCellView()
-                }
-                else {
-                    
-                    ScrollView{
-                        if habitManager.challenges.count < 1{
-                            
-                            EmptyCellView()
-                            
-                        }
-                        else{
-                            
-                            ForEach(habitManager.challenges) { challenge in
-                                
-                                if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
-                                    
-                                    NavigationLink {
-                                        //HabitDetailView(calendar: Calendar.current)
-                                        ZStack{
-                                            ScrollView(showsIndicators: false){
-                                                CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
-                                            }
-                                            .padding()
-                                            .background(Color("BackgroundColor"))
-                                            
-                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
-                                                .edgesIgnoringSafeArea(.all)
-                                                .transition(.opacity)
-                                                .customAlert( // 커스텀 알림창 띄우기
-                                                    isPresented: $showsCustomAlert,
-                                                    title: "챌린지를 삭제하시겠어요?",
-                                                    message: "삭제된 챌린지는 복구할 수 없어요.",
-                                                    primaryButtonTitle: "삭제",
-                                                    primaryAction: { habitManager.removeChallenge(challenge: challenge) },
-                                                    withCancelButton: true)
-                                                    
-                                              ModalAnchorView()
-                                        } // ZStack
-                                        
-                                    } label: {
-                                        ChallengeCellView(challenge: challenge)
-                                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-                                            .contextMenu {
-                                                Button(role: .destructive) {
-                                                    // 챌린지 삭제
-                                                    habitManager.removeChallenge(challenge: challenge)
-                                                } label: {
-                                                    Text("챌린지 지우기")
-                                                        .font(.custom("IMHyemin-Regular", size: 17))
-                                                    Image(systemName: "trash")
-                                                }
-                                            } // contextMenu
-                                        
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.bottom, 5)
-                                } // if
-                            }
-                        }
-                    }
-                } // VStack
-                
-            }
-            .onAppear{
-                habitManager.loadChallenge()
-            }
-        case 1:
-            
-            if habitManager.habits.count < 1{
-                EmptyCellView()
-            }
-            else{
-                ScrollView {
-                    ForEach(habitManager.habits) { habit in
-                        
-                        NavigationLink {
-                            // MARK: 버전 분기
-                            
-                            //HabitDetailView(calendar: Calendar.current)
-                        } label: {
-                            HabitCellView(habit: habit)
-                        }
-                        
-                    }
-                }
-                //                    .onAppear{
-                //                        Task{
-                //                            await habitManager.fetchChallenge()
-                //                        }
-                //                        print(habitManager.habits)
-                //
-                //                    }
-            }
-        default: Text("something wrong")
-        }// switch
-        
-    }
-}
 
 struct HomeView: View {
     
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
-    @State var isAnimating: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
 
@@ -148,6 +27,8 @@ struct HomeView: View {
     var body: some View {
         NavigationView{
             VStack {
+                //MARK: 세그먼트 뷰.
+                //챌린지와 완성된 습관을 세그먼트 뷰로 확인할 수 있습니다.
                 SegmentedPicker(
                     habitTypeList,
                     selectedIndex: Binding(
@@ -178,8 +59,8 @@ struct HomeView: View {
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
-                // 세그먼트 뷰
-                HabitSegmentView(selectedIndex: $selectedIndex)
+                //MARK: 세그먼트디테일뷰
+                HabitSegmentDetailView(selectedIndex: $selectedIndex)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())

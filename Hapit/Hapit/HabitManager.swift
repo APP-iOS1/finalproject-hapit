@@ -52,14 +52,10 @@ final class HabitManager: ObservableObject{
                             self.challenges.append(challenge)
                         }
                     }
-                    
                     promise(.success(self.challenges))
-                    
                 }
-            
         }
         .eraseToAnyPublisher()
-        
     }
     
     func loadChallenge(){
@@ -69,11 +65,10 @@ final class HabitManager: ObservableObject{
         self.fetchChallengeCombine()
             .sink { (completion) in
                 switch completion{
-                    case .failure(let error):
-                        print(error)
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { [weak self] (challenges) in
                 //self?.challenges = challenges
@@ -109,11 +104,10 @@ final class HabitManager: ObservableObject{
         self.create(challenge)
             .sink { (completion) in
                 switch completion{
-                    case .failure(let error):
-                        print(error)
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { _ in }
             .store(in: &cancellables)
@@ -173,10 +167,10 @@ final class HabitManager: ObservableObject{
         self.updateChallengeIsChecked(challenge: challenge)
             .sink { (completion) in
                 switch completion{
-                    case .failure( _):
-                        return
-                    case .finished:
-                        return
+                case .failure( _):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { _ in
             }
@@ -184,7 +178,8 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     
-    // MARK: - About Posts
+    // MARK: - Post CRUD Part
+    // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
     func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
         
@@ -193,7 +188,7 @@ final class HabitManager: ObservableObject{
             let query = self.database.collection("Post")
                 .whereField("uid", isEqualTo: userID)
                 .whereField("challengeID", isEqualTo: challengeID)
-
+            
             query.getDocuments{(snapshot, error) in
                 
                 if let error = error {
@@ -211,15 +206,13 @@ final class HabitManager: ObservableObject{
                         self.posts.append(post)
                     }
                 }
-                
                 promise(.success(self.challenges))
-                
             }
-            
         }
         .eraseToAnyPublisher()
     }
     
+    // MARK: - R: Fetch Posts 함수 (ViewModel)
     @MainActor
     func loadPosts(challengeID: String, userID: String){
         posts.removeAll()
@@ -227,10 +220,10 @@ final class HabitManager: ObservableObject{
         self.fetchPosts(challengeID: challengeID, userID: userID)
             .sink { (completion) in
                 switch completion{
-                    case .failure(_):
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { [weak self] (challenges) in
                 self?.challenges = challenges
@@ -238,7 +231,7 @@ final class HabitManager: ObservableObject{
             .store(in: &cancellables)
     }
     
-    // MARK: - Post Create 함수 (Service)
+    // MARK: - C: Create Post 함수 (Service)
     func createService(_ post: Post) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { promise in
             self.database.collection("Post")
@@ -261,16 +254,75 @@ final class HabitManager: ObservableObject{
         .eraseToAnyPublisher()
     }
     
-    // MARK: - Post Create 함수 (ViewModel)
+    // MARK: - C: Post Create 함수 (ViewModel)
     func createPost(post: Post){
         self.createService(post)
             .sink { (completion) in
                 switch completion{
-                    case .failure(let error):
-                        print(error)
-                        return
-                    case .finished:
-                        return
+                case .failure(_):
+                    return
+                case .finished:
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - U: Post Update 함수 (Service)
+    func updatePostService(_ post: Post) -> AnyPublisher<Void, Error> {
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document(post.id)
+                .updateData(["content" : post.content]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - U: Post Update 함수 (ViewModel)
+    func updatePost(post: Post) {
+        self.updatePostService(post)
+            .sink { (completion) in
+                switch completion{
+                case .failure(_):
+                    return
+                case .finished:
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - D: Post Delete 함수 (Service)
+    func deletePostService(_ post: Post) -> AnyPublisher<Void, Error>{
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document(post.id)
+                .delete() { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - D: Post Delete 함수 (ViewModel)
+    func deletePost(post: Post) {
+        self.deletePostService(post)
+            .sink { (completion) in
+                switch completion {
+                case .failure(_):
+                    return
+                case .finished:
+                    return
                 }
             } receiveValue: { _ in }
             .store(in: &cancellables)

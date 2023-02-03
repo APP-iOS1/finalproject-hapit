@@ -29,8 +29,6 @@ struct LogInView: View {
             ScrollViewReader { proxy in
                 ScrollView(.vertical, showsIndicators: false) {
                     Group {
-                        Spacer()
-                        
                         Image("logo")
                             .resizable()
                             .frame(maxWidth: .infinity, maxHeight: 200)
@@ -146,6 +144,7 @@ struct LogInView: View {
                 .padding(.horizontal, 20)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 

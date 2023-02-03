@@ -135,43 +135,44 @@ struct ToSView: View {
                 
                 // 회원가입 버튼을 누르면 progress view가 나타남
                 // Fallback on earlier versions
-                NavigationLink {
-                    GetStartView(isFullScreen: $isFullScreen, email: $email, pw: $pw)
-                } label: {
-                    if isClicked {
-                        ProgressView()
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(agreeAll ? Color.accentColor : .gray)
+                
+                NavigationLink(destination: GetStartView(isFullScreen: $isFullScreen, email: $email, pw: $pw), isActive: $isActive) {
+                    Button(action: {
+                        isClicked = true
+                        Task {
+                            do {
+                                try await authManager.register(email: email, pw: pw, name: nickName)
+                            } catch {
+                                throw(error)
                             }
-                    } else {
-                        Text("가입하기")
-                            .font(.custom("IMHyemin-Bold", size: 16))
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(agreeAll ? Color.accentColor : .gray)
-                            }
-                    }
-                } // Nav Link
-                .simultaneousGesture(TapGesture().onEnded {
-                    Task {
-                        isClicked.toggle()
-                        
-                        do {
-                            try await authManager.register(email: email, pw: pw, name: nickName)
-                        } catch {
-                            throw(error)
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                            isActive.toggle()
+                        }
+                    }){
+                        if isClicked {
+                            ProgressView()
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(agreeAll ? Color.accentColor : .gray)
+                                }
+                        } else {
+                            Text("가입하기")
+                                .font(.custom("IMHyemin-Bold", size: 16))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(agreeAll ? Color.accentColor : .gray)
+                                }
                         }
                     }
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-                        isActive.toggle()
-                    }
-                })
+                    .disabled(!agreeAll)
+                    .padding(.vertical, 5)
+                }
             }
         }
         .padding(.horizontal, 20)

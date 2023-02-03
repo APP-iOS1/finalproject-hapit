@@ -10,6 +10,7 @@ import SwiftUI
 struct ChallengeCellView: View {
  
     var challenge: Challenge
+    var isCheckedInDevice: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
     
@@ -18,15 +19,15 @@ struct ChallengeCellView: View {
         HStack {
             Button {
                 // firestore에 업데이트 함수 제작 요망
-                //challenge.isChecked.toggle()
+                // challenge.isChecked.toggle()
                 habitManager.loadChallengeIsChecked(challenge: challenge)
+        
             } label: {
                 Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
                     .foregroundColor(challenge.isChecked ? .green : .gray)
                 
             }
-            
             .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
             //checkButton

@@ -12,7 +12,7 @@ struct ContentView: View {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
     @AppStorage("autoLogIn") var isFullScreen: Bool = true
-    
+    @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @State private var index: Int = 0
     //@StateObject var habitManager: HabitManager = HabitManager()
@@ -27,6 +27,9 @@ struct ContentView: View {
                     }
                 }
                 .tag(0)
+                .onAppear{
+                    habitManager.loadChallenge()
+                }
             SocialView()
                .tabItem {
                    VStack{

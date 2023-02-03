@@ -141,6 +141,7 @@ struct LogInView: View {
                         }
                     }
                     .id(bottomID)
+                    .padding(.bottom, 10)
                 }
                 .padding(.horizontal, 20)
             }

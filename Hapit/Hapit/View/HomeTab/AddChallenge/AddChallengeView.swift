@@ -15,8 +15,6 @@ enum ChallengeType: String, CaseIterable{
     case group = "그룹"
 }
 
-let currentUser = Auth.auth().currentUser ?? nil
-
 struct PickerView: View {
     @Binding var currentIndex: Int
         var challengetype: [String] //section (개인/그룹)
@@ -207,9 +205,10 @@ struct AddChallengeView: View {
                                 //HapitPushInfo에도 동일하게 담길 id 이기 때문에 do 밖으로 빼줌
                                 let id = UUID().uuidString
                                 do {
-                                    let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
-                                    
-                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+
+                                    let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    let current = authManager.firebaseAuth                                    
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: current.currentUser?.uid ?? ""))
                                     
                                     dismiss()
                                     
@@ -227,9 +226,10 @@ struct AddChallengeView: View {
                             Task {
                                 do {
                                     let id = UUID().uuidString
-                                    let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
+                                    let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    let current = authManager.firebaseAuth
                                     
-                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: current.currentUser?.uid ?? ""))
                                     
                                     dismiss()
                                     

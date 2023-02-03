@@ -36,7 +36,7 @@
 		67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */; };
 		67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE832987EF2A0020212F /* PhotoPicker.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
-		95397CC2298C8FD400D3B7DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
+		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
@@ -608,7 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95397CC2298C8FD400D3B7DB /* ContentView.swift in Sources */,
+				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,

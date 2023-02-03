@@ -51,7 +51,6 @@ struct RegisterView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    
                     HStack() {
                         StepBar(nowStep: 1)
                             .padding(.leading, -8)

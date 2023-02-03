@@ -167,6 +167,7 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     
+    // MARK: - Post CRUD Part
     // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
     func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
@@ -194,11 +195,8 @@ final class HabitManager: ObservableObject{
                         self.posts.append(post)
                     }
                 }
-                
                 promise(.success(self.challenges))
-                
             }
-            
         }
         .eraseToAnyPublisher()
     }
@@ -280,6 +278,36 @@ final class HabitManager: ObservableObject{
         self.updatePostService(post)
             .sink { (completion) in
                 switch completion{
+                case .failure(_):
+                    return
+                case .finished:
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - D: Post Delete 함수 (Service)
+    func deletePostService(_ post: Post) -> AnyPublisher<Void, Error>{
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document(post.id)
+                .delete() { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - D: Post Delete 함수 (ViewModel)
+    func deletePost(post: Post) {
+        self.deletePostService(post)
+            .sink { (completion) in
+                switch completion {
                 case .failure(_):
                     return
                 case .finished:

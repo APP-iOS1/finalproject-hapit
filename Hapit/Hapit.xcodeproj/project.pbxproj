@@ -33,10 +33,11 @@
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
 		674F28B32977C4C000390405 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B22977C4C000390405 /* Post.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
+		678B5468298CA6A80001F4D9 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B5467298CA6A80001F4D9 /* NotificationManager.swift */; };
 		67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */; };
 		67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE832987EF2A0020212F /* PhotoPicker.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
-		95397CC2298C8FD400D3B7DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E28CC29762C9C009EEB1A /* ContentView.swift */; };
+		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
@@ -125,6 +126,7 @@
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		674F28B22977C4C000390405 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
+		678B5467298CA6A80001F4D9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DedicatedWriteDiaryView.swift; sourceTree = "<group>"; };
 		67A5AE832987EF2A0020212F /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */,
 				C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */,
 				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
+				678B5467298CA6A80001F4D9 /* NotificationManager.swift */,
 			);
 			path = AddChallenge;
 			sourceTree = "<group>";
@@ -608,7 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95397CC2298C8FD400D3B7DB /* ContentView.swift in Sources */,
+				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
@@ -650,6 +653,7 @@
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
+				678B5468298CA6A80001F4D9 /* NotificationManager.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,

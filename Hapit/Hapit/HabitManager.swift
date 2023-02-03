@@ -71,7 +71,7 @@ final class HabitManager: ObservableObject{
                     return
                 }
             } receiveValue: { [weak self] (challenges) in
-                self?.challenges = challenges
+                //self?.challenges = challenges
             }
             .store(in: &cancellables)
     }
@@ -127,30 +127,42 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - Update a Habit
-    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<[Challenge], Error> {
+    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<Void, Error> {
         // Update a Challenge
         // Local
-        let isChecked = challenge.isChecked
-        // TO server
-        var check: Bool{
-            if isChecked == true{
-                return false
-            }else{
-                return true
-            }
-        }
+        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
+        let count = updateCount(count: challenge.count,isChecked: challenge.isChecked)
         
-        return Future<[Challenge], Error> {  promise in
+        return Future<Void, Error> {  promise in
             
             self.database.collection("Challenge")
                 .document(challenge.id)
-                .updateData(["isChecked": check])
-            promise(.success(self.challenges))
+                .updateData(["isChecked": isChecked])
             
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["count": count])
+                //promise(.success())
         }
         .eraseToAnyPublisher()
     }
     
+    func toggleIsChanged(isChecked: Bool) -> Bool{
+        if isChecked == true{
+            return false
+        }else{
+            return true
+        }
+    }
+    
+    func updateCount(count: Int, isChecked: Bool) -> Int{
+        if isChecked == true{
+            return count - 1
+        }else{
+            return count + 1
+        }
+    }
+
     func loadChallengeIsChecked(challenge: Challenge){
         self.updateChallengeIsChecked(challenge: challenge)
             .sink { (completion) in
@@ -160,8 +172,7 @@ final class HabitManager: ObservableObject{
                 case .finished:
                     return
                 }
-            } receiveValue: { [weak self] (challenges) in
-                self?.challenges = challenges
+            } receiveValue: { _ in
             }
             .store(in: &cancellables)
         loadChallenge()

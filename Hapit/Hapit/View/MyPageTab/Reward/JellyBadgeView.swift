@@ -9,6 +9,8 @@ import SwiftUI
 
 struct JellyBadgeView: View {
     @State var jellyImage = "bearBlue"
+    @State var jellyName = "내가 가장\n오래 젤리"
+    
     var body: some View {
         VStack {
             Image(jellyImage)
@@ -20,7 +22,7 @@ struct JellyBadgeView: View {
                     .frame(width: 100, height: 100))
                 .padding(.bottom, 15)
             
-            Text("내가 가장\n오래 젤리")
+            Text(jellyName)
                 .font(.custom("IMHyemin-Regular", size: 12))
                 .frame(width: 60)
         }

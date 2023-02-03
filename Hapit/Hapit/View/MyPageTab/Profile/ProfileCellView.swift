@@ -35,6 +35,13 @@ struct ProfileCellView: View {
                     .padding(30)
                 }.halfSheet(showSheet: $showBearModal) {
                     BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
+                        .environmentObject(authManager)
+                }
+                .onChange(of: isSelectedJelly) { jelly in
+                    Task {
+                        let current = authManager.firebaseAuth
+                        try await authManager.updateUserProfileImage(uid: current.currentUser?.uid ?? "", image: bearArray[jelly % 7])
+                    }
                 }
                 
                 // MARK: 닉네임, 이메일, 닉네임 수정

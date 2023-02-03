@@ -74,7 +74,7 @@ struct AddChallengeView: View {
     @State var temeFriend: [ChallengeFriends] = []
 
     @State private var notiTime = Date()
-    @State private var currentDate = Date()
+//    @State private var currentDate = Date()
     let maximumCount: Int = 12
 
     private var isOverCount: Bool {
@@ -158,25 +158,25 @@ struct AddChallengeView: View {
                     Spacer()
                 default:
                     
-//                    HStack{
-//                       // InvitedMateView(temeFriend: $temeFriend)
-//                        
-//                        NavigationLink {
-//                            // 친구 데이터 전달
-//                         //   ChallengeFriendsView(friends: friends, temeFriend: $temeFriend)
-//                         //       .navigationBarBackButtonHidden(true)
-//                            
-//                        } label: {
-//                            VStack {
-//                                Image(systemName: "plus.circle")
-//                                    .resizable()
-//                                    .frame(width: 50, height: 50)
-//                                Text("함께할 친구 고르기")
-//                                    .font(.custom("IMHyemin-Bold", size: 17))
-//                            }
-//                            
-//                        }.padding(.horizontal,20)
-//                    }
+                    HStack{
+                        InvitedMateView(temeFriend: $temeFriend)
+                        
+                        NavigationLink {
+//                             친구 데이터 전달
+                            ChallengeFriendsView(friends: friends, temeFriend: $temeFriend)
+                                .navigationBarBackButtonHidden(true)
+                            
+                        } label: {
+                            VStack {
+                                Image(systemName: "plus.circle")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                Text("함께할 친구 고르기")
+                                    .font(.custom("IMHyemin-Bold", size: 17))
+                            }
+                            
+                        }.padding(.horizontal,20)
+                    }
                     
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 20))
@@ -322,7 +322,8 @@ struct AddChallengeView: View {
             Task {
                 do {
                     //친구 데이터를 받아오기
-                    let friends = try await authManager.getFriends(uid: currentUser?.uid ?? "")
+                    let current = authManager.firebaseAuth
+                    let friends = try await authManager.getFriends(uid: current.currentUser?.uid ?? "")
                     // 받아온 친구 데이터를 ChallengeFriends 데이터로 받아오기
                     for friend in friends{
                        let nickname = try await authManager.getNickName(uid: friend)

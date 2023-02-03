@@ -15,13 +15,13 @@ struct DedicatedWriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @State var content = ""
     
-    // MARK: 더미 데이터 - 데이터 연동 후 지우기 !!
-    @State private var date = "2023년 01월 20일 금요일"
-    @State private var habitName = "물마시기"
+    var currentChallenge: Challenge
     
     @State private var selectedImage: UIImage?// ios 15
     @State private var isShowingPhotoPicker: Bool = false
     
+    @EnvironmentObject var habitManager: HabitManager
+
     let maxCharacterLength = Int(300)
     
     var body: some View {
@@ -29,9 +29,9 @@ struct DedicatedWriteDiaryView: View {
             ScrollView {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("\(habitName)")
+                        Text("\(currentChallenge.challengeTitle)")
                             .font(.custom("IMHyemin-Bold", size: 22))
-                        Text("\(date)")
+                        Text("\(currentChallenge.createdDate)")
                             .font(.custom("IMHyemin-Regular", size: 17))
                     }
                     Spacer()
@@ -97,8 +97,13 @@ struct DedicatedWriteDiaryView: View {
 //                    } // ToolbarItem
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
+                            habitManager.createPost(post: Post(id: UUID().uuidString,
+                                                               uid: currentChallenge.uid,
+                                                               challengeID: currentChallenge.id,
+                                                               title: currentChallenge.challengeTitle,
+                                                               content: content,
+                                                               createdAt: Date()))
                             dismiss()
-
                         } label: {
                             Image(systemName: "checkmark")
                         }

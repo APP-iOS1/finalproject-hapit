@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = SwiftLint;
+			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
@@ -37,14 +38,14 @@
 /* Begin PBXFileReference section */
 		014E7ACEB90B7A2082168DA5B1DCABF4 /* Pods-Hapit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Hapit-dummy.m"; sourceTree = "<group>"; };
 		20BD9D215057A7B92BB094FB76820D17 /* Pods-Hapit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Hapit-umbrella.h"; sourceTree = "<group>"; };
-		220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Hapit"; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		220A82650258B8A20A361FEFADCDC8B2 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
 		585D963CC36D879276ECEF29C67DE6C4 /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
 		5F099B48C1ADC196B4E0491D553B7A40 /* Pods-Hapit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-acknowledgements.plist"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7463924BFFAB3E4DCE4FB3BD46ECFD47 /* Pods-Hapit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Hapit-Info.plist"; sourceTree = "<group>"; };
 		7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B196DB913133FFBF0E55E708B4F000DB /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
 		B282FB9EDB5DF9C0E27DE953EDC96934 /* Pods-Hapit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Hapit.modulemap"; sourceTree = "<group>"; };
 		C10D469E15B0A87CC84488BD1F360BEB /* Pods-Hapit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Hapit-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -81,7 +82,7 @@
 		14A598009D0C3366CFE54B8837992B69 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */,
+				220A82650258B8A20A361FEFADCDC8B2 /* Pods_Hapit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,7 +137,6 @@
 			children = (
 				7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */,
 			);
-			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -178,7 +178,7 @@
 			);
 			name = "Pods-Hapit";
 			productName = Pods_Hapit;
-			productReference = 220A82650258B8A20A361FEFADCDC8B2 /* Pods-Hapit */;
+			productReference = 220A82650258B8A20A361FEFADCDC8B2 /* Pods_Hapit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */

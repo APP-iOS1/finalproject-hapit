@@ -29,7 +29,7 @@ class AuthManager: ObservableObject {
         }
     }
     
-    //MARK: - 로그아웃
+//    //MARK: - 로그아웃
     final func logOut() async throws {
         do {
             try await firebaseAuth.signOut()

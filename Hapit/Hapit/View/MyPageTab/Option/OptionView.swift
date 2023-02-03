@@ -57,7 +57,7 @@ struct OptionView: View {
             Button {
                 Task {
                     do {
-                        try await authManager.logOut()
+//                        try await authManager.logOut()
                         isFullScreen = true
                         index = 0
                     } catch {

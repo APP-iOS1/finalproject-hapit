@@ -43,6 +43,7 @@ struct ContentView: View {
                     }
                 }
                 .tag(2)
+            
         }.fullScreenCover(isPresented: $isFullScreen) {
             LogInView(isFullScreen: $isFullScreen)
         }

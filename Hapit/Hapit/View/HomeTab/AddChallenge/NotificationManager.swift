@@ -6,10 +6,14 @@
 //
 
 import UserNotifications
-import UIKit
+import SwiftUI
+import RealmSwift
+
+// hapitPushInfo에 저장된 챌린지 id를 가져와서 HapitManger 안에 있는 객체 배열 안의 해당 id의 객체에 접근해서 Title가져오기
 
 class NotificationManager: ObservableObject {
-    
+    @EnvironmentObject var habitManager: HabitManager
+
     let notiCenter = UNUserNotificationCenter.current()
     
     @Published var isAlarmOn: Bool = false
@@ -19,15 +23,20 @@ class NotificationManager: ObservableObject {
             // Set Notification with the Time
             removeAllNotifications()
             addNotification(with: notiTime)
+            // , challengeId: <#String#>
         }
     }
     
     @Published var isAlertOccurred: Bool = false
     
-    
     // time에 반복되는 노티피케이션 추가
+    // , challengeId: String
     func addNotification(with time: Date) {
         let content = UNMutableNotificationContent()
+        
+//        for i in habitManager.challenges {
+//
+//        }
         
         content.title = "챌린지명"
         content.subtitle = "챌린지를 수행할 시간이에요!"
@@ -36,7 +45,6 @@ class NotificationManager: ObservableObject {
         let dateComponent = Calendar.current.dateComponents([.hour, .minute], from: time)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
         
         notiCenter.add(request)
     }

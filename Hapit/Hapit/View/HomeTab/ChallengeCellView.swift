@@ -20,8 +20,8 @@ struct ChallengeCellView: View {
             Button {
                 // firestore에 업데이트 함수 제작 요망
                 // challenge.isChecked.toggle()
-                // habitManager.loadChallengeIsChecked(challenge: challenge)
-                habitManager.updateIsChecked(challenge: challenge)
+                habitManager.loadChallengeIsChecked(challenge: challenge)
+        
             } label: {
                 Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)

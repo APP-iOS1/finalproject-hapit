@@ -126,16 +126,6 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     
-    func updateIsChecked(challenge: Challenge){
-        
-        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
-        
-        database.collection("Challenge")
-            .document(challenge.id)
-            .updateData(["isChecked": isChecked])
-        loadChallenge()
-    }
-    
     // MARK: - Update a Habit
     @MainActor
     func updateChallenge() async{
@@ -147,6 +137,7 @@ final class HabitManager: ObservableObject{
         // Update a Challenge
         // Local
         let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
+        let count = updateCount(count: challenge.count,isChecked: challenge.isChecked)
         
         return Future<Void, Error> {  promise in
             
@@ -154,6 +145,9 @@ final class HabitManager: ObservableObject{
                 .document(challenge.id)
                 .updateData(["isChecked": isChecked])
             
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["count": count])
                 //promise(.success())
         }
         .eraseToAnyPublisher()
@@ -167,6 +161,14 @@ final class HabitManager: ObservableObject{
         }
     }
     
+    func updateCount(count: Int, isChecked: Bool) -> Int{
+        if isChecked == true{
+            return count - 1
+        }else{
+            return count + 1
+        }
+    }
+
     func loadChallengeIsChecked(challenge: Challenge){
         self.updateChallengeIsChecked(challenge: challenge)
             .sink { (completion) in

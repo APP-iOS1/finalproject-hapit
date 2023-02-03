@@ -160,4 +160,36 @@ class AuthManager: ObservableObject {
             throw(error)
         }
     }
+    
+    // MARK: - 사용 중인 유저의 친구목록을 반환
+    final func getFriends(uid: String) async throws -> [String] {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpFriends: [String] = docData?["friends"] as? [String] ?? [""]
+            
+            return tmpFriends
+        } catch {
+            throw(error)
+        }
+    }
+
+    // MARK: - 사용 중인 유저의 프로필사진을 반환
+    final func getPorImage(uid: String) async throws -> String {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpPorImage: String = docData?["friends"] as? String ?? ""
+            
+            return tmpPorImage
+        } catch {
+            throw(error)
+        }
+    }
 }

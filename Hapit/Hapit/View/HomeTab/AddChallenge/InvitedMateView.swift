@@ -9,25 +9,23 @@ import SwiftUI
 
 struct InvitedMateView: View {
     @EnvironmentObject var habitManager: HabitManager
-    @Binding var tempMate: [ChallengeMate]
+    @Binding var temeFriend: [ChallengeFriends]
+
     var body: some View {
         ScrollView(.horizontal){
             HStack{
-                ForEach(habitManager.seletedMate){ mate in
-                    if mate.isChecked{
-                        AddChallengeMateProfileView(mateName: mate.name)
+                ForEach(habitManager.seletedFriends){ friend in
+                    if friend.isChecked{
+                        AddChallengeMateProfileView(mateName: friend.name, proImage: friend.proImage)
                     }
                 }
             }.padding(.horizontal,20)
         }
-//        .onChange(of: tempMate) { newValue in
-//            habitManager.seletedMate = []
-//        }
     }
 }
 
 struct InvitedMateView_Previews: PreviewProvider {
     static var previews: some View {
-        InvitedMateView( tempMate: .constant([ChallengeMate(name: "dddd")]))
+        InvitedMateView( temeFriend: .constant([ChallengeFriends(uid: "",proImage: "",name: "dddd")]))
     }
 }

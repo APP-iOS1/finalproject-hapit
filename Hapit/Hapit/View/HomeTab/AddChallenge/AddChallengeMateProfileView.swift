@@ -13,6 +13,7 @@ struct AddChallengeMateProfileView: View {
   //  @State var selectedMate: SelectedMateArray
     let bearArray = Jelly.allCases.map({"\($0)"})
     var mateName: String
+    var proImage: String
     
     var body: some View {
                    

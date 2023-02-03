@@ -61,12 +61,11 @@ struct AddChallengeView: View {
     //PickerView(challengetype,currentIndex)
     @State var challengetype: [String] = ["개인", "그룹"]
     @State var currentIndex: Int = 0
-    
-    //user의 친구 더미 데이터
-    @State var myFriends: [String] = ["김예원", "박민주", "신현준", "릴루","이지", "로로", "가나","dddd", "보리", "가지", "아이스크림"]
-    
-    // 친구 리스트 임시저장
-    @State var tempMate: [ChallengeMate] = []
+
+    //user의 친구 더미 데이터 (디비에서 받아오기)
+    @State var friends: [ChallengeFriends] = []
+    //친구 리스트 임시 저장
+    @State var temeFriend: [ChallengeFriends] = []
     
     // MARK: - Body
     var body: some View {
@@ -123,25 +122,25 @@ struct AddChallengeView: View {
                     Spacer()
                 default:
                     
-                    HStack{
-                        InvitedMateView(tempMate: $tempMate)
-                        
-                        NavigationLink {
-                            // 친구 데이터 전달
-                            AddChallengeMateView(myFriendArray: myFriends,tempMate: $tempMate)
-                                .navigationBarBackButtonHidden(true)
-                            
-                        } label: {
-                            VStack {
-                                Image(systemName: "plus.circle")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                Text("친구초대")
-                                    .font(.custom("IMHyemin-Bold", size: 17))
-                            }
-                            
-                        }.padding(.horizontal,20)
-                    }
+//                    HStack{
+//                       // InvitedMateView(temeFriend: $temeFriend)
+//                        
+//                        NavigationLink {
+//                            // 친구 데이터 전달
+//                         //   ChallengeFriendsView(friends: friends, temeFriend: $temeFriend)
+//                         //       .navigationBarBackButtonHidden(true)
+//                            
+//                        } label: {
+//                            VStack {
+//                                Image(systemName: "plus.circle")
+//                                    .resizable()
+//                                    .frame(width: 50, height: 50)
+//                                Text("함께할 친구 고르기")
+//                                    .font(.custom("IMHyemin-Bold", size: 17))
+//                            }
+//                            
+//                        }.padding(.horizontal,20)
+//                    }
                     
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 17))
@@ -228,12 +227,13 @@ struct AddChallengeView: View {
                                 do {
                                     let id = UUID().uuidString
                                     let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
-                                    
+                                   
+                                    //친구들 uid 저장
                                      var mateArray: [String] = []
                                 
-                                     for mate in habitManager.seletedMate {
-                                        let mateName = mate.name
-                                        mateArray.append(mateName)
+                                     for friend in habitManager.seletedFriends {
+                                         let uid = friend.uid
+                                        mateArray.append(uid)
                                      }
                                     habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
                                     
@@ -251,7 +251,26 @@ struct AddChallengeView: View {
                     } // label
                 } // ToolbarItem
             } // toolbar
-        } // NavigationStack
+        }
+        .onAppear {
+            Task {
+                do {
+                    //친구 데이터를 받아오기
+                    let friends = try await authManager.getFriends(uid: currentUser?.uid ?? "")
+                    // 받아온 친구 데이터를 ChallengeFriends 데이터로 받아오기
+                    for friend in friends{
+                       let nickname = try await authManager.getNickName(uid: friend)
+                        let proImage = try await authManager.getPorImage(uid: friend)
+                        self.friends.append(ChallengeFriends(uid: friend, proImage: proImage, name: nickname))
+                        print("\(self.friends)")
+                    }
+                    
+                } catch {
+                    throw(error)
+                }
+            }
+        }
+        // NavigationView
     } // Body
 }
 

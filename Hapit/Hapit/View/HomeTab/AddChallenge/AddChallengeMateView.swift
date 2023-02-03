@@ -7,29 +7,39 @@
 
 import SwiftUI
 
+// 모델로 빼기
+struct ChallengeMate: Identifiable,Hashable{
+    var id = UUID()
+    var isChecked: Bool = false
+    var name: String
+
+ }
+
 struct AddChallengeMateView: View {
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
-    // 더미 데이터 현재 친구 리스트가 없음
-    @State var mateArray: [String] = ["김예원", "박민주", "신현준", "릴루","이지", "로로", "가나", "릴루","ddd", "보리", "가지", "아이스크림"]
+    
+    // 더미 데이터 - 현재 친구 리스트 addChallengeView에서 바인딩
+    var myFriendArray: [String]
+    //친구리스트 임시저장
+    @Binding var tempMate: [ChallengeMate]
+    
     var body: some View {
-        
-        ZStack{
-            VStack{
-                ScrollView{
-                    VStack{
-                        ForEach(mateArray,id: \.self) { mate in
-                            // 선택된 셀의 값을 저장하는 변수가 필요
-                            AddChallengeMateCellView(mateName: mate)
-                        }
-                    }
+        ZStack {
+            Spacer()
+            VStack {
+                ScrollView {
+                        ForEach(myFriendArray, id: \.self) { myFriend in
+                            let mate = ChallengeMate(name: myFriend)
+                            AddChallengeMateCellView(tempMate: $tempMate, selectedMateArray: mate)
+                        }.padding(.top,20)
                 }
-                .padding(.top,20)
-                
                 Button{
-                    // 초대하기를 누르면 선택된 셀에 해당하는 친구들을 groupArray에 넣을 수 있음
+                    habitManager.seletedMate = tempMate
+                    tempMate = []
+                    dismiss()
                 }label: {
                     Text("초대하기")
                         .foregroundColor(.white)
@@ -37,9 +47,10 @@ struct AddChallengeMateView: View {
                         .background {
                             RoundedRectangle(cornerRadius: 10)
                         }
-                }
-            }
-        }.background(Color("BackgroundColor").ignoresSafeArea())
+                }//Button
+            }//VStack
+        }//ZStack
+            .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle("친구초대")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -57,6 +68,6 @@ struct AddChallengeMateView: View {
 
 struct AddChallengeMateView_Previews: PreviewProvider {
     static var previews: some View {
-        AddChallengeMateView()
+        AddChallengeMateView(myFriendArray: ["dummy","dummy1","dummy2","dummy3","dummy4"], tempMate: .constant([ChallengeMate(name: "dummy")]))
     }
 }

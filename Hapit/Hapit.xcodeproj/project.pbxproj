@@ -59,6 +59,7 @@
 		C90766FB2989F8D000D646F7 /* AddChallengeMateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */; };
 		C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */; };
 		C90766FF2989F8FF00D646F7 /* AddChallengeMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */; };
+		C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9076701298AD81F00D646F7 /* InvitedMateView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
@@ -149,6 +150,7 @@
 		C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateCellView.swift; sourceTree = "<group>"; };
 		C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateProfileView.swift; sourceTree = "<group>"; };
 		C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateView.swift; sourceTree = "<group>"; };
+		C9076701298AD81F00D646F7 /* InvitedMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedMateView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				C90766FE2989F8FF00D646F7 /* AddChallengeMateView.swift */,
 				C90766FA2989F8D000D646F7 /* AddChallengeMateCellView.swift */,
 				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
+				C9076701298AD81F00D646F7 /* InvitedMateView.swift */,
 			);
 			path = AddChallenge;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
+				C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */,
 				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,

@@ -27,6 +27,11 @@ final class HabitManager: ObservableObject{
     @Published var habits: [Challenge] = []
     @Published var posts: [Post] = []
     
+    // 최종으로 받아오는 초대할 친구 목록
+    @Published var seletedMate: [ChallengeMate] = []
+
+    
+    
     let database = Firestore.firestore()
     
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{

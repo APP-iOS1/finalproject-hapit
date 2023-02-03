@@ -8,72 +8,76 @@
 import SwiftUI
 import FirebaseAuth
 
-//MARK: - ChallengeType(개인/그룹)
-enum ChallengeType: String, CaseIterable{
-    case personal = "개인"
-    case group = "그룹"
-}
-
+//MARK: - 현재 사용자
 let currentUser = Auth.auth().currentUser ?? nil
 
+//MARK: - PickerView(세그먼트 Picker)
+///challengetype : [String]
+///currentIndex: Int
+///font: UIFont
 struct PickerView: View {
-    @Binding var currentIndex: Int
-        var challengetype: [String] //section (개인/그룹)
-    let font = UIFont(name: "IMHyemin-Bold", size: 13)
+    @Binding var currentIndex: Int // 현재 picker의 위치
+    var challengetype: [String] //section (개인/그룹)
+    let font = UIFont(name: "IMHyemin-Bold", size: 13) // 폰트 적용
     
-        init(_ currentIndex: Binding<Int>, challengetype: [String]) {
-            self._currentIndex = currentIndex
-            self.challengetype = challengetype
-            UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color("AccentColor"))
-            UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-            UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemGray], for: .normal)
-            
-            UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: font!], for: .normal)
-            
-        }
+    init(_ currentIndex: Binding<Int>, challengetype: [String]) {
+        self._currentIndex = currentIndex
+        self.challengetype = challengetype
         
-        var body: some View {
-            VStack {
-                Picker("", selection: $currentIndex) {
-                    ForEach(challengetype.indices, id: \.self) { index in
-                        Text(challengetype[index])
-                            .font(.custom("IMHyemin-Bold", size: 17))
-                            .tag(index)
-                            
-                    }
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color("AccentColor")) //선택된 picker의 TintColor 설정
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected) //선택된 picker의 글자색 설정
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemGray], for: .normal) //선택되지 않은 picker의 글자색 설정
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: font!], for: .normal) //picker의 폰트 설정
+        
+    }
+    
+    var body: some View {
+        VStack {
+            Picker("", selection: $currentIndex) {
+                ForEach(challengetype.indices, id: \.self) { index in
+                    Text(challengetype[index])
+                        .font(.custom("IMHyemin-Bold", size: 17))
+                        .tag(index)
                 }
-                .pickerStyle(.segmented)
-            }
-            .padding()
-        }
-}
+            }//Picker
+            .pickerStyle(.segmented)
+        }//VStack
+        .padding()
+    }
+}//PickerView
 
 // MARK: - AddChallengeView Struct
 struct AddChallengeView: View {
-    // MARK: - Property Wrappers
+    // MARK: Property Wrappers
     @Environment(\.dismiss) private var dismiss
-
+    
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     
     @State private var challengeTitle: String = ""
+    //FIXME: 알람데이터 저장이 필요
     @State private var isAlarmOn: Bool = false
+    @State private var currentDate = Date()
+    //PickerView(challengetype,currentIndex)
     @State var challengetype: [String] = ["개인", "그룹"]
     @State var currentIndex: Int = 0
-
-    @State private var currentDate = Date()
+    
+    //user의 친구 더미 데이터
+    @State var myFriends: [String] = ["김예원", "박민주", "신현준", "릴루","이지", "로로", "가나","dddd", "보리", "가지", "아이스크림"]
+    
+    // 친구 리스트 임시저장
+    @State var tempMate: [ChallengeMate] = []
     
     // MARK: - Body
     var body: some View {
         NavigationView {
             VStack(spacing: 15) {
-                
                 PickerView($currentIndex, challengetype: challengetype)
                 switch(currentIndex){
                 case 0:
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 17))
-                        
+                    
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                         .background(Color("CellColor"))
                         .cornerRadius(15)
@@ -118,11 +122,15 @@ struct AddChallengeView: View {
                     
                     Spacer()
                 default:
+                    
                     HStack{
+                        InvitedMateView(tempMate: $tempMate)
+                        
                         NavigationLink {
-                            AddChallengeMateView()
+                            // 친구 데이터 전달
+                            AddChallengeMateView(myFriendArray: myFriends,tempMate: $tempMate)
                                 .navigationBarBackButtonHidden(true)
-
+                            
                         } label: {
                             VStack {
                                 Image(systemName: "plus.circle")
@@ -131,13 +139,13 @@ struct AddChallengeView: View {
                                 Text("친구초대")
                                     .font(.custom("IMHyemin-Bold", size: 17))
                             }
-
+                            
                         }.padding(.horizontal,20)
                     }
-
+                    
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 17))
-                        
+                    
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                         .background(Color("CellColor"))
                         .cornerRadius(15)
@@ -148,7 +156,7 @@ struct AddChallengeView: View {
                     HStack {
                         Text("알림")
                             .font(.custom("IMHyemin-Regular", size: 17))
-
+                            
                         Spacer()
                         if isAlarmOn {
                             DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
@@ -221,7 +229,13 @@ struct AddChallengeView: View {
                                     let id = UUID().uuidString
                                     let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
                                     
-                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                     var mateArray: [String] = []
+                                
+                                     for mate in habitManager.seletedMate {
+                                        let mateName = mate.name
+                                        mateArray.append(mateName)
+                                     }
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
                                     
                                     dismiss()
                                     

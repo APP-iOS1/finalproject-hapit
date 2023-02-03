@@ -19,6 +19,7 @@
 		3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */; };
 		3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */; };
 		3C5CAA8F298B9C5C007C3EAA /* HabitSegmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8E298B9C5B007C3EAA /* HabitSegmentDetailView.swift */; };
+		3C5CAA93298C8CA4007C3EAA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */; };
 		3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */; };
 		3C811D1D2987628A0005539A /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1C2987628A0005539A /* CustomDatePickerView.swift */; };
 		3C811D1F29877AF10005539A /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1E29877AF10005539A /* DateValue.swift */; };
@@ -108,6 +109,7 @@
 		3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalAnchorView.swift; sourceTree = "<group>"; };
 		3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManager.swift; sourceTree = "<group>"; };
 		3C5CAA8E298B9C5B007C3EAA /* HabitSegmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitSegmentDetailView.swift; sourceTree = "<group>"; };
+		3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalendarView.swift; sourceTree = "<group>"; };
 		3C811D1C2987628A0005539A /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
 		3C811D1E29877AF10005539A /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */,
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
 				F40B9A512988CDFB00385014 /* Extension */,
 				C54829822987503B000C743E /* Font */,
@@ -535,6 +538,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C5CAA93298C8CA4007C3EAA /* GoogleService-Info.plist in Resources */,
 				F49E28D229762CA0009EEB1A /* Preview Assets.xcassets in Resources */,
 				F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */,
 				C5706F1529878730001300F5 /* .swiftlint.yml in Resources */,

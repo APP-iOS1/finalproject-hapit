@@ -12,6 +12,9 @@
 		369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D429777E72004CB739 /* DiaryViewModel.swift */; };
 		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
 		36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 36D4A14B2989EEBD0048309A /* FirebaseMessaging */; };
+		36E1440B298CE7720044E666 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 36E1440A298CE7720044E666 /* Realm */; };
+		36E1440D298CE7720044E666 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 36E1440C298CE7720044E666 /* RealmSwift */; };
+		36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E1440E298CE7F20044E666 /* HapitPushInfo.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3C39C493298985D400603149 /* PostModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C39C492298985D400603149 /* PostModalView.swift */; };
 		3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA85298A376E007C3EAA /* Modal.swift */; };
@@ -33,6 +36,7 @@
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
 		674F28B32977C4C000390405 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B22977C4C000390405 /* Post.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
+		678B5468298CA6A80001F4D9 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B5467298CA6A80001F4D9 /* NotificationManager.swift */; };
 		67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */; };
 		67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE832987EF2A0020212F /* PhotoPicker.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
@@ -40,6 +44,7 @@
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
+		C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5212475298CC1A400235921 /* UserInfoManager.swift */; };
 		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
 		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
 		C5706F1529878730001300F5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C5706F1429878730001300F5 /* .swiftlint.yml */; };
@@ -102,6 +107,7 @@
 		368AE79D29878DA7005088E5 /* DiaryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModalView.swift; sourceTree = "<group>"; };
 		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
+		36E1440E298CE7F20044E666 /* HapitPushInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitPushInfo.swift; sourceTree = "<group>"; };
 		36F8EC022988D6F70029B701 /* Hapit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hapit.entitlements; sourceTree = "<group>"; };
 		36F8EC082988EBB80029B701 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		36F8EC0A2988EBB80029B701 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -127,10 +133,12 @@
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		674F28B22977C4C000390405 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
+		678B5467298CA6A80001F4D9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DedicatedWriteDiaryView.swift; sourceTree = "<group>"; };
 		67A5AE832987EF2A0020212F /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5212475298CC1A400235921 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
 		C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
 		C5482987298751EC000C743E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -182,9 +190,11 @@
 				3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */,
 				95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */,
 				36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */,
+				36E1440D298CE7720044E666 /* RealmSwift in Frameworks */,
 				95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */,
 				F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */,
 				7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */,
+				36E1440B298CE7720044E666 /* Realm in Frameworks */,
 				F40B9A50298827E400385014 /* KakaoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +317,7 @@
 				C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */,
 				C9076701298AD81F00D646F7 /* InvitedMateView.swift */,
 				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
+				678B5467298CA6A80001F4D9 /* NotificationManager.swift */,
 			);
 			path = AddChallenge;
 			sourceTree = "<group>";
@@ -405,6 +416,7 @@
 				F47BA150297A697F000222EE /* User.swift */,
 				3C5CAA85298A376E007C3EAA /* Modal.swift */,
 				C958D15E298CD8690057AA5B /* ChallengeFriends.swift */,
+				36E1440E298CE7F20044E666 /* HapitPushInfo.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -427,6 +439,7 @@
 				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
+				C5212475298CC1A400235921 /* UserInfoManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -507,6 +520,8 @@
 				F47BA153297A75EE000222EE /* FirebaseAuth */,
 				F40B9A4F298827E400385014 /* KakaoSDK */,
 				36D4A14B2989EEBD0048309A /* FirebaseMessaging */,
+				36E1440A298CE7720044E666 /* Realm */,
+				36E1440C298CE7720044E666 /* RealmSwift */,
 			);
 			productName = Hapit;
 			productReference = F49E28C729762C9C009EEB1A /* Hapit.app */;
@@ -540,6 +555,7 @@
 				3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
 				95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				36E14409298CE7720044E666 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = F49E28C829762C9C009EEB1A /* Products */;
 			projectDirPath = "";
@@ -616,6 +632,7 @@
 			files = (
 				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
+				C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
 				3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */,
@@ -657,6 +674,7 @@
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
+				678B5468298CA6A80001F4D9 /* NotificationManager.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
@@ -671,6 +689,7 @@
 				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
+				36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */,
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
 				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
@@ -802,7 +821,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -822,6 +841,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -835,7 +855,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -855,6 +875,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -885,6 +906,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		36E14409298CE7720044E666 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		3CE9DFF229792FFB00E76147 /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/KazaiMazai/SwiftySegmentedPicker.git";
@@ -916,6 +945,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		36E1440A298CE7720044E666 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 36E14409298CE7720044E666 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		36E1440C298CE7720044E666 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 36E14409298CE7720044E666 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		3CE9DFF329792FFB00E76147 /* SegmentedPicker */ = {
 			isa = XCSwiftPackageProductDependency;

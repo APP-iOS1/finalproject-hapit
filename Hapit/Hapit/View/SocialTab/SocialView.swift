@@ -6,25 +6,12 @@
 //
 
 import SwiftUI
-
-struct User1: Identifiable {
-    let id: String
-    let name: String
-    let profileImage: String
-    let challenge: [String]
-}
-
-struct Users1 {
-    let users = [
-        User1(id: "1",name: "박민주", profileImage: "bearBlue",challenge: ["물마시기","물마시기2","물마시기3"]),
-        User1(id: "2",name: "김예원", profileImage: "bearGreen",challenge: ["아침먹기","아침먹기2","아침먹기3"]),
-        User1(id: "3",name: "추현호", profileImage: "bearYellow",challenge: ["점심먹기3"]),
-        User1(id: "4",name: "이주희", profileImage: "bearPurple",challenge: ["저녁먹기2","저녁먹기3"])
-    ]
-}
+import FirebaseAuth
 
 struct SocialView: View {
-    let friends = Users1()
+    @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var authManager: AuthManager
+    @State private var friends: [User] = [User]()
 
     var body: some View {
         NavigationView {
@@ -39,11 +26,11 @@ struct SocialView: View {
 
                     ScrollView{
                         // TODO: 본인 표시 해줘야함 -> 셀 색깔로?
-                        ForEach(friends.users) { user in
+                        ForEach(friends, id: \.self) { friend in
                             NavigationLink {
                                 FriendChallengeView()
                             } label: {
-                                FriendsRow(friends: user)
+                                FriendsRow(friend: friend, index: 0)
                             }
                         }
                     }
@@ -65,30 +52,41 @@ struct SocialView: View {
                 }
             }.background(Color("BackgroundColor"))
         }
+        .task {
+            do {
+                let current = authManager.firebaseAuth
+                try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
+                self.friends = userInfoManager.friendArray
+//                print(friends)
+            } catch {
+                
+            }
+        }
     }
 }
 struct FriendsRow: View {
-    let friends: User1
-
+    let friend: User
+    var index: Int
+    
     var body: some View {
         HStack {
             // TODO: 노션에 적어놓은 랭킹대로 정렬
-            Text("\(friends.id)")
+            Text("\(index)")
                 .font(.largeTitle)
                 .foregroundColor(Color("AccentColor"))
 
-            Image(friends.profileImage)
+            Image(friend.proImage)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .padding(10)
 
-            // TODO: 습관 개수???
+            // TODO: 진행중인 챌린지 개수 가져오기
             VStack(alignment: .leading, spacing: 3) {
-                Text(friends.name)
+                Text(friend.name)
                     .foregroundColor(.black)
                     .bold()
-                Text("현재 챌린지 개수: \(friends.challenge.count)")
+                Text("현재 챌린지 개수: 2")
                     .font(.subheadline)
                     .foregroundColor(Color(.systemGray))
             }
@@ -98,7 +96,6 @@ struct FriendsRow: View {
         .background(.white)
         .cornerRadius(20)
         .padding(.horizontal)
-
     }
 }
 

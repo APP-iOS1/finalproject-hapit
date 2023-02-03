@@ -7,14 +7,17 @@
 
 import SwiftUI
 import FirebaseAuth
+import RealmSwift
 
 //MARK: - 현재 사용자
-let currentUser = Auth.auth().currentUser ?? nil
+// 사용하는 건지 아닌지 모르겠어요 : yw
+//let currentUser = Auth.auth().currentUser ?? nil
 
 //MARK: - PickerView(세그먼트 Picker)
 ///challengetype : [String]
 ///currentIndex: Int
 ///font: UIFont
+
 struct PickerView: View {
     @Binding var currentIndex: Int // 현재 picker의 위치
     var challengetype: [String] //section (개인/그룹)
@@ -53,8 +56,11 @@ struct AddChallengeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
+    @ObservedObject private var notiManager = NotificationManager()
+    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
     
     @State private var challengeTitle: String = ""
+
     //FIXME: 알람데이터 저장이 필요
     @State private var isAlarmOn: Bool = false
     @State private var currentDate = Date()
@@ -66,7 +72,15 @@ struct AddChallengeView: View {
     @State var friends: [ChallengeFriends] = []
     //친구 리스트 임시 저장
     @State var temeFriend: [ChallengeFriends] = []
-    
+
+    @State private var notiTime = Date()
+    @State private var currentDate = Date()
+    let maximumCount: Int = 12
+
+    private var isOverCount: Bool {
+        challengeTitle.count > maximumCount
+    }
+
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -75,21 +89,43 @@ struct AddChallengeView: View {
                 switch(currentIndex){
                 case 0:
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 17))
-                    
+                        .font(.custom("IMHyemin-Bold", size: 20))
+
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                         .background(Color("CellColor"))
                         .cornerRadius(15)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(isOverCount ? .red : .clear)
+                            )
                         .padding(.horizontal, 20)
+                        .shakeEffect(trigger: isOverCount)
+                        .onChange(of: challengeTitle, perform: {
+                                  challengeTitle = String($0.prefix(maximumCount+1))
+                                })
                     
+                    HStack {
+                      if isOverCount {
+                        Text("최대 \(maximumCount) 글자 까지만 입력해주세요.")
+                          .foregroundColor(.red)
+                          .font(.custom("IMHyemin-Regular", size: 13))
+                      }
+                    
+                      Spacer()
+
+                      Text("\(challengeTitle.count) / \(maximumCount)")
+                        .foregroundColor(isOverCount ? .red : .gray)
+                        .font(.custom("IMHyemin-Regular", size: 17))
+                    }
+                    .padding([.leading, .trailing], 20)
                     HStack {
                         Text("알림")
                             .font(.custom("IMHyemin-Regular", size: 17))
                         Spacer()
-                        if isAlarmOn {
-                            DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
+                        if notiManager.isAlarmOn {
+                            DatePicker("", selection: $notiManager.notiTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                         }
                         else{
@@ -99,7 +135,7 @@ struct AddChallengeView: View {
                                 .multilineTextAlignment(.trailing)
                             
                         }
-                        Toggle("", isOn: $isAlarmOn)
+                        Toggle("", isOn: $notiManager.isAlarmOn)
                             .labelsHidden()
                             .padding(.leading, 5)
                         
@@ -143,22 +179,42 @@ struct AddChallengeView: View {
 //                    }
                     
                     TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 17))
-                    
+                        .font(.custom("IMHyemin-Bold", size: 20))
+
                         .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
                         .background(Color("CellColor"))
                         .cornerRadius(15)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(isOverCount ? .red : .clear)
+                            )
                         .padding(.horizontal, 20)
+                        .shakeEffect(trigger: isOverCount)
+                    
+                    HStack {
+                      if isOverCount {
+                        Text("최대 \(maximumCount) 글자 까지만 입력해주세요.")
+                          .foregroundColor(.red)
+                          .font(.custom("IMHyemin-Regular", size: 17))
+                      }
+
+                      Spacer()
+
+                      Text("\(challengeTitle.count) / \(maximumCount)")
+                        .foregroundColor(isOverCount ? .red : .gray)
+                    }
+                    .font(.custom("IMHyemin-Regular", size: 17))
+                    .padding()
                     
                     HStack {
                         Text("알림")
                             .font(.custom("IMHyemin-Regular", size: 17))
                             
                         Spacer()
-                        if isAlarmOn {
-                            DatePicker("", selection: $currentDate, displayedComponents: .hourAndMinute)
+                        if notiManager.isAlarmOn {
+                            DatePicker("", selection: $notiManager.notiTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                         }
                         else{
@@ -168,7 +224,7 @@ struct AddChallengeView: View {
                                 .multilineTextAlignment(.trailing)
                             
                         }
-                        Toggle("", isOn: $isAlarmOn)
+                        Toggle("", isOn: $notiManager.isAlarmOn)
                             .labelsHidden()
                             .padding(.leading, 5)
                         
@@ -209,11 +265,13 @@ struct AddChallengeView: View {
                         switch(currentIndex){
                         case 0:
                             Task {
+                                //HapitPushInfo에도 동일하게 담길 id 이기 때문에 do 밖으로 빼줌
+                                let id = UUID().uuidString
                                 do {
-                                    let id = UUID().uuidString
-                                    let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
-                                    
-                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+
+                                    let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    let current = authManager.firebaseAuth                                    
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: [], challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: current.currentUser?.uid ?? ""))
                                     
                                     dismiss()
                                     
@@ -221,12 +279,18 @@ struct AddChallengeView: View {
                                 } catch {
                                     throw(error)
                                 }
+                                if notiManager.isAlarmOn {
+                                    let newPushInfo = HapitPushInfo(pushID: id, pushTime: notiManager.notiTime, isChallengeAlarmOn: true)
+                                    $hapitPushInfo.append(newPushInfo)
+                                }
                             }
+                            
                         default:
                             Task {
                                 do {
                                     let id = UUID().uuidString
-                                    let creator = try await authManager.getNickName(uid: currentUser?.uid ?? "")
+                                    let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    let current = authManager.firebaseAuth
                                    
                                     //친구들 uid 저장
                                      var mateArray: [String] = []
@@ -234,8 +298,9 @@ struct AddChallengeView: View {
                                      for friend in habitManager.seletedFriends {
                                          let uid = friend.uid
                                         mateArray.append(uid)
-                                     }
-                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: currentUser?.uid ?? ""))
+                                     }                    
+                                    
+                                    habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: current.currentUser?.uid ?? ""))
                                     
                                     dismiss()
                                     
@@ -249,6 +314,7 @@ struct AddChallengeView: View {
                     } label: {
                         Image(systemName: "checkmark")
                     } // label
+                    .disabled((isOverCount == true) || (challengeTitle.count < 1) )
                 } // ToolbarItem
             } // toolbar
         }

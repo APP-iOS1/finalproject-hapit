@@ -11,14 +11,15 @@ struct ContentView: View {
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
-
-    @State private var isFullScreen = true
+    @AppStorage("autoLogIn") var isFullScreen: Bool = true
+    @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @State private var index: Int = 0
     //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
-        TabView(selection: $index){
+        TabView(selection: $index) {
             HomeView()
                 .tabItem {
                     VStack{
@@ -27,6 +28,10 @@ struct ContentView: View {
                     }
                 }
                 .tag(0)
+                .onAppear{
+                    habitManager.loadChallenge()
+                }
+
             SocialView()
                .tabItem {
                    VStack{
@@ -35,7 +40,9 @@ struct ContentView: View {
                    }
                 }
                .tag(1)
-            MyPageView(isFullScreen: $isFullScreen, index: $index).environmentObject(authManager)
+                 
+            MyPageView(isFullScreen: $isFullScreen, index: $index)
+                .environmentObject(authManager)
                 .tabItem {
                     VStack{
                         Image(systemName: "person.circle.fill")
@@ -43,6 +50,7 @@ struct ContentView: View {
                     }
                 }
                 .tag(2)
+            
         }.fullScreenCover(isPresented: $isFullScreen) {
             LogInView(isFullScreen: $isFullScreen)
         }

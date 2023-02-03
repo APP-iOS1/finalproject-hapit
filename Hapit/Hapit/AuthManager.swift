@@ -13,7 +13,7 @@ import FirebaseCore
 
 @MainActor
 class AuthManager: ObservableObject {
-    var userInfoStore: User = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [])
+    var userInfoStore: User = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: [])
     
     @Published var isLoggedin = false
     
@@ -29,7 +29,7 @@ class AuthManager: ObservableObject {
         }
     }
     
-    //MARK: - 로그아웃
+//    //MARK: - 로그아웃
     final func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
@@ -56,7 +56,7 @@ class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "", badge: [])
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [])
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -75,8 +75,9 @@ class AuthManager: ObservableObject {
                     "email" : userInfo.email,
                     "pw" : userInfo.pw,
                     "name" : userInfo.name,
-                    "image" : userInfo.proImage,
-                    "badge" : userInfo.badge
+                    "proImage" : userInfo.proImage,
+                    "badge" : userInfo.badge,
+                    "friends" : userInfo.friends
                 ])
         } catch {
             throw(error)
@@ -118,7 +119,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 닉네임을 반환
-    final func getNickName(uid: String) async -> String {
+    final func getNickName(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -129,26 +130,23 @@ class AuthManager: ObservableObject {
             
             return tmpName
         } catch {
-            print(error.localizedDescription)
-            return "error"
+            throw(error)
         }
     }
     
     // MARK: - 사용 중인 유저의 닉네임을 수정
-    final func updateUserNickName(uid: String, nickname: String) async -> Void {
+    final func updateUserNickName(uid: String, nickname: String) async throws -> Void {
         //        guard let currentUserId else { return }
         let path = database.collection("User")
         do {
             try await path.document(uid).updateData(["name": nickname])
         } catch {
-#if DEBUG
-            print("\(error.localizedDescription)")
-#endif
+            throw(error)
         }
     }
     
     // MARK: - 사용 중인 유저의 이메일을 반환
-    final func getEmail(uid: String) async -> String {
+    final func getEmail(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -159,8 +157,50 @@ class AuthManager: ObservableObject {
             
             return tmpEmail
         } catch {
-            print(error.localizedDescription)
-            return "error"
+            throw(error)
+        }
+    }
+    
+    // MARK: - 사용 중인 유저의 친구목록을 반환
+    final func getFriends(uid: String) async throws -> [String] {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpFriends: [String] = docData?["friends"] as? [String] ?? [""]
+            
+            return tmpFriends
+        } catch {
+            throw(error)
+        }
+    }
+
+    // MARK: - 사용 중인 유저의 프로필사진을 반환
+    final func getPorImage(uid: String) async throws -> String {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpPorImage: String = docData?["friends"] as? String ?? ""
+            
+            return tmpPorImage
+       } catch {
+            throw(error)
+        }
+    }
+
+    // MARK: - 사용 중인 유저의 프로필 사진을 수정
+    final func updateUserProfileImage(uid: String, image: String) async throws -> Void {
+        //        guard let currentUserId else { return }
+        let path = database.collection("User")
+        do {
+            try await path.document(uid).updateData(["proImage": image])
+        } catch {
+            throw(error)
         }
     }
 }

@@ -31,7 +31,6 @@ struct FriendChallengeView: View {
     }
 }
 
-
 struct FriendChallengeView_Previews: PreviewProvider {
     static var previews: some View {
         FriendChallengeView()

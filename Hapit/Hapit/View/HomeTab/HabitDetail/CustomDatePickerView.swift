@@ -19,6 +19,12 @@ struct CustomDatePickerView: View {
     @EnvironmentObject var modalManager: ModalManager
     @Binding var showsCustomAlert: Bool
     
+    @State var showsCreatePostView: Bool = false
+    
+    // Login
+    @EnvironmentObject var authManager: AuthManager
+    
+    
     var body: some View {
         ZStack{
             VStack(spacing: 35){
@@ -91,6 +97,7 @@ struct CustomDatePickerView: View {
                                         postsForModalView.append(post)
                                     }
                                 }
+                                print(postsForModalView)
                                 self.modalManager.openModal()
                             }
                             .animation(.easeIn, value: currentDate)
@@ -109,14 +116,15 @@ struct CustomDatePickerView: View {
                 
             }
             .onAppear{
-                habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
+                // MARK: 포스트 불러오기
+                //habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
+                habitManager.loadPosts(challengeID: currentChallenge.id, userID: authManager.firebaseAuth.currentUser?.uid ?? "")
                 currentDate = Date()
+                
                 self.modalManager.newModal(position: .closed) {
-                    //PostModalView(postsForModalView: $postsForModalView)
-                    Image("modaldummy")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 500)
+                    
+                    PostModalView(postsForModalView: $postsForModalView)
+                    
                 }
             }
             .toolbar {
@@ -129,8 +137,21 @@ struct CustomDatePickerView: View {
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        // 챌린지 삭제
+                        showsCreatePostView.toggle()
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .foregroundColor(.gray)
+                    } // label
+                } // ToolbarItem
             }
             
+        }
+        .sheet(isPresented: $showsCreatePostView) {
+            DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
     }
     //MARK: Methods

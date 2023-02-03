@@ -35,6 +35,13 @@ struct ProfileCellView: View {
                     .padding(30)
                 }.halfSheet(showSheet: $showBearModal) {
                     BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
+                        .environmentObject(authManager)
+                }
+                .onChange(of: isSelectedJelly) { jelly in
+                    Task {
+                        let current = authManager.firebaseAuth
+                        try await authManager.updateUserProfileImage(uid: current.currentUser?.uid ?? "", image: bearArray[jelly % 7])
+                    }
                 }
                 
                 // MARK: 닉네임, 이메일, 닉네임 수정
@@ -77,10 +84,18 @@ struct ProfileCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)
-        .task {
-            nickName = await authManager.getNickName(uid: currentUser?.uid ?? "")
-            email = await authManager.getEmail(uid: currentUser?.uid ?? "")
-            
+        .onAppear {
+            Task {
+                do {
+                    let current = authManager.firebaseAuth
+                    let nameTarget = try await authManager.getNickName(uid: current.currentUser?.uid ?? "")
+                    let emailTarget = try await authManager.getEmail(uid: current.currentUser?.uid ?? "")
+                    nickName = nameTarget
+                    email = emailTarget
+                } catch {
+                    throw(error)
+                }
+            }
         }
     }
 }

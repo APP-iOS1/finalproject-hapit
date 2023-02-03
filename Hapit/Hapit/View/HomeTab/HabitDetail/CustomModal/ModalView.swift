@@ -20,10 +20,10 @@ struct ModalView: View {
     }
     
     var body: some View {
-        
+        // 30 이상 드래그 해야지 인식하는 drag 제스쳐
         let drag = DragGesture(minimumDistance: 30)
             .updating($dragState) { drag, state, transaction in
-                state = .dragging(translation:  drag.translation)
+                state = .dragging(translation: drag.translation)
         }
         .onChanged {
             self.modal.dragOffset = $0.translation
@@ -35,11 +35,7 @@ struct ModalView: View {
                 Color.black
                     .opacity(self.modal.position != .closed ? 0.3 : 0)
                     .ignoresSafeArea()
-//                    .onTapGesture {
-//                        self.modal.position = .closed
-//                }
                 ZStack(alignment: .top) {
-                    Color("Default")
                     self.modal.content
                         .frame(height: UIScreen.main.bounds.height - (self.modal.position.offsetFromTop() + geometry.safeAreaInsets.top + self.dragState.translation.height))
                 }
@@ -51,7 +47,7 @@ struct ModalView: View {
         }
         .edgesIgnoringSafeArea(.top)
     }
-    
+    //MARK: 드래그가 끝나면 호출되는 함수
     private func onDragEnded(drag: DragGesture.Value) {
         
         // Setting stops
@@ -61,7 +57,7 @@ struct ModalView: View {
         // Nearest position for drawer to snap to.
         let nearestPosition: ModalState
         
-        // Determining the direction of the drag gesture and its distance from the top
+        // drag gesture의 방향을 결정해주는 변수
         let dragDirection = drag.predictedEndLocation.y - drag.location.y
         let offsetFromTopOfView = modal.position.offsetFromTop() + drag.translation.height
         

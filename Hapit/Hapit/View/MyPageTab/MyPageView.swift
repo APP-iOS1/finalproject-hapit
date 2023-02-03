@@ -25,9 +25,9 @@ struct MyPageView: View {
                         NavigationLink {
                             OptionView(isFullScreen: $isFullScreen, index: $index)
                         } label: {
-                            Image(systemName: "gearshape.fill")
+                            Image(systemName: "gearshape")
                                 .resizable()
-                                .frame(width: 30,height: 30)
+                                .frame(width: 25, height: 25)
                         }
                     }
                 }
@@ -37,8 +37,8 @@ struct MyPageView: View {
     }
 }
 
-struct MyPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyPageView(isFullScreen: .constant(true), index: .constant(0))
-    }
-}
+//struct MyPageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyPageView(isFullScreen: .constant(true), index: .constant(0))
+//    }
+//}

@@ -21,24 +21,25 @@ struct CustomAlert: View {
       Text(title)
         .foregroundColor(.black)
         .font(.custom("IMHyemin-Bold", size: 20))
-        .bold()
+        .padding(.top, 30)
 
       Text(message)
-            .font(.custom("IMHyemin-Regular", size: 17))
+        .font(.custom("IMHyemin-Regular", size: 17))
         .foregroundColor(.black)
-        .multilineTextAlignment(.leading)
-        .frame(minHeight: 60)
+        .multilineTextAlignment(.center)
+        .padding(.bottom, 50)
 
       HStack {
         if withCancelButton {
           Button(action: { isPresented = false }) {
             Text("취소")
                   .font(.custom("IMHyemin-Bold", size: 17))
-              .padding(.vertical, 6)
+              .padding(.vertical, 10)
+              .foregroundColor(.gray)
               .frame(maxWidth: .infinity)
           }
-          .buttonStyle(.bordered)
-          .tint(.accentColor)
+//          .buttonStyle(.bordered)
+//          .tint(.accentColor)
         }
 
         Button {
@@ -47,23 +48,25 @@ struct CustomAlert: View {
         } label: {
           Text(primaryButtonTitle)
                 .font(.custom("IMHyemin-Bold", size: 17))
-            .padding(.vertical, 6)
+            .padding(.vertical, 10)
+            .foregroundColor(.accentColor)
             .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.borderedProminent)
-        .tint(.accentColor)
+//        .buttonStyle(.borderedProminent)
+//        .tint(.accentColor)
       }
     }
-    .padding(16)
-    .frame(width: 300)
+    .padding(15)
     .background(
-      RoundedRectangle(cornerRadius: 12)
-        .stroke(Color.accentColor.opacity(0.5))
-        .background(
-          RoundedRectangle(cornerRadius: 12)
-            .fill(.white)
-        )
+      RoundedRectangle(cornerRadius: 20)
+        .fill(Color("CellColor"))
+//        .stroke(Color.accentColor.opacity(0.5))
+//        .background(
+//          RoundedRectangle(cornerRadius: 20)
+//            .fill(Color("CellColor"))
+//        )
     )
+    .padding(.horizontal, 40)
   }
 }
 
@@ -73,7 +76,7 @@ struct CustomAlert_Previews: PreviewProvider {
       isPresented: .constant(true),
       title: "타이틀",
       message: "메시지메시지메시지~",
-      primaryButtonTitle: "확인!",
+      primaryButtonTitle: "확인",
       primaryAction: { },
       withCancelButton: true)
   }

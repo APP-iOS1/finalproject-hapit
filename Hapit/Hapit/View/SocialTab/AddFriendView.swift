@@ -13,8 +13,7 @@ var currentFriendsData: [String] = []
 
 struct AddFriendView: View {
     @State var searchText: String = ""
-    
-    
+        
     var data = dummyFriendsData.map(DummyFriendData.init)
     var filteredData: [DummyFriendData] {
         if searchText.isEmpty{
@@ -24,7 +23,6 @@ struct AddFriendView: View {
         }
 
     }
-    
     
     var body: some View {
         NavigationView{
@@ -45,7 +43,6 @@ struct DummyFriendData: Identifiable{
     var name: String
     var id: String { self.name }
 }
-
 
 struct AddFriendView_Previews: PreviewProvider {
     static var previews: some View {

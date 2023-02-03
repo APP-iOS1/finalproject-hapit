@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct User1: Identifiable {
-    let id : String
+    let id: String
     let name: String
     let profileImage: String
     let challenge: [String]
 }
-
-
 
 struct Users1 {
     let users = [
@@ -103,7 +101,6 @@ struct FriendsRow: View {
 
     }
 }
-
 
 struct SocialView_Previews: PreviewProvider {
     static var previews: some View {

@@ -111,12 +111,11 @@ struct CustomDatePickerView: View {
             .onAppear{
                 habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
                 currentDate = Date()
+                
                 self.modalManager.newModal(position: .closed) {
-                    //PostModalView(postsForModalView: $postsForModalView)
-                    Image("modaldummy")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 500)
+                    
+                    PostModalView(postsForModalView: $postsForModalView)
+                    
                 }
             }
             .toolbar {

@@ -92,4 +92,3 @@ struct CustomAlertModifier_Previews: PreviewProvider {
         )
     }
 }
-

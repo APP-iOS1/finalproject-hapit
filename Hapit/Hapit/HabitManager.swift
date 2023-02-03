@@ -225,4 +225,42 @@ final class HabitManager: ObservableObject{
             }
             .store(in: &cancellables)
     }
+    
+    // MARK: - Post Create 함수 (Service)
+    func createService(_ post: Post) -> AnyPublisher<Void, Error> {
+        Future<Void, Error> { promise in
+            self.database.collection("Post")
+                .document()
+                .setData([
+                    "id": post.id,
+                    "uid": post.uid,
+                    "challengeID": post.challengeID,
+                    "title": post.title,
+                    "content": post.content,
+                    "createdAt": post.createdAt
+                ]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Post Create 함수 (ViewModel)
+    func createPost(post: Post){
+        self.createService(post)
+            .sink { (completion) in
+                switch completion{
+                    case .failure(let error):
+                        print(error)
+                        return
+                    case .finished:
+                        return
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
+    }
 }

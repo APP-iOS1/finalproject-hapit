@@ -151,7 +151,7 @@ struct CustomDatePickerView: View {
             
         }
         .sheet(isPresented: $showsCreatePostView) {
-            DedicatedWriteDiaryView()
+            DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
     }
     //MARK: Methods

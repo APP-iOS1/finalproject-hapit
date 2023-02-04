@@ -56,7 +56,7 @@ extension AppDelegate: MessagingDelegate {
 @main
 struct HapitApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    private var modalManager: ModalManager = ModalManager()
+    //private var modalManager: ModalManager = ModalManager()
     
     var body: some Scene {
         WindowGroup {
@@ -64,7 +64,7 @@ struct HapitApp: App {
                 .environmentObject(HabitManager())
                 .environmentObject(AuthManager())
                 .environmentObject(UserInfoManager())
-                .environmentObject(modalManager)
+                .environmentObject(ModalManager())
                 .onAppear{
                     print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)
                     UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")

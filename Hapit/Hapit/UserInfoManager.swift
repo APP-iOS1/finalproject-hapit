@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 typealias SnapshotDataType = [String: Any]
 
+@MainActor
 final class UserInfoManager: ObservableObject {
     @Published var friendArray = [User]()
     @Published var currentUserInfo: User? = nil

@@ -22,6 +22,7 @@ struct LocalNotificationSettingView: View {
         VStack {
             if lnManager.isGranted { // 기기에서 알림 허용이 되어있는 경우
                 DatePicker("", selection: $scheduleDate, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
                 Button("Calendar Notification") {
                     Task {
                     let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: scheduleDate)
@@ -35,7 +36,7 @@ struct LocalNotificationSettingView: View {
                 }
                 .buttonStyle(.bordered)
             } else { // 기기에서 알림 허용이 되어있지 않은 경우
-                Button("Enable Notifications") {
+                Button("저장하기") {
                     lnManager.openSettings()
                 }
                 .buttonStyle(.borderedProminent)

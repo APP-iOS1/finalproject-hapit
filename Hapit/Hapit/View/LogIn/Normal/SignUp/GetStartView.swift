@@ -51,7 +51,6 @@ struct GetStartView: View {
                         authManager.isLoggedin = true
                         isFullScreen = false
                     } catch {
-                        authManager.isLoggedin = false
                         throw(error)
                     }
                 }

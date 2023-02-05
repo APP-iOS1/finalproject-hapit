@@ -12,6 +12,7 @@ struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @Binding var isFullScreen: Bool
     @Binding var index: Int
+    @Binding var flag: Int
     @State private var isLogoutAlert = false
     
     var body: some View {
@@ -71,13 +72,10 @@ struct OptionView: View {
                          message: "로그아웃하시겠습니까?",
                          primaryButtonTitle: "로그아웃",
                          primaryAction: { Task {
-                do {
-                    isFullScreen = true
-                    index = 0
-                    try await authManager.logOut()
-                } catch {
-                    throw(error)
-                }
+                            isFullScreen = true
+                            flag = 1
+                            authManager.isLoggedin = false
+                            index = 0
             } },
                          withCancelButton: true)
             
@@ -87,13 +85,10 @@ struct OptionView: View {
                 Button {
                     // TODO: 회원탈퇴 기능 추가
                     Task {
-                        do {
-                            try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                            isFullScreen = true
-                            index = 0
-                        } catch {
-                            throw(error)
-                        }
+                        isFullScreen = true
+                        flag = 2
+                        authManager.isLoggedin = false
+                        index = 0
                     }
                 } label: {
                     Text("회원탈퇴")
@@ -117,6 +112,6 @@ struct ListTextModifier: ViewModifier {
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(isFullScreen: .constant(true), index: .constant(0))
+        OptionView(isFullScreen: .constant(true), index: .constant(0), flag: .constant(1))
     }
 }

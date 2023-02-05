@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ProfileCellView: View {
     @EnvironmentObject var authManager: AuthManager
-    @State private var nickName = ""
-    @State private var email = ""
+    @Binding var nickName: String
+    @Binding var email: String
     @State private var isSelectedJelly = 0
     @State private var showBearModal = false
     @State private var showNicknameModal = false
@@ -74,7 +74,7 @@ struct ProfileCellView: View {
                     }
                     .halfSheet(showSheet: $showNicknameModal) {
                         NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
-                            //.environmentObject(authManager)
+                            .environmentObject(authManager)
                     }
                 }
             }
@@ -84,19 +84,6 @@ struct ProfileCellView: View {
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)
-        .onAppear {
-            Task {
-                do {
-                    let current = authManager.firebaseAuth
-                    let nameTarget = try await authManager.getNickName(uid: current.currentUser?.uid ?? "")
-                    let emailTarget = try await authManager.getEmail(uid: current.currentUser?.uid ?? "")
-                    nickName = nameTarget
-                    email = emailTarget
-                } catch {
-                    throw(error)
-                }
-            }
-        }
     }
 }
 
@@ -169,6 +156,6 @@ class CustomHostingController<Content: View>: UIHostingController<Content> {
 
 struct ProfileCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileCellView()
+        ProfileCellView(nickName: .constant(""), email: .constant(""))
     }
 }

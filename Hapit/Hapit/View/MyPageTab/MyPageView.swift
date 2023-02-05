@@ -11,23 +11,38 @@ struct MyPageView: View {
     @EnvironmentObject var authManager: AuthManager
     @Binding var isFullScreen: Bool
     @Binding var index: Int
+    @Binding var flag: Int
+    @State private var nickName = ""
+    @State private var email = ""
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    ProfileCellView()
-                        //.environmentObject(authManager)
+                    ProfileCellView(nickName: $nickName, email: $email)
                     RewardView()
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
                         NavigationLink {
-                            OptionView(isFullScreen: $isFullScreen, index: $index)
+                            OptionView(isFullScreen: $isFullScreen, index: $index, flag: $flag)
                         } label: {
                             Image(systemName: "gearshape")
                                 .resizable()
                                 .frame(width: 25, height: 25)
+                        }
+                    }
+                }
+                .onAppear {
+                    Task {
+                        do {
+                            let current = authManager.firebaseAuth.currentUser?.uid ?? ""
+                            let nameTarget = try await authManager.getNickName(uid: current)
+                            let emailTarget = try await authManager.getEmail(uid: current)
+                            nickName = nameTarget
+                            email = emailTarget
+                        } catch {
+                            throw(error)
                         }
                     }
                 }

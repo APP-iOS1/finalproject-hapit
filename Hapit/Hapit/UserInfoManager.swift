@@ -51,7 +51,7 @@ final class UserInfoManager: ObservableObject {
     }
     
     // MARK: 현재 유저의 친구 정보 불러오기
-    func getFriendArray(currentUserUid: String?) async throws -> Void {
+    func getFriendArray(currentUserUid: String) async throws -> Void {
         //guard let currentUserUid else { return }
 //        var uid = ""
 //
@@ -61,7 +61,7 @@ final class UserInfoManager: ObservableObject {
 //            uid = currentUserUid ?? "Impossible"
 //        }
 
-        let target = try await database.collection("User").document("0TNE4PomiUdal8xg4wsUevBmUNt1").getDocument()
+        let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
         let friendList: [String] = docData?["friends"] as? [String] ?? [""]
         

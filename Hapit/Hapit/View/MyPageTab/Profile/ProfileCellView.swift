@@ -74,7 +74,7 @@ struct ProfileCellView: View {
                     }
                     .halfSheet(showSheet: $showNicknameModal) {
                         NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
-                            .environmentObject(authManager)
+                            //.environmentObject(authManager)
                     }
                 }
             }

@@ -56,7 +56,7 @@ struct AddChallengeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
-    @ObservedObject private var notiManager = NotificationManager()
+
     @ObservedResults(HapitPushInfo.self) var hapitPushInfo
     
     @State private var challengeTitle: String = ""
@@ -124,8 +124,8 @@ struct AddChallengeView: View {
                         Text("알림")
                             .font(.custom("IMHyemin-Regular", size: 17))
                         Spacer()
-                        if notiManager.isAlarmOn {
-                            DatePicker("", selection: $notiManager.notiTime, displayedComponents: .hourAndMinute)
+                        if isAlarmOn {
+                            DatePicker("", selection: $notiTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                         }
                         else{
@@ -135,7 +135,7 @@ struct AddChallengeView: View {
                                 .multilineTextAlignment(.trailing)
                             
                         }
-                        Toggle("", isOn: $notiManager.isAlarmOn)
+                        Toggle("", isOn: $isAlarmOn)
                             .labelsHidden()
                             .padding(.leading, 5)
                         
@@ -213,8 +213,8 @@ struct AddChallengeView: View {
                             .font(.custom("IMHyemin-Regular", size: 17))
                             
                         Spacer()
-                        if notiManager.isAlarmOn {
-                            DatePicker("", selection: $notiManager.notiTime, displayedComponents: .hourAndMinute)
+                        if isAlarmOn {
+                            DatePicker("", selection: $notiTime, displayedComponents: .hourAndMinute)
                                 .labelsHidden()
                         }
                         else{
@@ -224,7 +224,7 @@ struct AddChallengeView: View {
                                 .multilineTextAlignment(.trailing)
                             
                         }
-                        Toggle("", isOn: $notiManager.isAlarmOn)
+                        Toggle("", isOn: $isAlarmOn)
                             .labelsHidden()
                             .padding(.leading, 5)
                         
@@ -279,10 +279,7 @@ struct AddChallengeView: View {
                                 } catch {
                                     throw(error)
                                 }
-                                if notiManager.isAlarmOn {
-                                    let newPushInfo = HapitPushInfo(pushID: id, pushTime: notiManager.notiTime, isChallengeAlarmOn: true)
-                                    $hapitPushInfo.append(newPushInfo)
-                                }
+                                
                             }
                             
                         default:

@@ -41,7 +41,7 @@ struct HabitSegmentDetailView: View {
                                     //HabitDetailView(calendar: Calendar.current)
                                     ZStack{
                                         ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
+                                            CustomDatePickerView(currentDate: $date, showsCustomAlert: $showsCustomAlert, currentChallenge: challenge)
                                         }
                                         .padding()
                                         .background(Color("BackgroundColor"))

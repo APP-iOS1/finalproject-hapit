@@ -8,6 +8,20 @@
 import SwiftUI
 
 struct LogInView: View {
+    
+//    init() {
+//        let coloredAppearance = UINavigationBarAppearance()
+//        coloredAppearance.configureWithTransparentBackground()
+//        coloredAppearance.backgroundColor = UIColor(Color.accentColor)
+////        coloredAppearance.titleTextAttributes = [.foregroundColor: titleColor ?? .white]
+////        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: titleColor ?? .white]
+//        
+//        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
+//        UINavigationBar.appearance().standardAppearance = coloredAppearance
+//        UINavigationBar.appearance().compactAppearance = coloredAppearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+//    }
+    
     @Namespace var topID
     @Namespace var bottomID
     
@@ -25,6 +39,7 @@ struct LogInView: View {
     @EnvironmentObject var habitManager: HabitManager
     
     var body: some View {
+        
         NavigationView {
             ScrollViewReader { proxy in
                 ScrollView(.vertical, showsIndicators: false) {
@@ -123,7 +138,7 @@ struct LogInView: View {
                         HStack {
                             Text("아직 회원이 아니신가요?")
                                 .font(.custom("IMHyemin-Bold", size: 16))
-                            NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)) {
+                            NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
                                 Text("회원가입")
                                     .font(.custom("IMHyemin-Bold", size: 16))
                             }
@@ -144,13 +159,13 @@ struct LogInView: View {
                 .padding(.horizontal, 20)
             }
         }
-        .navigationBarHidden(true)
+        .navigationBarColor(backgroundColor: .clear)
     }
 }
 
-struct LogInView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogInView(isFullScreen: .constant(true))
-            .environmentObject(AuthManager())
-    }
-}
+//struct LogInView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LogInView(isFullScreen: .constant(true))
+//            .environmentObject(AuthManager())
+//    }
+//}

@@ -48,14 +48,15 @@ struct RegisterView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                VStack() {
                     HStack() {
                         StepBar(nowStep: 1)
                             .padding(.leading, -8)
                         Spacer()
                     }
+                    .frame(height: 50)
+                    .padding(.top, 120)
                     
                     // MARK: TITLE
                     HStack {
@@ -277,10 +278,8 @@ struct RegisterView: View {
                         }
                         .frame(height: 30)
                     }
-                    Spacer()
                 }
-            }
-            .padding(.top, 30)
+                .padding(.bottom, 60)
                 
             // MARK: 완료 버튼
             // Fallback on earlier versions
@@ -332,7 +331,10 @@ struct RegisterView: View {
             }
             .disabled(isOk())
             .padding(.vertical, 5)
+            .padding(.top, 35)
+            }
         }
+        .ignoresSafeArea()
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .padding(.horizontal, 20)
@@ -342,7 +344,7 @@ struct RegisterView: View {
     func checkEmailType(string: String) -> Bool {
         let emailFormula = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         
-        return  NSPredicate(format: "SELF MATCHES %@", emailFormula).evaluate(with: string)
+        return NSPredicate(format: "SELF MATCHES %@", emailFormula).evaluate(with: string)
     }
     
     //비밀번호 유효성 검증

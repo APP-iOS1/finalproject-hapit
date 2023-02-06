@@ -23,7 +23,8 @@ struct GetStartView: View {
                     .padding(.leading, -8)
                 Spacer()
             }
-            .padding(.top, 30)
+            .frame(height: 40)
+            .padding(.top, -18)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
@@ -71,8 +72,8 @@ struct GetStartView: View {
     }
 }
 
-//struct GetStartView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GetStartView()
-//    }
-//}
+struct GetStartView_Previews: PreviewProvider {
+    static var previews: some View {
+        GetStartView(isFullScreen: .constant(true), email: .constant(""), pw: .constant(""))
+    }
+}

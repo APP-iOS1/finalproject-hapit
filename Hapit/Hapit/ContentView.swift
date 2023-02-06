@@ -17,7 +17,6 @@ struct ContentView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @State private var index: Int = 0
     @State private var flag: Int = 1
-    //@StateObject var habitManager: HabitManager = HabitManager()
 
     var body: some View {
         switch authManager.isLoggedin {
@@ -76,6 +75,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                //.navigationBarColor(backgroundColor: .clear, titleColor: .black)
         }
     }
 }

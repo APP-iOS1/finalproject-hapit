@@ -158,7 +158,7 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView()
+                LocalNotificationSettingView(challengeID: currentChallenge.id)
                     .environmentObject(LocalNotificationManager())
             }
             

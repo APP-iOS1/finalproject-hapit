@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct LocalNotificationSettingView: View {
     
     // MARK: - Property Wrappers
     @EnvironmentObject var lnManager: LocalNotificationManager
     @Environment(\.scenePhase) var scenePhase
-    @State private var scheduleDate = Date()
+    @State private var scheduledDate = Date()
+    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
+    var challengeID: String
     
     // MARK: - Properties
     // ex) var valueName: Bool = true
@@ -21,21 +24,19 @@ struct LocalNotificationSettingView: View {
     var body: some View {
         VStack(alignment: .center) {
             if lnManager.isGranted { // 기기에서 알림 허용이 되어있는 경우
-                DatePicker("", selection: $scheduleDate, displayedComponents: .hourAndMinute)
+                DatePicker("", selection: $scheduledDate, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                 Button("저장하기") {
-                    Task {
-                    let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: scheduleDate)
-                    let localNotification = LocalNotification(identifier: UUID().uuidString,
-                                                              title: "챌린지 이름",
-                                                              body: "챌린지를 수행할 시간이에요!",
-                                                              dateComponents: dateComponents,
-                                                              repeats: false)
-                        await lnManager.schedule(localNotification: localNotification)
-                    }
+                    
+                    //Realm에 푸쉬 정보 저장
+                    
+                    let newLocalPush = HapitPushInfo(pushID: challengeID, pushTime: scheduledDate, isChallengeAlarmOn: true)
+                    $hapitPushInfo.append(newLocalPush)
+                    
                 }
                 .buttonStyle(.bordered)
-            } else { // 기기에서 알림 허용이 되어있지 않은 경우
+            } else {
+                // 기기에서 알림 허용이 되어있지 않은 경우
                 Button("설정에서 알림 허용하기") {
                     lnManager.openSettings()
                 }
@@ -43,22 +44,11 @@ struct LocalNotificationSettingView: View {
             }
             
         }
-        .task {
-            try? await lnManager.requestAuthorization()
-        }
-        .onChange(of: scenePhase) { newValue in
-            if newValue == .active {
-                Task {
-                    await lnManager.getCurrentSettings()
-                    await lnManager.getPendingRequests()
-                }
-            }
-        }
     }
 }
-
-struct LocalNotificationSettingView_Previews: PreviewProvider {
-    static var previews: some View {
-        LocalNotificationSettingView()
-    }
-}
+//
+//struct LocalNotificationSettingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LocalNotificationSettingView()
+//    }
+//}

@@ -26,14 +26,13 @@ struct ToSView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            
-            Spacer().frame(height: 10)
-            
             HStack() {
                 StepBar(nowStep: 2)
                     .padding(.leading, -8)
                 Spacer()
             }
+            .frame(height: 40)
+            .padding(.top, -18)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
@@ -187,8 +186,8 @@ struct ToSView: View {
     }
 }
 
-//struct ToSView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ToSView(isFullScreen: .constant(false))
-//    }
-//}
+struct ToSView_Previews: PreviewProvider {
+    static var previews: some View {
+        ToSView(isFullScreen: .constant(false), email: .constant(""), pw: .constant(""), nickName: .constant(""))
+    }
+}

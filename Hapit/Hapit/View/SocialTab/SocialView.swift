@@ -39,9 +39,9 @@ struct SocialView: View {
                         NavigationLink {
                             EditFriendView(friends: $friends)
                         } label: {
-                            Image(systemName: "person.2.badge.gearshape")
+                            Image(systemName: "person.and.person")
                         }
-                        
+//                        person.2.badge.gearshape
                         NavigationLink {
                             MessageFullscreenView()
                         } label: {

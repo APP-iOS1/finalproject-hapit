@@ -12,6 +12,7 @@ typealias SnapshotDataType = [String: Any]
 
 @MainActor
 final class UserInfoManager: ObservableObject {
+    @Published var userInfoArray = [User]()
     @Published var friendArray = [User]()
     @Published var currentUserInfo: User? = nil
     let database = Firestore.firestore()
@@ -24,17 +25,16 @@ final class UserInfoManager: ObservableObject {
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
-                self.currentUserInfo = makeCurrentUser(with: requestedData)
-                //                guard let currentUserInfo else { return }
+                self.currentUserInfo = makeUser(with: requestedData, id: snapshot.documentID)
             }
         } catch {
             throw(error)
         }
     }
     
-    // MARK: getCurrentUserInfo()에서 사용할 함수
-    private func makeCurrentUser(with requestedData: SnapshotDataType) -> User {
-        let id: String = requestedData["id"] as? String ?? ""
+    // MARK: getCurrentUserInfo(), fetchUserInfo에서 사용할 함수
+    private func makeUser(with requestedData: SnapshotDataType, id: String) -> User {
+        let id: String = id
         let name: String = requestedData["name"] as? String ?? ""
         let email: String = requestedData["email"] as? String ?? ""
         let pw: String = requestedData["pw"] as? String ?? ""
@@ -42,21 +42,28 @@ final class UserInfoManager: ObservableObject {
         let badge: [String] = requestedData["badge"] as? [String] ?? [""]
         let friends: [String] = requestedData["friends"] as? [String] ?? [""]
         
-        let currentUser = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends)
+        let userInfo = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends)
         
-        return currentUser
+        return userInfo
+    }
+    
+    // MARK: 데이터베이스에 있는 전체 유저 정보 불러오기
+    func fetchUserInfo() async -> Void {
+        self.userInfoArray.removeAll()
+        let path = database.collection("User")
+        let _ = path.getDocuments() { (snapshot, error) in
+            if let snapshot {
+                for document in snapshot.documents {
+                    let userData = self.makeUser(with: document.data(), id: document.documentID)
+                    self.userInfoArray.append(userData)
+                }
+            }
+        }
     }
     
     // MARK: 현재 유저의 친구 정보 불러오기
     func getFriendArray(currentUserUid: String?) async throws -> Void {
         guard let currentUserUid else { return }
-        //        var uid = ""
-        //
-        //        if currentUserUid == nil{
-        //            uid = "0TNE4PomiUdal8xg4wsUevBmUNt1"
-        //        }else{
-        //            uid = currentUserUid
-        //        }
         let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
         let friendList: [String] = docData?["friends"] as? [String] ?? [""]
@@ -70,7 +77,7 @@ final class UserInfoManager: ObservableObject {
                 let snapshot = try await target.getDocument()
                 if let requestedData = snapshot.data() {
                     // 친구의 유저 정보 불러와서 배열에 더하기
-                    let friendData = makeCurrentUser(with: requestedData)
+                    let friendData = makeUser(with: requestedData, id: snapshot.documentID)
                     self.friendArray.append(friendData)
                 }
             } catch {
@@ -79,4 +86,25 @@ final class UserInfoManager: ObservableObject {
         }
     }
     
+    // MARK: 친구 삭제
+    // - parameters with: currentUserUid, user.id
+    func removeFriendData(userID: String, friendID: String) async throws -> Void {
+        do {
+            // currentUser의 친구 목록에서 삭제
+            try await database.collection("User")
+                .document(userID)
+                .updateData([
+                    "friends": FieldValue.arrayRemove([friendID])
+                ])
+            
+            // 해당 친구의 친구 목록에서 currentUser 삭제
+            try await database.collection("User")
+                .document(friendID)
+                .updateData([
+                    "friends": FieldValue.arrayRemove([userID])
+                ])
+        } catch {
+            throw(error)
+        }
+    }
 }

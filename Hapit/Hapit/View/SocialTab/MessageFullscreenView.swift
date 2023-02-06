@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MessageFullscreenView: View {
+    
     var body: some View {
-        
         ZStack {
             ScrollView {
                 VStack {

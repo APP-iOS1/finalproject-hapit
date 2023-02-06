@@ -8,54 +8,39 @@
 import SwiftUI
 
 struct EditFriendView: View {
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Binding var friends: [User]
     
     var body: some View {
         ZStack {
             VStack {
+                NavigationLink {
+                    AddFriendView()
+                } label: {
+                    Text("새로운 친구 추가하기")
+                        .font(.custom("IMHyemin-Bold", size: 17))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.accentColor)
+                            .frame(width: 350, height: 50))
+                }
+                
                 ScrollView {
                     // TODO: 본인 표시 해줘야함 -> 셀 색깔로?
                     ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
-                        FriendsRemoveRow(friend: friend)
+                        FriendsEditRow(friend: friend, isRemoveOrAdd: true)
                     }
                 }
             }
         }.background(Color("BackgroundColor"))
-    }
-}
-
-struct FriendsRemoveRow: View {
-    let friend: User
-    
-    var body: some View {
-        HStack {
-            Image(friend.proImage)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
-                .padding(10)
-            
-                Text(friend.name)
-                    .foregroundColor(.black)
-                    .bold()
-            
-            Spacer()
-            
-            Button {
-                
-            } label: {
-                Text("삭제")
-                    .foregroundColor(.white)
-                    .padding(5)
-                    .background(RoundedRectangle(cornerRadius: 5)
-                        .fill(Color.accentColor))
+            .onAppear {
+                Task {
+                    // 여기서 바로 패치안됨;
+                    await userInfoManager.fetchUserInfo()
+                }
             }
-
-        }
-        .padding()
-        .background(.white)
-        .cornerRadius(20)
-        .padding(.horizontal)
     }
 }
 

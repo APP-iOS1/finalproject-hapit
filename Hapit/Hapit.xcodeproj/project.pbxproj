@@ -36,9 +36,11 @@
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
 		674F28B32977C4C000390405 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B22977C4C000390405 /* Post.swift */; };
 		6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6774979329763C29003F9D6C /* AddChallengeView.swift */; };
-		678B5468298CA6A80001F4D9 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B5467298CA6A80001F4D9 /* NotificationManager.swift */; };
 		67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */; };
 		67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5AE832987EF2A0020212F /* PhotoPicker.swift */; };
+		67BD574E298FE3C600DD37B0 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574D298FE3C600DD37B0 /* LocalNotification.swift */; };
+		67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */; };
+		67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
 		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
@@ -133,9 +135,11 @@
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		674F28B22977C4C000390405 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6774979329763C29003F9D6C /* AddChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeView.swift; sourceTree = "<group>"; };
-		678B5467298CA6A80001F4D9 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DedicatedWriteDiaryView.swift; sourceTree = "<group>"; };
 		67A5AE832987EF2A0020212F /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		67BD574D298FE3C600DD37B0 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
+		67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
+		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5212475298CC1A400235921 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 		3C38AFC229763327002D5ADF /* HomeTab */ = {
 			isa = PBXGroup;
 			children = (
+				67BD574C298FE3B300DD37B0 /* Notification */,
 				C90767002989F90900D646F7 /* AddChallenge */,
 				3C38AFBE297632F5002D5ADF /* HomeView.swift */,
 				3C5CAA8E298B9C5B007C3EAA /* HabitSegmentDetailView.swift */,
@@ -250,6 +255,16 @@
 				674A917F2989FFF00050CF0B /* CustomAlertModifier.swift */,
 			);
 			path = CustomAlert;
+			sourceTree = "<group>";
+		};
+		67BD574C298FE3B300DD37B0 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				67BD574D298FE3C600DD37B0 /* LocalNotification.swift */,
+				67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */,
+				67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		89A963E5358D329345D77DC3 /* Pods */ = {
@@ -317,7 +332,6 @@
 				C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */,
 				C9076701298AD81F00D646F7 /* InvitedMateView.swift */,
 				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
-				678B5467298CA6A80001F4D9 /* NotificationManager.swift */,
 			);
 			path = AddChallenge;
 			sourceTree = "<group>";
@@ -630,6 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */,
 				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */,
@@ -645,6 +660,7 @@
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
+				67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
 				3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */,
@@ -674,7 +690,6 @@
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
-				678B5468298CA6A80001F4D9 /* NotificationManager.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
@@ -683,6 +698,7 @@
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
+				67BD574E298FE3C600DD37B0 /* LocalNotification.swift in Sources */,
 				368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
 				C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */,
@@ -821,10 +837,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AU882HP6MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -842,6 +860,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FCMHapit;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -855,10 +874,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AU882HP6MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -876,6 +897,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FCMHapit;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

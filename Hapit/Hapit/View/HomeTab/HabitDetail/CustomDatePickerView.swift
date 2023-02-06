@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomDatePickerView: View {
     
-    var currentChallenge: Challenge
+    //MARK: - Property Wrappers
     @Binding var currentDate: Date
     @State var isShownModalView: Bool = false
     @State var postsForModalView: [Post] = []
@@ -18,13 +18,17 @@ struct CustomDatePickerView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var modalManager: ModalManager
     @Binding var showsCustomAlert: Bool
-    
     @State var showsCreatePostView: Bool = false
+    @State var isAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
+    @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
     
     // Login
     @EnvironmentObject var authManager: AuthManager
     
+    // MARK: - Properties
+    var currentChallenge: Challenge
     
+    // MARK: - Body
     var body: some View {
         ZStack{
             VStack(spacing: 35){
@@ -140,13 +144,22 @@ struct CustomDatePickerView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        // 챌린지 삭제
-                        showsCreatePostView.toggle()
+                        // 챌린지 알림 설정
+                        isAlarmOn.toggle()
+                        if isAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
+                            isShowingAlarmSheet.toggle()
+                        } else { // 앱의 알림 설정을 해제시켜줘야 함.
+                            
+                        }
                     } label: {
-                        Image(systemName: "square.and.pencil")
+                        Image(systemName: isAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
+            } // toolbar
+            .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
+                LocalNotificationSettingView()
+                    .environmentObject(LocalNotificationManager())
             }
             
         }

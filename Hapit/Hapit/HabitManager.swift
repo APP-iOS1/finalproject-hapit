@@ -54,13 +54,21 @@ final class HabitManager: ObservableObject{
                     
                     snapshot.documents.forEach { document in
                         if let challenge = try? document.data(as: Challenge.self){
-                            self.challenges.append(challenge)
+                            self.isChallenge(challenge: challenge)
                         }
                     }
                     promise(.success(self.challenges))
                 }
         }
         .eraseToAnyPublisher()
+    }
+    
+    func isChallenge(challenge: Challenge){
+        if (challenge.count > 65){
+            self.habits.append(challenge)
+        }else{
+            self.challenges.append(challenge)
+        }
     }
     
     func loadChallenge(){
@@ -76,7 +84,7 @@ final class HabitManager: ObservableObject{
                     return
                 }
             } receiveValue: { [weak self] (challenges) in
-                //self?.challenges = challenges
+                self?.challenges = challenges
             }
             .store(in: &cancellables)
     }

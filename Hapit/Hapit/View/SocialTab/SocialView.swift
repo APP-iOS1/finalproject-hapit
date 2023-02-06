@@ -52,16 +52,21 @@ struct SocialView: View {
                 }
             }.background(Color("BackgroundColor"))
         }
-        .task {
+        .onAppear{
             do {
-                let current = authManager.firebaseAuth
-                try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
-                self.friends = userInfoManager.friendArray
-//                print(friends)
+                Task{
+                    let current = authManager.firebaseAuth
+                    try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
+                    
+                    self.friends = userInfoManager.friendArray
+                    
+                }
             } catch {
-                
+               
             }
+            
         }
+
     }
 }
 struct FriendsRow: View {

@@ -14,6 +14,8 @@ import UIKit
 
 class AppDelegate: NSObject, UIApplicationDelegate{
     
+    let gcmMessageIDKey = "gcm.Message_ID"
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
@@ -64,6 +66,7 @@ struct HapitApp: App {
                 .environmentObject(HabitManager())
                 .environmentObject(AuthManager())
                 .environmentObject(UserInfoManager())
+                .environmentObject(LocalNotificationManager())
                 .environmentObject(ModalManager())
                 .onAppear{
                     print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)

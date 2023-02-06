@@ -13,7 +13,6 @@ import FirebaseCore
 
 @MainActor
 class AuthManager: ObservableObject {
-    var userInfoStore: User = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: [])
     
     @Published var isLoggedin = false
     
@@ -29,11 +28,10 @@ class AuthManager: ObservableObject {
         }
     }
     
-//    //MARK: - 로그아웃
+    //MARK: - 로그아웃
     final func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
-            isLoggedin = false
         } catch {
             throw(error)
         }
@@ -121,7 +119,7 @@ class AuthManager: ObservableObject {
     // MARK: - 사용 중인 유저의 닉네임을 반환
     final func getNickName(uid: String) async throws -> String {
         do {
-            let target = try await database.collection("User").document("\(uid)")
+            let target = try await database.collection("User").document(uid)
                 .getDocument()
             
             let docData = target.data()
@@ -136,7 +134,6 @@ class AuthManager: ObservableObject {
     
     // MARK: - 사용 중인 유저의 닉네임을 수정
     final func updateUserNickName(uid: String, nickname: String) async throws -> Void {
-        //        guard let currentUserId else { return }
         let path = database.collection("User")
         do {
             try await path.document(uid).updateData(["name": nickname])
@@ -185,7 +182,7 @@ class AuthManager: ObservableObject {
             
             let docData = target.data()
             
-            let tmpPorImage: String = docData?["friends"] as? String ?? ""
+            let tmpPorImage: String = docData?["proImage"] as? String ?? ""
             
             return tmpPorImage
        } catch {
@@ -195,7 +192,6 @@ class AuthManager: ObservableObject {
 
     // MARK: - 사용 중인 유저의 프로필 사진을 수정
     final func updateUserProfileImage(uid: String, image: String) async throws -> Void {
-        //        guard let currentUserId else { return }
         let path = database.collection("User")
         do {
             try await path.document(uid).updateData(["proImage": image])

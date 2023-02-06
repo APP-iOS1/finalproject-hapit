@@ -24,7 +24,6 @@ struct SocialView: View {
                     }.padding(.trailing, 20)
                     
                     ScrollView {
-                        // TODO: 본인 표시 해줘야함 -> 셀 색깔로?
                         ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
                             NavigationLink {
                                 FriendChallengeView()
@@ -47,8 +46,8 @@ struct SocialView: View {
                             MessageFullscreenView()
                         } label: {
                             // TODO: 나중에 메세지 오면 색깔, 심볼 삼항연산자로 변경
-//                            Image(systemName: "envelope")
-//                                .foregroundColor(.gray)
+                            //                            Image(systemName: "envelope")
+                            //                                .foregroundColor(.gray)
                             Image(systemName: "envelope.badge")
                                 .foregroundColor(Color("AccentColor"))
                         }
@@ -87,14 +86,10 @@ struct FriendsRow: View {
             
             // TODO: 진행중인 챌린지 개수 가져오기
             VStack(alignment: .leading, spacing: 3) {
-                if index == 0 {
-                    Text("(나) ")
-                        .foregroundColor(.black)
-                        .bold()
-                }
-                Text(friend.name)
+                Text(index == 1 ? "(나) \(friend.name)" : "\(friend.name)")
                     .foregroundColor(.black)
                     .bold()
+                
                 Text("현재 챌린지 개수: 2")
                     .font(.subheadline)
                     .foregroundColor(Color(.systemGray))

@@ -14,7 +14,6 @@ typealias SnapshotDataType = [String: Any]
 final class UserInfoManager: ObservableObject {
     @Published var friendArray = [User]()
     @Published var currentUserInfo: User? = nil
-    
     let database = Firestore.firestore()
     
     // MARK: - 현재 접속한 유저의 정보 불러오기
@@ -26,10 +25,7 @@ final class UserInfoManager: ObservableObject {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
                 self.currentUserInfo = makeCurrentUser(with: requestedData)
-                guard let currentUserInfo else { return }
-            }
-            else {
-                dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")
+                //                guard let currentUserInfo else { return }
             }
         } catch {
             throw(error)
@@ -53,16 +49,15 @@ final class UserInfoManager: ObservableObject {
     
     // MARK: 현재 유저의 친구 정보 불러오기
     func getFriendArray(currentUserUid: String?) async throws -> Void {
-        //guard let currentUserUid else { return }
-//        var uid = ""
-//
-//        if currentUserUid == nil{
-//            uid = "0TNE4PomiUdal8xg4wsUevBmUNt1"
-//        }else{
-//            uid = currentUserUid ?? "Impossible"
-//        }
-
-        let target = try await database.collection("User").document("0TNE4PomiUdal8xg4wsUevBmUNt1").getDocument()
+        guard let currentUserUid else { return }
+        //        var uid = ""
+        //
+        //        if currentUserUid == nil{
+        //            uid = "0TNE4PomiUdal8xg4wsUevBmUNt1"
+        //        }else{
+        //            uid = currentUserUid
+        //        }
+        let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
         let friendList: [String] = docData?["friends"] as? [String] ?? [""]
         
@@ -76,11 +71,7 @@ final class UserInfoManager: ObservableObject {
                 if let requestedData = snapshot.data() {
                     // 친구의 유저 정보 불러와서 배열에 더하기
                     let friendData = makeCurrentUser(with: requestedData)
-//                    DispatchQueue.main.async {
-                        self.friendArray.append(friendData)
-//                    }
-                } else {
-                    dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")
+                    self.friendArray.append(friendData)
                 }
             } catch {
                 throw(error)

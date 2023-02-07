@@ -14,6 +14,7 @@ struct OptionView: View {
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
+    @State private var isAlarmOn = false
     
     var body: some View {
         VStack {
@@ -53,6 +54,9 @@ struct OptionView: View {
                         .modifier(ListTextModifier())
                 }.listRowSeparator(.hidden)
                 
+                Toggle("알림", isOn: $isAlarmOn)
+                    .font(.custom("IMHyemin-Bold", size: 16))
+                    .listRowSeparator(.hidden)        
             }
             .listStyle(PlainListStyle())
             

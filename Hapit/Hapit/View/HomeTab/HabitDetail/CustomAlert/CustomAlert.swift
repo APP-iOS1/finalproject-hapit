@@ -38,8 +38,6 @@ struct CustomAlert: View {
               .foregroundColor(.gray)
               .frame(maxWidth: .infinity)
           }
-//          .buttonStyle(.bordered)
-//          .tint(.accentColor)
         }
 
         Button {
@@ -52,20 +50,14 @@ struct CustomAlert: View {
             .foregroundColor(.accentColor)
             .frame(maxWidth: .infinity)
         }
-//        .buttonStyle(.borderedProminent)
-//        .tint(.accentColor)
       }
     }
     .padding(15)
     .background(
       RoundedRectangle(cornerRadius: 20)
         .fill(Color("CellColor"))
-//        .stroke(Color.accentColor.opacity(0.5))
-//        .background(
-//          RoundedRectangle(cornerRadius: 20)
-//            .fill(Color("CellColor"))
-//        )
     )
+    .shadow(radius: 20)
     .padding(.horizontal, 40)
   }
 }

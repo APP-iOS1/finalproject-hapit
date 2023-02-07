@@ -74,6 +74,5 @@ class LocalNotificationManager: NSObject, ObservableObject, UNUserNotificationCe
         try? await notificationCenter.add(request)
         
         await getPendingRequests()
-    }
-    
+    }  
 }

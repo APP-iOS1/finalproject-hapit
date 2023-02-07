@@ -38,7 +38,6 @@ struct AddFriendView: View {
             ScrollView {
                 ForEach(Array(users.enumerated()), id: \.1) { (index, user) in
                     if user.name.contains(friendNameText) {
-
                         FriendsEditRow(friend: user, isRemoveOrAdd: false)
                             .padding(-5)
                     }
@@ -48,7 +47,6 @@ struct AddFriendView: View {
         }
         .onAppear {
             // 여기서는 패치되어있음
-//            print(userInfoManager.userInfoArray)
             users = userInfoManager.userInfoArray
         }
     }

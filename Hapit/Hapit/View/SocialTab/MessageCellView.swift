@@ -42,8 +42,8 @@ struct MessageCellView: View {
                                 try await messageManager.sendMessage(Message(id: UUID().uuidString,
                                                                              messageType: "match",
                                                                              sendTime: Date(),
-                                                                             senderID: msg.receiverID,
-                                                                             receiverID: msg.senderID))
+                                                                             senderID: msg.senderID,
+                                                                             receiverID: msg.receiverID))
                                 try await messageManager.removeMessage(userID: msg.receiverID,
                                                                        messageID: msg.id)
                             }

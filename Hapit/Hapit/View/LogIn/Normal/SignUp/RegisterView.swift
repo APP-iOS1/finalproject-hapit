@@ -17,6 +17,8 @@ struct RegisterView: View {
         return email == emailTmp
     }
     
+    @Binding var isFullScreen: String
+    
     @State private var pw: String = ""
     @State private var showPw: Bool = false
     
@@ -42,20 +44,19 @@ struct RegisterView: View {
     @State private var canGoNext: Bool = false
     @State private var isClicked: Bool = false
     
-    @Binding var isFullScreen: Bool
-    
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         VStack(spacing: 20) {
-
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                VStack() {
                     HStack() {
                         StepBar(nowStep: 1)
                             .padding(.leading, -8)
                         Spacer()
                     }
+                    .frame(height: 50)
+                    .padding(.top, 120)
                     
                     // MARK: TITLE
                     HStack {
@@ -74,6 +75,7 @@ struct RegisterView: View {
                             HStack {
                                 TextField("이메일을 입력해주세요.", text: $email)
                                     .font(.custom("IMHyemin-Regular", size: 16))
+                                    .keyboardType(.emailAddress)
                                     .focused($emailFocusField)
                                     .modifier(ClearTextFieldModifier())
                                     .shakeEffect(trigger: mailDuplicated)
@@ -120,8 +122,8 @@ struct RegisterView: View {
                                 if isSecuredPassword {
                                     SecureField("비밀번호를 입력해주세요.", text: $pw)
                                         .font(.custom("IMHyemin-Regular", size: 16))
-                                        .textContentType(.oneTimeCode)
                                         .textContentType(.newPassword)
+                                        //.textContentType(.oneTimeCode)
                                         .focused($pwFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
@@ -177,8 +179,8 @@ struct RegisterView: View {
                                 if isSecuredCheckPassword {
                                     SecureField("비밀번호를 다시 입력해주세요.", text: $pwCheck)
                                         .font(.custom("IMHyemin-Regular", size: 16))
-                                        .textContentType(.oneTimeCode)
                                         .textContentType(.newPassword)
+                                        .textContentType(.oneTimeCode)
                                         .focused($pwCheckFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
@@ -277,15 +279,13 @@ struct RegisterView: View {
                         }
                         .frame(height: 30)
                     }
-                    Spacer()
                 }
-            }
-            .padding(.top, 30)
+                .padding(.bottom, 90)
                 
             // MARK: 완료 버튼
             // Fallback on earlier versions
             
-            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
+                NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
                 Button(action: {
                     Task {
                         do {
@@ -332,7 +332,10 @@ struct RegisterView: View {
             }
             .disabled(isOk())
             .padding(.vertical, 5)
+            .padding(.top, 75)
+            }
         }
+        .edgesIgnoringSafeArea(.top)
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .padding(.horizontal, 20)
@@ -342,7 +345,7 @@ struct RegisterView: View {
     func checkEmailType(string: String) -> Bool {
         let emailFormula = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         
-        return  NSPredicate(format: "SELF MATCHES %@", emailFormula).evaluate(with: string)
+        return NSPredicate(format: "SELF MATCHES %@", emailFormula).evaluate(with: string)
     }
     
     //비밀번호 유효성 검증
@@ -379,7 +382,6 @@ struct ClearTextFieldModifier: ViewModifier {
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
             .font(.subheadline)
-            //.frame(height: 30)
     }
 }
 
@@ -389,13 +391,13 @@ struct TextFieldUnderLineRectangleModifier: ViewModifier {
     var padding: CGFloat = 20
     func body(content: Content) -> some View {
         content
-            .frame(height: (stateTyping ? 1.5 : 1.0))
-            .foregroundColor(stateTyping ? .accentColor : .gray)
+            .frame(height: (stateTyping ? 1.5 : 1.2))
+            .foregroundColor(stateTyping ? .accentColor : Color(UIColor.systemGray3))
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(isFullScreen: .constant(true))
+        RegisterView(isFullScreen: .constant("logIn"))
     }
 }

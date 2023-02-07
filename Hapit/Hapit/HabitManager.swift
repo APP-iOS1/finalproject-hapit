@@ -23,8 +23,25 @@ final class HabitManager: ObservableObject{
     
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
+    @Published var currentMateInfos: [User] = []
     @Published var challenges: [Challenge] = []
     @Published var habits: [Challenge] = []
+    @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
+
+    var currentUserChallenges: [Challenge] {
+        var tempChallenges: [Challenge] = []
+        for challenge in challenges {
+            if let currentUser = currentUser {
+                if challenge.uid == currentUser.uid {
+                    tempChallenges.append(challenge)
+                }
+            } else {
+                return []
+            }
+        }
+        return tempChallenges
+    }
+    
     @Published var posts: [Post] = []
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
@@ -56,7 +73,7 @@ final class HabitManager: ObservableObject{
                     
                     snapshot.documents.forEach { document in
                         if let challenge = try? document.data(as: Challenge.self){
-                            self.challenges.append(challenge)
+                            self.isChallenge(challenge: challenge)
                         }
                     }
                     promise(.success(self.challenges))
@@ -64,37 +81,14 @@ final class HabitManager: ObservableObject{
         }
         .eraseToAnyPublisher()
     }
-    
-//   //FIXME: - 현재 creator가 닉네임으로 되어있는데 uid로 변경이 필요해보임
-//    func fetchFriendChallengeCombine(friendName: String) -> AnyPublisher<[Challenge], Error>{
-//
-//        Future<[Challenge], Error> {  promise in
-//
-//            self.database.collection("Challenge")
-//                .whereField("creator",isEqualTo: friendName)
-//                .order(by: "createdAt", descending: true)
-//                .getDocuments{(snapshot, error) in
-//
-//                    if let error = error {
-//                        promise(.failure (error))
-//                        return
-//                    }
-//
-//                    guard let snapshot = snapshot else {
-//                        promise(.failure (FirebaseError.badSnapshot))
-//                        return
-//                    }
-//
-//                    snapshot.documents.forEach { document in
-//                        if let friendchallenges = try? document.data(as: Challenge.self){
-//                            self.friendchallenges.append(friendchallenges)
-//                        }
-//                    }
-//                    promise(.success(self.friendchallenges))
-//                }
-//        }
-//        .eraseToAnyPublisher()
-//    }
+
+    func isChallenge(challenge: Challenge){
+        if (challenge.count > 65){
+            self.habits.append(challenge)
+        }else{
+            self.challenges.append(challenge)
+        }
+    }
 
     func loadChallenge(){
         
@@ -109,7 +103,7 @@ final class HabitManager: ObservableObject{
                     return
                 }
             } receiveValue: { [weak self] (challenges) in
-                //self?.challenges = challenges
+                self?.challenges = challenges
             }
             .store(in: &cancellables)
     }
@@ -214,6 +208,37 @@ final class HabitManager: ObservableObject{
             }
             .store(in: &cancellables)
         loadChallenge()
+    }
+    
+    @MainActor
+    func fetchChallenge(challengeID: String) -> AnyPublisher<Challenge, Error>{
+        
+        Future<Challenge, Error> {  promise in
+            
+            let query = self.database.collection("Challenge")
+                .whereField("id", isEqualTo: challengeID)
+            
+            query.getDocuments{(snapshot, error) in
+                
+                if let error = error {
+                    promise(.failure (error))
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    promise(.failure (FirebaseError.badSnapshot))
+                    return
+                }
+                
+                snapshot.documents.forEach { document in
+                    if let currentChallenge = try? document.data(as: Challenge.self){
+                        self.currentChallenge = currentChallenge
+                    }
+                }
+                promise(.success(self.currentChallenge))
+            }
+        }
+        .eraseToAnyPublisher()
     }
     
     // MARK: - Post CRUD Part
@@ -365,4 +390,5 @@ final class HabitManager: ObservableObject{
             } receiveValue: { _ in }
             .store(in: &cancellables)
     }
+    
 }

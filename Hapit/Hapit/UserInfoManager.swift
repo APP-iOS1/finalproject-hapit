@@ -18,14 +18,30 @@ final class UserInfoManager: ObservableObject {
     
     // MARK: - 현재 접속한 유저의 정보 불러오기
     // - parameters with: Auth.auth().currentUser.uid
+    //싱글턴활용해보기
     func getCurrentUserInfo(currentUserUid: String?) async throws -> Void {
         guard let currentUserUid else { return }
         let userPath = database.collection("User").document("\(currentUserUid)")
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
-                self.currentUserInfo = makeCurrentUser(with: requestedData)
-                guard let currentUserInfo else { return }
+                self.currentUserInfo = makeCurrentUser(with: requestedData, id: snapshot.documentID)
+            }
+        } catch {
+            throw(error)
+        }
+    }
+    
+    func getUserInfoByUID(userUid: String?) async throws -> User? {
+        var tempUser: User? = nil
+        guard let userUid else { return nil }
+        let userPath = database.collection("User").document("\(userUid)")
+        do {
+            let snapshot = try await userPath.getDocument()
+            if let requestedData = snapshot.data() {
+                tempUser = makeCurrentUser(with: requestedData, id: snapshot.documentID)
+                guard let tempUser else { return nil}
+                return tempUser
             }
             else {
                 dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")
@@ -33,11 +49,12 @@ final class UserInfoManager: ObservableObject {
         } catch {
             throw(error)
         }
+        return tempUser
     }
     
-    // MARK: getCurrentUserInfo()에서 사용할 함수
-    private func makeCurrentUser(with requestedData: SnapshotDataType) -> User {
-        let id: String = requestedData["id"] as? String ?? ""
+    // MARK: getCurrentUserInfo(), fetchUserInfo에서 사용할 함수
+    private func makeCurrentUser(with requestedData: SnapshotDataType, id: String) -> User {
+        let id: String = id
         let name: String = requestedData["name"] as? String ?? ""
         let email: String = requestedData["email"] as? String ?? ""
         let pw: String = requestedData["pw"] as? String ?? ""
@@ -45,9 +62,9 @@ final class UserInfoManager: ObservableObject {
         let badge: [String] = requestedData["badge"] as? [String] ?? [""]
         let friends: [String] = requestedData["friends"] as? [String] ?? [""]
         
-        let currentUser = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends)
+        let userInfo = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends)
         
-        return currentUser
+        return userInfo
     }
     
     // MARK: 현재 유저의 친구 정보 불러오기
@@ -60,7 +77,6 @@ final class UserInfoManager: ObservableObject {
 //        }else{
 //            uid = currentUserUid ?? "Impossible"
 //        }
-
         let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
         //친구의 UID 리스트
@@ -75,7 +91,7 @@ final class UserInfoManager: ObservableObject {
                 let snapshot = try await target.getDocument()
                 if let requestedData = snapshot.data() {
                     // 친구의 유저 정보 불러와서 배열에 더하기
-                    let friendData = makeCurrentUser(with: requestedData)
+                    let friendData = makeCurrentUser(with: requestedData, id: snapshot.documentID)
 //                    DispatchQueue.main.async {
                     // UID까지 저장한 friendData
                     let getFriendData = User(id: friend, name: friendData.name, email: friendData.email, pw: friendData.pw, proImage: friendData.proImage, badge: friendData.badge, friends: friendData.friends)

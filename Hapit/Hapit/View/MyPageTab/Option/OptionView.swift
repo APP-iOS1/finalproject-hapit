@@ -10,10 +10,14 @@ import FirebaseAuth
 
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
-    @Binding var isFullScreen: Bool
+    @EnvironmentObject var lnManager: LocalNotificationManager
+    @Environment(\.scenePhase) var scenePhase
+    @Binding var isFullScreen: String
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
+    @State private var isAlarmOn = false
+    @State private var isSettingsAlert = false
     
     var body: some View {
         VStack {
@@ -53,6 +57,19 @@ struct OptionView: View {
                         .modifier(ListTextModifier())
                 }.listRowSeparator(.hidden)
                 
+                Toggle("알림", isOn: $isAlarmOn)
+                    .onChange(of: isAlarmOn) { val in
+                        if val == false {
+                            lnManager.clearRequests()
+                        } else {
+                            if lnManager.isGranted == false {
+                                isSettingsAlert.toggle()
+                            }
+                        }
+                    }
+                    .listRowSeparator(.hidden)
+                    .font(.custom("IMHyemin-Bold", size: 16))
+                        
             }
             .listStyle(PlainListStyle())
             
@@ -72,9 +89,9 @@ struct OptionView: View {
                          message: "로그아웃하시겠습니까?",
                          primaryButtonTitle: "로그아웃",
                          primaryAction: { Task {
-                            isFullScreen = true
                             flag = 1
-                            authManager.isLoggedin = false
+                isFullScreen = "logOut"
+                authManager.save(value: Key.logOut.rawValue, forkey: "state")
                             index = 0
             } },
                          withCancelButton: true)
@@ -85,9 +102,9 @@ struct OptionView: View {
                 Button {
                     // TODO: 회원탈퇴 기능 추가
                     Task {
-                        isFullScreen = true
                         flag = 2
-                        authManager.isLoggedin = false
+                        isFullScreen = "logOut"
+                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
                         index = 0
                     }
                 } label: {
@@ -98,7 +115,30 @@ struct OptionView: View {
             }
             .frame(width: 350)
             .padding(.bottom)
+        } // VStack
+        .onAppear {
+            Task{
+                await lnManager.getCurrentSettings()
+                if !lnManager.isGranted {
+                    isAlarmOn = lnManager.isGranted
+                }
+            }
         }
+        .onChange(of: scenePhase) { newValue in
+            // 앱이 작동중일 때
+            // 노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
+            // 설정 앱에서 끄면 해당 변화가 바로 OptionView에 반영되어야 하지만,
+            // 설정 앱에선 켜져 있고, OptionView에서 끈 후에, 다시 OptionView가 펼쳐지면 설정 앱 알림 정보가 반영되면 안 됨.
+            if newValue == .active {
+                Task {
+                    await lnManager.getCurrentSettings()
+                    if !lnManager.isGranted {
+                        isAlarmOn = lnManager.isGranted
+                    }
+                }
+            }
+        }
+        .customAlert(isPresented: $isSettingsAlert, title: "알림허용이 되어있지 않습니다", message: "설정으로 이동하여 알림 허용을 하시겠습니까?", primaryButtonTitle: "허용", primaryAction: {lnManager.openSettings()}, withCancelButton: true)
     }
 }
 
@@ -112,6 +152,6 @@ struct ListTextModifier: ViewModifier {
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(isFullScreen: .constant(true), index: .constant(0), flag: .constant(1))
+        OptionView(isFullScreen: .constant("logIn"), index: .constant(0), flag: .constant(1))
     }
 }

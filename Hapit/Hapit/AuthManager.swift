@@ -10,35 +10,49 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 import FirebaseCore
+import SwiftUI
+import AuthenticationServices
+
+enum Key: String {
+    case logIn
+    case logOut
+}
 
 @MainActor
-class AuthManager: ObservableObject {
+final class AuthManager: ObservableObject {
     
-    @Published var isLoggedin = false
+    @Published var nonce = ""
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     
+    // MARK: - 유저 로그인 정보 save 함수
+    func save(value: Any?, forkey key: String) {
+        UserDefaults.standard.set(value ?? "", forKey: key)
+    }
+    
     // MARK: - 로그인 
-    final func login(with email: String, _ password: String) async throws {
+    func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
+            print(UserDefaults.standard.string(forKey: "state"))
         } catch{
             throw(error)
         }
     }
     
     //MARK: - 로그아웃
-    final func logOut() async throws {
+    func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
+            print(UserDefaults.standard.string(forKey: "state"))
         } catch {
             throw(error)
         }
     }
     
     //MARK: - 회원탈퇴
-    final func deleteUser(uid: String) async throws {
+    func deleteUser(uid: String) async throws {
         do {
             try await firebaseAuth.currentUser?.delete()
             try await database.collection("User").document("\(uid)").delete()
@@ -48,7 +62,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 신규회원 생성
-    final func register(email: String, pw: String, name: String) async throws {
+    func register(email: String, pw: String, name: String) async throws {
         do {
             //Auth에 유저등록
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
@@ -65,7 +79,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 유저데이터 firestore에 업로드하는 함수
-    final func uploadUserInfo(userInfo: User) async throws {
+    func uploadUserInfo(userInfo: User) async throws {
         do {
             try await database.collection("User")
                 .document(userInfo.id)
@@ -83,7 +97,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 이메일 중복확인을 해주는 함수
-    final func isEmailDuplicated(email: String) async throws -> Bool {
+    func isEmailDuplicated(email: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
                 .whereField("email", isEqualTo: email).getDocuments()
@@ -100,7 +114,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 닉네임 중복확인을 해주는 함수
-    final func isNicknameDuplicated(nickName: String) async throws -> Bool {
+    func isNicknameDuplicated(nickName: String) async throws -> Bool {
         do {
             let target = try await database.collection("User")
                 .whereField("name", isEqualTo: nickName).getDocuments()
@@ -117,7 +131,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 닉네임을 반환
-    final func getNickName(uid: String) async throws -> String {
+    func getNickName(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document(uid)
                 .getDocument()
@@ -133,7 +147,7 @@ class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 닉네임을 수정
-    final func updateUserNickName(uid: String, nickname: String) async throws -> Void {
+    func updateUserNickName(uid: String, nickname: String) async throws -> Void {
         let path = database.collection("User")
         do {
             try await path.document(uid).updateData(["name": nickname])
@@ -175,7 +189,7 @@ class AuthManager: ObservableObject {
     }
 
     // MARK: - 사용 중인 유저의 프로필사진을 반환
-    final func getPorImage(uid: String) async throws -> String {
+    func getPorImage(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -191,12 +205,32 @@ class AuthManager: ObservableObject {
     }
 
     // MARK: - 사용 중인 유저의 프로필 사진을 수정
-    final func updateUserProfileImage(uid: String, image: String) async throws -> Void {
+    func updateUserProfileImage(uid: String, image: String) async throws -> Void {
         let path = database.collection("User")
         do {
             try await path.document(uid).updateData(["proImage": image])
         } catch {
             throw(error)
+        }
+    }
+    
+    // MARK: - 애플로그인 함수
+    func authenticate(credential: ASAuthorizationAppleIDCredential){
+        
+        guard let token = credential.identityToken else {
+            return
+        }
+        
+        guard let tokenString = String(data: token, encoding: .utf8) else{
+            return
+        }
+        
+        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
+        
+        Auth.auth().signIn(with: firebaseCredential) { (result, err) in
+            if let error = err {
+                return
+            }
         }
     }
 }

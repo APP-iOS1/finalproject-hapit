@@ -74,5 +74,12 @@ class LocalNotificationManager: NSObject, ObservableObject, UNUserNotificationCe
         try? await notificationCenter.add(request)
         
         await getPendingRequests()
-    }  
+    }
+    
+    // MARK: 생성된 알림을 모두 지우는 함수
+    func clearRequests() {
+        notificationCenter.removeAllPendingNotificationRequests()
+        pendingRequests.removeAll()
+        print("Pending: (pendingRequests.count)")
+    }
 }

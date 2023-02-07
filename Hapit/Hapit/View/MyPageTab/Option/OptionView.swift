@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var lnManager: LocalNotificationManager
     @Binding var isFullScreen: Bool
     @Binding var index: Int
     @Binding var flag: Int
@@ -55,8 +56,14 @@ struct OptionView: View {
                 }.listRowSeparator(.hidden)
                 
                 Toggle("알림", isOn: $isAlarmOn)
+                    .onChange(of: isAlarmOn) {_ in
+                        if !isAlarmOn {
+                            lnManager.clearRequests()
+                        }
+                    }
+                    .listRowSeparator(.hidden)
                     .font(.custom("IMHyemin-Bold", size: 16))
-                    .listRowSeparator(.hidden)        
+                        
             }
             .listStyle(PlainListStyle())
             
@@ -102,6 +109,10 @@ struct OptionView: View {
             }
             .frame(width: 350)
             .padding(.bottom)
+        } // VStack
+        .onAppear {
+            isAlarmOn = lnManager.isGranted
+            print("onAppear 실행 : \(isAlarmOn)")
         }
     }
 }

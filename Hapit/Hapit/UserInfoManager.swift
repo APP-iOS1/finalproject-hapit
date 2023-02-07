@@ -107,4 +107,24 @@ final class UserInfoManager: ObservableObject {
             throw(error)
         }
     }
+    
+    // MARK: 친구 추가
+    // - parameters with: currentUserUid, user.id
+    func updateFriendList(receiverID: String, senderID: String) async throws -> Void {
+        do {
+            try await database.collection("User")
+                .document(receiverID)
+                .updateData([
+                    "friends": FieldValue.arrayUnion([senderID])
+                ])
+            
+            try await database.collection("User")
+                .document(senderID)
+                .updateData([
+                    "friends": FieldValue.arrayUnion([receiverID])
+                ])
+        } catch {
+            throw(error)
+        }
+    }
 }

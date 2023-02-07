@@ -8,7 +8,6 @@
 import SwiftUI
 import FirebaseFirestore
 
-
 final class MessageManager: ObservableObject {
     @Published var messageArray = [Message]()
     let database = Firestore.firestore()

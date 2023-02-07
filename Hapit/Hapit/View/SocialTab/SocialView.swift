@@ -11,104 +11,66 @@ import FirebaseAuth
 struct SocialView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
-    
+    @EnvironmentObject var messageManager: MessageManager
+    @State private var myFriends: [User] = [User]() // currentUser 포함
+    @State private var friends: [User] = [User]() // currentUser 제외
     @State private var friends: [User] = [User]()
     @State var rank: Int = 0
+
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
                     HStack {
                         Spacer()
-                        Text("친구 수: \(friends.count)")
-                            .font(.subheadline)
-                            .bold()
+                        Text("친구 수: \(myFriends.count - 1)")
+                            .font(.custom("IMHyemin-Bold", size: 15))
                     }.padding(.trailing, 20)
                     
-                    // 내 랭킹 표시
-                    ScrollView{
-                        Text("내 랭킹")
-                        MyRankCell
-                        // TODO: 본인 표시 해줘야함 -> 셀 색깔로?
-                        ForEach(friends) { friend in
+                    ScrollView {
+                        ForEach(Array(myFriends.enumerated()), id: \.1) { (index, friend) in
                             NavigationLink {
                                 FriendChallengeView(friend: friend)
                                     .navigationTitle("친구가 수행중인 챌린지")
                             } label: {
-                                FriendsRow(friend: friend, index: 0)
+                                FriendsRow(friend: friend, index: index + 1)
                             }
                         }
                     }
                 }
                 .navigationTitle("랭킹")
                 .toolbar {
-                    Button {
-                        
-                    } label: {
-                        // TODO: 나중에 메세지 오면 색깔, 심볼 삼항연산자로 변경
-                        // 읽은 상태
-                        //                        Image(systemName: "envelope")
-                        //                            .foregroundColor(.gray)
-                        // 메세지 온 상태
-                        Image(systemName: "envelope.badge")
-                            .foregroundColor(Color("AccentColor"))
+                    HStack {
+                        NavigationLink {
+                            EditFriendView(friends: $friends)
+                        } label: {
+                            Image(systemName: "person.and.person")
+                        }
+//                        person.2.badge.gearshape
+                        NavigationLink {
+                            MessageFullscreenView()
+                        } label: {
+                            // TODO: 나중에 메세지 오면 색깔, 심볼 삼항연산자로 변경
+                            //                            Image(systemName: "envelope")
+                            //                                .foregroundColor(.gray)
+                            Image(systemName: "envelope.badge")
+                                .foregroundColor(Color("AccentColor"))
+                        }
                     }
-                    
                 }
             }.background(Color("BackgroundColor"))
         }
-        .onAppear{
+        .task {
             do {
-                Task{
-                    let current = authManager.firebaseAuth
-                    try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
-                    
-                    self.friends = userInfoManager.friendArray
-                }
+                let current = authManager.firebaseAuth
+                try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
+                try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
+                self.myFriends = userInfoManager.friendArray
+                self.friends = userInfoManager.friendArray
+                self.myFriends.insert(userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""]), at: 0)
             } catch {
             }
-            
         }
-        
-    }
-
-    var MyRankCell: some View {
-
-        ZStack {
-            HStack {
-                // TODO: 노션에 적어놓은 랭킹대로 정렬
-                Text("\(rank)")
-                    .font(.largeTitle)
-                    .foregroundColor(Color("AccentColor"))
-
-                Image(userInfoManager.currentUserInfo?.proImage ?? "blueBear")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .padding(10)
-
-                // TODO: 진행중인 챌린지 개수 가져오기
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(userInfoManager.currentUserInfo?.name ?? "dummyName")
-                        .foregroundColor(.black)
-                        .bold()
-                    Text("현재 챌린지 개수: 2")
-                        .font(.subheadline)
-                        .foregroundColor(Color(.systemGray))
-                }
-                Spacer()
-            }
-            .padding()
-            .background(.white)
-            .cornerRadius(20)
-            .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color("AccentColor"), lineWidth: 2)
-    
-                )
-        .padding()
-        }//.background(Color("BackgroundColor"))
-        
     }
 }
 
@@ -128,12 +90,13 @@ struct FriendsRow: View {
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .padding(10)
-
+            
             // TODO: 진행중인 챌린지 개수 가져오기
             VStack(alignment: .leading, spacing: 3) {
-                Text(friend.name)
+                Text(index == 1 ? "(나) \(friend.name)" : "\(friend.name)")
                     .foregroundColor(.black)
                     .bold()
+                
                 Text("현재 챌린지 개수: 2")
                     .font(.subheadline)
                     .foregroundColor(Color(.systemGray))

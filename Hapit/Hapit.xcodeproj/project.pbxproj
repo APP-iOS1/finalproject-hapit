@@ -46,10 +46,15 @@
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
+		C50FEE3E2991DE1000C18D3F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FEE3D2991DE1000C18D3F /* Message.swift */; };
+		C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FEE3F2991DE9100C18D3F /* MessageManager.swift */; };
+		C50FEE422991F35F00C18D3F /* MessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FEE412991F35F00C18D3F /* MessageCellView.swift */; };
 		C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5212475298CC1A400235921 /* UserInfoManager.swift */; };
 		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
 		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
 		C5706F1529878730001300F5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C5706F1429878730001300F5 /* .swiftlint.yml */; };
+		C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E6E0D298E54500078B60F /* EditFriendView.swift */; };
+		C5882FA62990B5F3001FD3B6 /* FriendsEditLow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5882FA52990B5F3001FD3B6 /* FriendsEditLow.swift */; };
 		C58BC9E4298C8880009B358D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C58BC9E3298C8880009B358D /* GoogleService-Info.plist */; };
 		C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55142977A7C9008BB0CF /* Jelly.swift */; };
 		C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55162977B782008BB0CF /* NicknameModalView.swift */; };
@@ -144,11 +149,16 @@
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C50FEE3D2991DE1000C18D3F /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C50FEE3F2991DE9100C18D3F /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
+		C50FEE412991F35F00C18D3F /* MessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellView.swift; sourceTree = "<group>"; };
 		C5212475298CC1A400235921 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
 		C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
 		C5482987298751EC000C743E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C5706F1429878730001300F5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C57E6E0D298E54500078B60F /* EditFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFriendView.swift; sourceTree = "<group>"; };
+		C5882FA52990B5F3001FD3B6 /* FriendsEditLow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsEditLow.swift; sourceTree = "<group>"; };
 		C58BC9E3298C8880009B358D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C59D55142977A7C9008BB0CF /* Jelly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jelly.swift; sourceTree = "<group>"; };
 		C59D55162977B782008BB0CF /* NicknameModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModalView.swift; sourceTree = "<group>"; };
@@ -361,10 +371,13 @@
 			isa = PBXGroup;
 			children = (
 				C9CBC800297683BB00D530CC /* SocialView.swift */,
+				C57E6E0D298E54500078B60F /* EditFriendView.swift */,
 				3CF39BA429770D87003D4809 /* AddFriendView.swift */,
 				C59D55182977CD17008BB0CF /* FriendChallengeView.swift */,
 				C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */,
 				C59D551A2977D149008BB0CF /* MessageFullscreenView.swift */,
+				C5882FA52990B5F3001FD3B6 /* FriendsEditLow.swift */,
+				C50FEE412991F35F00C18D3F /* MessageCellView.swift */,
 			);
 			path = SocialTab;
 			sourceTree = "<group>";
@@ -437,6 +450,7 @@
 				3C5CAA85298A376E007C3EAA /* Modal.swift */,
 				C958D15E298CD8690057AA5B /* ChallengeFriends.swift */,
 				36E1440E298CE7F20044E666 /* HapitPushInfo.swift */,
+				C50FEE3D2991DE1000C18D3F /* Message.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -460,6 +474,7 @@
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
 				C5212475298CC1A400235921 /* UserInfoManager.swift */,
+				C50FEE3F2991DE9100C18D3F /* MessageManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -654,6 +669,7 @@
 				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */,
+				C50FEE422991F35F00C18D3F /* MessageCellView.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
 				3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */,
@@ -668,6 +684,7 @@
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
 				67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
+				C5882FA62990B5F3001FD3B6 /* FriendsEditLow.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
 				3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */,
 				C958D163298CE6DE0057AA5B /* ChallengeFriendsCellView.swift in Sources */,
@@ -714,8 +731,11 @@
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */,
+				C50FEE3E2991DE1000C18D3F /* Message.swift in Sources */,
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
+				C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */,
+				C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */,
 				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
 				369D01D729777E97004CB739 /* Dairy.swift in Sources */,
 			);

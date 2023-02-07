@@ -68,6 +68,7 @@ struct HapitApp: App {
                 .environmentObject(UserInfoManager())
                 .environmentObject(LocalNotificationManager())
                 .environmentObject(ModalManager())
+                .environmentObject(MessageManager())
                 .onAppear{
                     print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)
                     UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")

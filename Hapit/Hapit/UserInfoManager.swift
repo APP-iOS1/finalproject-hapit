@@ -10,10 +10,11 @@ import FirebaseFirestore
 
 typealias SnapshotDataType = [String: Any]
 
+@MainActor
 final class UserInfoManager: ObservableObject {
+    @Published var userInfoArray = [User]()
     @Published var friendArray = [User]()
     @Published var currentUserInfo: User? = nil
-    
     let database = Firestore.firestore()
     
     // MARK: - 현재 접속한 유저의 정보 불러오기
@@ -25,7 +26,7 @@ final class UserInfoManager: ObservableObject {
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
-                self.currentUserInfo = makeCurrentUser(with: requestedData, id: snapshot.documentID)
+                self.currentUserInfo = makeUser(with: requestedData, id: snapshot.documentID)
             }
         } catch {
             throw(error)
@@ -53,7 +54,7 @@ final class UserInfoManager: ObservableObject {
     }
     
     // MARK: getCurrentUserInfo(), fetchUserInfo에서 사용할 함수
-    private func makeCurrentUser(with requestedData: SnapshotDataType, id: String) -> User {
+    private func makeUser(with requestedData: SnapshotDataType, id: String) -> User {
         let id: String = id
         let name: String = requestedData["name"] as? String ?? ""
         let email: String = requestedData["email"] as? String ?? ""
@@ -67,16 +68,23 @@ final class UserInfoManager: ObservableObject {
         return userInfo
     }
     
+    // MARK: 데이터베이스에 있는 전체 유저 정보 불러오기
+    func fetchUserInfo() async -> Void {
+        self.userInfoArray.removeAll()
+        let path = database.collection("User")
+        let _ = path.getDocuments() { (snapshot, error) in
+            if let snapshot {
+                for document in snapshot.documents {
+                    let userData = self.makeUser(with: document.data(), id: document.documentID)
+                    self.userInfoArray.append(userData)
+                }
+            }
+        }
+    }
+    
     // MARK: 현재 유저의 친구 정보 불러오기
-    func getFriendArray(currentUserUid: String) async throws -> Void {
-        //guard let currentUserUid else { return }
-//        var uid = ""
-//
-//        if currentUserUid == nil{
-//            uid = "0TNE4PomiUdal8xg4wsUevBmUNt1"
-//        }else{
-//            uid = currentUserUid ?? "Impossible"
-//        }
+    func getFriendArray(currentUserUid: String?) async throws -> Void {
+        guard let currentUserUid else { return }
         let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
         //친구의 UID 리스트
@@ -90,16 +98,8 @@ final class UserInfoManager: ObservableObject {
             do {
                 let snapshot = try await target.getDocument()
                 if let requestedData = snapshot.data() {
-                    // 친구의 유저 정보 불러와서 배열에 더하기
-                    let friendData = makeCurrentUser(with: requestedData, id: snapshot.documentID)
-//                    DispatchQueue.main.async {
-                    // UID까지 저장한 friendData
-                    let getFriendData = User(id: friend, name: friendData.name, email: friendData.email, pw: friendData.pw, proImage: friendData.proImage, badge: friendData.badge, friends: friendData.friends)
-                    
-                        self.friendArray.append(getFriendData)
-//                    }
-                } else {
-                    dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")
+                    let friendData = makeUser(with: requestedData, id: snapshot.documentID)
+                    self.friendArray.append(friendData)
                 }
             } catch {
                 throw(error)
@@ -107,4 +107,45 @@ final class UserInfoManager: ObservableObject {
         }
     }
     
+    // MARK: 친구 삭제
+    // - parameters with: currentUserUid, user.id
+    func removeFriendData(userID: String, friendID: String) async throws -> Void {
+        do {
+            // currentUser의 친구 목록에서 삭제
+            try await database.collection("User")
+                .document(userID)
+                .updateData([
+                    "friends": FieldValue.arrayRemove([friendID])
+                ])
+            
+            // 해당 친구의 친구 목록에서 currentUser 삭제
+            try await database.collection("User")
+                .document(friendID)
+                .updateData([
+                    "friends": FieldValue.arrayRemove([userID])
+                ])
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: 친구 추가
+    // - parameters with: currentUserUid, user.id
+    func updateFriendList(receiverID: String, senderID: String) async throws -> Void {
+        do {
+            try await database.collection("User")
+                .document(receiverID)
+                .updateData([
+                    "friends": FieldValue.arrayUnion([senderID])
+                ])
+            
+            try await database.collection("User")
+                .document(senderID)
+                .updateData([
+                    "friends": FieldValue.arrayUnion([receiverID])
+                ])
+        } catch {
+            throw(error)
+        }
+    }
 }

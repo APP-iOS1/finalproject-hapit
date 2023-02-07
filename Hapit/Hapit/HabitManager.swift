@@ -23,8 +23,25 @@ final class HabitManager: ObservableObject{
     
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
+    @Published var currentMateInfos: [User] = []
     @Published var challenges: [Challenge] = []
     @Published var habits: [Challenge] = []
+    @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
+
+    var currentUserChallenges: [Challenge] {
+        var tempChallenges: [Challenge] = []
+        for challenge in challenges {
+            if let currentUser = currentUser {
+                if challenge.uid == currentUser.uid {
+                    tempChallenges.append(challenge)
+                }
+            } else {
+                return []
+            }
+        }
+        return tempChallenges
+    }
+    
     @Published var posts: [Post] = []
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
@@ -191,6 +208,37 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     
+    @MainActor
+    func fetchChallenge(challengeID: String) -> AnyPublisher<Challenge, Error>{
+        
+        Future<Challenge, Error> {  promise in
+            
+            let query = self.database.collection("Challenge")
+                .whereField("id", isEqualTo: challengeID)
+            
+            query.getDocuments{(snapshot, error) in
+                
+                if let error = error {
+                    promise(.failure (error))
+                    return
+                }
+                
+                guard let snapshot = snapshot else {
+                    promise(.failure (FirebaseError.badSnapshot))
+                    return
+                }
+                
+                snapshot.documents.forEach { document in
+                    if let currentChallenge = try? document.data(as: Challenge.self){
+                        self.currentChallenge = currentChallenge
+                    }
+                }
+                promise(.success(self.currentChallenge))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     // MARK: - Post CRUD Part
     // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
@@ -340,4 +388,5 @@ final class HabitManager: ObservableObject{
             } receiveValue: { _ in }
             .store(in: &cancellables)
     }
+    
 }

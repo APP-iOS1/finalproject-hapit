@@ -76,7 +76,12 @@ class LocalNotificationManager: NSObject, ObservableObject, UNUserNotificationCe
         await getPendingRequests()
     }
     
-    // MARK: 생성된 알림을 모두 지우는 함수
+    // MARK: - identifier가 동일한 알림을 찾아서 지우는 함수
+    func removeRequest(withIdentifier identifier: String) {
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+    }
+    
+    // MARK: - 생성된 알림을 모두 지우는 함수
     func clearRequests() {
         notificationCenter.removeAllPendingNotificationRequests()
         pendingRequests.removeAll()

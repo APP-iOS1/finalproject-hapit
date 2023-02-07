@@ -11,11 +11,13 @@ import FirebaseAuth
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @Environment(\.scenePhase) var scenePhase
     @Binding var isFullScreen: Bool
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
     @State private var isAlarmOn = false
+    @State private var isSettingsAlert = false
     
     var body: some View {
         VStack {
@@ -56,9 +58,13 @@ struct OptionView: View {
                 }.listRowSeparator(.hidden)
                 
                 Toggle("알림", isOn: $isAlarmOn)
-                    .onChange(of: isAlarmOn) {_ in
-                        if !isAlarmOn {
+                    .onChange(of: isAlarmOn) { val in
+                        if val == false {
                             lnManager.clearRequests()
+                        } else {
+                            if lnManager.isGranted == false {
+                                isSettingsAlert.toggle()
+                            }
                         }
                     }
                     .listRowSeparator(.hidden)
@@ -111,9 +117,22 @@ struct OptionView: View {
             .padding(.bottom)
         } // VStack
         .onAppear {
-            isAlarmOn = lnManager.isGranted
-            print("onAppear 실행 : \(isAlarmOn)")
+            Task{
+                await lnManager.getCurrentSettings()
+                isAlarmOn = lnManager.isGranted
+            }
         }
+        .onChange(of: scenePhase) { newValue in
+            //앱이 작동중일 때
+            //노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
+            if newValue == .active {
+                Task {
+                    await lnManager.getCurrentSettings()
+                    isAlarmOn = lnManager.isGranted
+                }
+            }
+        }
+        .customAlert(isPresented: $isSettingsAlert, title: "알림허용이 되어있지 않습니다", message: "설정으로 이동하여 알림 허용을 하시겠습니까?", primaryButtonTitle: "허용", primaryAction: {lnManager.openSettings()}, withCancelButton: true)
     }
 }
 

@@ -119,16 +119,22 @@ struct OptionView: View {
         .onAppear {
             Task{
                 await lnManager.getCurrentSettings()
-                isAlarmOn = lnManager.isGranted
+                if !lnManager.isGranted {
+                    isAlarmOn = lnManager.isGranted
+                }
             }
         }
         .onChange(of: scenePhase) { newValue in
-            //앱이 작동중일 때
-            //노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
+            // 앱이 작동중일 때
+            // 노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
+            // 설정 앱에서 끄면 해당 변화가 바로 OptionView에 반영되어야 하지만,
+            // 설정 앱에선 켜져 있고, OptionView에서 끈 후에, 다시 OptionView가 펼쳐지면 설정 앱 알림 정보가 반영되면 안 됨.
             if newValue == .active {
                 Task {
                     await lnManager.getCurrentSettings()
-                    isAlarmOn = lnManager.isGranted
+                    if !lnManager.isGranted {
+                        isAlarmOn = lnManager.isGranted
+                    }
                 }
             }
         }

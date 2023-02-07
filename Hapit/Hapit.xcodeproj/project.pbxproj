@@ -48,6 +48,8 @@
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
 		95FAB86E2991DB5100E797EA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86D2991DB5100E797EA /* FirebaseStorage */; };
 		95FAB8702991DB5100E797EA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */; };
+		95FAB87229920B0100E797EA /* BadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FAB87129920B0100E797EA /* BadgeManager.swift */; };
+		95FAB8742992334900E797EA /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FAB8732992334900E797EA /* Badge.swift */; };
 		C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5212475298CC1A400235921 /* UserInfoManager.swift */; };
 		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
 		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
@@ -144,6 +146,8 @@
 		67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
+		95FAB87129920B0100E797EA /* BadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManager.swift; sourceTree = "<group>"; };
+		95FAB8732992334900E797EA /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5212475298CC1A400235921 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
@@ -432,6 +436,7 @@
 				369D01D629777E97004CB739 /* Dairy.swift */,
 				3C811D1E29877AF10005539A /* DateValue.swift */,
 				C59D55142977A7C9008BB0CF /* Jelly.swift */,
+				95FAB8732992334900E797EA /* Badge.swift */,
 				674F28B02977C49100390405 /* Challenge.swift */,
 				674F28B22977C4C000390405 /* Post.swift */,
 				F47BA150297A697F000222EE /* User.swift */,
@@ -459,6 +464,7 @@
 				F47BA14E297A67FE000222EE /* AuthManager.swift */,
 				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
+				95FAB87129920B0100E797EA /* BadgeManager.swift */,
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
 				C5212475298CC1A400235921 /* UserInfoManager.swift */,
 			);
@@ -692,6 +698,7 @@
 				3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */,
 				C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
+				95FAB87229920B0100E797EA /* BadgeManager.swift in Sources */,
 				3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */,
 				3C39C493298985D400603149 /* PostModalView.swift in Sources */,
 				3C811D1D2987628A0005539A /* CustomDatePickerView.swift in Sources */,
@@ -701,6 +708,7 @@
 				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
+				95FAB8742992334900E797EA /* Badge.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,

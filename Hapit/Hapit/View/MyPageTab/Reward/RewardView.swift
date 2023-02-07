@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RewardView: View {
+    
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
         VStack {
             // 타이틀
@@ -21,7 +24,7 @@ struct RewardView: View {
                     Text("획득 젤리")
                         .font(.custom("IMHyemin-Bold", size: 17))
                     Spacer()
-                    Text("6 / 30")
+                    Text("\(authManager.badges.count)" + "/27")
                         .foregroundColor(Color.accentColor)
                         .font(.custom("IMHyemin-Bold", size: 17))
                 }

@@ -22,11 +22,6 @@ struct MyPageView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    Image(uiImage: UIImage(data: habitManager.bearimageData.first ?? Data()) ?? UIImage())
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(10)
-                        .frame(width: 100)
                     ProfileCellView(nickName: $nickName, email: $email)
                     RewardView()
                 }
@@ -42,8 +37,7 @@ struct MyPageView: View {
                     }
                 }
                 .onAppear {
-                    habitManager.fetchImages("jellybears/bearBlue1.png")
-                    print(habitManager.bearimageData.count)
+                    
                     Task {
                         do {
                             let current = authManager.firebaseAuth.currentUser?.uid ?? ""

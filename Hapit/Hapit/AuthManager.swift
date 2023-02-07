@@ -10,11 +10,20 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 import FirebaseCore
+import FirebaseStorage
 
 @MainActor
 class AuthManager: ObservableObject {
     
     @Published var isLoggedin = false
+    
+    // 로컬에 저장하는 젤리들의 배열
+    @Published var badges: [String] = []
+    // Storage로 부터 받는 젤리들의 배열
+    @Published var bearimagesDatas: [Data] = []
+    
+    // MARK: Storage URL
+    let storageRef = Storage.storage().reference()
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
@@ -199,4 +208,47 @@ class AuthManager: ObservableObject {
             throw(error)
         }
     }
+    
+    // MARK: - 사용중인 유저의 소유한 뱃지가져오기
+    func fetchBadgeList(uid: String) async throws {
+        self.badges.removeAll()
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let badge: [String] = docData?["badge"] as! [String]
+            
+            for element in badge{
+                badges.append(element)
+            }
+       } catch {
+            throw(error)
+           
+       }
+    }
+    
+    // MARK: - Storage에서 이미지 뱃지 가져오기
+    //Storage에서 path에 해당하는 이미지를 가져온 뒤, imageData 배열에 추가해주는 함수
+    //gs://hapit-b465e.appspot.com/jellybears/bearBlue1.png
+    func fetchImages(paths: [String]) {
+        self.bearimagesDatas.removeAll()
+        
+        for path in paths{
+            let ref = storageRef.child("jellybears/" + path + ".png")
+            
+            ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if error != nil {
+                    //print(error.localizedDescription)
+                } else {
+                    guard let data else { return }
+                    self.bearimagesDatas.append(data)
+                }
+            }
+            
+        }
+    
+    }
+    
 }

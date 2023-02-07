@@ -45,6 +45,8 @@ final class HabitManager: ObservableObject{
     @Published var posts: [Post] = []
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
+    //친구의 챌린지를 받을 변수
+    @Published var friendchallenges: [Challenge] = []
 
     // 최종으로 받아오는 초대할 친구 목록
     @Published var seletedFriends: [ChallengeFriends] = []
@@ -79,7 +81,7 @@ final class HabitManager: ObservableObject{
         }
         .eraseToAnyPublisher()
     }
-    
+
     func isChallenge(challenge: Challenge){
         if (challenge.count > 65){
             self.habits.append(challenge)
@@ -87,7 +89,7 @@ final class HabitManager: ObservableObject{
             self.challenges.append(challenge)
         }
     }
-    
+
     func loadChallenge(){
         
         challenges.removeAll()

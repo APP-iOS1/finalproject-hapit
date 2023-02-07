@@ -79,6 +79,7 @@ final class UserInfoManager: ObservableObject {
 //        }
         let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
+        //친구의 UID 리스트
         let friendList: [String] = docData?["friends"] as? [String] ?? [""]
         
         self.friendArray.removeAll()
@@ -92,7 +93,10 @@ final class UserInfoManager: ObservableObject {
                     // 친구의 유저 정보 불러와서 배열에 더하기
                     let friendData = makeCurrentUser(with: requestedData, id: snapshot.documentID)
 //                    DispatchQueue.main.async {
-                        self.friendArray.append(friendData)
+                    // UID까지 저장한 friendData
+                    let getFriendData = User(id: friend, name: friendData.name, email: friendData.email, pw: friendData.pw, proImage: friendData.proImage, badge: friendData.badge, friends: friendData.friends)
+                    
+                        self.friendArray.append(getFriendData)
 //                    }
                 } else {
                     dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")

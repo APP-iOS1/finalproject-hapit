@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    init() {
-        UITabBar.appearance().backgroundColor = UIColor.white
-    }
+//    init() {
+//        UITabBar.appearance().backgroundColor = UIColor.white
+//    }
     
     // UserDefault로 항상 앱에 로그인 정보 저장
     @AppStorage("autoLogIn") var isFullScreen: Bool = true
@@ -58,7 +58,7 @@ struct ContentView: View {
                 
             }
         default:
-                LogInView(isFullScreen: $isFullScreen)
+            LogInView(isFullScreen: $isFullScreen)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                             Task {

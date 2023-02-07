@@ -10,7 +10,6 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 import FirebaseCore
-import CryptoKit
 import SwiftUI
 import AuthenticationServices
 
@@ -21,16 +20,50 @@ enum LoginState {
 
 @MainActor
 final class AuthManager: ObservableObject {
+    enum Key: String {
+        case logIn
+    }
+    
+    // init
+    private init() {}
+    
+    // Singleton Pattern
+    static let shared = AuthManager()
     
     @Published var isLoggedin = false //이거말고 --> UserInfoManager 함수 활용 생각해보기
+    @Published var nonce = ""
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
+    
+    // 로그인 되어 있는지 확인해주는 변수
+    var hasloggedIn: Bool {
+        return load(.logIn) as? Bool ?? false
+    }
+    
+    // MARK: - 유저 로그인 정보 save 함수
+    func save(value: Any, forkey key: Key) {
+        UserDefaults.standard.set(value, forKey: key.rawValue)
+    }
+    
+    // MARK: - 유저 로그인 정보 remove 함수
+    func remove(_ key: Key) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
+    
+    // MARK: - 로그인 여부 enum의 원시 값 반환
+    func load(_ key: Key) -> Any? {
+        switch key {
+        case .logIn:
+            return key.rawValue
+        }
+    }
     
     // MARK: - 로그인 
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
+            save(value: firebaseAuth.currentUser?.uid ?? "", forkey: .logIn)
         } catch{
             throw(error)
         }
@@ -40,6 +73,7 @@ final class AuthManager: ObservableObject {
     func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
+            remove(.logIn)
         } catch {
             throw(error)
         }
@@ -207,16 +241,11 @@ final class AuthManager: ObservableObject {
             throw(error)
         }
     }
-}
-
-// MARK: - 애플 로그인 클래스
-final class AppleLoginViewModel: ObservableObject {
     
-    @Published var nonce = ""
-    
+    // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential){
         
-        guard let token = credential.identityToken else{
+        guard let token = credential.identityToken else {
             return
         }
         
@@ -227,57 +256,9 @@ final class AppleLoginViewModel: ObservableObject {
         let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
         
         Auth.auth().signIn(with: firebaseCredential) { (result, err) in
-            if let error = err{
+            if let error = err {
                 return
             }
         }
-        
-        withAnimation(.easeInOut){
-            
-        }
-    }
-    
-    func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            return String(format: "%02x", $0)
-        }.joined()
-        
-        return hashString
-    }
-
-    func randomNonceString(length: Int = 32) -> String {
-        precondition(length > 0)
-        let charset: [Character] =
-        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        var result = ""
-        var remainingLength = length
-        
-        while remainingLength > 0 {
-            let randoms: [UInt8] = (0 ..< 16).map { _ in
-                var random: UInt8 = 0
-                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if errorCode != errSecSuccess {
-                    fatalError(
-                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-                    )
-                }
-                return random
-            }
-            
-            randoms.forEach { random in
-                if remainingLength == 0 {
-                    return
-                }
-                
-                if random < charset.count {
-                    result.append(charset[Int(random)])
-                    remainingLength -= 1
-                }
-            }
-        }
-        return result
     }
 }
-

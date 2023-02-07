@@ -12,9 +12,12 @@ struct LogInView: View {
     @Namespace var topID
     @Namespace var bottomID
     
+    //@AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    
     @State private var email: String = ""
     @State private var pw: String = ""
     @Binding var isFullScreen: Bool
+    //@Binding var isFirstLaunching: Bool
     
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool

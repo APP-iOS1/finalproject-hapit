@@ -17,9 +17,11 @@ struct CustomDatePickerView: View {
     @State private var currentMonth: Int = 0
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var modalManager: ModalManager
+    @EnvironmentObject var lnManager: LocalNotificationManager
+    @Environment(\.scenePhase) var scenePhase
     @Binding var showsCustomAlert: Bool
     @State var showsCreatePostView: Bool = false
-    @State var isAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
+    @State var isChallengeAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
     
     // Login
@@ -108,7 +110,6 @@ struct CustomDatePickerView: View {
                 }
                 Spacer()
             }//VStack
-            
             .padding()
             .padding(.top, 0)
             .background(Color("CellColor"))
@@ -117,7 +118,17 @@ struct CustomDatePickerView: View {
             .ignoresSafeArea()
             .onChange(of: currentMonth) { newValue in
                 currentDate = getCurrentMonth()
-                
+            }
+            .onChange(of: scenePhase) { newValue in
+                //앱이 작동중일 때
+                //노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
+                //
+                if newValue == .active {
+                    Task {
+                        await lnManager.getCurrentSettings()
+                        isChallengeAlarmOn = lnManager.isGranted
+                    }
+                }
             }
             .onAppear{
                 // MARK: 포스트 불러오기
@@ -127,10 +138,13 @@ struct CustomDatePickerView: View {
                 currentDate = Date()
                 
                 self.modalManager.newModal(position: .closed) {
-                    
                     PostModalView(postsForModalView: $postsForModalView)
-                    
                 }
+                Task {
+                    await lnManager.getCurrentSettings()
+                    print("lnManager.isGranted: \(lnManager.isGranted)")
+                }
+               
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -145,15 +159,16 @@ struct CustomDatePickerView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        //MARK: 챌린지 알림 설정
-                        isAlarmOn.toggle()
-                        if isAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
+                        // 챌린지 알림 설정
+                        isChallengeAlarmOn.toggle()
+                        if isChallengeAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
                             isShowingAlarmSheet.toggle()
                         } else { // 앱의 알림 설정을 해제시켜줘야 함.
-                            
+                            lnManager.removeRequest(withIdentifier: currentChallenge.id)
+                            isShowingAlarmSheet.toggle()
                         }
                     } label: {
-                        Image(systemName: isAlarmOn ? "bell.fill" : "bell.slash.fill")
+                        Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
@@ -168,7 +183,7 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView()
+                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
                     .environmentObject(LocalNotificationManager())
             }
             

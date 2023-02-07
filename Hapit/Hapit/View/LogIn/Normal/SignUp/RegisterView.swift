@@ -391,8 +391,8 @@ struct TextFieldUnderLineRectangleModifier: ViewModifier {
     var padding: CGFloat = 20
     func body(content: Content) -> some View {
         content
-            .frame(height: (stateTyping ? 1.5 : 1.0))
-            .foregroundColor(stateTyping ? .accentColor : .gray)
+            .frame(height: (stateTyping ? 1.5 : 1.2))
+            .foregroundColor(stateTyping ? .accentColor : Color(UIColor.systemGray3))
     }
 }
 

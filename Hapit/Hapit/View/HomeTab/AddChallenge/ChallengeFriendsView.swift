@@ -51,8 +51,7 @@ struct ChallengeFriendsView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "multiply")
-                        .foregroundColor(.gray)
+                    Image(systemName: "chevron.backward")
                 } // label
             } // ToolbarIte
         } // toolbar

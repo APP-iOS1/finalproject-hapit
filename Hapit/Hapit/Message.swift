@@ -14,3 +14,9 @@ struct Message: Hashable, Codable, Identifiable {
     var senderID: String
     var receiverID: String
 }
+
+// MARK: messageType
+// - "add" : "\()님이 친구 요청을 보냈습니다"
+// - "accept" : "\()님이 친구 요청을 수락했습니다"
+// - "match" : "\()님과 친구가 되었습니다"
+// - "cock" : "\()님이 콕 찌르고 갔습니다"

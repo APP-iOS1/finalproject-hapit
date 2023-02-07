@@ -11,6 +11,7 @@ import FirebaseAuth
 struct SocialView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var messageManager: MessageManager
     @State private var friends: [User] = [User]()
     
     var body: some View {

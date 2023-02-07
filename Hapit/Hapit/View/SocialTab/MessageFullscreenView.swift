@@ -8,15 +8,27 @@
 import SwiftUI
 
 struct MessageFullscreenView: View {
+    @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var messageManager: MessageManager
     
     var body: some View {
         ZStack {
             ScrollView {
-                VStack {
-                    Text("현재 도착한 메시지가 없습니다.")
-                }.frame(maxWidth: .infinity)
+                if messageManager.messageArray.isEmpty {
+                    VStack {
+                        Text("현재 도착한 메시지가 없습니다.")
+                    }.frame(maxWidth: .infinity)
+                } else {
+                    ForEach(messageManager.messageArray) { msg in
+                        MessageCellView(msg: msg)
+                    }
+                }
             }
-        }.background(Color("BackgroundColor"))
+        }
+        .background(Color("BackgroundColor"))
+        .task {
+            messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+        }
     }
 }
 

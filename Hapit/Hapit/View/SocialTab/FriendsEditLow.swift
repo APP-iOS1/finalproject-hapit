@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct FriendsEditRow: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var messageManager: MessageManager
     let friend: User
     var isRemoveOrAdd: Bool
     
@@ -28,19 +29,21 @@ struct FriendsEditRow: View {
             Spacer()
             
             Button {
-                // TODO: Bool값에 의해 삭제/추가 액션 나누기
                 Task {
+                    // 삭제 셀
                     if isRemoveOrAdd {
                         try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
                     } else {
-                        
+                    // 추가 셀
+                        try await messageManager.sendMessage(Message(id: UUID().uuidString, messageType: "add", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friend.id))
                     }
                 }
             } label: {
                 Text(isRemoveOrAdd ? "삭제" : "추가")
                     .foregroundColor(.white)
-                    .padding(5)
-                    .background(RoundedRectangle(cornerRadius: 5)
+                    .bold()
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 10)
                         .fill(Color.accentColor))
             }
         }

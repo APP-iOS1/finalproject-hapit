@@ -26,9 +26,10 @@ struct EditFriendView: View {
                             .fill(Color.accentColor)
                             .frame(width: 350, height: 50))
                 }
+                // FIXME: 왜 패딩 주니까 내비게이션 안됨?;;;
+//                .padding(EdgeInsets(top: -50, leading: 0, bottom: 10, trailing: 0))
                 
                 ScrollView {
-                    // TODO: 본인 표시 해줘야함 -> 셀 색깔로?
                     ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
                         FriendsEditRow(friend: friend, isRemoveOrAdd: true)
                     }

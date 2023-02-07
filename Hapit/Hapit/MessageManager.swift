@@ -47,7 +47,7 @@ final class MessageManager: ObservableObject {
     }
     
     // TODO: async
-    private func fetchMessage(userID: String) {
+    func fetchMessage(userID: String) {
         database.collection("User")
             .document(userID).collection("Message")
             .order(by: "sendTime", descending: true)
@@ -62,12 +62,11 @@ final class MessageManager: ObservableObject {
                         let receiverID: String = docData["receiverID"] as? String ?? ""
                         if let sendStamp = docData["sendTime"] as? Timestamp {
                             let sendTime = sendStamp.dateValue()
-                            let alarmData : Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID)
-                            self.messageArray.append(alarmData)
+                            let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID)
+                            self.messageArray.append(msgData)
                         }
                     }
                 }
             }
     }
 }
-

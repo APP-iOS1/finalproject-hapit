@@ -16,6 +16,10 @@ struct MessageFullscreenView: View {
             if messageManager.messageArray.isEmpty {
                 VStack {
                     Text("현재 도착한 메시지가 없습니다.")
+                        .font(.custom("IMHyemin-Bold", size: 20))
+                    Image(systemName: "envelope.open")
+                        .resizable()
+                        .frame(width: 200)
                 }.frame(maxWidth: .infinity)
             } else {
                 ForEach(messageManager.messageArray) { msg in

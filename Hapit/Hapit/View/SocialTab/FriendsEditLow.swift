@@ -43,11 +43,7 @@ struct FriendsEditRow: View {
                 }
             } label: {
                 Text(isRemoveOrAdd ? "삭제" : "추가")
-                    .foregroundColor(.white)
-                    .bold()
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.accentColor))
+                    .modifier(FriendButtonModifier())
             }
             .alert("친구 신청 완료!", isPresented: $isAddAlert) {
                 Button("완료") {}

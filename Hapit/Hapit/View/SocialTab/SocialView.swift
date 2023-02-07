@@ -12,7 +12,8 @@ struct SocialView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var messageManager: MessageManager
-    @State private var friends: [User] = [User]()
+    @State private var myFriends: [User] = [User]() // currentUser 포함
+    @State private var friends: [User] = [User]() // currentUser 제외
     
     var body: some View {
         NavigationView {
@@ -20,12 +21,12 @@ struct SocialView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Text("친구 수: \(friends.count - 1)")
+                        Text("친구 수: \(myFriends.count - 1)")
                             .font(.custom("IMHyemin-Bold", size: 15))
                     }.padding(.trailing, 20)
                     
                     ScrollView {
-                        ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
+                        ForEach(Array(myFriends.enumerated()), id: \.1) { (index, friend) in
                             NavigationLink {
                                 FriendChallengeView()
                             } label: {
@@ -61,8 +62,9 @@ struct SocialView: View {
                 let current = authManager.firebaseAuth
                 try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
                 try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
+                self.myFriends = userInfoManager.friendArray
                 self.friends = userInfoManager.friendArray
-                self.friends.insert(userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""]), at: 0)
+                self.myFriends.insert(userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""]), at: 0)
             } catch {
             }
         }

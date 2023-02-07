@@ -28,6 +28,15 @@ struct EditFriendView: View {
                 }
                 // FIXME: 왜 패딩 주니까 내비게이션 안됨?;;;
 //                .padding(EdgeInsets(top: -50, leading: 0, bottom: 10, trailing: 0))
+                if friends.isEmpty {
+                    Image(systemName: "arrow.up")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30)
+                        .padding(.top, 20)
+                    Text("친구를 추가해보세요")
+                        .font(.custom("IMHyemin-Bold", size: 20))
+                }
                 
                 ScrollView {
                     ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
@@ -35,7 +44,9 @@ struct EditFriendView: View {
                     }
                 }
             }
-        }.background(Color("BackgroundColor"))
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color("BackgroundColor"))
             .onAppear {
                 Task {
                     // 여기서 바로 패치안됨;

@@ -26,6 +26,7 @@ struct MessageCellView: View {
                 .padding(.horizontal)
                 VStack(alignment: .leading) {
                     Text("\(senderNickname)님이 친구 요청을 보냈습니다")
+                        .font(.custom("IMHyemin-Bold", size: 17))
                     HStack {
                         Button {
                             Task {
@@ -70,16 +71,19 @@ struct MessageCellView: View {
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님이 친구 요청을 수락했습니다")
+                    .font(.custom("IMHyemin-Bold", size: 17))
             case "match":
                 Text("💘")
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님과 친구가 되었습니다")
+                    .font(.custom("IMHyemin-Bold", size: 17))
             case "cock":
                 Text("🫵🏻")
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님이 콕 찔렀습니다")
+                    .font(.custom("IMHyemin-Bold", size: 17))
             default:
                 Text("")
             }

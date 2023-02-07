@@ -12,12 +12,10 @@ struct LogInView: View {
     @Namespace var topID
     @Namespace var bottomID
     
-    //@AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    @Binding var isFullScreen: String
     
     @State private var email: String = ""
     @State private var pw: String = ""
-    @Binding var isFullScreen: Bool
-    //@Binding var isFirstLaunching: Bool
     
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
@@ -67,7 +65,7 @@ struct LogInView: View {
                         }
                         
                         HStack(alignment: .center, spacing: 5) {
-                            if !authManager.isLoggedin && verified {
+                            if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
                                 Image(systemName: "exclamationmark.circle")
                                 Text("이메일과 비밀번호가 일치하지 않습니다")
                                 Spacer()
@@ -90,16 +88,14 @@ struct LogInView: View {
                                 } else {
                                     do {
                                         try await authManager.login(with: email, pw)
-                                        authManager.isLoggedin = true
+                                        isFullScreen = "logIn"
+                                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
                                         verified = true
                                     } catch {
-                                        authManager.isLoggedin = false
+                                        isFullScreen = "logOut"
+                                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
                                         verified = true
                                         throw(error)
-                                    }
-                                    
-                                    if authManager.isLoggedin {
-                                        isFullScreen = false
                                     }
                                 }
                             }
@@ -130,7 +126,7 @@ struct LogInView: View {
                         
                         Group {
                             VStack {
-                                AppleLogIn()
+                                //ddAppleLogIn()
                                 GoogleLogIn()
                             }
                         }
@@ -144,7 +140,7 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView(isFullScreen: .constant(true))
+        LogInView(isFullScreen: .constant("logOut"))
             .environmentObject(AuthManager())
     }
 }

@@ -17,6 +17,8 @@ struct RegisterView: View {
         return email == emailTmp
     }
     
+    @Binding var isFullScreen: String
+    
     @State private var pw: String = ""
     @State private var showPw: Bool = false
     
@@ -41,8 +43,6 @@ struct RegisterView: View {
     
     @State private var canGoNext: Bool = false
     @State private var isClicked: Bool = false
-    
-    @Binding var isFullScreen: Bool
     
     @EnvironmentObject var authManager: AuthManager
     
@@ -285,7 +285,7 @@ struct RegisterView: View {
             // MARK: 완료 버튼
             // Fallback on earlier versions
             
-            NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
+                NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
                 Button(action: {
                     Task {
                         do {
@@ -398,6 +398,6 @@ struct TextFieldUnderLineRectangleModifier: ViewModifier {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(isFullScreen: .constant(true))
+        RegisterView(isFullScreen: .constant("logIn"))
     }
 }

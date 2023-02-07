@@ -26,9 +26,9 @@ struct AppleLogIn: View {
                     return
                 }
                 authManager.authenticate(credential: credential)
-                authManager.isLoggedin = true
+                authManager.save(value: Key.logIn.rawValue, forkey: "state")
             case .failure(_):
-                authManager.isLoggedin = false
+                authManager.save(value: Key.logOut.rawValue, forkey: "state")
             }
         }
         .signInWithAppleButtonStyle(.black)

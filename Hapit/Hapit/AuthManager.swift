@@ -13,57 +13,29 @@ import FirebaseCore
 import SwiftUI
 import AuthenticationServices
 
-enum LoginState {
+enum Key: String {
     case logIn
     case logOut
 }
 
 @MainActor
 final class AuthManager: ObservableObject {
-    enum Key: String {
-        case logIn
-    }
     
-    // init
-    private init() {}
-    
-    // Singleton Pattern
-    static let shared = AuthManager()
-    
-    @Published var isLoggedin = false //이거말고 --> UserInfoManager 함수 활용 생각해보기
     @Published var nonce = ""
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     
-    // 로그인 되어 있는지 확인해주는 변수
-    var hasloggedIn: Bool {
-        return load(.logIn) as? Bool ?? false
-    }
-    
     // MARK: - 유저 로그인 정보 save 함수
-    func save(value: Any, forkey key: Key) {
-        UserDefaults.standard.set(value, forKey: key.rawValue)
-    }
-    
-    // MARK: - 유저 로그인 정보 remove 함수
-    func remove(_ key: Key) {
-        UserDefaults.standard.removeObject(forKey: key.rawValue)
-    }
-    
-    // MARK: - 로그인 여부 enum의 원시 값 반환
-    func load(_ key: Key) -> Any? {
-        switch key {
-        case .logIn:
-            return key.rawValue
-        }
+    func save(value: Any?, forkey key: String) {
+        UserDefaults.standard.set(value ?? "", forKey: key)
     }
     
     // MARK: - 로그인 
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-            save(value: firebaseAuth.currentUser?.uid ?? "", forkey: .logIn)
+            print(UserDefaults.standard.string(forKey: "state"))
         } catch{
             throw(error)
         }
@@ -73,7 +45,7 @@ final class AuthManager: ObservableObject {
     func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
-            remove(.logIn)
+            print(UserDefaults.standard.string(forKey: "state"))
         } catch {
             throw(error)
         }

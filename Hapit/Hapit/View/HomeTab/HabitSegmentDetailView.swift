@@ -23,11 +23,10 @@ struct HabitSegmentDetailView: View {
         switch selectedIndex {
             
         case 0:
-            
             VStack {
-                if habitManager.challenges.count < 1{
+                if habitManager.currentUserChallenges.count < 1{
                     
-                    EmptyCellView()
+                    EmptyCellView(currentContentsType: .challenge)
                 }
                 else {
                     
@@ -41,7 +40,7 @@ struct HabitSegmentDetailView: View {
                                     //HabitDetailView(calendar: Calendar.current)
                                     ZStack{
                                         ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentChallenge: challenge, currentDate: $date, showsCustomAlert: $showsCustomAlert)
+                                            CustomDatePickerView(currentDate: $date, showsCustomAlert: $showsCustomAlert, currentChallenge: challenge)
                                         }
                                         .padding()
                                         .background(Color("BackgroundColor"))
@@ -84,7 +83,7 @@ struct HabitSegmentDetailView: View {
         case 1:
             
             if habitManager.habits.count < 1{
-                EmptyCellView()
+                EmptyCellView(currentContentsType: .habit)
             }
             else{
                 ScrollView {

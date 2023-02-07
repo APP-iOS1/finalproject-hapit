@@ -7,41 +7,51 @@
 
 import SwiftUI
 
-var dummyFriendsData: [String] = ["진형", "응관", "예원", "민주", "주희", "현호", "현준" ]
-
-var currentFriendsData: [String] = []
-
 struct AddFriendView: View {
-    @State var searchText: String = ""
-        
-    var data = dummyFriendsData.map(DummyFriendData.init)
-    var filteredData: [DummyFriendData] {
-        if searchText.isEmpty{
-            return data
-        } else {
-            return data.filter { $0.name.localizedStandardContains(searchText)}
-        }
-
-    }
+    @EnvironmentObject var userInfoManager: UserInfoManager
+    @State private var friendNameText: String = ""
+    @State private var users = [User]()
     
     var body: some View {
-        NavigationView{
-            List(filteredData){ data in
-                Text(data.name)
-            }
-        }
-        
-        .searchable(text: $searchText, prompt: "친구의 아이디")
-        .onSubmit(of: .search) {
-            currentFriendsData.append(searchText)
-        }
-        .navigationTitle("소셜")
-    }
-}
+        VStack {
+            // MARK: Title Image
+            Image("fourbears")
+                .resizable()
+                .frame(width: 150, height: 90)
+            
+            // MARK: Title
+            Text("친구를 찾아보세요")
+                .font(.custom("IMHyemin-Bold", size: 28))
+            
+            // MARK: TextField
+            TextField("닉네임을 정확하게 입력하세요", text: $friendNameText)
+                .disableAutocorrection(true)
+                .textInputAutocapitalization(.never)
+                .padding()
+                .background{
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color("MiddlePinkColor"))
+                }
+                .padding()
+            
+            // MARK: List
+            ScrollView {
+                ForEach(Array(users.enumerated()), id: \.1) { (index, user) in
+                    if user.name.contains(friendNameText) {
 
-struct DummyFriendData: Identifiable{
-    var name: String
-    var id: String { self.name }
+                        FriendsEditRow(friend: user, isRemoveOrAdd: false)
+                            .padding(-5)
+                    }
+                }
+            }
+            Spacer()
+        }
+        .onAppear {
+            // 여기서는 패치되어있음
+//            print(userInfoManager.userInfoArray)
+            users = userInfoManager.userInfoArray
+        }
+    }
 }
 
 struct AddFriendView_Previews: PreviewProvider {

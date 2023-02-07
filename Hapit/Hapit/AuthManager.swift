@@ -26,7 +26,7 @@ final class AuthManager: ObservableObject {
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     
-    // MARK: - 유저 로그인 정보 save 함수
+    // MARK: - 유저 로그인 정보 UserDefaults에 save 함수
     func save(value: Any?, forkey key: String) {
         UserDefaults.standard.set(value ?? "", forKey: key)
     }
@@ -35,7 +35,6 @@ final class AuthManager: ObservableObject {
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-            print(UserDefaults.standard.string(forKey: "state"))
         } catch{
             throw(error)
         }
@@ -45,7 +44,6 @@ final class AuthManager: ObservableObject {
     func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
-            print(UserDefaults.standard.string(forKey: "state"))
         } catch {
             throw(error)
         }
@@ -215,22 +213,41 @@ final class AuthManager: ObservableObject {
     }
     
     // MARK: - 애플로그인 함수
-    func authenticate(credential: ASAuthorizationAppleIDCredential){
-        
-        guard let token = credential.identityToken else {
-            return
-        }
-        
-        guard let tokenString = String(data: token, encoding: .utf8) else{
-            return
-        }
-        
-        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
-        
-        Auth.auth().signIn(with: firebaseCredential) { (result, err) in
-            if let error = err {
+    func authenticate(credential: ASAuthorizationAppleIDCredential) async throws {
+        do {
+            guard let token = credential.identityToken else {
                 return
             }
+            
+            guard let tokenString = String(data: token, encoding: .utf8) else{
+                return
+            }
+            
+            let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
+            
+            // 1. Authentication에 로그인
+            let signIn = try await firebaseAuth.signIn(with: firebaseCredential)
+            
+            // 애플로그인을한 유저
+            let currentAppleUser = signIn.user
+            
+            // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
+            let dbRef = database.collection("User")
+                .document(currentAppleUser.uid)
+            
+            // 2. firestore에서 유저의 uid에 해당하는 문서를 가져옴
+            let target = try await dbRef.getDocument()
+            
+            // 문서가 존재하지 않는다면 새로 firestore에 등록해주기
+            if !target.exists {
+                
+                let newby = User(id: currentAppleUser.uid, name: currentAppleUser.displayName ?? "", email: currentAppleUser.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                
+                // 3. firestore에 새로이 문서를 등록함
+                try await uploadUserInfo(userInfo: newby)
+            }
+        } catch {
+            throw(error)
         }
     }
 }

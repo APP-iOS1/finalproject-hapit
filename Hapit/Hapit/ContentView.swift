@@ -25,7 +25,9 @@ struct ContentView: View {
                 HomeView()
                     .tabItem {
                         VStack{
-                            Image(systemName: "teddybear.fill")
+                            Image("teddybear.fill")
+                                .resizable()
+                                .renderingMode(.template)
                             Text("홈")
                         }
                     }

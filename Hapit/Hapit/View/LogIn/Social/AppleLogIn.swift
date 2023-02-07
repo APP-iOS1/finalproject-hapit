@@ -6,11 +6,34 @@
 //
 
 import SwiftUI
+import _AuthenticationServices_SwiftUI
 
 struct AppleLogIn: View {
+    
+    @EnvironmentObject var appleViewModel: AppleLoginViewModel
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
-        Image("Logo - SIWA - Logo-only - White")
-            .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
+        SignInWithAppleButton { (request) in
+            appleViewModel.nonce = appleViewModel.randomNonceString()
+            request.requestedScopes = [.email, .fullName]
+            request.nonce = appleViewModel.sha256(appleViewModel.nonce)
+        } onCompletion: { (result) in
+            switch result{
+            case .success(let user):
+                print("success")
+                guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
+                    print("error with firebase")
+                    return
+                }
+                appleViewModel.authenticate(credential: credential)
+                authManager.isLoggedin = true
+            case .failure(_):
+                authManager.isLoggedin = false
+            }
+        }
+        .signInWithAppleButtonStyle(.black)
+        .frame(width: 310, height: 50)
     }
 }
 

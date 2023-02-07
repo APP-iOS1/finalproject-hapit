@@ -127,7 +127,7 @@ struct LogInView: View {
                         Group {
                             VStack {
                                 AppleLogIn()
-                                GoogleLogIn()
+                                //GoogleLogIn()
                             }
                         }
                     }

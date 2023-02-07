@@ -46,6 +46,8 @@
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
+		95FAB86E2991DB5100E797EA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86D2991DB5100E797EA /* FirebaseStorage */; };
+		95FAB8702991DB5100E797EA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */; };
 		C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5212475298CC1A400235921 /* UserInfoManager.swift */; };
 		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
 		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
@@ -193,9 +195,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95FAB8702991DB5100E797EA /* FirebaseStorageCombine-Community in Frameworks */,
 				3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */,
 				95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */,
 				36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */,
+				95FAB86E2991DB5100E797EA /* FirebaseStorage in Frameworks */,
 				36E1440D298CE7720044E666 /* RealmSwift in Frameworks */,
 				95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */,
 				F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */,
@@ -539,6 +543,8 @@
 				36D4A14B2989EEBD0048309A /* FirebaseMessaging */,
 				36E1440A298CE7720044E666 /* Realm */,
 				36E1440C298CE7720044E666 /* RealmSwift */,
+				95FAB86D2991DB5100E797EA /* FirebaseStorage */,
+				95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */,
 			);
 			productName = Hapit;
 			productReference = F49E28C729762C9C009EEB1A /* Hapit.app */;
@@ -996,6 +1002,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		95FAB86D2991DB5100E797EA /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
 		};
 		F40B9A4F298827E400385014 /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -10,6 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 import FirebaseAuth
+import FirebaseStorage
 
 final class HabitManager: ObservableObject{
     
@@ -20,17 +21,23 @@ final class HabitManager: ObservableObject{
     private var cancellables = Set<AnyCancellable>()
     
     let currentUser = Auth.auth().currentUser ?? nil
-    
-    // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
-    // challenges 에서는 제거를 한다.
+    // MARK: Storage URL
+    let storageRef = Storage.storage().reference()
+ 
+    // 내가 앞으로 66일동안 해야하는 챌린지
     @Published var challenges: [Challenge] = []
+    // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     @Published var habits: [Challenge] = []
+    // 해당하는 챌린지의 일지의 배열
     @Published var posts: [Post] = []
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
 
     // 최종으로 받아오는 초대할 친구 목록
     @Published var seletedFriends: [ChallengeFriends] = []
+    
+    // Storage로 부터 받는 젤리들의 배열
+    @Published var bearimageData: [Data] = []
 
     let database = Firestore.firestore()
     
@@ -340,4 +347,28 @@ final class HabitManager: ObservableObject{
             } receiveValue: { _ in }
             .store(in: &cancellables)
     }
+    
+    // MARK: - Fetch Image
+    //Storage에서 path에 해당하는 이미지를 가져온 뒤, imageData 배열에 추가해주는 함수
+    //gs://hapit-b465e.appspot.com/jellybears/bearBlue1.png
+    //받아오는 주소
+    //gs://hapit-b465e.appspot.com/jellybears/bearBlue1.png
+    @MainActor
+    func fetchImages(_ path: String) {
+        self.bearimageData.removeAll()
+        
+            let ref = storageRef.child(path)
+            print(ref)
+            
+            ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if let error {
+                    print(error.localizedDescription)
+                } else {
+                    guard let data else { return }
+                    self.bearimageData.append(data)
+                }
+            }
+        
+    }
+    
 }

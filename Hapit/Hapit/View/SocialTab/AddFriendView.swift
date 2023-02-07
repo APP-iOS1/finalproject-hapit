@@ -17,7 +17,7 @@ struct AddFriendView: View {
             // MARK: Title Image
             Image("fourbears")
                 .resizable()
-                .frame(width: 120, height: 90)
+                .frame(width: 150, height: 100)
             
             // MARK: Title
             Text("친구를 찾아보세요")

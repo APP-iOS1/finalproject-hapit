@@ -11,6 +11,8 @@ import FirebaseAuth
 struct FriendsEditRow: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var messageManager: MessageManager
+    @State private var isRemoveAlert = false
+    @State private var isAddAlert = false
     let friend: User
     var isRemoveOrAdd: Bool
     
@@ -32,10 +34,11 @@ struct FriendsEditRow: View {
                 Task {
                     // 삭제 셀
                     if isRemoveOrAdd {
-                        try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
+                        isRemoveAlert.toggle()
                     } else {
                     // 추가 셀
                         try await messageManager.sendMessage(Message(id: UUID().uuidString, messageType: "add", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friend.id))
+                        isAddAlert.toggle()
                     }
                 }
             } label: {
@@ -45,6 +48,21 @@ struct FriendsEditRow: View {
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 10)
                         .fill(Color.accentColor))
+            }
+            .alert("친구 신청 완료!", isPresented: $isAddAlert) {
+                Button("완료") {}
+            } message: {
+                Text("해피들이 메시지를 전달했어요 💌")
+            }
+            .alert("정말 삭제하실 건가요?", isPresented: $isRemoveAlert) {
+                Button("삭제", role: .destructive) {
+                    Task {
+                        try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
+                    }
+                }
+                Button("취소", role: .cancel) {}
+            } message: {
+                Text("삭제해도 메시지는 가지 않아요❗️")
             }
         }
         .padding()

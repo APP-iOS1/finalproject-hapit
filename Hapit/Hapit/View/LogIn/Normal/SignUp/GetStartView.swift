@@ -9,9 +9,9 @@ import SwiftUI
 
 struct GetStartView: View {
     
-    @Binding var isFullScreen: Bool
     @EnvironmentObject var authManager: AuthManager
     
+    @Binding var isFullScreen: String
     @Binding var email: String
     @Binding var pw: String
     
@@ -23,7 +23,8 @@ struct GetStartView: View {
                     .padding(.leading, -8)
                 Spacer()
             }
-            .padding(.top, 30)
+            .frame(height: 40)
+            .padding(.top, -18)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
@@ -48,8 +49,8 @@ struct GetStartView: View {
                 Task {
                     do {
                         try await authManager.login(with: email, pw)
-                        authManager.isLoggedin = true
-                        isFullScreen = false
+                        isFullScreen = "logIn"
+                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
                     } catch {
                         throw(error)
                     }
@@ -71,8 +72,8 @@ struct GetStartView: View {
     }
 }
 
-//struct GetStartView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GetStartView()
-//    }
-//}
+struct GetStartView_Previews: PreviewProvider {
+    static var previews: some View {
+        GetStartView(isFullScreen: .constant("logIn"), email: .constant(""), pw: .constant(""))
+    }
+}

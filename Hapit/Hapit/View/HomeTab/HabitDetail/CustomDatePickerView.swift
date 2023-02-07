@@ -63,7 +63,7 @@ struct CustomDatePickerView: View {
                     } label: {
                         Image(systemName: "chevron.right")
                     }//Button
-                    
+                      
                 }// HStack
                 .padding()
                 .padding(.top, -20)
@@ -103,7 +103,6 @@ struct CustomDatePickerView: View {
                                         postsForModalView.append(post)
                                     }
                                 }
-                                print(postsForModalView)
                                 self.modalManager.openModal()
                             }
                             .animation(.easeIn, value: currentDate)
@@ -116,6 +115,7 @@ struct CustomDatePickerView: View {
             .background(Color("CellColor"))
             .cornerRadius(20)
             .navigationBarTitle(currentChallenge.challengeTitle)
+            .ignoresSafeArea()
             .onChange(of: currentMonth) { newValue in
                 currentDate = getCurrentMonth()
             }
@@ -133,6 +133,7 @@ struct CustomDatePickerView: View {
             .onAppear{
                 // MARK: 포스트 불러오기
                 //habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
+                habitManager.fetchChallenge(challengeID: currentChallenge.id)
                 habitManager.loadPosts(challengeID: currentChallenge.id, userID: authManager.firebaseAuth.currentUser?.uid ?? "")
                 currentDate = Date()
                 
@@ -148,7 +149,7 @@ struct CustomDatePickerView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        // 챌린지 삭제
+                        //MARK: 챌린지 삭제
                         showsCustomAlert.toggle()
                     } label: {
                         Image(systemName: "trash")
@@ -171,6 +172,15 @@ struct CustomDatePickerView: View {
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        //MARK: 챌린지 추가
+                        showsCreatePostView.toggle()
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .foregroundColor(.gray)
+                    } // label
+                } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
                 LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
@@ -181,6 +191,7 @@ struct CustomDatePickerView: View {
         .sheet(isPresented: $showsCreatePostView) {
             DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
+        
     }
     //MARK: Methods
     

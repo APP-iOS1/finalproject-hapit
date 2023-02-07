@@ -62,7 +62,7 @@ struct ContentView: View {
             .onAppear {
                 authManager.save(value: Key.logIn.rawValue, forkey: "state")
             }
-        case "logOut":
+        default:
             LogInView(isFullScreen: $isFullScreen)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
@@ -84,8 +84,6 @@ struct ContentView: View {
                         }
                     }
                     .navigationBarColor(backgroundColor: .clear)
-        default:
-            EmptyView()
         }
     }
 }

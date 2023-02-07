@@ -75,6 +75,7 @@ struct RegisterView: View {
                             HStack {
                                 TextField("이메일을 입력해주세요.", text: $email)
                                     .font(.custom("IMHyemin-Regular", size: 16))
+                                    .keyboardType(.emailAddress)
                                     .focused($emailFocusField)
                                     .modifier(ClearTextFieldModifier())
                                     .shakeEffect(trigger: mailDuplicated)
@@ -121,8 +122,8 @@ struct RegisterView: View {
                                 if isSecuredPassword {
                                     SecureField("비밀번호를 입력해주세요.", text: $pw)
                                         .font(.custom("IMHyemin-Regular", size: 16))
-                                        .textContentType(.oneTimeCode)
                                         .textContentType(.newPassword)
+                                        //.textContentType(.oneTimeCode)
                                         .focused($pwFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
@@ -178,8 +179,8 @@ struct RegisterView: View {
                                 if isSecuredCheckPassword {
                                     SecureField("비밀번호를 다시 입력해주세요.", text: $pwCheck)
                                         .font(.custom("IMHyemin-Regular", size: 16))
+                                        .textContentType(.newPassword) 
                                         .textContentType(.oneTimeCode)
-                                        .textContentType(.newPassword)
                                         .focused($pwCheckFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
@@ -279,7 +280,7 @@ struct RegisterView: View {
                         .frame(height: 30)
                     }
                 }
-                .padding(.bottom, 60)
+                .padding(.bottom, 90)
                 
             // MARK: 완료 버튼
             // Fallback on earlier versions
@@ -331,10 +332,10 @@ struct RegisterView: View {
             }
             .disabled(isOk())
             .padding(.vertical, 5)
-            .padding(.top, 35)
+            .padding(.top, 75)
             }
         }
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.top)
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .padding(.horizontal, 20)
@@ -381,7 +382,6 @@ struct ClearTextFieldModifier: ViewModifier {
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
             .font(.subheadline)
-            //.frame(height: 30)
     }
 }
 

@@ -119,7 +119,7 @@ struct ToSView: View {
                             Image(systemName: "checkmark")
                                 .foregroundColor(agreeAD ? Color.accentColor : .gray)
                         }
-                        Text("(선택) E-mail 광고성 정보 수신동의")
+                        Text("(선택) E-mail 광고성 정보 수신동의") // 크게 중요해보이지 않음
                             .font(.custom("IMHyemin-Regular", size: 16))
                         Spacer()
                         NavigationLink(destination: ServiceToS()){
@@ -134,6 +134,11 @@ struct ToSView: View {
                 
                 // 회원가입 버튼을 누르면 progress view가 나타남
                 // Fallback on earlier versions
+                
+                // 약관에 관한 글들은 어디서 가져오는지
+                // 주의해야할 점이 있는지
+                // 서비스 이용약관/개인정보 처리 --> 개인정보포털사이트, 검색해서 상식적으로 이해하는 정도로만 넣어도 문제될일은 없을 것이다..
+                
                 
                 NavigationLink(destination: GetStartView(isFullScreen: $isFullScreen, email: $email, pw: $pw), isActive: $isActive) {
                     Button(action: {

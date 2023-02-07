@@ -11,6 +11,8 @@ struct ContentView: View {
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
+    
+    // UserDefault로 항상 앱에 로그인 정보 저장
     @AppStorage("autoLogIn") var isFullScreen: Bool = true
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
@@ -19,6 +21,7 @@ struct ContentView: View {
     @State private var flag: Int = 1
 
     var body: some View {
+        //switch 쓰기엔 조금 타입이 그럼
         switch authManager.isLoggedin {
         case true:
             TabView(selection: $index) {
@@ -55,27 +58,27 @@ struct ContentView: View {
                 
             }
         default:
-            LogInView(isFullScreen: $isFullScreen)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                        Task {
-                            if authManager.firebaseAuth.currentUser?.uid != "" && flag == 1 {
-                                do {
-                                    try await authManager.logOut()
-                                } catch {
-                                    throw(error)
-                                }
-                            } else if authManager.firebaseAuth.currentUser?.uid != "" && flag == 2 {
-                                do {
-                                    try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                                } catch {
-                                    throw(error)
+                LogInView(isFullScreen: $isFullScreen)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                            Task {
+                                if authManager.firebaseAuth.currentUser?.uid != "" && flag == 1 {
+                                    do {
+                                        try await authManager.logOut()
+                                    } catch {
+                                        throw(error)
+                                    }
+                                } else if authManager.firebaseAuth.currentUser?.uid != "" && flag == 2 {
+                                    do {
+                                        try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    } catch {
+                                        throw(error)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                //.navigationBarColor(backgroundColor: .clear, titleColor: .black)
+                    .navigationBarColor(backgroundColor: .clear)
         }
     }
 }

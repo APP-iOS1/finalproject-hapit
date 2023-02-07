@@ -28,6 +28,8 @@ final class HabitManager: ObservableObject{
     @Published var posts: [Post] = []
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
+    //친구의 챌린지를 받을 변수
+    @Published var friendchallenges: [Challenge] = []
 
     // 최종으로 받아오는 초대할 친구 목록
     @Published var seletedFriends: [ChallengeFriends] = []
@@ -63,6 +65,37 @@ final class HabitManager: ObservableObject{
         .eraseToAnyPublisher()
     }
     
+//   //FIXME: - 현재 creator가 닉네임으로 되어있는데 uid로 변경이 필요해보임
+//    func fetchFriendChallengeCombine(friendName: String) -> AnyPublisher<[Challenge], Error>{
+//
+//        Future<[Challenge], Error> {  promise in
+//
+//            self.database.collection("Challenge")
+//                .whereField("creator",isEqualTo: friendName)
+//                .order(by: "createdAt", descending: true)
+//                .getDocuments{(snapshot, error) in
+//
+//                    if let error = error {
+//                        promise(.failure (error))
+//                        return
+//                    }
+//
+//                    guard let snapshot = snapshot else {
+//                        promise(.failure (FirebaseError.badSnapshot))
+//                        return
+//                    }
+//
+//                    snapshot.documents.forEach { document in
+//                        if let friendchallenges = try? document.data(as: Challenge.self){
+//                            self.friendchallenges.append(friendchallenges)
+//                        }
+//                    }
+//                    promise(.success(self.friendchallenges))
+//                }
+//        }
+//        .eraseToAnyPublisher()
+//    }
+
     func loadChallenge(){
         
         challenges.removeAll()

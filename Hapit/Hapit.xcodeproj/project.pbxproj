@@ -66,6 +66,7 @@
 		C958D15F298CD8690057AA5B /* ChallengeFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D15E298CD8690057AA5B /* ChallengeFriends.swift */; };
 		C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */; };
 		C958D163298CE6DE0057AA5B /* ChallengeFriendsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */; };
+		C97E42202991F13B002321C8 /* FriendChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
@@ -161,6 +162,7 @@
 		C958D15E298CD8690057AA5B /* ChallengeFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriends.swift; sourceTree = "<group>"; };
 		C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsView.swift; sourceTree = "<group>"; };
 		C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsCellView.swift; sourceTree = "<group>"; };
+		C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeCellView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				C9CBC800297683BB00D530CC /* SocialView.swift */,
 				3CF39BA429770D87003D4809 /* AddFriendView.swift */,
 				C59D55182977CD17008BB0CF /* FriendChallengeView.swift */,
+				C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */,
 				C59D551A2977D149008BB0CF /* MessageFullscreenView.swift */,
 			);
 			path = SocialTab;
@@ -659,6 +662,7 @@
 				C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */,
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
 				3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */,
+				C97E42202991F13B002321C8 /* FriendChallengeCellView.swift in Sources */,
 				C958D15F298CD8690057AA5B /* ChallengeFriends.swift in Sources */,
 				3C5CAA96298C8FEC007C3EAA /* ContentView.swift in Sources */,
 				674F28B32977C4C000390405 /* Post.swift in Sources */,

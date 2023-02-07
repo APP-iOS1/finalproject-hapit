@@ -40,7 +40,7 @@ final class UserInfoManager: ObservableObject {
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
-                tempUser = makeCurrentUser(with: requestedData, id: snapshot.documentID)
+                tempUser = makeUser(with: requestedData, id: snapshot.documentID)
                 guard let tempUser else { return nil}
                 return tempUser
             }

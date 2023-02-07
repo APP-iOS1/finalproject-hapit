@@ -18,6 +18,7 @@ final class UserInfoManager: ObservableObject {
     
     // MARK: - 현재 접속한 유저의 정보 불러오기
     // - parameters with: Auth.auth().currentUser.uid
+    //싱글턴활용해보기
     func getCurrentUserInfo(currentUserUid: String?) async throws -> Void {
         guard let currentUserUid else { return }
         let userPath = database.collection("User").document("\(currentUserUid)")

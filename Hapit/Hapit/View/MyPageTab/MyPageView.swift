@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MyPageView: View {
     @EnvironmentObject var authManager: AuthManager
-    @Binding var isFullScreen: Bool
+    
+    @Binding var isFullScreen: String
     @Binding var index: Int
     @Binding var flag: Int
     @State private var nickName = ""

@@ -9,25 +9,13 @@ import SwiftUI
 
 struct LogInView: View {
     
-//    init() {
-//        let coloredAppearance = UINavigationBarAppearance()
-//        coloredAppearance.configureWithTransparentBackground()
-//        coloredAppearance.backgroundColor = UIColor(Color.accentColor)
-////        coloredAppearance.titleTextAttributes = [.foregroundColor: titleColor ?? .white]
-////        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: titleColor ?? .white]
-//        
-//        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
-//        UINavigationBar.appearance().standardAppearance = coloredAppearance
-//        UINavigationBar.appearance().compactAppearance = coloredAppearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
-//    }
-    
     @Namespace var topID
     @Namespace var bottomID
     
+    @Binding var isFullScreen: String
+    
     @State private var email: String = ""
     @State private var pw: String = ""
-    @Binding var isFullScreen: Bool
     
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
@@ -38,134 +26,121 @@ struct LogInView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
     
+    // ScrollView의 y값 찾아서 -> hidden 해보기
+    // 키보드 높이만큼 뷰 올리는 방법..!
+    
     var body: some View {
-        
         NavigationView {
-            ScrollViewReader { proxy in
                 ScrollView(.vertical, showsIndicators: false) {
-                    Group {
-                        Image("logo")
-                            .resizable()
-                            .frame(maxWidth: .infinity, maxHeight: 200)
-                        
-                        Spacer()
-                    }
-                    .padding(.top, 15)
-                    .padding(.bottom, 30)
-                    .id(topID)
-                    
                     VStack(spacing: 20) {
-                        VStack(spacing: 5) {
-                            TextField("이메일", text: $email)
-                                .font(.custom("IMHyemin-Bold", size: 16))
-                                .focused($emailFocusField)
-                                .modifier(ClearTextFieldModifier())
-                                .onSubmit {
-                                    withAnimation {
-                                        proxy.scrollTo(topID)
-                                    }
-                                }
-                            Rectangle()
-                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
-                        }
-                        .frame(height: 40)
-                        
-                        VStack(spacing: 5) {
-                            SecureField("비밀번호", text: $pw)
-                                .font(.custom("IMHyemin-Bold", size: 16))
-                                .focused($pwFocusField)
-                                .modifier(ClearTextFieldModifier())
-                                .onSubmit {
-                                    withAnimation {
-                                        proxy.scrollTo(topID)
-                                    }
-                                }
-                            Rectangle()
-                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
-                        }
-                        .frame(height: 40)
-                    }
-                    
-                    HStack(alignment: .center, spacing: 5) {
-                        if !authManager.isLoggedin && verified {
-                            Image(systemName: "exclamationmark.circle")
-                            Text("이메일과 비밀번호가 일치하지 않습니다")
+                        Group {
+                            Image("logo")
+                                .resizable()
+                                .frame(height: 180)
+                                .id(topID)
                             Spacer()
-                        } else {
-                            Text("이")
-                                .foregroundColor(.white)
                         }
-                    }
-                    .font(.custom("IMHyemin-Bold", size: 12))
-                    .foregroundColor(.red)
-                    
-                    Button(action: {
-                        Task {
-                            //이메일 또는 비밀번호를 입력하지 않았을 경우
-                            if email == "" {
-                                emailFocusField = true
-                            } else if pw == "" {
-                                pwFocusField = true
-                            } else {
-                                do {
-                                    try await authManager.login(with: email, pw)
-                                    authManager.isLoggedin = true
-                                    verified = true
-                                } catch {
-                                    authManager.isLoggedin = false
-                                    verified = true
-                                    throw(error)
-                                }
-                                
-                                if authManager.isLoggedin {
-                                    isFullScreen = false
-                                }
-                            }
-                        }
-                    }){
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.pink)
-                            .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
-                            .overlay {
-                                Text("로그인")
+                        .padding(.bottom, 30)
+                        
+                        VStack(spacing: 20) {
+                            VStack(spacing: 5) {
+                                TextField("이메일", text: $email)
                                     .font(.custom("IMHyemin-Bold", size: 16))
+                                    .focused($emailFocusField)
+                                    .modifier(ClearTextFieldModifier())
+                                Rectangle()
+                                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
+                            }
+                            .frame(height: 40)
+                            
+                            VStack(spacing: 5) {
+                                SecureField("비밀번호", text: $pw)
+                                    .font(.custom("IMHyemin-Bold", size: 16))
+                                    .focused($pwFocusField)
+                                    .modifier(ClearTextFieldModifier())
+                                Rectangle()
+                                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
+                            }
+                            .frame(height: 40)
+                        }
+                        
+                        HStack(alignment: .center, spacing: 5) {
+                            if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
+                                Image(systemName: "exclamationmark.circle")
+                                Text("이메일과 비밀번호가 일치하지 않습니다")
+                                Spacer()
+                            } else {
+                                Text("이")
                                     .foregroundColor(.white)
                             }
-                    }
-                    .padding(.bottom, 20)
-                    
-                    Group {
-                        HStack {
-                            Text("아직 회원이 아니신가요?")
-                                .font(.custom("IMHyemin-Bold", size: 16))
-                            NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
-                                Text("회원가입")
+                        }
+                        .font(.custom("IMHyemin-Bold", size: 12))
+                        .foregroundColor(.red)
+                        .padding(.bottom, 20)
+                        
+                        Button(action: {
+                            Task {
+                                //이메일 또는 비밀번호를 입력하지 않았을 경우
+                                if email == "" {
+                                    emailFocusField = true
+                                } else if pw == "" {
+                                    pwFocusField = true
+                                } else {
+                                    do {
+                                        try await authManager.login(with: email, pw)
+                                        isFullScreen = "logIn"
+                                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                                        verified = true
+                                    } catch {
+                                        isFullScreen = "logOut"
+                                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                                        verified = true
+                                        throw(error)
+                                    }
+                                }
+                            }
+                        }){
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(.pink)
+                                .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
+                                .overlay {
+                                    Text("로그인")
+                                        .font(.custom("IMHyemin-Bold", size: 16))
+                                        .foregroundColor(.white)
+                                }
+                        }
+                        .padding(.bottom, 20)
+                        
+                        Group {
+                            HStack {
+                                Text("아직 회원이 아니신가요?")
                                     .font(.custom("IMHyemin-Bold", size: 16))
+                                NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
+                                    Text("회원가입")
+                                        .font(.custom("IMHyemin-Bold", size: 16))
+                                }
+                            }
+                        }
+                        .padding(.bottom, 10)
+                        .padding(.top, 10)
+                        
+                        Group {
+                            VStack {
+                                //ddAppleLogIn()
+                                GoogleLogIn()
                             }
                         }
                     }
-                    .padding(.bottom, 10)
-                    .padding(.top, 10)
-                    
-                    Group {
-                        HStack {
-                            AppleLogIn()
-                            GoogleLogIn()
-                        }
-                    }
-                    .id(bottomID)
-                    .padding(.bottom, 10)
-                }
                 .padding(.horizontal, 20)
             }
         }
-        .navigationBarColor(backgroundColor: .clear)
+        .edgesIgnoringSafeArea(.top)
     }
 }
 
-//struct LogInView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LogInView(isFullScreen: .constant(true))
-//            .environmentObject(AuthManager())
-//    }
-//}
+struct LogInView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogInView(isFullScreen: .constant("logOut"))
+            .environmentObject(AuthManager())
+    }
+}

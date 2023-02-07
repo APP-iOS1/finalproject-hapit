@@ -23,11 +23,10 @@ struct EditFriendView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.accentColor)
-                            .frame(width: 350, height: 50))
+                                .fill(Color.accentColor)
+                                .frame(width: 350, height: 50))
                 }
-                // FIXME: 왜 패딩 주니까 내비게이션 안됨?;;;
-//                .padding(EdgeInsets(top: -50, leading: 0, bottom: 10, trailing: 0))
+                
                 if friends.isEmpty {
                     Image(systemName: "arrow.up")
                         .resizable()
@@ -45,19 +44,20 @@ struct EditFriendView: View {
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity)
         .background(Color("BackgroundColor"))
-            .onAppear {
-                Task {
-                    // 여기서 바로 패치안됨;
-                    await userInfoManager.fetchUserInfo()
-                }
+        .onAppear {
+            Task {
+                // 여기서 바로 패치안됨;
+                await userInfoManager.fetchUserInfo()
             }
+        }
     }
 }
 
-//struct EditFriendView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditFriendView(friends: [User]())
-//    }
-//}
+struct EditFriendView_Previews: PreviewProvider {
+    static var previews: some View {
+        EditFriendView(friends: .constant([User]()))
+    }
+}

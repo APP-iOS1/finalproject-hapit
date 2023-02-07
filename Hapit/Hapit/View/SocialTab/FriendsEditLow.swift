@@ -13,6 +13,7 @@ struct FriendsEditRow: View {
     @EnvironmentObject var messageManager: MessageManager
     @State private var isRemoveAlert = false
     @State private var isAddAlert = false
+    @State private var friendOrNot = false
     let friend: User
     var isRemoveOrAdd: Bool
     
@@ -37,6 +38,13 @@ struct FriendsEditRow: View {
                         isRemoveAlert.toggle()
                     } else {
                     // 추가 셀
+                        // TODO: 이미 친구인 상태면 Alert 띄우고 신청 못하게 하기
+                        if let friendArray = userInfoManager.currentUserInfo?.friends {
+                            if friendArray.contains(friend.id) {
+                                friendOrNot = true
+                                isAddAlert.toggle()
+                            }
+                        }
                         try await messageManager.sendMessage(Message(id: UUID().uuidString, messageType: "add", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friend.id))
                         isAddAlert.toggle()
                     }
@@ -45,10 +53,15 @@ struct FriendsEditRow: View {
                 Text(isRemoveOrAdd ? "삭제" : "추가")
                     .modifier(FriendButtonModifier())
             }
-            .alert("친구 신청 완료!", isPresented: $isAddAlert) {
-                Button("완료") {}
+            .alert(friendOrNot ? "😮" : "친구 신청 완료!", isPresented: $isAddAlert) {
+                Button("완료") { }
             } message: {
-                Text("해피들이 메시지를 전달했어요 💌")
+                Text(friendOrNot ? "이미 친구인 유저예요❗️" : "해피들이 메시지를 전달했어요 💌")
+            }
+            .alert("😮", isPresented: $friendOrNot) {
+                Button("닫기") { }
+            } message: {
+                Text("이미 친구인 유저예요❗️")
             }
             .alert("정말 삭제하실 건가요?", isPresented: $isRemoveAlert) {
                 Button("삭제", role: .destructive) {

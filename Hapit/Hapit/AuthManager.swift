@@ -213,41 +213,38 @@ final class AuthManager: ObservableObject {
     }
     
     // MARK: - 애플로그인 함수
-    func authenticate(credential: ASAuthorizationAppleIDCredential) async throws {
-        do {
-            guard let token = credential.identityToken else {
-                return
+    func authenticate(credential: ASAuthorizationAppleIDCredential) {
+        guard let token = credential.identityToken else {
+            return
+        }
+        
+        guard let tokenString = String(data: token, encoding: .utf8) else{
+            return
+        }
+        
+        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
+        
+        // 1. Authentication에 로그인
+        firebaseAuth.signIn(with: firebaseCredential) { (result, err) in
+        // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
+        let dbRef = self.database.collection("User")
+            .document(result?.user.uid ?? "")
+        
+            dbRef.getDocument { (document, error) in
+                // 2. 애플로그인 유저 uid에 해당하는 문서 없다면 새로 만들어준다
+                if !(document?.exists ?? false) {
+                    let newby = User(id: result?.user.uid ?? "", name: result?.user.displayName ?? "", email: result?.user.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                    
+                    dbRef.setData([
+                        "email" : newby.email,
+                        "pw" : newby.pw,
+                        "name" : newby.name,
+                        "proImage" : newby.proImage,
+                        "badge" : newby.badge,
+                        "friends" : newby.friends
+                    ])
+                }
             }
-            
-            guard let tokenString = String(data: token, encoding: .utf8) else{
-                return
-            }
-            
-            let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
-            
-            // 1. Authentication에 로그인
-            let signIn = try await firebaseAuth.signIn(with: firebaseCredential)
-            
-            // 애플로그인을한 유저
-            let currentAppleUser = signIn.user
-            
-            // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
-            let dbRef = database.collection("User")
-                .document(currentAppleUser.uid)
-            
-            // 2. firestore에서 유저의 uid에 해당하는 문서를 가져옴
-            let target = try await dbRef.getDocument()
-            
-            // 문서가 존재하지 않는다면 새로 firestore에 등록해주기
-            if !target.exists {
-                
-                let newby = User(id: currentAppleUser.uid, name: currentAppleUser.displayName ?? "", email: currentAppleUser.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
-                
-                // 3. firestore에 새로이 문서를 등록함
-                try await uploadUserInfo(userInfo: newby)
-            }
-        } catch {
-            throw(error)
         }
     }
 }

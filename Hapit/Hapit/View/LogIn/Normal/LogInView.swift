@@ -126,7 +126,7 @@ struct LogInView: View {
                         
                         Group {
                             VStack {
-                                AppleLogIn()
+                                AppleLogIn(isFullScreen: $isFullScreen)
                                 //GoogleLogIn()
                             }
                         }

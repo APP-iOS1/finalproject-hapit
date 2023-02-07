@@ -89,11 +89,14 @@ struct AddChallengeView: View {
                         do {
                             let id = UUID().uuidString
                             let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                            let current = authManager.firebaseAuth
+                            let current = authManager.firebaseAuth                            
+                            
+                            var mateArray: [String] = []
+                            // 챌린지 작성자 uid 저장
+                            // TODO: authManager.firebaseAuth.currentUser?.uid ?? "" 부분이 중복되는 코드. 전체적으로 고칠 필요가 있음
+                            mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                             
                             //친구들 uid 저장
-                            var mateArray: [String] = []
-                            
                             for friend in habitManager.seletedFriends {
                                 let uid = friend.uid
                                 mateArray.append(uid)

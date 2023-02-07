@@ -35,7 +35,6 @@ struct FriendsEditRow: View {
                     } else {
                         
                     }
-                    
                 }
             } label: {
                 Text(isRemoveOrAdd ? "삭제" : "추가")

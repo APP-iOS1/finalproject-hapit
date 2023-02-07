@@ -20,6 +20,7 @@ struct MyPageView: View {
             ScrollView {
                 VStack {
                     ProfileCellView(nickName: $nickName, email: $email)
+                        .padding(.top, -50)
                     RewardView()
                 }
                 .toolbar {

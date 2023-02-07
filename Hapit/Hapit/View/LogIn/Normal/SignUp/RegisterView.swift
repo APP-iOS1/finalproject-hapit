@@ -179,7 +179,7 @@ struct RegisterView: View {
                                 if isSecuredCheckPassword {
                                     SecureField("비밀번호를 다시 입력해주세요.", text: $pwCheck)
                                         .font(.custom("IMHyemin-Regular", size: 16))
-                                        .textContentType(.newPassword) 
+                                        .textContentType(.newPassword)
                                         .textContentType(.oneTimeCode)
                                         .focused($pwCheckFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())

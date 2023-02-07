@@ -14,6 +14,11 @@ import CryptoKit
 import SwiftUI
 import AuthenticationServices
 
+enum LoginState {
+    case logIn
+    case logOut
+}
+
 @MainActor
 final class AuthManager: ObservableObject {
     
@@ -212,12 +217,10 @@ final class AppleLoginViewModel: ObservableObject {
     func authenticate(credential: ASAuthorizationAppleIDCredential){
         
         guard let token = credential.identityToken else{
-            print("error with firebase")
             return
         }
         
         guard let tokenString = String(data: token, encoding: .utf8) else{
-            print("error with Token")
             return
         }
         
@@ -225,9 +228,12 @@ final class AppleLoginViewModel: ObservableObject {
         
         Auth.auth().signIn(with: firebaseCredential) { (result, err) in
             if let error = err{
-                print(error.localizedDescription)
                 return
             }
+        }
+        
+        withAnimation(.easeInOut){
+            
         }
     }
     

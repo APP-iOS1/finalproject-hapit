@@ -21,9 +21,7 @@ struct AppleLogIn: View {
         } onCompletion: { (result) in
             switch result{
             case .success(let user):
-                print("success")
                 guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
-                    print("error with firebase")
                     return
                 }
                 appleViewModel.authenticate(credential: credential)

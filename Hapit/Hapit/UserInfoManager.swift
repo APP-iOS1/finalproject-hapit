@@ -19,6 +19,7 @@ final class UserInfoManager: ObservableObject {
     
     // MARK: - 현재 접속한 유저의 정보 불러오기
     // - parameters with: Auth.auth().currentUser.uid
+    //싱글턴활용해보기
     func getCurrentUserInfo(currentUserUid: String?) async throws -> Void {
         guard let currentUserUid else { return }
         let userPath = database.collection("User").document("\(currentUserUid)")
@@ -30,6 +31,26 @@ final class UserInfoManager: ObservableObject {
         } catch {
             throw(error)
         }
+    }
+    
+    func getUserInfoByUID(userUid: String?) async throws -> User? {
+        var tempUser: User? = nil
+        guard let userUid else { return nil }
+        let userPath = database.collection("User").document("\(userUid)")
+        do {
+            let snapshot = try await userPath.getDocument()
+            if let requestedData = snapshot.data() {
+                tempUser = makeCurrentUser(with: requestedData, id: snapshot.documentID)
+                guard let tempUser else { return nil}
+                return tempUser
+            }
+            else {
+                dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")
+            }
+        } catch {
+            throw(error)
+        }
+        return tempUser
     }
     
     // MARK: getCurrentUserInfo(), fetchUserInfo에서 사용할 함수
@@ -66,6 +87,7 @@ final class UserInfoManager: ObservableObject {
         guard let currentUserUid else { return }
         let target = try await database.collection("User").document(currentUserUid).getDocument()
         let docData = target.data()
+        //친구의 UID 리스트
         let friendList: [String] = docData?["friends"] as? [String] ?? [""]
         
         self.friendArray.removeAll()
@@ -76,7 +98,6 @@ final class UserInfoManager: ObservableObject {
             do {
                 let snapshot = try await target.getDocument()
                 if let requestedData = snapshot.data() {
-                    // 친구의 유저 정보 불러와서 배열에 더하기
                     let friendData = makeUser(with: requestedData, id: snapshot.documentID)
                     self.friendArray.append(friendData)
                 }

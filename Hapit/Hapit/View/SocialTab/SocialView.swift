@@ -14,7 +14,9 @@ struct SocialView: View {
     @EnvironmentObject var messageManager: MessageManager
     @State private var myFriends: [User] = [User]() // currentUser 포함
     @State private var friends: [User] = [User]() // currentUser 제외
-    
+    @State private var friends: [User] = [User]()
+    @State var rank: Int = 0
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -28,7 +30,8 @@ struct SocialView: View {
                     ScrollView {
                         ForEach(Array(myFriends.enumerated()), id: \.1) { (index, friend) in
                             NavigationLink {
-                                FriendChallengeView()
+                                FriendChallengeView(friend: friend)
+                                    .navigationTitle("친구가 수행중인 챌린지")
                             } label: {
                                 FriendsRow(friend: friend, index: index + 1)
                             }
@@ -70,6 +73,7 @@ struct SocialView: View {
         }
     }
 }
+
 struct FriendsRow: View {
     let friend: User
     var index: Int

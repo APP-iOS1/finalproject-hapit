@@ -8,31 +8,45 @@
 import SwiftUI
 
 struct FriendChallengeView: View {
-    // TODO: 나중에 Binding 값으로
-    // MARK: 더미 데이터
-    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: "")
-
+    @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var authManager: AuthManager
+    
+    // 친구의 User 정보
+    @State var friend: User
+    
     var body: some View {
         ZStack {
-            ScrollView{
-                NavigationLink {
-                    Text("디테일이 들어가는 곳")
-                } label: {
-                   // ChallengeCellView(challenge: $dummyChallenge)
+            VStack {
+                ScrollView{
+                    NavigationLink {
+                        
+                        //  ChallengeCellView(challenge: dummyChallenge)
+                    } label: {
+                        VStack{
+                            ForEach(habitManager.challenges) { challenge in
+                                if challenge.uid == friend.id {
+                                    FriendChallengeCellView(challenge: challenge)
+                                }
+                            }
+                            
+                            ForEach(habitManager.challenges) { challenge in
+                                ForEach(challenge.mateArray, id: \.self){ mate in
+                                    if mate == friend.id{
+                                        FriendChallengeCellView(challenge: challenge)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-                
-                NavigationLink {
-                    Text("디테일이 들어가는 곳")
-                } label: {
-                   // ChallengeCellView(challenge: $dummyChallenge)
-                }
-            }
-        }.background(Color("BackgroundColor"))
+            }.background(Color("BackgroundColor"))
+        }
     }
 }
-
 struct FriendChallengeView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendChallengeView()
+        FriendChallengeView(friend: User(id: "", name: "yewon", email: "yewon", pw: "", proImage: "", badge: [""], friends: [""]))
+        
     }
 }

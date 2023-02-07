@@ -23,11 +23,10 @@ struct HabitSegmentDetailView: View {
         switch selectedIndex {
             
         case 0:
-            
             VStack {
-                if habitManager.challenges.count < 1{
+                if habitManager.currentUserChallenges.count < 1{
                     
-                    EmptyCellView()
+                    EmptyCellView(currentContentsType: .challenge)
                 }
                 else {
                     
@@ -84,7 +83,7 @@ struct HabitSegmentDetailView: View {
         case 1:
             
             if habitManager.habits.count < 1{
-                EmptyCellView()
+                EmptyCellView(currentContentsType: .habit)
             }
             else{
                 ScrollView {

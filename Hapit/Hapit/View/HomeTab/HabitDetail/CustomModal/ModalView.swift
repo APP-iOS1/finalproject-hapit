@@ -64,9 +64,9 @@ struct ModalView: View {
         // Determining whether drawer is above or below `.partiallyRevealed` threshold for snapping behavior.
         if offsetFromTopOfView <= ModalState.partiallyRevealed.offsetFromTop() {
             higherStop = .open
-            lowerStop = .partiallyRevealed
+            lowerStop = .closed
         } else {
-            higherStop = .partiallyRevealed
+            higherStop = .open
             lowerStop = .closed
         }
         

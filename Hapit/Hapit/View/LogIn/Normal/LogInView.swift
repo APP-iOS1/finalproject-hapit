@@ -41,7 +41,7 @@ struct LogInView: View {
                     
                     VStack(spacing: 20) {
                         VStack(spacing: 5) {
-                            TextField("이메일", text: $email)
+                            TextField("이메일을 입력해주세요.", text: $email)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($emailFocusField)
                                 .modifier(ClearTextFieldModifier())
@@ -56,7 +56,7 @@ struct LogInView: View {
                         .frame(height: 40)
                         
                         VStack(spacing: 5) {
-                            SecureField("비밀번호", text: $pw)
+                            SecureField("비밀번호를 입력해주세요.", text: $pw)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($pwFocusField)
                                 .modifier(ClearTextFieldModifier())
@@ -109,7 +109,7 @@ struct LogInView: View {
                         }
                     }){
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(.pink)
+                            .fill(Color.accentColor)
                             .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
                             .overlay {
                                 Text("로그인")

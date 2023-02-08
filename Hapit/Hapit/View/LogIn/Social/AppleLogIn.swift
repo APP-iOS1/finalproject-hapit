@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import _AuthenticationServices_SwiftUI
+import AuthenticationServices
 import CryptoKit
 
 struct AppleLogIn: View {
@@ -17,7 +17,7 @@ struct AppleLogIn: View {
     var body: some View {
         SignInWithAppleButton { (request) in
             authManager.nonce = randomNonceString()
-            request.requestedScopes = [.email, .fullName]
+            request.requestedScopes = [.fullName, .email]
             request.nonce = sha256(authManager.nonce)
         } onCompletion: { (result) in
             switch result{

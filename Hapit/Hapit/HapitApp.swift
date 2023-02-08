@@ -13,7 +13,7 @@ import FirebaseMessaging
 import UIKit
 
 class AppDelegate: NSObject, UIApplicationDelegate{
-    
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
     let gcmMessageIDKey = "gcm.Message_ID"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -25,7 +25,9 @@ class AppDelegate: NSObject, UIApplicationDelegate{
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
             options: authOptions,
-            completionHandler: {_, _ in })
+            completionHandler: {didAllow, _ in
+                self.isUserAlarmOn = didAllow
+            })
         application.registerForRemoteNotifications()
         return true
     }

@@ -17,7 +17,8 @@ struct OptionView: View {
     @Binding var flag: Int
     @State private var isLogoutAlert = false
     @State private var isSettingsAlert = false
-    
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+
     var body: some View {
         VStack {
             List {
@@ -58,6 +59,7 @@ struct OptionView: View {
                 
                 Toggle("알림", isOn: $lnManager.isAlarmOn)
                     .onChange(of: lnManager.isAlarmOn) { val in
+                        lnManager.isAlarmOn = isUserAlarmOn
                         if val == false {
                             lnManager.clearRequests()
                         } else {
@@ -121,6 +123,7 @@ struct OptionView: View {
                 if !lnManager.isGranted {
                     lnManager.isAlarmOn = lnManager.isGranted
                 }
+                lnManager.isAlarmOn = isUserAlarmOn
             }
         }
         .onChange(of: scenePhase) { newValue in

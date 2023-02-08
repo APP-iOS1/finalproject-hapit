@@ -26,8 +26,7 @@ struct LocalNotificationSettingView: View {
     // MARK: - Body
     var body: some View {
         VStack(alignment: .center) {
-            if lnManager.isAlarmOn { // 기기에서 알림 허용이 되어있는 경우
-                
+            // 기기에서 알림 허용이 되어있는 경우
                 DatePicker("", selection: $scheduledDate, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                 
@@ -46,17 +45,14 @@ struct LocalNotificationSettingView: View {
                     }
                 }
                 .buttonStyle(.bordered)
-            } else {
-                // 기기에서 알림 허용이 되어있지 않은 경우
-                Button("설정에서 알림 허용하기") {
-                    isAlertOn = true
-                }
-                .buttonStyle(.borderedProminent)
-            }
-            
         }
         .onAppear{
             isChallengeAlarmOn = false // 저장하기 버튼을 안 누르고 모달을 닫을 경우에 알림이 해제되어 있어야 함. (아이콘)
+            for push in hapitPushInfo {
+                if push.pushID == challengeID {
+                    scheduledDate = push.pushTime ?? Date()
+                }
+            }
             Task {
                 await lnManager.getCurrentSettings()
             }

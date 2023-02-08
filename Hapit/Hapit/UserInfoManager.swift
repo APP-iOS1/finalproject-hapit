@@ -32,6 +32,19 @@ final class UserInfoManager: ObservableObject {
             throw(error)
         }
     }
+//    func getUserInfosByChallenge(challenge: Challenge) async throws -> [User] {
+//        let mateArray: [String] = challenge.mateArray
+//        var tempArray: [User] = []
+//        do {
+//            for mate in mateArray {
+//                try await tempArray.append(getUserInfoByUID(userUid: mate) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: []))
+//                return tempArray
+//            }
+//        } catch {
+//            throw(error)
+//        }
+//        return tempArray
+//    }
     
     func getUserInfoByUID(userUid: String?) async throws -> User? {
         var tempUser: User? = nil

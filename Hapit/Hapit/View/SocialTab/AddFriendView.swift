@@ -11,6 +11,11 @@ struct AddFriendView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @State private var friendNameText: String = ""
     @State private var users = [User]()
+    @Binding var isAddAlert: Bool
+    @Binding var isRemoveAlert: Bool
+    @Binding var friendOrNot: Bool
+    @Binding var selectedFriend: User
+    @State private var isContained = false
     
     var body: some View {
         VStack {
@@ -38,7 +43,7 @@ struct AddFriendView: View {
             ScrollView {
                 ForEach(Array(users.enumerated()), id: \.1) { (index, user) in
                     if user.name.contains(friendNameText) {
-                        FriendsEditRow(friend: user, isRemoveOrAdd: false)
+                        FriendsEditRow(isAddAlert: $isAddAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, selectedFriend: $selectedFriend, friend: user, isRemoveOrAdd: false)
                             .padding(-5)
                     }
                 }
@@ -46,14 +51,27 @@ struct AddFriendView: View {
             Spacer()
         }
         .onAppear {
-            // 여기서는 패치되어있음
             users = userInfoManager.userInfoArray
+            // 닉네임 검색 시 본인 안뜨게 본인 정보 삭제
+            for (index, user) in users.enumerated() {
+                if user.name == userInfoManager.currentUserInfo?.name ?? "" {
+                    users.remove(at: index)
+                }
+            }
         }
+        .customAlert(isPresented: $isAddAlert,
+                     title: friendOrNot ? "😮" : "친구 신청 완료!",
+                     message: friendOrNot ? "이미 친구인 유저예요❗️" : "해피들이 메시지를 전달했어요 💌",
+                     primaryButtonTitle: "완료",
+                     primaryAction: { isAddAlert = false
+            friendOrNot = false
+        },
+                     withCancelButton: false)
     }
 }
 
-struct AddFriendView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddFriendView()
-    }
-}
+//struct AddFriendView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddFriendView()
+//    }
+//}

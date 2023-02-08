@@ -10,12 +10,16 @@ import SwiftUI
 struct EditFriendView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @Binding var friends: [User]
+    @State private var isAddAlert = false
+    @State private var isRemoveAlert = false
+    @State private var friendOrNot = false
+    @State private var selectedFriend = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""])
     
     var body: some View {
         ZStack {
             VStack {
                 NavigationLink {
-                    AddFriendView()
+                    AddFriendView(isAddAlert: $isAddAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, selectedFriend: $selectedFriend)
                 } label: {
                     Text("새로운 친구 추가하기")
                         .font(.custom("IMHyemin-Bold", size: 17))
@@ -39,7 +43,7 @@ struct EditFriendView: View {
                 
                 ScrollView {
                     ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
-                        FriendsEditRow(friend: friend, isRemoveOrAdd: true)
+                        FriendsEditRow(isAddAlert: $isAddAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, selectedFriend: $selectedFriend, friend: friend, isRemoveOrAdd: true)
                     }
                 }
             }
@@ -53,6 +57,24 @@ struct EditFriendView: View {
                 await userInfoManager.fetchUserInfo()
             }
         }
+        .customAlert(isPresented: $isRemoveAlert,
+                     title: "정말 삭제하실 건가요?",
+                     message: "삭제해도 메시지는 가지 않아요❗️",
+                     primaryButtonTitle: "삭제",
+                     primaryAction: { Task {
+            try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: selectedFriend.id)
+        }},
+                     withCancelButton: true)
+//        .alert("정말 삭제하실 건가요?", isPresented: $isRemoveAlert) {
+//            Button("삭제", role: .destructive) {
+//                Task {
+//                    try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
+//                }
+//            }
+//            Button("취소", role: .cancel) {}
+//        } message: {
+//            Text("삭제해도 메시지는 가지 않아요❗️")
+//        }
     }
 }
 

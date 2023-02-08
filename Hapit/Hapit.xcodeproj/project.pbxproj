@@ -77,6 +77,7 @@
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
+		F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4101A5C29935BE800006039 /* KeyboardManager.swift */; };
 		F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423787E2990A2C40005B12D /* NavigationBarColor.swift */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
@@ -180,6 +181,7 @@
 		C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeCellView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
+		F4101A5C29935BE800006039 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		F423787E2990A2C40005B12D /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		F47BA150297A697F000222EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
 				C5212475298CC1A400235921 /* UserInfoManager.swift */,
 				C50FEE3F2991DE9100C18D3F /* MessageManager.swift */,
+				F4101A5C29935BE800006039 /* KeyboardManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
+				F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
 				67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,

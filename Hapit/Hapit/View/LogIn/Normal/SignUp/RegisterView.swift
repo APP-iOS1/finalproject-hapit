@@ -13,6 +13,8 @@ struct RegisterView: View {
     @State private var mailDuplicated: Bool = false
     @State private var emailTmp: String = ""
     
+    @EnvironmentObject var keyboardManager: KeyboardManager
+    
     var dupEmail: Bool {
         return email == emailTmp
     }
@@ -47,16 +49,14 @@ struct RegisterView: View {
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        VStack(spacing: 20) {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack() {
+        VStack(spacing: 10) {
+                //VStack {
                     HStack() {
                         StepBar(nowStep: 1)
                             .padding(.leading, -8)
                         Spacer()
                     }
-                    .frame(height: 50)
-                    .padding(.top, 120)
+                    .frame(height: 40)
                     
                     // MARK: TITLE
                     HStack {
@@ -68,7 +68,8 @@ struct RegisterView: View {
                         .font(.custom("IMHyemin-Bold", size: 34))
                         Spacer()
                     }
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 70)
+                    .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                     
                     VStack(spacing: 50) {
                         VStack(alignment: .leading, spacing: 5) {
@@ -123,7 +124,7 @@ struct RegisterView: View {
                                     SecureField("비밀번호를 입력해주세요.", text: $pw)
                                         .font(.custom("IMHyemin-Regular", size: 16))
                                         .textContentType(.newPassword)
-                                        //.textContentType(.oneTimeCode)
+                                        .textContentType(.oneTimeCode)
                                         .focused($pwFocusField) // 커서가 올라가있을 때 상태를 저장.
                                         .modifier(ClearTextFieldModifier())
                                 } else { // 비밀번호 보임 아이콘일 때
@@ -279,9 +280,11 @@ struct RegisterView: View {
                         }
                         .frame(height: 30)
                     }
-                }
-                .padding(.bottom, 90)
-                
+                //}
+                //.padding(.bottom, 90)
+            Spacer()
+                Spacer()
+            Spacer()
             // MARK: 완료 버튼
             // Fallback on earlier versions
             
@@ -332,10 +335,8 @@ struct RegisterView: View {
             }
             .disabled(isOk())
             .padding(.vertical, 5)
-            .padding(.top, 75)
-            }
         }
-        .edgesIgnoringSafeArea(.top)
+        .ignoresSafeArea(.keyboard)
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .padding(.horizontal, 20)
@@ -373,7 +374,6 @@ struct RegisterView: View {
             return true
         }
     }
-    
 }
 
 struct ClearTextFieldModifier: ViewModifier {

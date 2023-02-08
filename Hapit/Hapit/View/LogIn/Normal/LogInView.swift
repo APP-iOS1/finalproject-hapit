@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LogInView: View {
     
+    @EnvironmentObject var keyboardManager: KeyboardManager
     @Namespace var topID
     @Namespace var bottomID
     

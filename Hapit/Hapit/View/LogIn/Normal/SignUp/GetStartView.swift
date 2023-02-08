@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GetStartView: View {
     
+    @EnvironmentObject var keyboardManager: KeyboardManager
     @EnvironmentObject var authManager: AuthManager
     
     @Binding var isFullScreen: String
@@ -16,7 +17,7 @@ struct GetStartView: View {
     @Binding var pw: String
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             
             HStack() {
                 StepBar(nowStep: 3)
@@ -24,7 +25,6 @@ struct GetStartView: View {
                 Spacer()
             }
             .frame(height: 40)
-            .padding(.top, -18)
             
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
@@ -69,6 +69,7 @@ struct GetStartView: View {
             .padding(.vertical, 5)
         }
         .padding(.horizontal, 20)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

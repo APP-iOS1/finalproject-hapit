@@ -12,6 +12,8 @@ struct ContentView: View {
     // UserDefault로 항상 앱에 로그인 정보가 저장되고 그 값을 State 변수에 할당해 앱 시작시 화면의 분기를 형성함
     @AppStorage("isFullScreen") var isFullScreen: String = UserDefaults.standard.string(forKey: "state") ?? ""
     
+    @EnvironmentObject var keyboardManager: KeyboardManager
+    
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager

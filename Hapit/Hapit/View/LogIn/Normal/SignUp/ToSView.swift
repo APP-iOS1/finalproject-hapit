@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ToSView: View {
+    @EnvironmentObject var keyboardManager: KeyboardManager
+    
     @State private var agreeAll: Bool = false
     @State private var agreeService: Bool = false
     @State private var agreePrivate: Bool = false
@@ -25,27 +27,27 @@ struct ToSView: View {
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        VStack(spacing: 20) {
-            HStack() {
-                StepBar(nowStep: 2)
-                    .padding(.leading, -8)
-                Spacer()
-            }
-            .frame(height: 40)
-            .padding(.top, -18)
-            
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text("Hapit")
-                            .foregroundColor(Color.accentColor)
-                        Text("이용 약관에")
-                    }
-                    Text("동의해주세요")
+        VStack(spacing: 10) {
+                HStack() {
+                    StepBar(nowStep: 2)
+                        .padding(.leading, -8)
+                    Spacer()
                 }
-                .font(.custom("IMHyemin-Bold", size: 34))
-                Spacer()
-            }
+                .frame(height: 40)
+                //.padding(.top, -18)
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Hapit")
+                                .foregroundColor(Color.accentColor)
+                            Text("이용 약관에")
+                        }
+                        Text("동의해주세요")
+                    }
+                    .font(.custom("IMHyemin-Bold", size: 34))
+                    Spacer()
+                }
             
             Spacer()
             Spacer()

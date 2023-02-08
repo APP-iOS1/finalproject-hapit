@@ -43,7 +43,7 @@ struct AddChallengeView: View {
             VStack(spacing: 5) {
                 HStack{
                     InvitedMateView(temeFriend: $temeFriend)
-                }
+                }.padding(.horizontal,15)
                 
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                     .font(.custom("IMHyemin-Bold", size: 20))
@@ -104,6 +104,7 @@ struct AddChallengeView: View {
                             dismiss()
                             
                             habitManager.loadChallenge()
+                            habitManager.seletedFriends = []
                         } catch {
                             throw(error)
                         }
@@ -128,6 +129,7 @@ struct AddChallengeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
+                        habitManager.seletedFriends = []
                         dismiss()
                     } label: {
                         Image(systemName: "multiply")
@@ -148,6 +150,9 @@ struct AddChallengeView: View {
             .onAppear {
                 Task {
                     do {
+                        // 친구 배열 데이터 초기화
+                        self.friends = []
+                        
                         //친구 데이터를 받아오기
                         let current = authManager.firebaseAuth
                         let friends = try await authManager.getFriends(uid: current.currentUser?.uid ?? "")
@@ -155,6 +160,7 @@ struct AddChallengeView: View {
                         for friend in friends{
                             let nickname = try await authManager.getNickName(uid: friend)
                             let proImage = try await authManager.getPorImage(uid: friend)
+
                             self.friends.append(ChallengeFriends(uid: friend, proImage: proImage, name: nickname))
                             print("\(self.friends)")
                         }

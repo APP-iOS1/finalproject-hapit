@@ -72,7 +72,7 @@ struct RegisterView: View {
                 .padding(.bottom, geo.size.height / 6.6)
                 .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                 
-                Spacer()
+                //Spacer()
                 
                 VStack(spacing: 40) {
                     VStack(alignment: .leading, spacing: 5) {
@@ -288,6 +288,8 @@ struct RegisterView: View {
 
                 // MARK: 완료 버튼
                 // Fallback on earlier versions
+                
+                Spacer()
                 
                 NavigationLink(destination: ToSView(isFullScreen: $isFullScreen, email: $email, pw: $pw, nickName: $nickName), isActive: $canGoNext) {
                     Button(action: {

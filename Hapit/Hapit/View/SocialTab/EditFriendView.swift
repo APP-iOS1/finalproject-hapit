@@ -65,16 +65,6 @@ struct EditFriendView: View {
             try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: selectedFriend.id)
         }},
                      withCancelButton: true)
-//        .alert("정말 삭제하실 건가요?", isPresented: $isRemoveAlert) {
-//            Button("삭제", role: .destructive) {
-//                Task {
-//                    try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
-//                }
-//            }
-//            Button("취소", role: .cancel) {}
-//        } message: {
-//            Text("삭제해도 메시지는 가지 않아요❗️")
-//        }
     }
 }
 

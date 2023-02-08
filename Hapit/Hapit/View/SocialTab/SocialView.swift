@@ -12,6 +12,7 @@ struct SocialView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var messageManager: MessageManager
+    @EnvironmentObject var habitManager: HabitManager
     @State private var myFriends: [User] = [User]() // currentUser 포함
     @State private var friends: [User] = [User]() // currentUser 제외
     @State var rank: Int = 0
@@ -32,7 +33,7 @@ struct SocialView: View {
                                 FriendChallengeView(friend: friend)
                                     .navigationTitle("친구가 수행중인 챌린지")
                             } label: {
-                                FriendsRow(friend: friend, index: index + 1)
+                                FriendsRow(friend: friend, index: index + 1, count: challengeCount(friend: friend))
                             }
                         }
                     }
@@ -71,11 +72,24 @@ struct SocialView: View {
             }
         }
     }
+    
+    func challengeCount(friend: User) -> Int {
+        var count = 0
+        for challenge in habitManager.challenges {
+            for mate in challenge.mateArray {
+                if mate == friend.id {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
 }
 
 struct FriendsRow: View {
     let friend: User
     var index: Int
+    let count: Int
     
     var body: some View {
         HStack {
@@ -96,7 +110,7 @@ struct FriendsRow: View {
                     .foregroundColor(.black)
                     .bold()
                 
-                Text("현재 챌린지 개수: 2")
+                Text("현재 챌린지 개수: \(count)")
                     .font(.subheadline)
                     .foregroundColor(Color(.systemGray))
             }

@@ -11,7 +11,7 @@ import CryptoKit
 
 struct AppleLogIn: View {
     
-    //@Binding var isFirstLaunching: Bool
+    @Binding var isFullScreen: String
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
@@ -26,8 +26,10 @@ struct AppleLogIn: View {
                     return
                 }
                 authManager.authenticate(credential: credential)
+                isFullScreen = "logIn"
                 authManager.save(value: Key.logIn.rawValue, forkey: "state")
             case .failure(_):
+                isFullScreen = "logOut"
                 authManager.save(value: Key.logOut.rawValue, forkey: "state")
             }
         }
@@ -81,6 +83,6 @@ struct AppleLogIn: View {
 
 struct AppleLogIn_Previews: PreviewProvider {
     static var previews: some View {
-        AppleLogIn()
+        AppleLogIn(isFullScreen: .constant("logOut"))
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LogInView: View {
     
+    @EnvironmentObject var keyboardManager: KeyboardManager
     @Namespace var topID
     @Namespace var bottomID
     
@@ -29,112 +30,116 @@ struct LogInView: View {
     // ScrollView의 y값 찾아서 -> hidden 해보기
     // 키보드 높이만큼 뷰 올리는 방법..!
     
+    // 화면비율: 1/20 : 1/50 : 1/50
     var body: some View {
         NavigationView {
-                ScrollView(.vertical, showsIndicators: false) {
+            GeometryReader { geo in
+                VStack() {
+                    Spacer()
+                    
+                    Image("logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.bottom, geo.size.height / 30)
+                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+                    
+                    Spacer()
+                    
                     VStack(spacing: 20) {
-                        Group {
-                            Image("logo")
-                                .resizable()
-                                .frame(height: 180)
-                                .id(topID)
+                        VStack(spacing: 5) {
+                            TextField("이메일", text: $email)
+                                .font(.custom("IMHyemin-Bold", size: 16))
+                                .focused($emailFocusField)
+                                .modifier(ClearTextFieldModifier())
+                            Rectangle()
+                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
+                        }
+                        .frame(height: 40)
+                        
+                        VStack(spacing: 5) {
+                            SecureField("비밀번호", text: $pw)
+                                .font(.custom("IMHyemin-Bold", size: 16))
+                                .focused($pwFocusField)
+                                .modifier(ClearTextFieldModifier())
+                            Rectangle()
+                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
+                        }
+                        .frame(height: 40)
+                    }
+                    
+                    HStack(alignment: .center, spacing: 5) {
+                        if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
+                            Image(systemName: "exclamationmark.circle")
+                            Text("이메일과 비밀번호가 일치하지 않습니다")
                             Spacer()
+                        } else {
+                            Text("이")
+                                .foregroundColor(.white)
                         }
-                        .padding(.bottom, 30)
-                        
-                        VStack(spacing: 20) {
-                            VStack(spacing: 5) {
-                                TextField("이메일", text: $email)
-                                    .font(.custom("IMHyemin-Bold", size: 16))
-                                    .focused($emailFocusField)
-                                    .modifier(ClearTextFieldModifier())
-                                Rectangle()
-                                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
-                            }
-                            .frame(height: 40)
-                            
-                            VStack(spacing: 5) {
-                                SecureField("비밀번호", text: $pw)
-                                    .font(.custom("IMHyemin-Bold", size: 16))
-                                    .focused($pwFocusField)
-                                    .modifier(ClearTextFieldModifier())
-                                Rectangle()
-                                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
-                            }
-                            .frame(height: 40)
-                        }
-                        
-                        HStack(alignment: .center, spacing: 5) {
-                            if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
-                                Image(systemName: "exclamationmark.circle")
-                                Text("이메일과 비밀번호가 일치하지 않습니다")
-                                Spacer()
+                    }
+                    .font(.custom("IMHyemin-Bold", size: 12))
+                    .foregroundColor(.red)
+                    .padding(.bottom, 15)
+                    
+                    Button(action: {
+                        Task {
+                            //이메일 또는 비밀번호를 입력하지 않았을 경우
+                            if email == "" {
+                                emailFocusField = true
+                            } else if pw == "" {
+                                pwFocusField = true
                             } else {
-                                Text("이")
+                                do {
+                                    try await authManager.login(with: email, pw)
+                                    isFullScreen = "logIn"
+                                    authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                                    verified = true
+                                } catch {
+                                    isFullScreen = "logOut"
+                                    authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                                    verified = true
+                                    throw(error)
+                                }
+                            }
+                        }
+                    }){
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.pink)
+                            .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
+                            .overlay {
+                                Text("로그인")
+                                    .font(.custom("IMHyemin-Bold", size: 16))
                                     .foregroundColor(.white)
                             }
-                        }
-                        .font(.custom("IMHyemin-Bold", size: 12))
-                        .foregroundColor(.red)
-                        .padding(.bottom, 20)
-                        
-                        Button(action: {
-                            Task {
-                                //이메일 또는 비밀번호를 입력하지 않았을 경우
-                                if email == "" {
-                                    emailFocusField = true
-                                } else if pw == "" {
-                                    pwFocusField = true
-                                } else {
-                                    do {
-                                        try await authManager.login(with: email, pw)
-                                        isFullScreen = "logIn"
-                                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
-                                        verified = true
-                                    } catch {
-                                        isFullScreen = "logOut"
-                                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
-                                        verified = true
-                                        throw(error)
-                                    }
-                                }
-                            }
-                        }){
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.pink)
-                                .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
-                                .overlay {
-                                    Text("로그인")
-                                        .font(.custom("IMHyemin-Bold", size: 16))
-                                        .foregroundColor(.white)
-                                }
-                        }
-                        .padding(.bottom, 20)
-                        
-                        Group {
-                            HStack {
-                                Text("아직 회원이 아니신가요?")
+                    }
+                    .padding(.bottom, geo.size.height / 50)
+                    
+                    Group {
+                        HStack {
+                            Text("아직 회원이 아니신가요?")
+                                .font(.custom("IMHyemin-Bold", size: 16))
+                            NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
+                                Text("회원가입")
                                     .font(.custom("IMHyemin-Bold", size: 16))
-                                NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
-                                    Text("회원가입")
-                                        .font(.custom("IMHyemin-Bold", size: 16))
-                                }
-                            }
-                        }
-                        .padding(.bottom, 10)
-                        .padding(.top, 10)
-                        
-                        Group {
-                            VStack {
-                                AppleLogIn()
-                                GoogleLogIn()
                             }
                         }
                     }
+                    .padding(.bottom, geo.size.height / 50)
+                    
+                    Group {
+                        VStack {
+                            AppleLogIn(isFullScreen: $isFullScreen)
+                            AppleLogIn(isFullScreen: $isFullScreen)
+                            AppleLogIn(isFullScreen: $isFullScreen)
+                        }
+                    }
+                    .padding(.vertical, geo.size.height / 50)
+                }
                 .padding(.horizontal, 20)
+                .edgesIgnoringSafeArea(.top)
+                .ignoresSafeArea(.keyboard)
             }
         }
-        .edgesIgnoringSafeArea(.top)
     }
 }
 

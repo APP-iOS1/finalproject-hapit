@@ -26,7 +26,7 @@ final class AuthManager: ObservableObject {
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     
-    // MARK: - 유저 로그인 정보 save 함수
+    // MARK: - 유저 로그인 정보 UserDefaults에 save 함수
     func save(value: Any?, forkey key: String) {
         UserDefaults.standard.set(value ?? "", forKey: key)
     }
@@ -35,7 +35,6 @@ final class AuthManager: ObservableObject {
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-            print(UserDefaults.standard.string(forKey: "state"))
         } catch{
             throw(error)
         }
@@ -45,7 +44,6 @@ final class AuthManager: ObservableObject {
     func logOut() async throws {
         do {
             try await firebaseAuth.signOut()
-            print(UserDefaults.standard.string(forKey: "state"))
         } catch {
             throw(error)
         }
@@ -215,8 +213,7 @@ final class AuthManager: ObservableObject {
     }
     
     // MARK: - 애플로그인 함수
-    func authenticate(credential: ASAuthorizationAppleIDCredential){
-        
+    func authenticate(credential: ASAuthorizationAppleIDCredential) {
         guard let token = credential.identityToken else {
             return
         }
@@ -227,9 +224,26 @@ final class AuthManager: ObservableObject {
         
         let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
         
-        Auth.auth().signIn(with: firebaseCredential) { (result, err) in
-            if let error = err {
-                return
+        // 1. Authentication에 로그인
+        firebaseAuth.signIn(with: firebaseCredential) { (result, err) in
+        // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
+        let dbRef = self.database.collection("User")
+            .document(result?.user.uid ?? "")
+        
+            dbRef.getDocument { (document, error) in
+                // 2. 애플로그인 유저 uid에 해당하는 문서 없다면 새로 만들어준다
+                if !(document?.exists ?? false) {
+                    let newby = User(id: result?.user.uid ?? "", name: result?.user.displayName ?? "", email: result?.user.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                    
+                    dbRef.setData([
+                        "email" : newby.email,
+                        "pw" : newby.pw,
+                        "name" : newby.name,
+                        "proImage" : newby.proImage,
+                        "badge" : newby.badge,
+                        "friends" : newby.friends
+                    ])
+                }
             }
         }
     }

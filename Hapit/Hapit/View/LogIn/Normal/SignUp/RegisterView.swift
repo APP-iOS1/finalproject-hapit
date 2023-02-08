@@ -72,6 +72,8 @@ struct RegisterView: View {
                 .padding(.bottom, geo.size.height / 6.6)
                 .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                 
+                Spacer()
+                
                 VStack(spacing: 40) {
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {

@@ -51,6 +51,8 @@ struct ToSView: View {
                 }
                 .padding(.bottom, geo.size.height / 3.4)
                 
+                Spacer()
+                
                 Group {
                     HStack {
                         Button(action: {

@@ -23,6 +23,7 @@ struct CustomDatePickerView: View {
     @State var showsCreatePostView: Bool = false
     @State var isChallengeAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
+    @State private var isAlertOn = false
     
     // Login
     @EnvironmentObject var authManager: AuthManager
@@ -126,7 +127,9 @@ struct CustomDatePickerView: View {
                 if newValue == .active {
                     Task {
                         await lnManager.getCurrentSettings()
-                        isChallengeAlarmOn = lnManager.isGranted
+                        if !lnManager.isAlarmOn {
+                            isChallengeAlarmOn = lnManager.isAlarmOn
+                        }
                     }
                 }
             }
@@ -167,6 +170,10 @@ struct CustomDatePickerView: View {
                             lnManager.removeRequest(withIdentifier: currentChallenge.id)
                             isShowingAlarmSheet.toggle()
                         }
+                        // isAlarmOn이 false일때
+                        if !lnManager.isAlarmOn {
+                            isAlertOn = true
+                        }
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
@@ -191,6 +198,8 @@ struct CustomDatePickerView: View {
         .sheet(isPresented: $showsCreatePostView) {
             DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
+        
+        // 요기에 Alert로 마이페이지 설정에서 알림켜주세요 alert
         
     }
     //MARK: Methods

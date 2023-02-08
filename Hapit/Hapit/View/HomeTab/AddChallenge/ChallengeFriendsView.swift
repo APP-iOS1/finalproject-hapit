@@ -49,6 +49,7 @@ struct ChallengeFriendsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
+                    temeFriend = []
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")

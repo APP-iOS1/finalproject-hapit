@@ -43,7 +43,7 @@ struct AddChallengeView: View {
             VStack(spacing: 5) {
                 HStack{
                     InvitedMateView(temeFriend: $temeFriend)
-                }
+                }.padding(.horizontal,15)
                 
                 TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                     .font(.custom("IMHyemin-Bold", size: 20))
@@ -89,11 +89,14 @@ struct AddChallengeView: View {
                         do {
                             let id = UUID().uuidString
                             let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                            let current = authManager.firebaseAuth
+                            let current = authManager.firebaseAuth                            
+                            
+                            var mateArray: [String] = []
+                            // 챌린지 작성자 uid 저장
+                            // TODO: authManager.firebaseAuth.currentUser?.uid ?? "" 부분이 중복되는 코드. 전체적으로 고칠 필요가 있음
+                            mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                             
                             //친구들 uid 저장
-                            var mateArray: [String] = []
-                            
                             for friend in habitManager.seletedFriends {
                                 let uid = friend.uid
                                 mateArray.append(uid)
@@ -104,6 +107,7 @@ struct AddChallengeView: View {
                             dismiss()
                             
                             habitManager.loadChallenge()
+                            habitManager.seletedFriends = []
                         } catch {
                             throw(error)
                         }
@@ -128,6 +132,7 @@ struct AddChallengeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
+                        habitManager.seletedFriends = []
                         dismiss()
                     } label: {
                         Image(systemName: "multiply")
@@ -148,6 +153,9 @@ struct AddChallengeView: View {
             .onAppear {
                 Task {
                     do {
+                        // 친구 배열 데이터 초기화
+                        self.friends = []
+                        
                         //친구 데이터를 받아오기
                         let current = authManager.firebaseAuth
                         let friends = try await authManager.getFriends(uid: current.currentUser?.uid ?? "")
@@ -155,6 +163,7 @@ struct AddChallengeView: View {
                         for friend in friends{
                             let nickname = try await authManager.getNickName(uid: friend)
                             let proImage = try await authManager.getPorImage(uid: friend)
+
                             self.friends.append(ChallengeFriends(uid: friend, proImage: proImage, name: nickname))
                             print("\(self.friends)")
                         }

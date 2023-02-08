@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileCellView: View {
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Binding var nickName: String
     @Binding var email: String
     @State private var isSelectedJelly = 0
@@ -79,6 +80,13 @@ struct ProfileCellView: View {
                 }
             }
             .padding(10)
+        }
+        .onAppear {
+            Task {
+                try await userInfoManager.getCurrentUserInfo(currentUserUid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                // 프사 초기화 (firstIndex는 Optional 반환해서 unwrapping 해줘야 함)
+                isSelectedJelly = bearArray.firstIndex(of: userInfoManager.currentUserInfo?.proImage ?? "") ?? 0
+            }
         }
         .background()
         .cornerRadius(20)

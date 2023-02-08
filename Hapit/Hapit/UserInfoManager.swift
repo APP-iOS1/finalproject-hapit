@@ -40,8 +40,8 @@ final class UserInfoManager: ObservableObject {
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
-                //CHECK: makeCurrentUser->makeUser로 변경함.. 오타인가?
-              tempUser = makeUser(with: requestedData, id: snapshot.documentID)
+                tempUser = makeUser(with: requestedData, id: snapshot.documentID)
+
                 guard let tempUser else { return nil}
                 return tempUser
             }

@@ -14,7 +14,6 @@ struct SocialView: View {
     @EnvironmentObject var messageManager: MessageManager
     @State private var myFriends: [User] = [User]() // currentUser 포함
     @State private var friends: [User] = [User]() // currentUser 제외
-//    @State private var friends: [User] = [User]()
     @State var rank: Int = 0
 
     var body: some View {

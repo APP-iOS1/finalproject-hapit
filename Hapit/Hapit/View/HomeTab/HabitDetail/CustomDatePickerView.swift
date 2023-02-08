@@ -132,6 +132,9 @@ struct CustomDatePickerView: View {
                         if !lnManager.isAlarmOn {
                             isChallengeAlarmOn = lnManager.isAlarmOn
                         }
+                        if !lnManager.isGranted {
+                            isChallengeAlarmOn = lnManager.isGranted
+                        }
                     }
                 }
             }
@@ -149,7 +152,6 @@ struct CustomDatePickerView: View {
                     await lnManager.getCurrentSettings()
                     print("lnManager.isGranted: \(lnManager.isGranted)")
                 }
-                lnManager.isAlarmOn = isUserAlarmOn
                
             }
             .toolbar {
@@ -183,7 +185,6 @@ struct CustomDatePickerView: View {
                             isShowingAlarmSheet = false
                             isChallengeAlarmOn = false
                         }
-
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
@@ -200,7 +201,7 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
+                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
                     .environmentObject(LocalNotificationManager())
             }
         }

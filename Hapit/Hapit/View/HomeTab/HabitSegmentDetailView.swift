@@ -21,7 +21,6 @@ struct HabitSegmentDetailView: View {
     
     var body: some View {
         switch selectedIndex {
-            
         case 0:
             VStack {
                 if habitManager.currentUserChallenges.count < 1{
@@ -58,7 +57,7 @@ struct HabitSegmentDetailView: View {
                                     } // ZStack
                                     
                                 } label: {
-                                    ChallengeCellView(challenge: challenge)
+                                    ChallengeCellView(challenge: challenge, currentUserInfos: [])
                                         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
                                         .contextMenu {
                                             Button(role: .destructive) {
@@ -79,6 +78,9 @@ struct HabitSegmentDetailView: View {
                     }
                 }
             } // VStack
+            .onAppear(){
+                print(habitManager.currentUserChallenges)
+            }
 
         case 1:
             

@@ -99,7 +99,7 @@ struct AddChallengeView: View {
                                 mateArray.append(uid)
                             }
                             
-                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 1, isChecked: false, uid: current.currentUser?.uid ?? ""))
+                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: current.currentUser?.uid ?? ""))
                             
                             dismiss()
                             

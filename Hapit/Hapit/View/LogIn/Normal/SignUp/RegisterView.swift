@@ -48,6 +48,7 @@ struct RegisterView: View {
     
     @EnvironmentObject var authManager: AuthManager
     
+    //비율 분포: 1/6.6 - 1/50 - 1/50
     var body: some View {
         GeometryReader { geo in
             VStack() {
@@ -68,7 +69,7 @@ struct RegisterView: View {
                     .font(.custom("IMHyemin-Bold", size: 30))
                     Spacer()
                 }
-                .padding(.bottom, 70)
+                .padding(.bottom, geo.size.height / 6.6)
                 .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                 
                 VStack(spacing: 40) {
@@ -281,10 +282,8 @@ struct RegisterView: View {
                     .frame(height: 30)
                 }
                 //}
-                //.padding(.bottom, 90)
-                Spacer()
-                Spacer()
-                Spacer()
+                .padding(.bottom, geo.size.height / 50)
+
                 // MARK: 완료 버튼
                 // Fallback on earlier versions
                 
@@ -334,8 +333,9 @@ struct RegisterView: View {
                     }
                 }
                 .disabled(isOk())
-                .padding(.vertical, 5)
-                Spacer()
+                .padding(.vertical, geo.size.height / 50)
+                //.padding(.vertical, 5)
+                //Spacer()
             }
             .ignoresSafeArea(.keyboard)
             .autocorrectionDisabled()

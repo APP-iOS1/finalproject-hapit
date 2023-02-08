@@ -176,7 +176,7 @@ struct ToSView: View {
                     }
                     .disabled(!agreeAll)
                     .padding(.vertical, geo.size.height / 50)
-                    Spacer()
+                    //Spacer()
                 }
             }
             .padding(.horizontal, 20)

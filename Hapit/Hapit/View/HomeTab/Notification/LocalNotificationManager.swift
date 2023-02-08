@@ -8,8 +8,11 @@ class LocalNotificationManager: NSObject, ObservableObject, UNUserNotificationCe
     let notificationCenter = UNUserNotificationCenter.current()
     //허가 받았는 지 나타내는 bool값 publish
     @Published var isGranted = false
+    //옵션뷰에서 사용할 isAlarmOn 그릇
+    @Published var isAlarmOn = false
     //노티 어펜드할 어레이
     @Published var pendingRequests: [UNNotificationRequest] = []
+    
 
     //MARK: - UNUserNotificationCenterDelegate의 함수구현
     // 1. Delegate 클래스에게 이 클래스가 functions를 다루기위한 델리깃이라는걸 알려주기위한 초기화

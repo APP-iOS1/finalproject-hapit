@@ -16,7 +16,6 @@ struct OptionView: View {
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
-    @State private var isAlarmOn = false
     @State private var isSettingsAlert = false
     
     var body: some View {
@@ -57,8 +56,8 @@ struct OptionView: View {
                         .modifier(ListTextModifier())
                 }.listRowSeparator(.hidden)
                 
-                Toggle("알림", isOn: $isAlarmOn)
-                    .onChange(of: isAlarmOn) { val in
+                Toggle("알림", isOn: $lnManager.isAlarmOn)
+                    .onChange(of: lnManager.isAlarmOn) { val in
                         if val == false {
                             lnManager.clearRequests()
                         } else {
@@ -120,7 +119,7 @@ struct OptionView: View {
             Task{
                 await lnManager.getCurrentSettings()
                 if !lnManager.isGranted {
-                    isAlarmOn = lnManager.isGranted
+                    lnManager.isAlarmOn = lnManager.isGranted
                 }
             }
         }
@@ -133,7 +132,7 @@ struct OptionView: View {
                 Task {
                     await lnManager.getCurrentSettings()
                     if !lnManager.isGranted {
-                        isAlarmOn = lnManager.isGranted
+                        lnManager.isAlarmOn = lnManager.isGranted
                     }
                 }
             }

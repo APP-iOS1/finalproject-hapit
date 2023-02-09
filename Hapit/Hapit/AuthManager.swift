@@ -256,7 +256,7 @@ final class AuthManager: ObservableObject {
             
             let docData = target.data()
             
-            let badge: [String] = docData?["badge"] as! [String]
+            let badge: [String] = docData?["badge"] as? [String] ?? [""]
             
             for element in badge{
                 //self.fetchImages(path: element)

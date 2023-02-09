@@ -9,11 +9,14 @@ import SwiftUI
 
 struct AddFriendView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var messageManager: MessageManager
     @State private var friendNameText: String = ""
     @State private var users = [User]()
     @Binding var isAddAlert: Bool
+    @Binding var isAddedAlert: Bool
     @Binding var isRemoveAlert: Bool
     @Binding var friendOrNot: Bool
+    @Binding var isAdded: Bool
     @Binding var selectedFriend: User
     @State private var isContained = false
     
@@ -43,7 +46,7 @@ struct AddFriendView: View {
             ScrollView {
                 ForEach(Array(users.enumerated()), id: \.1) { (index, user) in
                     if user.name.contains(friendNameText) {
-                        FriendsEditRow(isAddAlert: $isAddAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, selectedFriend: $selectedFriend, friend: user, isRemoveOrAdd: false)
+                        FriendsEditRow(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, isAdded: $isAdded, selectedFriend: $selectedFriend, friend: user, isRemoveOrAdd: false)
                             .padding(-5)
                     }
                 }
@@ -59,12 +62,23 @@ struct AddFriendView: View {
                 }
             }
         }
+        // TODO: 삼항연산자에서 isAdded 포함해서 enum으로 변경하기
         .customAlert(isPresented: $isAddAlert,
                      title: friendOrNot ? "😮" : "친구 신청 완료!",
                      message: friendOrNot ? "이미 친구인 유저예요❗️" : "해피들이 메시지를 전달했어요 💌",
                      primaryButtonTitle: "완료",
-                     primaryAction: { isAddAlert = false
+                     primaryAction: { Task {
+            isAddAlert = false
             friendOrNot = false
+        }},
+                     withCancelButton: false)
+        .customAlert(isPresented: $isAddedAlert,
+                     title: "친구 신청 완료!",
+                     message: "해피들이 메시지를 전달했으니 조금만 기다려주세요 💌",
+                     primaryButtonTitle: "닫기",
+                     primaryAction: {
+            isAddedAlert = false
+            isAdded = false
         },
                      withCancelButton: false)
     }

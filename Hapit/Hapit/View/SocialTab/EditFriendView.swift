@@ -11,15 +11,17 @@ struct EditFriendView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @Binding var friends: [User]
     @State private var isAddAlert = false
+    @State private var isAddedAlert = false
     @State private var isRemoveAlert = false
     @State private var friendOrNot = false
+    @State private var isAdded = false
     @State private var selectedFriend = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""])
     
     var body: some View {
         ZStack {
             VStack {
                 NavigationLink {
-                    AddFriendView(isAddAlert: $isAddAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, selectedFriend: $selectedFriend)
+                    AddFriendView(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, isAdded: $isAdded, selectedFriend: $selectedFriend)
                 } label: {
                     Text("새로운 친구 추가하기")
                         .font(.custom("IMHyemin-Bold", size: 17))
@@ -43,7 +45,7 @@ struct EditFriendView: View {
                 
                 ScrollView {
                     ForEach(Array(friends.enumerated()), id: \.1) { (index, friend) in
-                        FriendsEditRow(isAddAlert: $isAddAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, selectedFriend: $selectedFriend, friend: friend, isRemoveOrAdd: true)
+                        FriendsEditRow(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, isAdded: $isAdded, selectedFriend: $selectedFriend, friend: friend, isRemoveOrAdd: true)
                     }
                 }
             }

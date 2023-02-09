@@ -12,6 +12,7 @@ import UserNotifications
 import FirebaseMessaging
 import UIKit
 import GoogleSignIn
+import KakaoSDKCommon
 
 class AppDelegate: NSObject, UIApplicationDelegate{
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
@@ -20,6 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        KakaoSDK.initSDK(appKey: "fa6e48dad20c3ead13f0758608cb305f")
 
         UNUserNotificationCenter.current().delegate = self
 

@@ -14,6 +14,9 @@ import FirebaseStorage
 import SwiftUI
 import AuthenticationServices
 import GoogleSignIn
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
 enum Key: String {
     case logIn

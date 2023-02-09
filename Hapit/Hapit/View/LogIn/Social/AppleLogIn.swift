@@ -11,7 +11,6 @@ import CryptoKit
 
 struct AppleLogIn: View {
     
-    @Binding var isFullScreen: String
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
@@ -31,12 +30,12 @@ struct AppleLogIn: View {
                         authManager.save(value: Key.logIn.rawValue, forkey: "state")
                     }
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
-                        isFullScreen = "logIn"
+                        authManager.loggedIn = "logIn"
                     }
                     
                 case .failure(_):
                     authManager.save(value: Key.logOut.rawValue, forkey: "state")
-                    isFullScreen = "logOut"
+                    authManager.loggedIn = "logOut"
                 }
             }
             .signInWithAppleButtonStyle(.black)
@@ -90,6 +89,6 @@ struct AppleLogIn: View {
 
 struct AppleLogIn_Previews: PreviewProvider {
     static var previews: some View {
-        AppleLogIn(isFullScreen: .constant("logOut"))
+        AppleLogIn()
     }
 }

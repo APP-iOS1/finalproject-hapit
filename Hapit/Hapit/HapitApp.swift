@@ -11,6 +11,7 @@ import FirebaseCore
 import UserNotifications
 import FirebaseMessaging
 import UIKit
+import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate{
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
@@ -60,6 +61,7 @@ extension AppDelegate: MessagingDelegate {
 @main
 struct HapitApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var googleSignIn = AuthManager()
     //private var modalManager: ModalManager = ModalManager()
     
     var body: some Scene {

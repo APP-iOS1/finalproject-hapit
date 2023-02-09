@@ -18,8 +18,6 @@ struct ToSView: View {
     @State private var isActive: Bool = false
     @State private var isClicked: Bool = false
     
-    @Binding var isFullScreen: String
-    
     @Binding var email: String
     @Binding var pw: String
     @Binding var nickName: String
@@ -141,7 +139,7 @@ struct ToSView: View {
                     // 주의해야할 점이 있는지
                     // 서비스 이용약관/개인정보 처리 --> 개인정보포털사이트, 검색해서 상식적으로 이해하는 정도로만 넣어도 문제될일은 없을 것이다..
                     
-                    NavigationLink(destination: GetStartView(isFullScreen: $isFullScreen, email: $email, pw: $pw), isActive: $isActive) {
+                    NavigationLink(destination: GetStartView(email: $email, pw: $pw), isActive: $isActive) {
                         Button(action: {
                             isClicked = true
                             Task {
@@ -196,6 +194,6 @@ struct ToSView: View {
 
 struct ToSView_Previews: PreviewProvider {
     static var previews: some View {
-        ToSView(isFullScreen: .constant("logIn"), email: .constant(""), pw: .constant(""), nickName: .constant(""))
+        ToSView(email: .constant(""), pw: .constant(""), nickName: .constant(""))
     }
 }

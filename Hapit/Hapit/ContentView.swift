@@ -9,11 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    // UserDefault로 항상 앱에 로그인 정보가 저장되고 그 값을 State 변수에 할당해 앱 시작시 화면의 분기를 형성함
-    @AppStorage("isFullScreen") var isFullScreen: String = UserDefaults.standard.string(forKey: "state") ?? ""
-    
-    @State var states: String = ""
-    
     @EnvironmentObject var keyboardManager: KeyboardManager
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
@@ -23,7 +18,7 @@ struct ContentView: View {
     @State private var flag: Int = 1
     
     var body: some View {
-        switch isFullScreen {
+        switch authManager.loggedIn {
         case "logIn":
             TabView(selection: $index) {
                 HomeView()
@@ -49,7 +44,7 @@ struct ContentView: View {
                     }
                     .tag(1)
                 
-                MyPageView(isFullScreen: $isFullScreen, index: $index, flag: $flag)
+                MyPageView(index: $index, flag: $flag)
                     .environmentObject(authManager)
                     .tabItem {
                         VStack{
@@ -61,19 +56,15 @@ struct ContentView: View {
             }
             .onAppear{
                 Task{
-                    states = isFullScreen
                     authManager.save(value: Key.logIn.rawValue, forkey: "state")
                     // String에 뱃지 이름을 String으로 가져옴.
                     try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                     // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
                     try await authManager.fetchImages(paths: authManager.badges)
-                    
                 }
-
-
             }
         default:
-            LogInView(isFullScreen: $isFullScreen)
+            LogInView()
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                         Task {
@@ -102,5 +93,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(KeyboardManager())
+            .environmentObject(AuthManager())
     }
 }

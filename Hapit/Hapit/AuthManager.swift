@@ -60,6 +60,10 @@ final class AuthManager: ObservableObject {
     //MARK: - 로그아웃
     func logOut() async throws {
         do {
+            if GIDSignIn.sharedInstance.currentUser != nil {
+                GIDSignIn.sharedInstance.signOut()
+            }
+            
             try await firebaseAuth.signOut()
         } catch {
             throw(error)
@@ -256,7 +260,7 @@ final class AuthManager: ObservableObject {
             
             let docData = target.data()
             
-            let badge: [String] = docData?["badge"] as! [String]
+            let badge: [String] = docData?["badge"] as? [String] ?? []
             
             for element in badge{
                 //self.fetchImages(path: element)
@@ -300,7 +304,6 @@ final class AuthManager: ObservableObject {
         }
     }
         
-
     // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
         guard let token = credential.identityToken else {
@@ -342,7 +345,10 @@ final class AuthManager: ObservableObject {
             GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
                 let userRef = database.collection("User").document(user?.userID ?? "")
                 
-                // firestore에 없는 유저인 경우에는 새로 등록해준다
+                // 1. 토큰을 생성하여 Credential을 만든 후 Auth 로그인
+                googleAuth(for: user, with: error)
+                
+                // 2. firestore에 없는 유저인 경우에는 새로 등록해준다
                 userRef.getDocument { (document, err) in
                     if !(document?.exists ?? false) {
                         let newby = User(id: user?.userID ?? "", name: user?.profile?.name ?? "", email: user?.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
@@ -357,13 +363,22 @@ final class AuthManager: ObservableObject {
                         ])
                     }
                 }
-                googleAuth(for: user, with: error)
             }
         } else {
+            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+            
+            let configuration = GIDConfiguration(clientID: clientID)
+            
+            GIDSignIn.sharedInstance.configuration = configuration
+            
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
             
             GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [self] result, err in
+                
+                // 1. 토큰을 생성하여 Credential을 만든 후 로그인
+                googleAuth(for: result?.user, with: err)
+                
                 if let googleUser = result?.user {
                     let userRef = self.database.collection("User").document(googleUser.userID ?? "")
                     
@@ -382,7 +397,6 @@ final class AuthManager: ObservableObject {
                         }
                     }
                 }
-                googleAuth(for: result?.user, with: err)
             }
         }
     }
@@ -391,6 +405,7 @@ final class AuthManager: ObservableObject {
         if let error = error {
             return
         }
+        
         guard let authenticationToken = user?.accessToken.tokenString, let idToken = user?.idToken?.tokenString else { return }
 
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authenticationToken)

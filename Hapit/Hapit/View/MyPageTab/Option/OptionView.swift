@@ -12,7 +12,7 @@ struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var lnManager: LocalNotificationManager
     @Environment(\.scenePhase) var scenePhase
-    @Binding var isFullScreen: String
+ 
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
@@ -141,7 +141,7 @@ struct OptionView: View {
                      primaryButtonTitle: "로그아웃",
                      primaryAction: { Task {
                 flag = 1
-                isFullScreen = "logOut"
+                authManager.loggedIn = "logOut"
                 authManager.save(value: Key.logOut.rawValue, forkey: "state")
                 index = 0 } },
                      withCancelButton: true)
@@ -151,7 +151,7 @@ struct OptionView: View {
                      primaryButtonTitle: "탈퇴",
                      primaryAction: { Task {
             flag = 2
-            isFullScreen = "logOut"
+            authManager.loggedIn = "logOut"
             authManager.save(value: Key.logOut.rawValue, forkey: "state")
             index = 0
         }},
@@ -169,6 +169,6 @@ struct ListTextModifier: ViewModifier {
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(isFullScreen: .constant("logIn"), index: .constant(0), flag: .constant(1))
+        OptionView(index: .constant(0), flag: .constant(1))
     }
 }

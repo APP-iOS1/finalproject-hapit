@@ -12,9 +12,9 @@ struct MyPageView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
     
-    @Binding var isFullScreen: String
     @Binding var index: Int
     @Binding var flag: Int
+    
     @State private var nickName = ""
     @State private var email = ""
 
@@ -28,7 +28,7 @@ struct MyPageView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
                         NavigationLink {
-                            OptionView(isFullScreen: $isFullScreen, index: $index, flag: $flag)
+                            OptionView(index: $index, flag: $flag)
                         } label: {
                             Image(systemName: "gearshape")
                                 .resizable()

@@ -13,8 +13,6 @@ struct LogInView: View {
     @Namespace var topID
     @Namespace var bottomID
     
-    @Binding var isFullScreen: String
-    
     @State private var email: String = ""
     @State private var pw: String = ""
     
@@ -91,11 +89,11 @@ struct LogInView: View {
                             } else {
                                 do {
                                     try await authManager.login(with: email, pw)
-                                    isFullScreen = "logIn"
+                                    authManager.loggedIn = "logIn"
                                     authManager.save(value: Key.logIn.rawValue, forkey: "state")
                                     verified = true
                                 } catch {
-                                    isFullScreen = "logOut"
+                                    authManager.loggedIn = "logOut"
                                     authManager.save(value: Key.logOut.rawValue, forkey: "state")
                                     verified = true
                                     throw(error)
@@ -118,7 +116,7 @@ struct LogInView: View {
                         HStack {
                             Text("아직 회원이 아니신가요?")
                                 .font(.custom("IMHyemin-Bold", size: 16))
-                            NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
+                            NavigationLink(destination: RegisterView()){
                                 Text("회원가입")
                                     .font(.custom("IMHyemin-Bold", size: 16))
                             }
@@ -128,9 +126,9 @@ struct LogInView: View {
                     
                     Group {
                         VStack {
-                            AppleLogIn(isFullScreen: $isFullScreen)
-                            AppleLogIn(isFullScreen: $isFullScreen)
-                            AppleLogIn(isFullScreen: $isFullScreen)
+                            AppleLogIn()
+                            GoogleLogIn()
+                            AppleLogIn()
                         }
                     }
                     .padding(.vertical, geo.size.height / 50)
@@ -145,7 +143,8 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView(isFullScreen: .constant("logOut"))
+        LogInView()
             .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
     }
 }

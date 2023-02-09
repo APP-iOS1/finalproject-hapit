@@ -25,7 +25,7 @@ struct AppleLogIn: View {
                 guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
                     return
                 }
-                authManager.authenticate(credential: credential)
+              //  authManager.authenticate(credential: credential)
                 isFullScreen = "logIn"
                 authManager.save(value: Key.logIn.rawValue, forkey: "state")
             case .failure(_):

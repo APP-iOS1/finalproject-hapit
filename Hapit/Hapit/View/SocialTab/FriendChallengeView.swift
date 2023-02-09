@@ -23,11 +23,7 @@ struct FriendChallengeView: View {
                         ForEach(habitManager.challenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self){ mate in
                                 if mate == friend.id{
-                                    NavigationLink {
-                                        
-                                    }label: {
                                         FriendChallengeCellView(challenge: challenge)
-                                    }
                                 }
                             }
                         }

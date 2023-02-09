@@ -7,13 +7,19 @@
 
 import SwiftUI
 
+let ReceiverFCMToken = "d2Fzp0SUCk2hh5aOenaMFF:APA91bF-IozEiFodJmBoSHxBhODZZkaEuW5z3wWPdF_zsdkT1a_ARXhn-zBP7f3LvFuPYGOi3LxTxXhgMW2YRdchMdrcM4ojdRnyOEQwpuChldgiZhK2o_29KLRsJKcYt4VL7S1Tk6Oa"
+
 struct FriendChallengeCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
 
-    @State var challengeWithMe:[Challenge] = []
+    @State var challengeWithMe: [Challenge] = []
     @State var challenge: Challenge
+    
+    @State private var notificationContent: String = ""
+    @ObservedObject private var datas = fcmManager
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 1){
@@ -21,8 +27,16 @@ struct FriendChallengeCellView: View {
                     Text(challenge.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))
                         .foregroundColor(.gray)
-                    Text(challenge.challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 22))
+                    HStack {
+                        Text(challenge.challengeTitle)
+                            .font(.custom("IMHyemin-Bold", size: 22))
+                        Button{
+                            self.datas.sendMessageTouser(datas: self.datas,to: ReceiverFCMToken, title: "Test" , body: "Test")
+                            self.notificationContent = ""
+                        } label: {
+                            Image(systemName: "hand.tap.fill")
+                        }
+                    }
                 }//VStack
                 
                 HStack(spacing: 5){
@@ -73,8 +87,8 @@ struct FriendChallengeCellView: View {
     }
 }
 
-struct FriendChallengeCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        FriendChallengeCellView(challenge: Challenge(id: "", creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: ""))
-    }
-}
+//struct FriendChallengeCellView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FriendChallengeCellView(challenge: Challenge(id: "", creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: ""))
+//    }
+//}

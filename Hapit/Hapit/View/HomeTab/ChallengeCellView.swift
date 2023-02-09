@@ -13,7 +13,8 @@ struct ChallengeCellView: View {
     var isCheckedInDevice: Bool = false
     
     @EnvironmentObject var habitManager: HabitManager
-    
+    @EnvironmentObject var userInfoManager: UserInfoManager
+    @State var currentUserInfos: [User]
     // MARK: - Body
     var body: some View {
         HStack {
@@ -45,8 +46,8 @@ struct ChallengeCellView: View {
                         .foregroundColor(.orange)
                     Text("연속 \(challenge.count)일째")
                     Spacer()
-                    ForEach(0..<3){ bear in
-                        Image("bearBlue")
+                    ForEach(currentUserInfos){ user in
+                        Image("\(user.proImage)")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .offset(y: 5)
@@ -69,32 +70,17 @@ struct ChallengeCellView: View {
         .background(
             .white
         )
-//        .overlay(
-//            VStack{
-//                Spacer()
-//                ZStack{
-//                    Rectangle()
-//                        .frame(height: 4)
-//                        .padding([.top, .leading, .trailing], 10)
-//                        .foregroundColor(Color(UIColor.lightGray))
-//                    
-//                    HStack{
-//                        //                    Image("duckBoat")
-//                        //                        .resizable()
-//                        //                        .aspectRatio(contentMode: .fit)
-//                        //                        .frame(width: 20)
-//                        
-//                        
-//                        Rectangle()
-//                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
-//                            .padding([.top, .leading, .trailing], 10)
-//                        Spacer()
-//                    }
-//                }
-//            }
-//        )
-
         .cornerRadius(20)
+        .onAppear(){
+            currentUserInfos = []
+            Task{
+                for member in challenge.mateArray {
+                    try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member)  ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: []))
+                }
+                
+            }
+            print(currentUserInfos)
+        }
         //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(
 //            VStack{

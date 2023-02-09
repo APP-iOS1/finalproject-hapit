@@ -19,7 +19,7 @@ struct InvitedMateView: View {
                         AddChallengeMateProfileView(mateName: friend.name, proImage: friend.proImage)
                     }
                 }
-            }.padding(.horizontal,20)
+            }.padding(.horizontal)
         }
     }
 }

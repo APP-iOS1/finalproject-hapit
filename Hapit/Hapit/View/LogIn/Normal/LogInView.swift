@@ -9,25 +9,14 @@ import SwiftUI
 
 struct LogInView: View {
     
-//    init() {
-//        let coloredAppearance = UINavigationBarAppearance()
-//        coloredAppearance.configureWithTransparentBackground()
-//        coloredAppearance.backgroundColor = UIColor(Color.accentColor)
-////        coloredAppearance.titleTextAttributes = [.foregroundColor: titleColor ?? .white]
-////        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: titleColor ?? .white]
-//        
-//        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
-//        UINavigationBar.appearance().standardAppearance = coloredAppearance
-//        UINavigationBar.appearance().compactAppearance = coloredAppearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
-//    }
-    
+    @EnvironmentObject var keyboardManager: KeyboardManager
     @Namespace var topID
     @Namespace var bottomID
     
+    @Binding var isFullScreen: String
+    
     @State private var email: String = ""
     @State private var pw: String = ""
-    @Binding var isFullScreen: Bool
     
     @FocusState private var emailFocusField: Bool
     @FocusState private var pwFocusField: Bool
@@ -38,21 +27,23 @@ struct LogInView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
     
+    // ScrollView의 y값 찾아서 -> hidden 해보기
+    // 키보드 높이만큼 뷰 올리는 방법..!
+    
+    // 화면비율: 1/20 : 1/50 : 1/50
     var body: some View {
-        
         NavigationView {
-            ScrollViewReader { proxy in
-                ScrollView(.vertical, showsIndicators: false) {
-                    Group {
-                        Image("logo")
-                            .resizable()
-                            .frame(maxWidth: .infinity, maxHeight: 200)
-                        
-                        Spacer()
-                    }
-                    .padding(.top, 15)
-                    .padding(.bottom, 30)
-                    .id(topID)
+            GeometryReader { geo in
+                VStack() {
+                    Spacer()
+                    
+                    Image("logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.bottom, geo.size.height / 30)
+                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+                    
+                    Spacer()
                     
                     VStack(spacing: 20) {
                         VStack(spacing: 5) {
@@ -60,11 +51,6 @@ struct LogInView: View {
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($emailFocusField)
                                 .modifier(ClearTextFieldModifier())
-                                .onSubmit {
-                                    withAnimation {
-                                        proxy.scrollTo(topID)
-                                    }
-                                }
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
                         }
@@ -75,11 +61,6 @@ struct LogInView: View {
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($pwFocusField)
                                 .modifier(ClearTextFieldModifier())
-                                .onSubmit {
-                                    withAnimation {
-                                        proxy.scrollTo(topID)
-                                    }
-                                }
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                         }
@@ -87,7 +68,7 @@ struct LogInView: View {
                     }
                     
                     HStack(alignment: .center, spacing: 5) {
-                        if !authManager.isLoggedin && verified {
+                        if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
                             Image(systemName: "exclamationmark.circle")
                             Text("이메일과 비밀번호가 일치하지 않습니다")
                             Spacer()
@@ -98,6 +79,7 @@ struct LogInView: View {
                     }
                     .font(.custom("IMHyemin-Bold", size: 12))
                     .foregroundColor(.red)
+                    .padding(.bottom, 15)
                     
                     Button(action: {
                         Task {
@@ -109,16 +91,14 @@ struct LogInView: View {
                             } else {
                                 do {
                                     try await authManager.login(with: email, pw)
-                                    authManager.isLoggedin = true
+                                    isFullScreen = "logIn"
+                                    authManager.save(value: Key.logIn.rawValue, forkey: "state")
                                     verified = true
                                 } catch {
-                                    authManager.isLoggedin = false
+                                    isFullScreen = "logOut"
+                                    authManager.save(value: Key.logOut.rawValue, forkey: "state")
                                     verified = true
                                     throw(error)
-                                }
-                                
-                                if authManager.isLoggedin {
-                                    isFullScreen = false
                                 }
                             }
                         }
@@ -132,7 +112,7 @@ struct LogInView: View {
                                     .foregroundColor(.white)
                             }
                     }
-                    .padding(.bottom, 20)
+                    .padding(.bottom, geo.size.height / 50)
                     
                     Group {
                         HStack {
@@ -144,28 +124,28 @@ struct LogInView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 10)
-                    .padding(.top, 10)
+                    .padding(.bottom, geo.size.height / 50)
                     
                     Group {
-                        HStack {
-                            AppleLogIn()
-                            GoogleLogIn()
+                        VStack {
+                            AppleLogIn(isFullScreen: $isFullScreen)
+                            AppleLogIn(isFullScreen: $isFullScreen)
+                            AppleLogIn(isFullScreen: $isFullScreen)
                         }
                     }
-                    .id(bottomID)
-                    .padding(.bottom, 10)
+                    .padding(.vertical, geo.size.height / 50)
                 }
                 .padding(.horizontal, 20)
+                .edgesIgnoringSafeArea(.top)
+                .ignoresSafeArea(.keyboard)
             }
         }
-        .navigationBarColor(backgroundColor: .clear)
     }
 }
 
-//struct LogInView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LogInView(isFullScreen: .constant(true))
-//            .environmentObject(AuthManager())
-//    }
-//}
+struct LogInView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogInView(isFullScreen: .constant("logOut"))
+            .environmentObject(AuthManager())
+    }
+}

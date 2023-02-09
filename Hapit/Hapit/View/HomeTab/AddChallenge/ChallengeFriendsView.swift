@@ -49,10 +49,10 @@ struct ChallengeFriendsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
+                    temeFriend = []
                     dismiss()
                 } label: {
-                    Image(systemName: "multiply")
-                        .foregroundColor(.gray)
+                    Image(systemName: "chevron.backward")
                 } // label
             } // ToolbarIte
         } // toolbar

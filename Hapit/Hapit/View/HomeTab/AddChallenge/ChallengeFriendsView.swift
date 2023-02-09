@@ -44,6 +44,7 @@ struct ChallengeFriendsView: View {
                 }//Button
             }//VStack
         }//ZStack
+        .frame(maxWidth: .infinity)
         .background(Color("BackgroundColor").ignoresSafeArea())
         .navigationBarTitle("함께할 친구 고르기")
         .toolbar {

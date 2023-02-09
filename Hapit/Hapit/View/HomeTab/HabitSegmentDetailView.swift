@@ -44,6 +44,7 @@ struct HabitSegmentDetailView: View {
                                         .padding()
                                         .background(Color("BackgroundColor"))
                                         Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
+                                        
                                             .edgesIgnoringSafeArea(.all)
                                             .transition(.opacity)
                                             .customAlert( // 커스텀 알림창 띄우기

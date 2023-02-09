@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomDatePickerView: View {
     
+    private let timeIntervalAfter66Days: TimeInterval = 60 * 60 * 24 * 66
     //MARK: - Property Wrappers
     @Binding var currentDate: Date
     @State var isShownModalView: Bool = false
@@ -18,6 +19,7 @@ struct CustomDatePickerView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var modalManager: ModalManager
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
     @Binding var showsCustomAlert: Bool
     @State var showsCreatePostView: Bool = false
@@ -25,8 +27,9 @@ struct CustomDatePickerView: View {
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
     //OptionView에서 설정해달라고 애원하는 시트
     @State private var isAlertOn = false
-    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
 
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+    
     // Login
     @EnvironmentObject var authManager: AuthManager
     
@@ -51,25 +54,19 @@ struct CustomDatePickerView: View {
                     Spacer(minLength: 0)
                     
                     Button {
-                        withAnimation{
-                            currentMonth -= 1
-                        }
+                        currentMonth -= 1
                     } label: {
                         Image(systemName: "chevron.left")
                     }//Button
                     .animation(.easeIn, value: currentMonth)
                     
                     Button {
-                        withAnimation{
-                            currentMonth += 1
-                        }
+                        currentMonth += 1
                     } label: {
                         Image(systemName: "chevron.right")
                     }//Button
-                      
+                    
                 }// HStack
-                .padding()
-                .padding(.top, -20)
                 HStack(spacing: 0){
                     ForEach(days, id: \.self){ day in
                         VStack{
@@ -83,6 +80,7 @@ struct CustomDatePickerView: View {
                         }
                     }
                 }
+                .padding(.top, -20)
                 
                 // Dates
                 let colums = Array(repeating: GridItem(.flexible()), count: 7)
@@ -107,14 +105,33 @@ struct CustomDatePickerView: View {
                                     }
                                 }
                                 self.modalManager.openModal()
+                                habitManager.currentMateInfos = []
+                                
+                                Task{
+                                    // customModalView에서 불러온 mateArray의 순서를 변경할 필요가 있다.
+                                    // CurrentUser의 uid가 mateArray[0으로 와야함]
+                                    habitManager.currentMateInfos = []
+                                    let current = authManager.firebaseAuth
+                                    let currentUser = current.currentUser?.uid
+                                    let mateArray = habitManager.currentChallenge.mateArray
+                                    var sortedMateArray = sortMateArray(mateArray, currentUserUid: currentUser ?? "")
+                                    
+                                    // currentMateInfo를 초기화 해주는 부분.
+                                    // 초기화를 하지 않는다면 onAppear 할 때마다 currentInfo가 늘어난다.
+                                    for member in sortedMateArray {
+                                        let userInfo = try await userInfoManager.getUserInfoByUID(userUid: member)
+                                        habitManager.currentMateInfos.append(userInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: []))
+                                    }
+                                }
+                                
                             }
                             .animation(.easeIn, value: currentDate)
                     }
                 }
-                Spacer()
+                .padding(.top, -20)
+                //Spacer()
             }//VStack
-            .padding()
-            .padding(.top, 0)
+            .padding([.top, .leading, .trailing])
             .background(Color("CellColor"))
             .cornerRadius(20)
             .navigationBarTitle(currentChallenge.challengeTitle)
@@ -137,20 +154,21 @@ struct CustomDatePickerView: View {
             }
             .onAppear{
                 // MARK: 포스트 불러오기
-                //habitManager.loadPosts(id: "6ZZSFSl3vddeX4HVGL5P")
                 habitManager.fetchChallenge(challengeID: currentChallenge.id)
                 habitManager.loadPosts(challengeID: currentChallenge.id, userID: authManager.firebaseAuth.currentUser?.uid ?? "")
                 currentDate = Date()
                 
                 self.modalManager.newModal(position: .closed) {
                     PostModalView(postsForModalView: $postsForModalView)
+                        .offset(y: 200)
                 }
+                
                 Task {
                     await lnManager.getCurrentSettings()
                     print("lnManager.isGranted: \(lnManager.isGranted)")
                 }
                 lnManager.isAlarmOn = isUserAlarmOn
-               
+                
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -172,7 +190,7 @@ struct CustomDatePickerView: View {
                                 isAlertOn = false
                                 isShowingAlarmSheet = true
                                 isChallengeAlarmOn = true
-
+                                
                             } else {
                                 isAlertOn = true
                                 isShowingAlarmSheet = false
@@ -183,7 +201,7 @@ struct CustomDatePickerView: View {
                             isShowingAlarmSheet = false
                             isChallengeAlarmOn = false
                         }
-
+                        
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
@@ -232,7 +250,7 @@ struct CustomDatePickerView: View {
                         .frame(width: 8, height: 8)
                         .padding(.top, 20)
                     
-                }else {
+                } else {
                     
                     Text("\(value.day)")
                         .font(.custom("IMHyemin-Bold", size: 20))
@@ -243,6 +261,13 @@ struct CustomDatePickerView: View {
                     
                 }
             }
+            if (isSameDay(date1: value.date, date2: currentChallenge.createdAt.addingTimeInterval(timeIntervalAfter66Days))){
+                Text("D-day")
+                    .font(.custom("IMHyemin-Regular", size: 10))
+                    .foregroundColor(.accentColor)
+                    
+            }
+            
         }
         .padding(.vertical, 8)
         .frame(height: 60, alignment: .top)
@@ -306,6 +331,25 @@ struct CustomDatePickerView: View {
         }
         
         return days
+    }
+    
+    func sortMateArray(_ mateArray: [String], currentUserUid: String) -> [String] {
+        var currentUserArray: [String] = []
+        var otherMatesArray: [String] = []
+        
+        for uid in mateArray {
+            
+            if uid == currentUserUid {
+                currentUserArray.append(uid)
+            }
+            else {
+                otherMatesArray.append((uid))
+            }
+        }
+        
+        let tempArray = currentUserArray + otherMatesArray
+        
+        return tempArray
     }
 }
 

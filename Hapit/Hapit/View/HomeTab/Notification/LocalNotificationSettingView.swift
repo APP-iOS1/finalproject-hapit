@@ -12,11 +12,11 @@ struct LocalNotificationSettingView: View {
     
     // MARK: - Property Wrappers
     @EnvironmentObject var lnManager: LocalNotificationManager
-    @Environment(\.dismiss) var dismiss
     @Environment(\.scenePhase) var scenePhase
     @State private var scheduledDate = Date()
     @ObservedResults(HapitPushInfo.self) var hapitPushInfo
     @Binding var isChallengeAlarmOn: Bool
+    @Binding var isShowingAlarmSheet: Bool
     var challengeID: String
     var challengeTitle: String
     
@@ -41,7 +41,10 @@ struct LocalNotificationSettingView: View {
                     Task{
                         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: scheduledDate)
                         await lnManager.schedule(localNotification: LocalNotification(identifier: challengeID, title: challengeTitle, body: "챌린지를 할 시간입니다", dateComponents: dateComponents, repeats: true))
-                        dismiss()
+                        
+                        //원래 dismiss쓰다가 isShowingAlarmSheet가 true인 상태여서 백그라운드모드일때 다시 모달이 다시 올라가는 현상이 있어서 isShowingAlarmSheet를 바인딩해서 false로 고정.
+                        isShowingAlarmSheet = false
+                        
                     }
                 }
                 .buttonStyle(.bordered)

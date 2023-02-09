@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
 		368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368AE79D29878DA7005088E5 /* DiaryModalView.swift */; };
+		3696BF8429940EF60025A3A4 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3696BF8329940EF60025A3A4 /* FCMManager.swift */; };
 		369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D429777E72004CB739 /* DiaryViewModel.swift */; };
 		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
 		36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 36D4A14B2989EEBD0048309A /* FirebaseMessaging */; };
@@ -115,6 +116,7 @@
 		0C9C7D2CE76DAFB6CDD8A4EC /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hapit.release.xcconfig"; path = "Target Support Files/Pods-Hapit/Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
 		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
 		368AE79D29878DA7005088E5 /* DiaryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModalView.swift; sourceTree = "<group>"; };
+		3696BF8329940EF60025A3A4 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
 		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
 		36E1440E298CE7F20044E666 /* HapitPushInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitPushInfo.swift; sourceTree = "<group>"; };
@@ -276,8 +278,6 @@
 		67BD574C298FE3B300DD37B0 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				67BD574D298FE3C600DD37B0 /* LocalNotification.swift */,
-				67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */,
 				67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */,
 			);
 			path = Notification;
@@ -443,6 +443,7 @@
 		F49E28D829762CCF009EEB1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				67BD574D298FE3C600DD37B0 /* LocalNotification.swift */,
 				369D01D629777E97004CB739 /* Dairy.swift */,
 				3C811D1E29877AF10005539A /* DateValue.swift */,
 				C59D55142977A7C9008BB0CF /* Jelly.swift */,
@@ -478,6 +479,8 @@
 				C5212475298CC1A400235921 /* UserInfoManager.swift */,
 				C50FEE3F2991DE9100C18D3F /* MessageManager.swift */,
 				F4101A5C29935BE800006039 /* KeyboardManager.swift */,
+				3696BF8329940EF60025A3A4 /* FCMManager.swift */,
+				67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */,
 				F49E28E3297639D3009EEB1A /* AppleLogIn.swift in Sources */,
 				C59D551B2977D149008BB0CF /* MessageFullscreenView.swift in Sources */,
+				3696BF8429940EF60025A3A4 /* FCMManager.swift in Sources */,
 				3C5CAA8F298B9C5C007C3EAA /* HabitSegmentDetailView.swift in Sources */,
 				C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */,
 				F49E28E5297639F4009EEB1A /* RegisterView.swift in Sources */,

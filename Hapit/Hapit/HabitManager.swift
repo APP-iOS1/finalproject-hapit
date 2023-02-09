@@ -20,12 +20,16 @@ final class HabitManager: ObservableObject{
     private var cancellables = Set<AnyCancellable>()
     
     let currentUser = Auth.auth().currentUser ?? nil
-    
+
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
     @Published var currentMateInfos: [User] = []
     @Published var challenges: [Challenge] = []
+    // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     @Published var habits: [Challenge] = []
+
+    // 해당하는 챌린지의 일지의 배열
+
     @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
 
     var currentUserChallenges: [Challenge] {
@@ -390,5 +394,4 @@ final class HabitManager: ObservableObject{
             } receiveValue: { _ in }
             .store(in: &cancellables)
     }
-    
 }

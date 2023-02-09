@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct MyPageView: View {
+    
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var habitManager: HabitManager
     
     @Binding var isFullScreen: String
     @Binding var index: Int
     @Binding var flag: Int
     @State private var nickName = ""
     @State private var email = ""
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -35,16 +37,20 @@ struct MyPageView: View {
                     }
                 }
                 .onAppear {
+                    
                     Task {
+    
                         do {
                             let current = authManager.firebaseAuth.currentUser?.uid ?? ""
                             let nameTarget = try await authManager.getNickName(uid: current)
                             let emailTarget = try await authManager.getEmail(uid: current)
                             nickName = nameTarget
                             email = emailTarget
+                           
                         } catch {
                             throw(error)
                         }
+
                     }
                 }
             }

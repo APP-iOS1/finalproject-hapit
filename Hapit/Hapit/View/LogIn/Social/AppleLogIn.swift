@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import _AuthenticationServices_SwiftUI
+import AuthenticationServices
 import CryptoKit
 
 struct AppleLogIn: View {
@@ -15,26 +15,33 @@ struct AppleLogIn: View {
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        SignInWithAppleButton { (request) in
-            authManager.nonce = randomNonceString()
-            request.requestedScopes = [.email, .fullName]
-            request.nonce = sha256(authManager.nonce)
-        } onCompletion: { (result) in
-            switch result{
-            case .success(let user):
-                guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
-                    return
+        GeometryReader { geo in
+            SignInWithAppleButton { (request) in
+                authManager.nonce = randomNonceString()
+                request.requestedScopes = [.fullName, .email]
+                request.nonce = sha256(authManager.nonce)
+            } onCompletion: { (result) in
+                switch result{
+                case .success(let user):
+                    Task {
+                        guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
+                            return
+                        }
+                        authManager.authenticate(credential: credential)
+                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                        isFullScreen = "logIn"
+                    }
+                    
+                case .failure(_):
+                    authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                    isFullScreen = "logOut"
                 }
-                authManager.authenticate(credential: credential)
-                isFullScreen = "logIn"
-                authManager.save(value: Key.logIn.rawValue, forkey: "state")
-            case .failure(_):
-                isFullScreen = "logOut"
-                authManager.save(value: Key.logOut.rawValue, forkey: "state")
             }
+            .signInWithAppleButtonStyle(.black)
+            .frame(height: 50)
         }
-        .signInWithAppleButtonStyle(.black)
-        .frame(width: 310, height: 50)
     }
     
     func sha256(_ input: String) -> String {

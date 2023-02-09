@@ -13,17 +13,18 @@ import FirebaseCore
 import FirebaseStorage
 import SwiftUI
 import AuthenticationServices
+import GoogleSignIn
 
 enum Key: String {
     case logIn
     case logOut
 }
 
-
 @MainActor
 final class AuthManager: ObservableObject {
     
     @Published var nonce = ""
+    @Published var loggedIn: String = UserDefaults.standard.string(forKey: "state") ?? ""
     
     // 로컬에 저장하는 젤리들의 배열
     @Published var badges: [String] = []
@@ -40,19 +41,17 @@ final class AuthManager: ObservableObject {
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
-
     
-
     // MARK: - 유저 로그인 정보 UserDefaults에 save 함수
     func save(value: Any?, forkey key: String) {
         UserDefaults.standard.set(value ?? "", forKey: key)
     }
     
-    // MARK: - 로그인 
+    // MARK: - 로그인
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
-           
+            
         } catch{
             throw(error)
         }
@@ -230,9 +229,7 @@ final class AuthManager: ObservableObject {
         }
     }
     
-
     // MARK: - 사용 중인 유저의 뱃지 추가하기
-    
     func updateBadge(uid: String, badge: String) async throws {
         
         let path = database.collection("User").document("\(uid)")
@@ -266,7 +263,7 @@ final class AuthManager: ObservableObject {
                 badges.append(element)
             }
             // 뱃지들 중복처리
-        
+            
             badges = Array(Set(badges))
             
         } catch {
@@ -300,8 +297,8 @@ final class AuthManager: ObservableObject {
             }
         } catch {
             throw(error)
-            
         }
+    }
         
     // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
@@ -317,10 +314,10 @@ final class AuthManager: ObservableObject {
         
         // 1. Authentication에 로그인
         firebaseAuth.signIn(with: firebaseCredential) { (result, err) in
-        // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
-        let dbRef = self.database.collection("User")
-            .document(result?.user.uid ?? "")
-        
+            // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
+            let dbRef = self.database.collection("User")
+                .document(result?.user.uid ?? "")
+            
             dbRef.getDocument { (document, error) in
                 // 2. 애플로그인 유저 uid에 해당하는 문서 없다면 새로 만들어준다
                 if !(document?.exists ?? false) {
@@ -335,6 +332,73 @@ final class AuthManager: ObservableObject {
                         "friends" : newby.friends
                     ])
                 }
+            }
+        }
+    }
+    // MARK: - 구글로그인 함수
+    func googleSignIn() {
+        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+            GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
+                let userRef = database.collection("User").document(user?.userID ?? "")
+                
+                // firestore에 없는 유저인 경우에는 새로 등록해준다
+                userRef.getDocument { (document, err) in
+                    if !(document?.exists ?? false) {
+                        let newby = User(id: user?.userID ?? "", name: user?.profile?.name ?? "", email: user?.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                        
+                        userRef.setData([
+                            "email" : newby.email,
+                            "pw" : newby.pw,
+                            "name" : newby.name,
+                            "proImage" : newby.proImage,
+                            "badge" : newby.badge,
+                            "friends" : newby.friends
+                        ])
+                    }
+                }
+                googleAuth(for: user, with: error)
+            }
+        } else {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+            
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [self] result, err in
+                if let googleUser = result?.user {
+                    let userRef = self.database.collection("User").document(googleUser.userID ?? "")
+                    
+                    userRef.getDocument { (document, err) in
+                        if !(document?.exists ?? false) {
+                            let newby = User(id: googleUser.userID ?? "", name: googleUser.profile?.name ?? "", email: googleUser.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                            
+                            userRef.setData([
+                                "email" : newby.email,
+                                "pw" : newby.pw,
+                                "name" : newby.name,
+                                "proImage" : newby.proImage,
+                                "badge" : newby.badge,
+                                "friends" : newby.friends
+                            ])
+                        }
+                    }
+                }
+                googleAuth(for: result?.user, with: err)
+            }
+        }
+    }
+    
+    func googleAuth(for user: GIDGoogleUser?, with error: Error?) {
+        if let error = error {
+            return
+        }
+        guard let authenticationToken = user?.accessToken.tokenString, let idToken = user?.idToken?.tokenString else { return }
+
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authenticationToken)
+
+        Auth.auth().signIn(with: credential) { [unowned self] (_, error) in
+            if let error = error {
+                return
+            } else {
+                self.loggedIn = "logIn"
             }
         }
     }

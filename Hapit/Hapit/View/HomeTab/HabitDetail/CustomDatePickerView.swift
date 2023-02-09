@@ -23,8 +23,10 @@ struct CustomDatePickerView: View {
     @State var showsCreatePostView: Bool = false
     @State var isChallengeAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
+    //OptionView에서 설정해달라고 애원하는 시트
     @State private var isAlertOn = false
-    
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+
     // Login
     @EnvironmentObject var authManager: AuthManager
     
@@ -130,6 +132,9 @@ struct CustomDatePickerView: View {
                         if !lnManager.isAlarmOn {
                             isChallengeAlarmOn = lnManager.isAlarmOn
                         }
+                        if !lnManager.isGranted {
+                            isChallengeAlarmOn = lnManager.isGranted
+                        }
                     }
                 }
             }
@@ -165,14 +170,20 @@ struct CustomDatePickerView: View {
                         // 챌린지 알림 설정
                         isChallengeAlarmOn.toggle()
                         if isChallengeAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
-                            isShowingAlarmSheet.toggle()
+                            if lnManager.isAlarmOn {
+                                isAlertOn = false
+                                isShowingAlarmSheet = true
+                                isChallengeAlarmOn = true
+
+                            } else {
+                                isAlertOn = true
+                                isShowingAlarmSheet = false
+                                isChallengeAlarmOn = false
+                            }
                         } else { // 앱의 알림 설정을 해제시켜줘야 함.
                             lnManager.removeRequest(withIdentifier: currentChallenge.id)
-                            isShowingAlarmSheet.toggle()
-                        }
-                        // isAlarmOn이 false일때
-                        if !lnManager.isAlarmOn {
-                            isAlertOn = true
+                            isShowingAlarmSheet = false
+                            isChallengeAlarmOn = false
                         }
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
@@ -190,17 +201,17 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
+                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
                     .environmentObject(LocalNotificationManager())
             }
-            
         }
         .sheet(isPresented: $showsCreatePostView) {
             DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
-        
-        // 요기에 Alert로 마이페이지 설정에서 알림켜주세요 alert
-        
+        .alert(isPresented: $isAlertOn) {
+            Alert(title: Text("마이페이지의 설정창에서 알림을 켜주세요"), message: nil,
+                  dismissButton: .default(Text("확인")))
+        }
     }
     //MARK: Methods
     

@@ -18,7 +18,8 @@ struct OptionView: View {
     @State private var isLogoutAlert = false
     @State private var isSettingsAlert = false
     @State private var isWithdrawalAlert = false
-    
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+
     var body: some View {
         VStack {
             List {
@@ -64,8 +65,12 @@ struct OptionView: View {
                         } else {
                             if lnManager.isGranted == false {
                                 isSettingsAlert.toggle()
+                                if isSettingsAlert {
+                                    lnManager.isAlarmOn = false
+                                }
                             }
                         }
+                        isUserAlarmOn = val
                     }
                     .listRowSeparator(.hidden)
                     .font(.custom("IMHyemin-Bold", size: 16))
@@ -105,7 +110,10 @@ struct OptionView: View {
                 await lnManager.getCurrentSettings()
                 if !lnManager.isGranted {
                     lnManager.isAlarmOn = lnManager.isGranted
+                    isUserAlarmOn = lnManager.isGranted
                 }
+                lnManager.isAlarmOn = isUserAlarmOn
+                
             }
         }
         .onChange(of: scenePhase) { newValue in
@@ -116,9 +124,8 @@ struct OptionView: View {
             if newValue == .active {
                 Task {
                     await lnManager.getCurrentSettings()
-                    if !lnManager.isGranted {
-                        lnManager.isAlarmOn = lnManager.isGranted
-                    }
+                    lnManager.isAlarmOn = lnManager.isGranted
+                    isUserAlarmOn = lnManager.isGranted
                 }
             }
         }

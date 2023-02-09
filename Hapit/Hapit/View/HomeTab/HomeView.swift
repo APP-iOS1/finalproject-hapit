@@ -10,11 +10,14 @@ import SegmentedPicker
 
 struct HomeView: View {
     
+    @ObservedObject var fcmManager: FCMManager = FCMManager()
+
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
     
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var authManager: AuthManager
 
     init() {
         // Use this if NavigationBarTitle is with Large Font
@@ -93,15 +96,4 @@ struct HomeView: View {
     }
 }
 
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView()
-//    }
-//}
 
-//    // MARK: 더미 데이터
-//    @State var dummyChallenge: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 1, isChecked: false)
-//
-//    @State var dummyChallenge2: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "금연하기", createdAt: Date(), count: 1, isChecked: false)
-//
-//    @State var dummyChallenge3: Challenge = Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "블로그쓰기", createdAt: Date(), count: 1, isChecked: false)

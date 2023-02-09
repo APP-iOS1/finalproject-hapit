@@ -13,6 +13,7 @@ struct ModalAnchorView: View {
     
     var body: some View {
         ModalView(modal: $modalManager.modal)
+           
     }
 }
 

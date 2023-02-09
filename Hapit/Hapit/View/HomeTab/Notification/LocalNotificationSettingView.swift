@@ -12,11 +12,11 @@ struct LocalNotificationSettingView: View {
     
     // MARK: - Property Wrappers
     @EnvironmentObject var lnManager: LocalNotificationManager
-    @Environment(\.dismiss) var dismiss
     @Environment(\.scenePhase) var scenePhase
     @State private var scheduledDate = Date()
     @ObservedResults(HapitPushInfo.self) var hapitPushInfo
     @Binding var isChallengeAlarmOn: Bool
+    @Binding var isShowingAlarmSheet: Bool
     var challengeID: String
     var challengeTitle: String
     
@@ -26,8 +26,7 @@ struct LocalNotificationSettingView: View {
     // MARK: - Body
     var body: some View {
         VStack(alignment: .center) {
-            if lnManager.isAlarmOn { // 기기에서 알림 허용이 되어있는 경우
-                
+            // 기기에서 알림 허용이 되어있는 경우
                 DatePicker("", selection: $scheduledDate, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                 
@@ -42,10 +41,14 @@ struct LocalNotificationSettingView: View {
                     Task{
                         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: scheduledDate)
                         await lnManager.schedule(localNotification: LocalNotification(identifier: challengeID, title: challengeTitle, body: "챌린지를 할 시간입니다", dateComponents: dateComponents, repeats: true))
-                        dismiss()
+                        
+                        //원래 dismiss쓰다가 isShowingAlarmSheet가 true인 상태여서 백그라운드모드일때 다시 모달이 다시 올라가는 현상이 있어서 isShowingAlarmSheet를 바인딩해서 false로 고정.
+                        isShowingAlarmSheet = false
+                        
                     }
                 }
                 .buttonStyle(.bordered)
+
             } else {
                 // 기기에서 알림 허용이 되어있지 않은 경우
                 Button("설정에서 알림 허용하기") {
@@ -53,10 +56,15 @@ struct LocalNotificationSettingView: View {
                 }
                 .buttonStyle(.borderedProminent)
             }
-            
+
         }
         .onAppear{
             isChallengeAlarmOn = false // 저장하기 버튼을 안 누르고 모달을 닫을 경우에 알림이 해제되어 있어야 함. (아이콘)
+            for push in hapitPushInfo {
+                if push.pushID == challengeID {
+                    scheduledDate = push.pushTime ?? Date()
+                }
+            }
             Task {
                 await lnManager.getCurrentSettings()
             }

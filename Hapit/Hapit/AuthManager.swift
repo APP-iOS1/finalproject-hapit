@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 import FirebaseCore
+import FirebaseStorage
 import SwiftUI
 import AuthenticationServices
 
@@ -18,14 +19,30 @@ enum Key: String {
     case logOut
 }
 
+
 @MainActor
 final class AuthManager: ObservableObject {
     
     @Published var nonce = ""
     
+    // 로컬에 저장하는 젤리들의 배열
+    @Published var badges: [String] = []
+    // Storage로 부터 받는 젤리들의 배열
+    @Published var bearimagesDatas: [Data] = []
+    // Badge Modeling
+    @Published var bearBadges: [Badge] = []
+    // 데이터를 스토리지에 가져올떄, 순서 없이 가져와서
+    // 이미지와 타이틀이 바뀌는 경우를 대비해서 적용시킴.
+    @Published var newBadges: [String] = []
+    
+    // MARK: Storage URL
+    let storageRef = Storage.storage().reference()
+    
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
+
     
+
     // MARK: - 유저 로그인 정보 UserDefaults에 save 함수
     func save(value: Any?, forkey key: String) {
         UserDefaults.standard.set(value ?? "", forKey: key)
@@ -35,6 +52,7 @@ final class AuthManager: ObservableObject {
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
+           
         } catch{
             throw(error)
         }
@@ -185,7 +203,7 @@ final class AuthManager: ObservableObject {
             throw(error)
         }
     }
-
+    
     // MARK: - 사용 중인 유저의 프로필사진을 반환
     func getPorImage(uid: String) async throws -> String {
         do {
@@ -197,11 +215,11 @@ final class AuthManager: ObservableObject {
             let tmpPorImage: String = docData?["proImage"] as? String ?? ""
             
             return tmpPorImage
-       } catch {
+        } catch {
             throw(error)
         }
     }
-
+    
     // MARK: - 사용 중인 유저의 프로필 사진을 수정
     func updateUserProfileImage(uid: String, image: String) async throws -> Void {
         let path = database.collection("User")
@@ -212,6 +230,79 @@ final class AuthManager: ObservableObject {
         }
     }
     
+
+    // MARK: - 사용 중인 유저의 뱃지 추가하기
+    
+    func updateBadge(uid: String, badge: String) async throws {
+        
+        let path = database.collection("User").document("\(uid)")
+        
+        do {
+            try await path.updateData([
+                "badge": FieldValue.arrayUnion([badge])
+            ])
+        } catch {
+            throw(error)
+        }
+        
+        try await fetchBadgeList(uid: uid)
+        try await fetchImages(paths: badges)
+    }
+    
+    // MARK: - 사용중인 유저의 소유한 뱃지들 가져오기
+    @MainActor
+    func fetchBadgeList(uid: String) async throws {
+        self.badges.removeAll()
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let badge: [String] = docData?["badge"] as! [String]
+            
+            for element in badge{
+                //self.fetchImages(path: element)
+                badges.append(element)
+            }
+            // 뱃지들 중복처리
+        
+            badges = Array(Set(badges))
+            
+        } catch {
+            throw(error)
+            
+        }
+    }
+    
+    // MARK: - Storage에서 이미지 뱃지 가져오기
+    //Storage에서 path에 해당하는 이미지를 가져온 뒤, imageData 배열에 추가해주는 함수
+    //gs://hapit-b465e.appspot.com/jellybears/bearBlue1.png
+    @MainActor
+    func fetchImages(paths: [String]) async throws {
+        self.bearimagesDatas.removeAll()
+        self.newBadges.removeAll()
+        
+        do {
+            
+            for path in paths{
+                let ref = storageRef.child("jellybears/" + path + ".png")
+                
+                ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    if error != nil {
+                        //print(error.localizedDescription)
+                    } else {
+                        guard let data else { return }
+                        self.bearimagesDatas.append(data)
+                        self.newBadges.append(path)
+                    }
+                }
+            }
+        } catch {
+            throw(error)
+            
+        }
+        
     // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
         guard let token = credential.identityToken else {

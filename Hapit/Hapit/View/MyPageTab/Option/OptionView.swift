@@ -17,7 +17,9 @@ struct OptionView: View {
     @Binding var flag: Int
     @State private var isLogoutAlert = false
     @State private var isSettingsAlert = false
-    
+    @State private var isWithdrawalAlert = false
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+
     var body: some View {
         VStack {
             List {
@@ -63,16 +65,20 @@ struct OptionView: View {
                         } else {
                             if lnManager.isGranted == false {
                                 isSettingsAlert.toggle()
+                                if isSettingsAlert {
+                                    lnManager.isAlarmOn = false
+                                }
                             }
                         }
+                        isUserAlarmOn = val
                     }
                     .listRowSeparator(.hidden)
                     .font(.custom("IMHyemin-Bold", size: 16))
-                        
+                
             }
             .listStyle(PlainListStyle())
             
-            // TODO: 로그아웃 alert 띄우기
+            // MARK: 로그아웃
             Button {
                 isLogoutAlert = true
             } label: {
@@ -83,29 +89,13 @@ struct OptionView: View {
                     .background(RoundedRectangle(cornerRadius: 10).stroke(.gray))
                     .padding()
             }
-            .customAlert(isPresented: $isLogoutAlert,
-                         title: "",
-                         message: "로그아웃하시겠습니까?",
-                         primaryButtonTitle: "로그아웃",
-                         primaryAction: { Task {
-                            flag = 1
-                isFullScreen = "logOut"
-                authManager.save(value: Key.logOut.rawValue, forkey: "state")
-                            index = 0
-            } },
-                         withCancelButton: true)
             
+            // MARK: 회원탈퇴
+            // TODO: "회원탈퇴하겠습니다." 라고 유저에게 텍스트를 입력받아 탈퇴를 더 어렵게 하기
             HStack {
                 Spacer()
-                
                 Button {
-                    // TODO: 회원탈퇴 기능 추가
-                    Task {
-                        flag = 2
-                        isFullScreen = "logOut"
-                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
-                        index = 0
-                    }
+                    isWithdrawalAlert.toggle()
                 } label: {
                     Text("회원탈퇴")
                         .font(.custom("IMHyemin-Regular", size: 16))
@@ -120,7 +110,10 @@ struct OptionView: View {
                 await lnManager.getCurrentSettings()
                 if !lnManager.isGranted {
                     lnManager.isAlarmOn = lnManager.isGranted
+                    isUserAlarmOn = lnManager.isGranted
                 }
+                lnManager.isAlarmOn = isUserAlarmOn
+                
             }
         }
         .onChange(of: scenePhase) { newValue in
@@ -131,13 +124,38 @@ struct OptionView: View {
             if newValue == .active {
                 Task {
                     await lnManager.getCurrentSettings()
-                    if !lnManager.isGranted {
-                        lnManager.isAlarmOn = lnManager.isGranted
-                    }
+                    lnManager.isAlarmOn = lnManager.isGranted
+                    isUserAlarmOn = lnManager.isGranted
                 }
             }
         }
-        .customAlert(isPresented: $isSettingsAlert, title: "알림허용이 되어있지 않습니다", message: "설정으로 이동하여 알림 허용을 하시겠습니까?", primaryButtonTitle: "허용", primaryAction: {lnManager.openSettings()}, withCancelButton: true)
+        .customAlert(isPresented: $isSettingsAlert,
+                     title: "알림허용이 되어있지 않습니다",
+                     message: "설정으로 이동하여 알림 허용을 하시겠습니까?",
+                     primaryButtonTitle: "허용",
+                     primaryAction: {lnManager.openSettings()},
+                     withCancelButton: true)
+        .customAlert(isPresented: $isLogoutAlert,
+                     title: "",
+                     message: "로그아웃하시겠습니까?",
+                     primaryButtonTitle: "로그아웃",
+                     primaryAction: { Task {
+                flag = 1
+                isFullScreen = "logOut"
+                authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                index = 0 } },
+                     withCancelButton: true)
+        .customAlert(isPresented: $isWithdrawalAlert,
+                     title: "정말로 해핏을 떠나실건가요?",
+                     message: "탈퇴하면 데이터를 복구할 수 없습니다.",
+                     primaryButtonTitle: "탈퇴",
+                     primaryAction: { Task {
+            flag = 2
+            isFullScreen = "logOut"
+            authManager.save(value: Key.logOut.rawValue, forkey: "state")
+            index = 0
+        }},
+                     withCancelButton: true)
     }
 }
 

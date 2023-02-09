@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "bearRelease.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "teddybear.fill@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -23,64 +23,58 @@ struct HabitSegmentDetailView: View {
         switch selectedIndex {
         case 0:
             VStack {
-                if habitManager.currentUserChallenges.count < 1{
-                    
+                if habitManager.currentUserChallenges.count < 1{   
                     EmptyCellView(currentContentsType: .challenge)
                 }
                 else {
-                    
-                    ScrollView{
-                        
+                    ScrollView {
                         ForEach(habitManager.challenges) { challenge in
-                            
-                            if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
-                                
-                                NavigationLink {
-                                    //HabitDetailView(calendar: Calendar.current)
-                                    ZStack{
-                                        ScrollView(showsIndicators: false){
-                                            CustomDatePickerView(currentDate: $date, showsCustomAlert: $showsCustomAlert, currentChallenge: challenge)
-                                        }
-                                        .padding()
-                                        .background(Color("BackgroundColor"))
-                                        Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
-                                            .edgesIgnoringSafeArea(.all)
-                                            .transition(.opacity)
-                                            .customAlert( // 커스텀 알림창 띄우기
-                                                isPresented: $showsCustomAlert,
-                                                title: "챌린지를 삭제하시겠어요?",
-                                                message: "삭제된 챌린지는 복구할 수 없어요.",
-                                                primaryButtonTitle: "삭제",
-                                                primaryAction: { habitManager.removeChallenge(challenge: challenge) },
-                                                withCancelButton: true)
-                                        ModalAnchorView()
-                                    } // ZStack
-                                    
-                                } label: {
-                                    ChallengeCellView(challenge: challenge, currentUserInfos: [])
-                                        .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-                                        .contextMenu {
-                                            Button(role: .destructive) {
-                                                // 챌린지 삭제
-                                                habitManager.removeChallenge(challenge: challenge)
-                                            } label: {
-                                                Text("챌린지 지우기")
-                                                    .font(.custom("IMHyemin-Regular", size: 17))
-                                                Image(systemName: "trash")
+                            ForEach(challenge.mateArray, id: \.self) { mate in
+                                if mate == authManager.firebaseAuth.currentUser?.uid {
+                                    NavigationLink {
+                                        //HabitDetailView(calendar: Calendar.current)
+                                        ZStack{
+                                            ScrollView(showsIndicators: false){
+                                                CustomDatePickerView(currentDate: $date, showsCustomAlert: $showsCustomAlert, currentChallenge: challenge)
                                             }
-                                        } // contextMenu
-                                    
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.bottom, 5)
-                            } // if
+                                            .padding()
+                                            .background(Color("BackgroundColor"))
+                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
+                                                .edgesIgnoringSafeArea(.all)
+                                                .transition(.opacity)
+                                                .customAlert( // 커스텀 알림창 띄우기
+                                                    isPresented: $showsCustomAlert,
+                                                    title: "챌린지를 삭제하시겠어요?",
+                                                    message: "삭제된 챌린지는 복구할 수 없어요.",
+                                                    primaryButtonTitle: "삭제",
+                                                    primaryAction: { habitManager.removeChallenge(challenge: challenge) },
+                                                    withCancelButton: true)
+                                            ModalAnchorView()
+                                        } // ZStack
+                                        
+                                    } label: {
+                                        ChallengeCellView(challenge: challenge, currentUserInfos: [])
+                                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
+                                            .contextMenu {
+                                                Button(role: .destructive) {
+                                                    // 챌린지 삭제
+                                                    habitManager.removeChallenge(challenge: challenge)
+                                                } label: {
+                                                    Text("챌린지 지우기")
+                                                        .font(.custom("IMHyemin-Regular", size: 17))
+                                                    Image(systemName: "trash")
+                                                }
+                                            } // contextMenu
+                                        
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.bottom, 5)
+                                } // if
+                            }
                         }
                     }
                 }
             } // VStack
-            .onAppear(){
-                print(habitManager.currentUserChallenges)
-            }
 
         case 1:
             

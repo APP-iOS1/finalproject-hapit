@@ -17,7 +17,7 @@ struct JellyBadgeView: View {
                 Image("bearLock")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 70, height: 90)
+                    .frame(width: 60, height: 80)
                     .background(Circle()
                         .fill(Color(.systemGray6))
                         .frame(width: 100, height: 100))

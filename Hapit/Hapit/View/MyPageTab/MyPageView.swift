@@ -43,9 +43,6 @@ struct MyPageView: View {
     
                         do {
                             let current = authManager.firebaseAuth.currentUser?.uid ?? ""
-//                            try await authManager.fetchBadgeList(uid: current)
-//                            try await authManager.fetchImages(paths: authManager.badges)
-                            
                             let nameTarget = try await authManager.getNickName(uid: current)
                             let emailTarget = try await authManager.getEmail(uid: current)
                             nickName = nameTarget

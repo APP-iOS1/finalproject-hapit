@@ -23,8 +23,6 @@ class AuthManager: ObservableObject {
     @Published var bearimagesDatas: [Data] = []
     // Badge Modeling
     @Published var bearBadges: [Badge] = []
-    // Storage로 부터 받는 젤리
-    // @Published var bearimagesData: Data = Data()
     // 데이터를 스토리지에 가져올떄, 순서 없이 가져와서
     // 이미지와 타이틀이 바뀌는 경우를 대비해서 적용시킴.
     @Published var newBadges: [String] = []
@@ -244,7 +242,6 @@ class AuthManager: ObservableObject {
     @MainActor
     func fetchImages(paths: [String]) async throws {
         self.bearimagesDatas.removeAll()
-        print("paths: \(paths)")
         do {
             
             for path in paths{
@@ -257,17 +254,9 @@ class AuthManager: ObservableObject {
                         guard let data else { return }
                         self.bearimagesDatas.append(data)
                         self.newBadges.append(path)
-                        print("bageData Array: \(self.bearimagesDatas)")
-                        print("path: \(path)")
-                        print("data: \(data)")
                     }
                 }
-                
             }
-            
-            print("bageArray: \(badges)")
-         
-            
         } catch {
             throw(error)
             

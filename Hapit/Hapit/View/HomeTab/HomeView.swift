@@ -15,6 +15,7 @@ struct HomeView: View {
     @State var selectedIndex: Int = 0
     
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var authManager: AuthManager
 
     init() {
         // Use this if NavigationBarTitle is with Large Font

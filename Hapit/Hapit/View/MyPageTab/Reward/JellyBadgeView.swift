@@ -8,24 +8,42 @@
 import SwiftUI
 
 struct JellyBadgeView: View {
-
-    var badge: Data
+    
+    var badge: Badge
     
     var body: some View {
         VStack {
-            
-            Image(uiImage: UIImage(data: badge) ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 70, height: 70)
-                .background(Circle()
-                    .fill(Color(.systemGray6))
-                    .frame(width: 100, height: 100))
-                .padding(.bottom, 15)
-            
-            
+            if badge.imageName == ""{
+                Image("bearLock")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 70, height: 90)
+                    .background(Circle()
+                        .fill(Color(.systemGray6))
+                        .frame(width: 100, height: 100))
+                    .padding(.bottom, 15)
+                
+                Text("비어 있음")
+                    .font(.custom("IMHyemin-Regular", size: 12))
+                    .frame(width: 60)
+            }else{
+                Image(uiImage: UIImage(data: badge.imageData) ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 70, height: 70)
+                    .background(Circle()
+                        .fill(Color(.systemGray6))
+                        .frame(width: 100, height: 100))
+                    .padding(.bottom, 15)
+                
+                Text(badge.title)
+                    .font(.custom("IMHyemin-Regular", size: 12))
+                    .frame(width: 60)
+                
+            }
         }
         .padding(10)
+        
     }
 }
 

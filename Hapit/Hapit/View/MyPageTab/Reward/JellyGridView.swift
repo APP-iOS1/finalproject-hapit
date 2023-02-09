@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct JellyGridView: View {
-    let data = Array(1...20).map { "목록 \($0)"}
+    //let data = Array(1...20)
     
     @EnvironmentObject var authManager: AuthManager
     
-    var badgeList: [Badge] = []
+    @State var badgeList: [Badge] = []
+    
+    // @State var imageData: Data = Data()
     
     //화면을 그리드형식으로 꽉채워줌
     let columns = [
@@ -24,27 +26,66 @@ struct JellyGridView: View {
     var body: some View {
         ScrollView{
             VStack{
-                LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(authManager.bearimagesDatas, id: \.self) { badge in
-                        JellyBadgeView(badge: badge)
-                    }
+                
+                LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
+                    
+                    ForEach(authManager.bearBadges, id: \.id) { badge in
+                            JellyBadgeView(badge: badge)
+                        }
                 }
                 
             }
             .padding()
         }
         .onAppear{
+            
+            authManager.bearBadges.removeAll()
+  
+
             Task{
-                // String에 뱃지 이름을 String으로 가져옴.
-                try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
-                self.authManager.fetchImages(paths: authManager.badges)
                 
-                for badge in authManager.badges{
-                    let newBadge = Badge(imageName: badge, title: showmetheTitle(imageName: badge))
-                    print(newBadge.title)
-                    //badgeList.append(newBadge)
+                //the ID bearGreen occurs multiple times within the collection, this will give undefined results!
+                //authManager.bearBadges = []
+                //badgeList = []
+                
+                for badge in 0..<20{
+                    
+                    let id = UUID().uuidString
+                    
+                    authManager.bearBadges.append(Badge(id: id, imageName: "", title: "", imageData: Data()))
                 }
+                
+                for (badgeName, data) in zip(authManager.newBadges, authManager.bearimagesDatas){
+                    // This is closure, and I can use return value.
+                    // Below is only one programming
+                    //self.imageData = authManager.bearimagesData
+                    //print("imagedata in view \(imageData)")
+                    let id = UUID().uuidString
+                    let newBadge = Badge(id: id, imageName: badgeName, title: showmetheTitle(imageName: badgeName), imageData: data)
+                    //badgeList.append(newBadge)
+                    print("badge title: \( newBadge.title )")
+                    print("new name: \( newBadge.imageName )")
+                    //                    print("bearbadges: \(authManager.bearBadges)")
+                    
+                    //                    print("new badge: \( newBadge.imageData )")
+                    // 탭을 다른 곳으로 갔다와야 출력이 됨.
+                    //authManager.bearBadges.append(newBadge)
+                    // 비어있는 곰을 출력하기 위한 노력
+                    authManager.bearBadges.append(newBadge)
+                    // 멀티플 아이디 에러생김 the ID bearBlue2 occurs multiple times within the collection, this will give undefined results!
+//                    for index in 0..<badgeList.count{
+//
+//                        badgeList[index] = newBadge
+//
+//                    }
+                    //badgeList.p
+                    
+                    // Initialization BearimageData for getting much bear data
+                    //authManager.bearimagesData = Data()
+                }
+                print("badgelist: \(badgeList)")
+                print("bearbadges: \(authManager.bearBadges)")
+                authManager.bearBadges = authManager.bearBadges.reversed()
             }
         }
     }
@@ -55,7 +96,7 @@ struct JellyGridView: View {
             case "bearBlue1":
                 return "첫 습관 달성"
             case "bearBlue2":
-                return "첫 챌린지 생성"
+                return "첫 챌린지!!"
             case "bearGreen":
                 return "작심삼일"
             case "bearPurpleB":

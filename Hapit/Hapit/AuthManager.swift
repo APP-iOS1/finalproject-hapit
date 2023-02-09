@@ -21,6 +21,13 @@ class AuthManager: ObservableObject {
     @Published var badges: [String] = []
     // Storage로 부터 받는 젤리들의 배열
     @Published var bearimagesDatas: [Data] = []
+    // Badge Modeling
+    @Published var bearBadges: [Badge] = []
+    // Storage로 부터 받는 젤리
+    // @Published var bearimagesData: Data = Data()
+    // 데이터를 스토리지에 가져올떄, 순서 없이 가져와서
+    // 이미지와 타이틀이 바뀌는 경우를 대비해서 적용시킴.
+    @Published var newBadges: [String] = []
     
     // MARK: Storage URL
     let storageRef = Storage.storage().reference()
@@ -28,7 +35,7 @@ class AuthManager: ObservableObject {
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
     
-    // MARK: - 로그인 
+    // MARK: - 로그인
     final func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
@@ -182,7 +189,7 @@ class AuthManager: ObservableObject {
             throw(error)
         }
     }
-
+    
     // MARK: - 사용 중인 유저의 프로필사진을 반환
     final func getPorImage(uid: String) async throws -> String {
         do {
@@ -194,11 +201,11 @@ class AuthManager: ObservableObject {
             let tmpPorImage: String = docData?["proImage"] as? String ?? ""
             
             return tmpPorImage
-       } catch {
+        } catch {
             throw(error)
         }
     }
-
+    
     // MARK: - 사용 중인 유저의 프로필 사진을 수정
     final func updateUserProfileImage(uid: String, image: String) async throws -> Void {
         let path = database.collection("User")
@@ -209,7 +216,8 @@ class AuthManager: ObservableObject {
         }
     }
     
-    // MARK: - 사용중인 유저의 소유한 뱃지가져오기
+    // MARK: - 사용중인 유저의 소유한 뱃지들 가져오기
+    @MainActor
     func fetchBadgeList(uid: String) async throws {
         self.badges.removeAll()
         do {
@@ -221,34 +229,49 @@ class AuthManager: ObservableObject {
             let badge: [String] = docData?["badge"] as! [String]
             
             for element in badge{
+                //self.fetchImages(path: element)
                 badges.append(element)
             }
-       } catch {
+        } catch {
             throw(error)
-           
-       }
+            
+        }
     }
     
     // MARK: - Storage에서 이미지 뱃지 가져오기
     //Storage에서 path에 해당하는 이미지를 가져온 뒤, imageData 배열에 추가해주는 함수
     //gs://hapit-b465e.appspot.com/jellybears/bearBlue1.png
-    func fetchImages(paths: [String]) {
+    @MainActor
+    func fetchImages(paths: [String]) async throws {
         self.bearimagesDatas.removeAll()
-        
-        for path in paths{
-            let ref = storageRef.child("jellybears/" + path + ".png")
+        print("paths: \(paths)")
+        do {
             
-            ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                if error != nil {
-                    //print(error.localizedDescription)
-                } else {
-                    guard let data else { return }
-                    self.bearimagesDatas.append(data)
+            for path in paths{
+                let ref = storageRef.child("jellybears/" + path + ".png")
+                
+                ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    if error != nil {
+                        //print(error.localizedDescription)
+                    } else {
+                        guard let data else { return }
+                        self.bearimagesDatas.append(data)
+                        self.newBadges.append(path)
+                        print("bageData Array: \(self.bearimagesDatas)")
+                        print("path: \(path)")
+                        print("data: \(data)")
+                    }
                 }
+                
             }
             
+            print("bageArray: \(badges)")
+         
+            
+        } catch {
+            throw(error)
+            
         }
-    
+        
     }
-    
 }

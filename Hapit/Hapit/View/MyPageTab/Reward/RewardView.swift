@@ -24,7 +24,7 @@ struct RewardView: View {
                     Text("획득 젤리")
                         .font(.custom("IMHyemin-Bold", size: 17))
                     Spacer()
-                    Text("\(authManager.badges.count)" + "/27")
+                    Text("\(authManager.badges.count)" + "/21")
                         .foregroundColor(Color.accentColor)
                         .font(.custom("IMHyemin-Bold", size: 17))
                 }

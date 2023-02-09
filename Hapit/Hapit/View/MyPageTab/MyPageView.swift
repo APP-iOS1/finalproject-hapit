@@ -17,6 +17,7 @@ struct MyPageView: View {
     @Binding var flag: Int
     @State private var nickName = ""
     @State private var email = ""
+
     
     var body: some View {
         NavigationView {
@@ -39,15 +40,21 @@ struct MyPageView: View {
                 .onAppear {
                     
                     Task {
+    
                         do {
                             let current = authManager.firebaseAuth.currentUser?.uid ?? ""
+//                            try await authManager.fetchBadgeList(uid: current)
+//                            try await authManager.fetchImages(paths: authManager.badges)
+                            
                             let nameTarget = try await authManager.getNickName(uid: current)
                             let emailTarget = try await authManager.getEmail(uid: current)
                             nickName = nameTarget
                             email = emailTarget
+                           
                         } catch {
                             throw(error)
                         }
+
                     }
                 }
             }

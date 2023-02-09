@@ -28,6 +28,7 @@ struct CustomDatePickerView: View {
 
     // Login
     @EnvironmentObject var authManager: AuthManager
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = UserDefaults.standard.bool(forKey: "isUserAlarmOn")
     
     // MARK: - Properties
     var currentChallenge: Challenge
@@ -122,14 +123,11 @@ struct CustomDatePickerView: View {
                 currentDate = getCurrentMonth()
             }
             .onChange(of: scenePhase) { newValue in
-                //앱이 작동중일 때
-                //노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
-                //
                 if newValue == .active {
                     Task {
                         await lnManager.getCurrentSettings()
-                        if !lnManager.isAlarmOn {
-                            isChallengeAlarmOn = lnManager.isAlarmOn
+                        if !isUserAlarmOn {
+                            isChallengeAlarmOn = isUserAlarmOn
                         }
                         if !lnManager.isGranted {
                             isChallengeAlarmOn = lnManager.isGranted

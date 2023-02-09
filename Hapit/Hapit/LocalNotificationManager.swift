@@ -8,8 +8,6 @@ class LocalNotificationManager: NSObject, ObservableObject, UNUserNotificationCe
     let notificationCenter = UNUserNotificationCenter.current()
     //허가 받았는 지 나타내는 bool값 publish
     @Published var isGranted = false
-    //옵션뷰에서 사용할 isAlarmOn 그릇
-    @Published var isAlarmOn = false
     //노티 어펜드할 어레이
     @Published var pendingRequests: [UNNotificationRequest] = []
     

@@ -17,7 +17,8 @@ struct OptionView: View {
     @Binding var flag: Int
     @State private var isLogoutAlert = false
     @State private var isSettingsAlert = false
-    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+    @State private var isTempAlarmOn = false
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = UserDefaults.standard.bool(forKey: "isUserAlarmOn")
 
     var body: some View {
         VStack {
@@ -57,15 +58,15 @@ struct OptionView: View {
                         .modifier(ListTextModifier())
                 }.listRowSeparator(.hidden)
                 
-                Toggle("알림", isOn: $lnManager.isAlarmOn)
-                    .onChange(of: lnManager.isAlarmOn) { val in
+                Toggle("알림", isOn: $isTempAlarmOn)
+                    .onChange(of: isTempAlarmOn) { val in
                         if val == false {
                             lnManager.clearRequests()
                         } else {
                             if lnManager.isGranted == false {
                                 isSettingsAlert.toggle()
                                 if isSettingsAlert {
-                                    lnManager.isAlarmOn = false
+                                    isUserAlarmOn = false
                                 }
                             }
                         }
@@ -124,9 +125,9 @@ struct OptionView: View {
             Task{
                 await lnManager.getCurrentSettings()
                 if !lnManager.isGranted {
-                    lnManager.isAlarmOn = lnManager.isGranted
                     isUserAlarmOn = lnManager.isGranted
                 }
+                isTempAlarmOn = isUserAlarmOn
 
             }
         }
@@ -138,7 +139,7 @@ struct OptionView: View {
             if newValue == .active {
                 Task {
                     await lnManager.getCurrentSettings()
-                    lnManager.isAlarmOn = lnManager.isGranted
+                    isTempAlarmOn = lnManager.isGranted
                     isUserAlarmOn = lnManager.isGranted
                 }
             }

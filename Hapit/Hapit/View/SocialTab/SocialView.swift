@@ -16,7 +16,7 @@ struct SocialView: View {
     @State private var myFriends: [User] = [User]() // currentUser 포함
     @State private var sortMyFriends: [User] = [User]() // currentUser 포함, 정렬
     @State private var friends: [User] = [User]() // currentUser 제외
-    @State private var rankCountArray : [[Int]] = [] // 0: count, 1: rank
+    @State private var rankCountArray: [[Int]] = [] // 0: count, 1: rank
 
     var body: some View {
         NavigationView {
@@ -61,11 +61,12 @@ struct SocialView: View {
                 }
             }.background(Color("BackgroundColor"))
         }
+        // FIXME: 뷰 들어올 때마다가 아니라 친구 목록의 변화가 있을때마다 실행되게끔 바꾸기
         .task {
             do {
                 let current = authManager.firebaseAuth
                 try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
-                try await userInfoManager.getFriendArray(currentUserUid: current.currentUser?.uid ?? "")
+                try await userInfoManager.getFriendArray()
                 self.myFriends = userInfoManager.friendArray
                 self.friends = userInfoManager.friendArray
                 let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""])
@@ -116,7 +117,7 @@ struct SocialView: View {
         var cnt: Int = 0
         
         for (index, friend) in friends.enumerated() {
-            rankArray[index][0] = challengeCount(friend: friend)
+            rankArray[index][0] = challengeDaysCount(friend: friend)
         }
         
         for index in 0..<friends.count {
@@ -133,7 +134,6 @@ struct SocialView: View {
                 cnt = 0
             }
         }
-        print(rankArray)
         return rankArray
     }
 }

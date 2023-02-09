@@ -12,7 +12,6 @@ import FirebaseFirestore
 final class MessageManager: ObservableObject {
     @Published var messageArray = [Message]()
     @Published var friendMessageArray = [Message]()
-    @Published var friendID = ""
     let database = Firestore.firestore()
     
     // MARK: 메시지 보내기 (CREATE)

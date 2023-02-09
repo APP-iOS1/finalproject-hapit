@@ -37,7 +37,6 @@ struct FriendsEditRow: View {
             
             Button {
                 Task {
-                    messageManager.friendID = friend.id
                     // 삭제 셀
                     if isRemoveOrAdd {
                         selectedFriend = friend

@@ -29,8 +29,8 @@ struct ContentView: View {
                     .tabItem {
                         VStack{
                             Image("teddybear.fill")
-                                .resizable()
                                 .renderingMode(.template)
+                                .font(.title3)
                             Text("홈")
                         }
                     }

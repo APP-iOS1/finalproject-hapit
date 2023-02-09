@@ -31,7 +31,6 @@ struct HabitSegmentDetailView: View {
                         ForEach(habitManager.challenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
-                                    
                                     NavigationLink {
                                         //HabitDetailView(calendar: Calendar.current)
                                         ZStack{

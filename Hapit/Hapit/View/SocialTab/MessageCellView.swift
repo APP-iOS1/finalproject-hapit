@@ -20,7 +20,7 @@ struct MessageCellView: View {
             case "add":
                 VStack {
                     Text("💝")
-                        .font(.title3)
+                        .font(.title)
                     Spacer()
                 }
                 .padding(.horizontal)

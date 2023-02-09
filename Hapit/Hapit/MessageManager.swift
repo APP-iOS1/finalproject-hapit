@@ -8,8 +8,10 @@
 import SwiftUI
 import FirebaseFirestore
 
+@MainActor
 final class MessageManager: ObservableObject {
     @Published var messageArray = [Message]()
+    @Published var friendMessageArray = [Message]()
     let database = Firestore.firestore()
     
     // MARK: 메시지 보내기 (CREATE)
@@ -67,5 +69,33 @@ final class MessageManager: ObservableObject {
                     }
                 }
             }
+//        print(messageArray)
+    }
+    
+    func fetchFriendMessage(userID: String) async throws -> [Message] {
+        do {
+            let snapshot = try await database.collection("User")
+                .document(userID).collection("Message")
+                .order(by: "sendTime", descending: true)
+                .getDocuments()
+            self.friendMessageArray.removeAll()
+            
+            for document in snapshot.documents {
+                let id: String = document.documentID
+                let docData = document.data()
+                let messageType: String = docData["alarmType"] as? String ?? ""
+                let senderID: String = docData["senderID"] as? String ?? ""
+                let receiverID: String = docData["receiverID"] as? String ?? ""
+                if let sendStamp = docData["sendTime"] as? Timestamp {
+                    let sendTime = sendStamp.dateValue()
+                    let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID)
+                    self.friendMessageArray.append(msgData)
+                }
+            }
+            let msgArr = self.friendMessageArray
+            return msgArr
+        } catch {
+            throw(error)
+        }
     }
 }

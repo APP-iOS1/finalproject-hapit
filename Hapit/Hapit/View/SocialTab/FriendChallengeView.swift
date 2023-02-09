@@ -21,15 +21,8 @@ struct FriendChallengeView: View {
                 ScrollView{
                     NavigationLink {
                         
-                        //  ChallengeCellView(challenge: dummyChallenge)
                     } label: {
                         VStack{
-                            ForEach(habitManager.challenges) { challenge in
-                                if challenge.uid == friend.id {
-                                    FriendChallengeCellView(challenge: challenge)
-                                }
-                            }
-                            
                             ForEach(habitManager.challenges) { challenge in
                                 ForEach(challenge.mateArray, id: \.self){ mate in
                                     if mate == friend.id{

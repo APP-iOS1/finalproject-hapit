@@ -137,7 +137,6 @@
 		3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalAnchorView.swift; sourceTree = "<group>"; };
 		3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManager.swift; sourceTree = "<group>"; };
 		3C5CAA8E298B9C5B007C3EAA /* HabitSegmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitSegmentDetailView.swift; sourceTree = "<group>"; };
-		3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C5CAA95298C8FEC007C3EAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalendarView.swift; sourceTree = "<group>"; };
 		3C811D1C2987628A0005539A /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
@@ -270,14 +269,6 @@
 				3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */,
 			);
 			path = CustomModal;
-			sourceTree = "<group>";
-		};
-		3C5CAA94298C8E3E007C3EAA /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		674A917C2989FFA80050CF0B /* CustomAlert */ = {
@@ -416,7 +407,6 @@
 				F49E28C829762C9C009EEB1A /* Products */,
 				89A963E5358D329345D77DC3 /* Pods */,
 				2672DC2838A0CC595638793A /* Frameworks */,
-				3C5CAA94298C8E3E007C3EAA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -922,7 +912,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FCMHapit;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AppStore com.hapitfinal.Hapit";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -959,7 +949,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FCMHapit;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "AppStore com.hapitfinal.Hapit";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

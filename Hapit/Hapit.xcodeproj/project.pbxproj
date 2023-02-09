@@ -32,6 +32,7 @@
 		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
 		3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAA29779347003D4809 /* ChallengeCellView.swift */; };
 		3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAC29779359003D4809 /* HabitCellView.swift */; };
+		673EA3942995495400AB5EA8 /* LocalChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673EA3932995495400AB5EA8 /* LocalChallenge.swift */; };
 		674A917E2989FFCD0050CF0B /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674A917D2989FFCD0050CF0B /* CustomAlert.swift */; };
 		674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674A917F2989FFF00050CF0B /* CustomAlertModifier.swift */; };
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
@@ -146,6 +147,7 @@
 		3CF39BAA29779347003D4809 /* ChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellView.swift; sourceTree = "<group>"; };
 		3CF39BAC29779359003D4809 /* HabitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellView.swift; sourceTree = "<group>"; };
 		5EF260FF7D795428372CA911 /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hapit.debug.xcconfig"; path = "Target Support Files/Pods-Hapit/Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
+		673EA3932995495400AB5EA8 /* LocalChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChallenge.swift; sourceTree = "<group>"; };
 		674A917D2989FFCD0050CF0B /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		674A917F2989FFF00050CF0B /* CustomAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 				C958D15E298CD8690057AA5B /* ChallengeFriends.swift */,
 				36E1440E298CE7F20044E666 /* HapitPushInfo.swift */,
 				C50FEE3D2991DE1000C18D3F /* Message.swift */,
+				673EA3932995495400AB5EA8 /* LocalChallenge.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -487,8 +490,8 @@
 			isa = PBXGroup;
 			children = (
 				F47BA14E297A67FE000222EE /* AuthManager.swift */,
-				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
+				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
 				95FAB87129920B0100E797EA /* BadgeManager.swift */,
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
 				C5212475298CC1A400235921 /* UserInfoManager.swift */,
@@ -746,6 +749,7 @@
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				95FAB8742992334900E797EA /* Badge.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
+				673EA3942995495400AB5EA8 /* LocalChallenge.swift in Sources */,
 				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
 				950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */,

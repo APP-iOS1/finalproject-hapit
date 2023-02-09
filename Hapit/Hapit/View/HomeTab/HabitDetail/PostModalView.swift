@@ -93,9 +93,23 @@ struct PostModalView: View {
                 .cornerRadius(20)
         )
         .onAppear(){
-            let current = authManager.firebaseAuth
-            let currentUser = current.currentUser?.uid
-            selectedMember = currentUser ?? ""
+            Task{
+                // customModalView에서 불러온 mateArray의 순서를 변경할 필요가 있다.
+                // CurrentUser의 uid가 mateArray[0으로 와야함]
+                let current = authManager.firebaseAuth
+                let currentUser = current.currentUser?.uid
+                let mateArray = habitManager.currentChallenge.mateArray
+                var sortedMateArray = sortMateArray(mateArray, currentUserUid: currentUser ?? "")
+                selectedMember = currentUser ?? ""
+                // currentMateInfo를 초기화 해주는 부분.
+                // 초기화를 하지 않는다면 onAppear 할 때마다 currentInfo가 늘어난다.
+                habitManager.currentMateInfos = []
+                for member in habitManager.currentChallenge.mateArray {
+                    var userInfo = try await userInfoManager.getUserInfoByUID(userUid: member)
+                
+                    habitManager.currentMateInfos.append(userInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: []))
+                }
+            }
         }
         .onDisappear(){
             habitManager.currentMateInfos = []
@@ -133,8 +147,24 @@ struct PostModalView: View {
                     currentPost = Post(id: "", uid: "", challengeID: "", title: "", content: "", createdAt: Date())
                 }
             }
+//            print(currentPost)
         }
+    }
+
+    func sortMateArray(_ mateArray: [String], currentUserUid: String) -> [String] {
+        var currentUserArray: [String] = []
+        var otherMatesArray: [String] = []
         
+        for uid in mateArray {
+            
+            if uid == currentUserUid {
+                currentUserArray.append(uid)
+            }
+            else {
+                otherMatesArray.append((uid))
+            }
+        }
+        return currentUserArray + otherMatesArray
     }
     
 }

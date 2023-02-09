@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct CustomDatePickerView: View {
     
@@ -21,12 +22,13 @@ struct CustomDatePickerView: View {
     @EnvironmentObject var lnManager: LocalNotificationManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
-    @Binding var showsCustomAlert: Bool
+    @State private var showsCustomAlert: Bool = false
     @State var showsCreatePostView: Bool = false
     @State var isChallengeAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
     //OptionView에서 설정해달라고 애원하는 시트
     @State private var isAlertOn = false
+    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언
 
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
     
@@ -165,12 +167,13 @@ struct CustomDatePickerView: View {
                     PostModalView(postsForModalView: $postsForModalView)
                         .offset(y: 200)
                 }
-                
                 Task {
                     await lnManager.getCurrentSettings()
                     print("lnManager.isGranted: \(lnManager.isGranted)")
                 }
                 lnManager.isAlarmOn = isUserAlarmOn
+
+                print("CustomDatePickerView의 localChallenge: \(localChallenge)")
                 
             }
             .toolbar {
@@ -205,7 +208,7 @@ struct CustomDatePickerView: View {
                             isChallengeAlarmOn = false
                         }
                     } label: {
-                        Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
+                        Image(systemName: isChallengeAlarmOn || localChallenge.isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
@@ -220,7 +223,7 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
+                LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
                     .environmentObject(LocalNotificationManager())
             }
         }
@@ -231,6 +234,14 @@ struct CustomDatePickerView: View {
             Alert(title: Text("마이페이지의 설정창에서 알림을 켜주세요"), message: nil,
                   dismissButton: .default(Text("확인")))
         }
+        .customAlert( // 커스텀 알림창 띄우기
+            isPresented: $showsCustomAlert,
+            title: "챌린지를 삭제하시겠어요?",
+            message: "삭제된 챌린지는 복구할 수 없어요.",
+            primaryButtonTitle: "삭제",
+            primaryAction: { habitManager.removeChallenge(challenge: currentChallenge) },
+            withCancelButton: true)
+        
     }
     //MARK: Methods
     

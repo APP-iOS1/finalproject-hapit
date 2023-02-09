@@ -79,7 +79,6 @@ struct ChallengeCellView: View {
                 }
                 
             }
-            print(currentUserInfos)
         }
         //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(

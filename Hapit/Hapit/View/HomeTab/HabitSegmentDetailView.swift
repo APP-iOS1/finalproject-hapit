@@ -23,32 +23,27 @@ struct HabitSegmentDetailView: View {
         switch selectedIndex {
         case 0:
             VStack {
-                if habitManager.currentUserChallenges.count < 1{   
+                if habitManager.currentUserChallenges.count < 1{
                     EmptyCellView(currentContentsType: .challenge)
                 }
                 else {
                     ScrollView {
-                        ForEach(habitManager.challenges) { challenge in
+                        ForEach(habitManager.currentUserChallenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
                                         //HabitDetailView(calendar: Calendar.current)
                                         ZStack{
                                             ScrollView(showsIndicators: false){
-                                                CustomDatePickerView(currentDate: $date, showsCustomAlert: $showsCustomAlert, currentChallenge: challenge)
+                                                CustomDatePickerView(currentDate: $date, localChallenge: challenge.localChallenge, currentChallenge: challenge)
+//                                                    .onAppear {
+//                                                        // HabitManger의 @Published currentChallenge 갱신
+//                                                        habitManager.currentChallenge = challenge
+//                                                    }
                                             }
                                             .padding()
                                             .background(Color("BackgroundColor"))
-                                            Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
-                                                .edgesIgnoringSafeArea(.all)
-                                                .transition(.opacity)
-                                                .customAlert( // 커스텀 알림창 띄우기
-                                                    isPresented: $showsCustomAlert,
-                                                    title: "챌린지를 삭제하시겠어요?",
-                                                    message: "삭제된 챌린지는 복구할 수 없어요.",
-                                                    primaryButtonTitle: "삭제",
-                                                    primaryAction: { habitManager.removeChallenge(challenge: challenge) },
-                                                    withCancelButton: true)
+                                          
                                             ModalAnchorView()
                                         } // ZStack
                                         
@@ -65,10 +60,10 @@ struct HabitSegmentDetailView: View {
                                                     Image(systemName: "trash")
                                                 }
                                             } // contextMenu
-                                        
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.bottom, 5)
+                                    
                                 } // if
                             }
                         }

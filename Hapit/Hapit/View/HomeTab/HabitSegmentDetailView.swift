@@ -78,9 +78,6 @@ struct HabitSegmentDetailView: View {
                     }
                 }
             } // VStack
-            .onAppear(){
-                print(habitManager.currentUserChallenges)
-            }
 
         case 1:
             

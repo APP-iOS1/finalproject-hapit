@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct CustomDatePickerView: View {
     
@@ -25,6 +26,9 @@ struct CustomDatePickerView: View {
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
     //OptionView에서 설정해달라고 애원하는 시트
     @State private var isAlertOn = false
+    @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+    @ObservedRealmObject var hapitPushInfo: HapitPushInfo
+
 
     // Login
     @EnvironmentObject var authManager: AuthManager
@@ -151,7 +155,7 @@ struct CustomDatePickerView: View {
                     await lnManager.getCurrentSettings()
                     print("lnManager.isGranted: \(lnManager.isGranted)")
                 }
-                //UserDefaults.standard.bool(forKey: "isUserAlarmOn")
+               
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -169,7 +173,7 @@ struct CustomDatePickerView: View {
                         // 챌린지 알림 설정
                         isChallengeAlarmOn.toggle()
                         if isChallengeAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
-                            if UserDefaults.standard.bool(forKey: "isUserAlarmOn") {
+                            if lnManager.isAlarmOn {
                                 isAlertOn = false
                                 isShowingAlarmSheet = true
                                 isChallengeAlarmOn = true

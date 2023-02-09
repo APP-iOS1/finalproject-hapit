@@ -127,8 +127,7 @@ struct OptionView: View {
                     lnManager.isAlarmOn = lnManager.isGranted
                     isUserAlarmOn = lnManager.isGranted
                 }
-                lnManager.isAlarmOn = isUserAlarmOn
-                
+
             }
         }
         .onChange(of: scenePhase) { newValue in

@@ -94,5 +94,3 @@ struct HomeView: View {
         return dateFormatter.string(from: dateCreatedAt)
     }
 }
-
-

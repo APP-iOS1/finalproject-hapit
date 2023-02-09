@@ -49,7 +49,7 @@ struct LocalNotificationSettingView: View {
             } else {
                 // 기기에서 알림 허용이 되어있지 않은 경우
                 Button("설정에서 알림 허용하기") {
-                    isAlertOn = true
+                 //   isAlertOn = true
                 }
                 .buttonStyle(.borderedProminent)
             }

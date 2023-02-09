@@ -69,6 +69,8 @@ struct ContentView: View {
                     try await authManager.fetchImages(paths: authManager.badges)
                     
                 }
+
+
             }
         default:
             LogInView(isFullScreen: $isFullScreen)

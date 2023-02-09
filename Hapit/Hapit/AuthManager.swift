@@ -300,6 +300,7 @@ final class AuthManager: ObservableObject {
         }
     }
         
+
     // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
         guard let token = credential.identityToken else {

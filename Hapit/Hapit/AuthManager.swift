@@ -11,6 +11,7 @@ import FirebaseFirestore
 import Firebase
 import FirebaseCore
 import FirebaseStorage
+import SwiftUI
 
 @MainActor
 class AuthManager: ObservableObject {
@@ -32,11 +33,13 @@ class AuthManager: ObservableObject {
     
     let database = Firestore.firestore()
     let firebaseAuth = Auth.auth()
+
     
     // MARK: - 로그인
     final func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
+           
         } catch{
             throw(error)
         }
@@ -214,6 +217,24 @@ class AuthManager: ObservableObject {
         }
     }
     
+    // MARK: - 사용 중인 유저의 뱃지 추가하기
+    
+    func updateBadge(uid: String, badge: String) async throws {
+        
+        let path = database.collection("User").document("\(uid)")
+        
+        do {
+            try await path.updateData([
+                "badge": FieldValue.arrayUnion([badge])
+            ])
+        } catch {
+            throw(error)
+        }
+        
+        try await fetchBadgeList(uid: uid)
+        try await fetchImages(paths: badges)
+    }
+    
     // MARK: - 사용중인 유저의 소유한 뱃지들 가져오기
     @MainActor
     func fetchBadgeList(uid: String) async throws {
@@ -230,6 +251,10 @@ class AuthManager: ObservableObject {
                 //self.fetchImages(path: element)
                 badges.append(element)
             }
+            // 뱃지들 중복처리
+        
+            badges = Array(Set(badges))
+            
         } catch {
             throw(error)
             
@@ -242,6 +267,8 @@ class AuthManager: ObservableObject {
     @MainActor
     func fetchImages(paths: [String]) async throws {
         self.bearimagesDatas.removeAll()
+        self.newBadges.removeAll()
+        
         do {
             
             for path in paths{

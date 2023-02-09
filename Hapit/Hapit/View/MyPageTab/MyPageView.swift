@@ -18,7 +18,6 @@ struct MyPageView: View {
     @State private var nickName = ""
     @State private var email = ""
 
-    
     var body: some View {
         NavigationView {
             ScrollView {

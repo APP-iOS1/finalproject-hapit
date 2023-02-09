@@ -53,6 +53,7 @@ struct JellyGridView: View {
 
                     authManager.bearBadges.append(newBadge)
                 }
+                
                 authManager.bearBadges = authManager.bearBadges.reversed()
             }
         }
@@ -74,7 +75,7 @@ struct JellyGridView: View {
             case "bearTurquoise":
                 return "처음 가입"
             case "bearYellow":
-                return "보너스"
+                return "첫 가입 축하"
             default:
                 return "비어 있음"
         }

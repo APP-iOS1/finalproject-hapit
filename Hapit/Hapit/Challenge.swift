@@ -53,7 +53,7 @@ struct Challenge: Hashable, Codable, Identifiable {
 
     // MARK: LocalChallenge형의 변수
     var localChallenge: LocalChallenge {
-        var tempLocalChallenge = LocalChallenge(localChallengeId: id, creator: creator, mateList: mateList, challengeTitle: challengeTitle, createdAt: createdAt, count: count, isChecked: isChecked, isChallengeAlarmOn: false)
+        var tempLocalChallenge = LocalChallenge(challengeId: id, creator: creator, mateList: mateList, challengeTitle: challengeTitle, createdAt: createdAt, count: count, isChecked: isChecked, isChallengeAlarmOn: false)
         
         return tempLocalChallenge
     }

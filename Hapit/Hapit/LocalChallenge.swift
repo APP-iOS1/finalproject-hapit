@@ -9,7 +9,8 @@ import Foundation
 import RealmSwift
 
 class LocalChallenge: Object, ObjectKeyIdentifiable {
-    @Persisted var localChallengeId: String
+    @Persisted(primaryKey: true) var localChallengeId: ObjectId
+    @Persisted var challengeId: String
     @Persisted var creator: String
     @Persisted var mateList: List<String> //[String]
     @Persisted var challengeTitle: String
@@ -20,10 +21,10 @@ class LocalChallenge: Object, ObjectKeyIdentifiable {
     @Persisted var isChallengeAlarmOn: Bool
     
     //이는 모든 멤버를 초기화하고 상속받은 멤버들을 customizing을 하기 위해서
-    convenience init(localChallengeId: String, creator: String, mateList: List<String>, challengeTitle: String, createdAt: Date, count: Int, isChecked: Bool, pushTime: Date? = nil, isChallengeAlarmOn: Bool) {
+    convenience init(challengeId: String, creator: String, mateList: List<String>, challengeTitle: String, createdAt: Date, count: Int, isChecked: Bool, pushTime: Date? = nil, isChallengeAlarmOn: Bool) {
         //푸시인포를 받아올 인스턴스 초기화 후 변수 받아서 프로퍼티에 할당
         self.init()
-        self.localChallengeId = localChallengeId
+        self.challengeId = challengeId
         self.creator = creator
         self.mateList = mateList
         self.challengeTitle = challengeTitle

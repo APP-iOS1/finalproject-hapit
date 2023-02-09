@@ -169,11 +169,11 @@ struct CustomDatePickerView: View {
                 }
                 Task {
                     await lnManager.getCurrentSettings()
-                    print("lnManager.isGranted: \(lnManager.isGranted)")
                 }
                 lnManager.isAlarmOn = isUserAlarmOn
 
-                print("CustomDatePickerView의 localChallenge: \(localChallenge)")
+                print("CustomDatePickerView의 Realm의 localChallenge: \(localChallenge)")
+                print("CustomDatePickerView의 currentChallenge.localChallenge: \(habitManager.currentChallenge.localChallenge.localChallengeId)")
                 
             }
             .toolbar {
@@ -208,7 +208,7 @@ struct CustomDatePickerView: View {
                             isChallengeAlarmOn = false
                         }
                     } label: {
-                        Image(systemName: isChallengeAlarmOn || localChallenge.isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
+                        Image(systemName: isChallengeAlarmOn || currentChallenge.localChallenge.isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
@@ -225,6 +225,7 @@ struct CustomDatePickerView: View {
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
                 LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
                     .environmentObject(LocalNotificationManager())
+                    .environmentObject(HabitManager())
             }
         }
         .sheet(isPresented: $showsCreatePostView) {

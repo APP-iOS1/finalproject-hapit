@@ -12,6 +12,7 @@ struct LocalNotificationSettingView: View {
     
     // MARK: - Property Wrappers
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var habitManager: HabitManager
     @Environment(\.scenePhase) var scenePhase
     @State private var scheduledDate = Date()
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언
@@ -32,11 +33,20 @@ struct LocalNotificationSettingView: View {
                     .labelsHidden()
                 
                 Button("저장하기") {
-                    //Realm에 푸쉬 알림 정보 업데이트
+                    // Realm에 푸쉬 알림 정보 업데이트
                     $localChallenge.isChallengeAlarmOn.wrappedValue = true
                     $localChallenge.pushTime.wrappedValue = scheduledDate
                     
-                    print("저장한 후의 localChallenge: \(localChallenge)")
+                    // challenges 업데이트
+                    for challenge in habitManager.currentUserChallenges {
+                        if challenge == habitManager.currentChallenge {
+                            challenge.localChallenge.isChallengeAlarmOn = true
+                            challenge.localChallenge.pushTime = scheduledDate
+                        }
+                    }
+                    
+                    print("저장한 후의 Realm의 localChallenge: \(localChallenge)")
+                    print("저장한 후의 currentChallenge.localChallenge: \(habitManager.currentChallenge.localChallenge.localChallengeId)")
 
                     isChallengeAlarmOn = true
                     

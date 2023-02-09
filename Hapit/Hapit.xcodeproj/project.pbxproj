@@ -15,7 +15,7 @@
 		36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 36D4A14B2989EEBD0048309A /* FirebaseMessaging */; };
 		36E1440B298CE7720044E666 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 36E1440A298CE7720044E666 /* Realm */; };
 		36E1440D298CE7720044E666 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 36E1440C298CE7720044E666 /* RealmSwift */; };
-		36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E1440E298CE7F20044E666 /* HapitPushInfo.swift */; };
+		36E1440F298CE7F30044E666 /* LocalChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E1440E298CE7F20044E666 /* LocalChallenge.swift */; };
 		3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38AFBE297632F5002D5ADF /* HomeView.swift */; };
 		3C39C493298985D400603149 /* PostModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C39C492298985D400603149 /* PostModalView.swift */; };
 		3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA85298A376E007C3EAA /* Modal.swift */; };
@@ -119,7 +119,7 @@
 		3696BF8329940EF60025A3A4 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
 		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
-		36E1440E298CE7F20044E666 /* HapitPushInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitPushInfo.swift; sourceTree = "<group>"; };
+		36E1440E298CE7F20044E666 /* LocalChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChallenge.swift; sourceTree = "<group>"; };
 		36F8EC022988D6F70029B701 /* Hapit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hapit.entitlements; sourceTree = "<group>"; };
 		36F8EC082988EBB80029B701 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		36F8EC0A2988EBB80029B701 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -452,7 +452,7 @@
 				F47BA150297A697F000222EE /* User.swift */,
 				3C5CAA85298A376E007C3EAA /* Modal.swift */,
 				C958D15E298CD8690057AA5B /* ChallengeFriends.swift */,
-				36E1440E298CE7F20044E666 /* HapitPushInfo.swift */,
+				36E1440E298CE7F20044E666 /* LocalChallenge.swift */,
 				C50FEE3D2991DE1000C18D3F /* Message.swift */,
 			);
 			name = Model;
@@ -738,7 +738,7 @@
 				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
-				36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */,
+				36E1440F298CE7F30044E666 /* LocalChallenge.swift in Sources */,
 				C50FEE3E2991DE1000C18D3F /* Message.swift in Sources */,
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,

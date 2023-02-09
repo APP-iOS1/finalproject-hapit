@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 //MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
 struct HabitSegmentDetailView: View {
@@ -18,22 +19,22 @@ struct HabitSegmentDetailView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
+    @ObservedResults(LocalChallenge.self) var localChallenge
     
     var body: some View {
         switch selectedIndex {
         case 0:
             VStack {
                 if habitManager.currentUserChallenges.count < 1{
-                    
                     EmptyCellView(currentContentsType: .challenge)
                 }
                 else {
-                    
+                    // 챌린지
                     ScrollView{
                         
-                        ForEach(habitManager.challenges) { challenge in
+                        ForEach(localChallenge) { challenge in
                             
-                            if challenge.uid == authManager.firebaseAuth.currentUser?.uid {
+                            if challenge.creator == authManager.firebaseAuth.currentUser?.uid {
                                 
                                 NavigationLink {
                                     //HabitDetailView(calendar: Calendar.current)
@@ -43,6 +44,7 @@ struct HabitSegmentDetailView: View {
                                         }
                                         .padding()
                                         .background(Color("BackgroundColor"))
+                                        
                                         Color.black.opacity(showsCustomAlert ? 0.3 : 0.0)
                                             .edgesIgnoringSafeArea(.all)
                                             .transition(.opacity)
@@ -51,7 +53,8 @@ struct HabitSegmentDetailView: View {
                                                 title: "챌린지를 삭제하시겠어요?",
                                                 message: "삭제된 챌린지는 복구할 수 없어요.",
                                                 primaryButtonTitle: "삭제",
-                                                primaryAction: { habitManager.removeChallenge(challenge: challenge) },
+                                                primaryAction: { habitManager.removeChallenge(challenge: challenge)
+                                                },
                                                 withCancelButton: true)
                                         ModalAnchorView()
                                     } // ZStack
@@ -80,7 +83,7 @@ struct HabitSegmentDetailView: View {
             } // VStack
 
         case 1:
-            
+            // 습관
             if habitManager.habits.count < 1{
                 EmptyCellView(currentContentsType: .habit)
             }

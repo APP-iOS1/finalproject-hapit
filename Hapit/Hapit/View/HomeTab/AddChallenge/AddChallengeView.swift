@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import RealmSwift
+import Realm
 
 // MARK: - AddChallengeView Struct
 struct AddChallengeView: View {
@@ -16,9 +17,6 @@ struct AddChallengeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
-    
-    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
-    
     @State private var challengeTitle: String = ""
     
     //FIXME: 알람데이터 저장이 필요
@@ -36,6 +34,9 @@ struct AddChallengeView: View {
     private var isOverCount: Bool {
         challengeTitle.count > maximumCount
     }
+    @ObservedRealmObject var localChallenge: LocalChallenge
+    
+    // 친구목록을 렒에 저장하기 위한 스트링 리스트(렒에 Array가 안됌)
     
     // MARK: - Body
     var body: some View {
@@ -92,6 +93,7 @@ struct AddChallengeView: View {
                             let current = authManager.firebaseAuth                            
                             
                             var mateArray: [String] = []
+
                             // 챌린지 작성자 uid 저장
                             // TODO: authManager.firebaseAuth.currentUser?.uid ?? "" 부분이 중복되는 코드. 전체적으로 고칠 필요가 있음
                             mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
@@ -100,13 +102,18 @@ struct AddChallengeView: View {
                             for friend in habitManager.seletedFriends {
                                 let uid = friend.uid
                                 mateArray.append(uid)
+                                //렐름에 들어갈 List에도 uid 넣기
+                                $localChallenge.mateArray.append(uid)
                             }
                             
                             habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: current.currentUser?.uid ?? ""))
                             
+                            let newChallenge = LocalChallenge(localChallengeId: id, creator: creator, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, isChallengeAlarmOn: false)
+                            
                             dismiss()
                             
                             habitManager.loadChallenge()
+                            // 선택된 친구를 초기화시켜줌
                             habitManager.seletedFriends = []
                         } catch {
                             throw(error)
@@ -179,8 +186,8 @@ struct AddChallengeView: View {
 
 
 // MARK: - AddChallengeView Previews
-struct AddChallengeView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddChallengeView()
-    }
-}
+//struct AddChallengeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddChallengeView()
+//    }
+//}

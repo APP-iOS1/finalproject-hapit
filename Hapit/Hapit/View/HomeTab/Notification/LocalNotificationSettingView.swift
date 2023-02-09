@@ -14,7 +14,7 @@ struct LocalNotificationSettingView: View {
     @EnvironmentObject var lnManager: LocalNotificationManager
     @Environment(\.scenePhase) var scenePhase
     @State private var scheduledDate = Date()
-    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
+    @ObservedResults(LocalChallenge.self) var localChallenge
     @Binding var isChallengeAlarmOn: Bool
     @Binding var isShowingAlarmSheet: Bool
     var challengeID: String
@@ -33,8 +33,8 @@ struct LocalNotificationSettingView: View {
                 Button("저장하기") {
                     //Realm에 푸쉬 정보 저장
                     
-                    let newLocalPush = HapitPushInfo(pushID: challengeID, pushTime: scheduledDate, isChallengeAlarmOn: true)
-                    $hapitPushInfo.append(newLocalPush)
+                    let newLocalPush = LocalChallenge(pushID: challengeID, pushTime: scheduledDate, isChallengeAlarmOn: true)
+                    $localChallenge.append(newLocalPush)
                     
                     isChallengeAlarmOn = true
                     
@@ -51,8 +51,8 @@ struct LocalNotificationSettingView: View {
         }
         .onAppear{
             isChallengeAlarmOn = false // 저장하기 버튼을 안 누르고 모달을 닫을 경우에 알림이 해제되어 있어야 함. (아이콘)
-            for push in hapitPushInfo {
-                if push.pushID == challengeID {
+            for push in localChallenge {
+                if push.localChallengeId == challengeID {
                     scheduledDate = push.pushTime ?? Date()
                 }
             }

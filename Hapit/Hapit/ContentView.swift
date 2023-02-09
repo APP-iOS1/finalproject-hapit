@@ -35,9 +35,6 @@ struct ContentView: View {
                         }
                     }
                     .tag(0)
-                    .onAppear{
-                        habitManager.loadChallenge()
-                    }
                 
                 SocialView()
                     .tabItem {

@@ -12,7 +12,7 @@ struct FriendChallengeCellView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
 
-    @State var challengeWithMe: Bool = false
+    @State var challengeWithMe:[Challenge] = []
     @State var challenge: Challenge
     var body: some View {
         HStack {
@@ -30,12 +30,14 @@ struct FriendChallengeCellView: View {
                         .foregroundColor(.orange)
                     Text("연속 \(challenge.count)일째")
                     Spacer()
-                //FIXME: - 함께하는 챌린지인 경우 표시해주는 코드가 필요
-                 // if challengeWithMe {
-                        Text("함께 챌린지 중")
-                            .foregroundColor(Color("AccentColor"))
-                            .font(.custom("IMHyemin-Bold", size: 12))
-                 //  }
+                    
+                    ForEach(challengeWithMe){ challenge in
+                        if challenge.id == self.challenge.id {
+                            Text("함께 챌린지 중")
+                                .foregroundColor(Color("AccentColor"))
+                                .font(.custom("IMHyemin-Bold", size: 12))
+                        }
+                    }
                 }
                 .font(.custom("IMHyemin-Regular", size: 15))//HStack
                 
@@ -49,27 +51,25 @@ struct FriendChallengeCellView: View {
         .cornerRadius(20)
         .padding(.horizontal)
 //FIXME: - 함께하는 챌린지인 경우 표시해주는 코드가 필요
-//        .onAppear {
-//            do{
-//
-//                Task{
-//
-//                    let current = authManager.firebaseAuth
-//                   let currentUser = current.currentUser?.uid
-//
-//                    for challenge in habitManager.challenges {
-//                        for mate in challenge.mateArray{
-//                            if mate == currentUser{
-//                                challengeWithMe.toggle()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            catch{
-//
-//            }
-//        }
+        .onAppear {
+            do{
+                Task{
+                    let current = authManager.firebaseAuth
+                   let currentUser = current.currentUser?.uid
+
+                    for challenge in habitManager.challenges {
+                        for mate in challenge.mateArray{
+                            if mate == currentUser{
+                                challengeWithMe.append(challenge)
+                            }
+                        }
+                    }
+                }
+            }
+            catch{
+
+            }
+        }
     }
 }
 

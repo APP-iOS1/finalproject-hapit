@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 class LocalChallenge: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var localChallengeId: ObjectId
-    @Persisted var challengeId: String
+//    @Persisted(primaryKey: true) var localChallengeId: ObjectId
+    @Persisted(primaryKey: true) var challengeId: String
     @Persisted var creator: String
     @Persisted var mateList: List<String> //[String]
     @Persisted var challengeTitle: String

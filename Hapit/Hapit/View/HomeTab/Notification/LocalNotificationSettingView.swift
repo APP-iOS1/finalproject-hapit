@@ -15,8 +15,9 @@ struct LocalNotificationSettingView: View {
     @EnvironmentObject var habitManager: HabitManager
     @Environment(\.scenePhase) var scenePhase
     @State private var scheduledDate = Date()
-    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언
-
+    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    
     @Binding var isChallengeAlarmOn: Bool
     @Binding var isShowingAlarmSheet: Bool
     
@@ -36,17 +37,8 @@ struct LocalNotificationSettingView: View {
                     // Realm에 푸쉬 알림 정보 업데이트
                     $localChallenge.isChallengeAlarmOn.wrappedValue = true
                     $localChallenge.pushTime.wrappedValue = scheduledDate
-                    
-                    // challenges 업데이트
-                    for challenge in habitManager.currentUserChallenges {
-                        if challenge == habitManager.currentChallenge {
-                            challenge.localChallenge.isChallengeAlarmOn = true
-                            challenge.localChallenge.pushTime = scheduledDate
-                        }
-                    }
-                    
+
                     print("저장한 후의 Realm의 localChallenge: \(localChallenge)")
-                    print("저장한 후의 currentChallenge.localChallenge: \(habitManager.currentChallenge.localChallenge.localChallengeId)")
 
                     isChallengeAlarmOn = true
                     
@@ -69,6 +61,11 @@ struct LocalNotificationSettingView: View {
             
             Task {
                 await lnManager.getCurrentSettings()
+            }
+            
+            // AddChallengeView에서 생성한(Realm에 저장된) 챌린지 for으로 돌려서 찾기 -> 성공
+            for challenge in localChallenges {
+                print("LocalNotificationSettingView의 localChallenges For문: \(challenge)")
             }
         }
     }

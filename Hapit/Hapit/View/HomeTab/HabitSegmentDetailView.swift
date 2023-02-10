@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 //MARK: 세그먼트로 개인습관 혹은 그룹습관을 선택해 볼 수 있다.
 struct HabitSegmentDetailView: View {
@@ -19,60 +20,60 @@ struct HabitSegmentDetailView: View {
     @State private var isOnAlarm: Bool = false // 알림 설정
     @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
     
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    
     var body: some View {
         switch selectedIndex {
         case 0:
             VStack {
-                if habitManager.currentUserChallenges.count < 1{
+                if habitManager.currentUserChallenges.count < 1 {
                     EmptyCellView(currentContentsType: .challenge)
-                }
-                else {
+                } else {
                     ScrollView {
                         ForEach(habitManager.currentUserChallenges) { challenge in
+                            Text("\(challenge.challengeTitle)")
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
                                         //HabitDetailView(calendar: Calendar.current)
                                         ZStack{
                                             ScrollView(showsIndicators: false){
-                                                CustomDatePickerView(currentDate: $date, localChallenge: challenge.localChallenge, currentChallenge: challenge)
-//                                                    .onAppear {
-//                                                        // HabitManger의 @Published currentChallenge 갱신
-//                                                        habitManager.currentChallenge = challenge
-//                                                    }
+                                                ForEach(localChallenges) { localChallenge in
+                                                    if localChallenge.challengeId == challenge.id {
+                                                        CustomDatePickerView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
+                                                    }
+                                                } // ForEach - localChallenges
                                             }
                                             .padding()
                                             .background(Color("BackgroundColor"))
-                                          
+                                            
                                             ModalAnchorView()
                                         } // ZStack
                                         
                                     } label: {
-                                        ChallengeCellView(challenge: challenge, currentUserInfos: [])
-                                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-                                            .contextMenu {
-                                                Button(role: .destructive) {
-                                                    // 챌린지 삭제
-                                                    habitManager.removeChallenge(challenge: challenge)
-                                                } label: {
-                                                    Text("챌린지 지우기")
-                                                        .font(.custom("IMHyemin-Regular", size: 17))
-                                                    Image(systemName: "trash")
-                                                }
-                                            } // contextMenu
+                                        ForEach(localChallenges) { localChallenge in
+                                            if localChallenge.challengeId == challenge.id {
+                                                ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
+                                            }
+                                        }
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.bottom, 5)
-                                    
                                 } // if
-                            }
-                        }
-                    }
-                }
+                                
+                            } // ForEach - mateArray
+                        } // ForEach - currentUserChallenges
+                    } // ScrollView
+                } // else
             } // VStack
-
-        case 1:
+            .onAppear {
+                print("================HabitSegmentDetailView의 localChallenges ForEach=================")
+                for localChallenge in localChallenges {
+                    print("\(localChallenge)")
+                } // ForEach - localChallenges
+            }
             
+        case 1:
             if habitManager.habits.count < 1{
                 EmptyCellView(currentContentsType: .habit)
             }
@@ -81,7 +82,6 @@ struct HabitSegmentDetailView: View {
                     ForEach(habitManager.habits) { habit in
                         
                         NavigationLink {
-                           
                             //HabitDetailView(calendar: Calendar.current)
                         } label: {
                             HabitCellView(habit: habit)
@@ -90,6 +90,7 @@ struct HabitSegmentDetailView: View {
                     }
                 }
             }
+            
         default: Text("something wrong")
         }// switch
         

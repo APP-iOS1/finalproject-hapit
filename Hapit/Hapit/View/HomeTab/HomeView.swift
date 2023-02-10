@@ -60,6 +60,7 @@ struct HomeView: View {
                 .onAppear {
                     selectedIndex = 0
                     habitManager.loadChallenge()
+                    
                     print("habitManager.currentUserChallenges.count : \(habitManager.currentUserChallenges.count)")
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))

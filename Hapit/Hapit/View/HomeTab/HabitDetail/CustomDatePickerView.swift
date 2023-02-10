@@ -28,7 +28,8 @@ struct CustomDatePickerView: View {
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
     //OptionView에서 설정해달라고 애원하는 시트
     @State private var isAlertOn = false
-    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언
+    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
 
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
     
@@ -171,9 +172,19 @@ struct CustomDatePickerView: View {
                     await lnManager.getCurrentSettings()
                 }
                 lnManager.isAlarmOn = isUserAlarmOn
+                
+                // Realm에 저장된 알림 설정을 해당 뷰의 알림 설정 변수에 세팅
+                isChallengeAlarmOn = localChallenge.isChallengeAlarmOn
+                
+                // Realm에 저장된 모든 챌린지를 돌면서 해당 뷰의 챌린지랑 같은 데이터(챌린지 모델)을 LocalNotificationSettingView로 넘기기
+                // AddChallengeView에서 생성한(Realm에 저장된) 챌린지 for으로 돌려서 찾기 -> 성공
+//                for challenge in localChallenges {
+//                    if challenge.challengeId == localChallenge.challengeId {
+//                        self.currentChallenge.localChallenge = challenge
+//                    }
+//                }
 
                 print("CustomDatePickerView의 Realm의 localChallenge: \(localChallenge)")
-                print("CustomDatePickerView의 currentChallenge.localChallenge: \(habitManager.currentChallenge.localChallenge.localChallengeId)")
                 
             }
             .toolbar {
@@ -203,12 +214,16 @@ struct CustomDatePickerView: View {
                                 isChallengeAlarmOn = false
                             }
                         } else { // 앱의 알림 설정을 해제시켜줘야 함.
+                            // lnManger schedule에서 삭제
                             lnManager.removeRequest(withIdentifier: currentChallenge.id)
                             isShowingAlarmSheet = false
                             isChallengeAlarmOn = false
+                            
+                            // Realm에 해당 챌린지 알림 설정 업데이트
+                            $localChallenge.isChallengeAlarmOn.wrappedValue = false
                         }
                     } label: {
-                        Image(systemName: isChallengeAlarmOn || currentChallenge.localChallenge.isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
+                        Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
                             .foregroundColor(.gray)
                     } // label
                 } // ToolbarItem
@@ -223,9 +238,13 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
-                    .environmentObject(LocalNotificationManager())
-                    .environmentObject(HabitManager())
+                ForEach(localChallenges) { localChallenge in
+                    if localChallenge.challengeId == currentChallenge.id {
+                        LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
+                            .environmentObject(LocalNotificationManager())
+                            .environmentObject(HabitManager())
+                    }
+                }
             }
         }
         .sheet(isPresented: $showsCreatePostView) {

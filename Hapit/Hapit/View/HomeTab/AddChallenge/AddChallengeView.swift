@@ -17,8 +17,6 @@ struct AddChallengeView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     
-    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
-    
     @State private var challengeTitle: String = ""
     
     //FIXME: 알람데이터 저장이 필요
@@ -32,7 +30,7 @@ struct AddChallengeView: View {
     
     @State private var notiTime = Date()
     
-    @ObservedResults(LocalChallenge.self) var localChallenge // 새로운 로컬챌린지 객체를 담아주기 위해 선언
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
     // MARK: - Properties
     let maximumCount: Int = 12
@@ -114,9 +112,9 @@ struct AddChallengeView: View {
                             habitManager.createChallenge(challenge: newChallenge)
 
                             // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
-                            $localChallenge.append(newChallenge.localChallenge)
+                            $localChallenges.append(newChallenge.localChallenge)
                             
-                            print("\(localChallenge)")
+                            print("\(localChallenges)")
 
                             dismiss()
                             
@@ -190,7 +188,6 @@ struct AddChallengeView: View {
         }// NavigationView
     } // Body
 }
-
 
 // MARK: - AddChallengeView Previews
 struct AddChallengeView_Previews: PreviewProvider {

@@ -195,7 +195,7 @@ final class AuthManager: ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 친구목록을 반환
-    final func getFriends(uid: String) async throws -> [String] {
+    func getFriends(uid: String) async throws -> [String] {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
@@ -420,5 +420,129 @@ final class AuthManager: ObservableObject {
                 self.loggedIn = "logIn"
             }
         }
+    }
+    
+    // MARK: - 카카오 로그인
+    func kakaoSignIn() {
+        // 사용자가 앞서 로그인에서 토큰을 발급받은 적이 있는가?
+        if (AuthApi.hasToken()) {
+            // 토큰의 유효성 확인
+            UserApi.shared.accessTokenInfo { token, error in
+                // 에러인 경우
+                if let error = error {
+                    //토큰 유효성 에러인 경우에는 로그인이 필요함
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true {
+                        //카카오톡으로 로그인 하는 것이 가능한지 확인
+                        if (UserApi.isKakaoTalkLoginAvailable()) {
+                            UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
+                                if error != nil {
+                                    return
+                                } else {
+                                    // 에러 없으면 카카오톡 로그인을 진행
+                                    
+                                    // 신규회원인지 확인해주기
+                                    UserApi.shared.me(completion: {
+                                        (user, error) in
+                                        if let error = error {
+                                            print(error)
+                                        } else {
+                                            
+                                            // 카카오톡 로그인 약관동의 진행
+                                            self.kakaoToS()
+                                            
+                                            // 카카오톡 로그인 사용자 문서 경로
+                                            let userRef = self.database.collection("User").document(String(user?.id ?? 0))
+                                            
+                                            // 경로를 바탕으로 문서 존재여부 찾아보기
+                                            userRef.getDocument { (document, error) in
+                                                // 카카오톡 로그인 유저 uid에 해당하는 문서 없다면 새로 생성
+                                                if !(document?.exists ?? false) {
+                                                    let newby = User(id: String(user?.id ?? 0), name: user?.kakaoAccount?.name ?? "", email: user?.kakaoAccount?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                                                    
+                                                    userRef.setData([
+                                                        "email" : newby.email,
+                                                        "pw" : newby.pw,
+                                                        "name" : newby.name,
+                                                        "proImage" : newby.proImage,
+                                                        "badge" : newby.badge,
+                                                        "friends" : newby.friends
+                                                    ])
+                                                }
+                                            }
+                                        }
+                                    })
+                                    // 로그인 + 회원등록이 완료되면 로그인상태 변경해줌
+                                    self.loggedIn = "logIn"
+                                }
+                            }
+                        } else {
+                            // 카카오톡 로그인 불가능에러
+                        }
+                    } else {
+                        //토큰유효성 이외의 기타 에러 발생
+                    }
+                }
+            }
+        } else {
+            //카카오톡으로 로그인 하는 것이 가능한지 확인
+            if (UserApi.isKakaoTalkLoginAvailable()) {
+                UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
+                    if error != nil {
+                        return
+                    } else {
+                        // 에러 없으면 카카오톡 로그인을 진행
+                        
+                        // 신규회원인지 확인해주기
+                        UserApi.shared.me(completion: {
+                            (user, error) in
+                            if let error = error {
+                                print(error)
+                            } else {
+                                // 카카오톡 로그인 사용자 문서 경로
+                                let userRef = self.database.collection("User").document(String(user?.id ?? 0))
+                                
+                                // 경로를 바탕으로 문서 존재여부 찾아보기
+                                userRef.getDocument { (document, error) in
+                                    // 카카오톡 로그인 유저 uid에 해당하는 문서 없다면 새로 생성
+                                    if !(document?.exists ?? false) {
+                                        
+                                        // 카카오톡 로그인 약관동의 진행
+                                        self.kakaoToS()
+                                        
+                                        let newby = User(id: String(user?.id ?? 0), name: user?.kakaoAccount?.name ?? "", email: user?.kakaoAccount?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                                        
+                                        userRef.setData([
+                                            "email" : newby.email,
+                                            "pw" : newby.pw,
+                                            "name" : newby.name,
+                                            "proImage" : newby.proImage,
+                                            "badge" : newby.badge,
+                                            "friends" : newby.friends
+                                        ])
+                                    }
+                                }
+                            }
+                        })
+                        // 로그인 + 회원등록이 완료되면 로그인상태 변경해줌
+                        self.loggedIn = "logIn"
+                    }
+                }
+            } else {
+                // 카카오톡 로그인 불가능에러
+            }
+        }
+    }
+    
+    func kakaoToS() {
+        let serviceTerms = ["서비스 이용약관 동의", "개인정보 수집 및 이용동의", "E-mail 광고성 정보 수신동의"]
+        
+        UserApi.shared.loginWithKakaoAccount(serviceTerms: serviceTerms, completion: { [self] (oauthToken, error) in
+        if let error = error {
+                return
+            }
+            else {
+                self.loggedIn = "logIn"
+            }
+        })
     }
 }

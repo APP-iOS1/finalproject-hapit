@@ -13,6 +13,7 @@ import FirebaseMessaging
 import UIKit
 import GoogleSignIn
 import KakaoSDKCommon
+import KakaoSDKAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate{
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
@@ -39,6 +40,13 @@ class AppDelegate: NSObject, UIApplicationDelegate{
          Messaging.messaging().apnsToken = deviceToken
     }
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.handleOpenUrl(url: url)
+        }
+        return false
+    }
+    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
@@ -57,6 +65,16 @@ extension AppDelegate: MessagingDelegate {
         object: nil,
         userInfo: dataDict
       )
+    }
+}
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
     }
 }
     

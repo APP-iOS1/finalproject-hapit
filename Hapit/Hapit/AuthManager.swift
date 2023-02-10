@@ -444,6 +444,7 @@ final class AuthManager: ObservableObject {
                                     UserApi.shared.me(completion: {
                                         (user, error) in
                                         if let error = error {
+                                            self.loggedIn = "logOut"
                                             print(error)
                                         } else {
                                             
@@ -476,7 +477,49 @@ final class AuthManager: ObservableObject {
                                 }
                             }
                         } else {
-                            // 카카오톡 로그인 불가능에러
+                            // 카카오톡 로그인 불가능 시엔 카카오계정 로그인 진행
+                            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                                    if let error = error {
+                                        return
+                                    }
+                                    else {
+                                        //에러 없으면 카카오계정 로그인 진행
+                                        
+                                        UserApi.shared.me(completion: {
+                                            (user, error) in
+                                            if let error = error {
+                                                self.loggedIn = "logOut"
+                                                print(error)
+                                            } else {
+                                                
+                                                // 카카오톡 로그인 약관동의 진행
+                                                self.kakaoToS()
+                                                
+                                                // 카카오톡 로그인 사용자 문서 경로
+                                                let userRef = self.database.collection("User").document(String(user?.id ?? 0))
+                                                
+                                                // 경로를 바탕으로 문서 존재여부 찾아보기
+                                                userRef.getDocument { (document, error) in
+                                                    // 카카오톡 로그인 유저 uid에 해당하는 문서 없다면 새로 생성
+                                                    if !(document?.exists ?? false) {
+                                                        let newby = User(id: String(user?.id ?? 0), name: user?.kakaoAccount?.name ?? "", email: user?.kakaoAccount?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                                                        
+                                                        userRef.setData([
+                                                            "email" : newby.email,
+                                                            "pw" : newby.pw,
+                                                            "name" : newby.name,
+                                                            "proImage" : newby.proImage,
+                                                            "badge" : newby.badge,
+                                                            "friends" : newby.friends
+                                                        ])
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        // 로그인 + 회원등록이 완료되면 로그인상태 변경해줌
+                                        self.loggedIn = "logIn"
+                                    }
+                                }
                         }
                     } else {
                         //토큰유효성 이외의 기타 에러 발생
@@ -496,6 +539,7 @@ final class AuthManager: ObservableObject {
                         UserApi.shared.me(completion: {
                             (user, error) in
                             if let error = error {
+                                self.loggedIn = "logOut"
                                 print(error)
                             } else {
                                 // 카카오톡 로그인 사용자 문서 경로
@@ -528,7 +572,49 @@ final class AuthManager: ObservableObject {
                     }
                 }
             } else {
-                // 카카오톡 로그인 불가능에러
+                // 카카오톡 로그인 불가능 시엔 카카오계정 로그인 진행
+                UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                        if let error = error {
+                            return
+                        }
+                        else {
+                            //에러 없으면 카카오계정 로그인 진행
+                            
+                            UserApi.shared.me(completion: {
+                                (user, error) in
+                                if let error = error {
+                                    self.loggedIn = "logOut"
+                                    print(error)
+                                } else {
+                                    
+                                    // 카카오톡 로그인 약관동의 진행
+                                    self.kakaoToS()
+                                    
+                                    // 카카오톡 로그인 사용자 문서 경로
+                                    let userRef = self.database.collection("User").document(String(user?.id ?? 0))
+                                    
+                                    // 경로를 바탕으로 문서 존재여부 찾아보기
+                                    userRef.getDocument { (document, error) in
+                                        // 카카오톡 로그인 유저 uid에 해당하는 문서 없다면 새로 생성
+                                        if !(document?.exists ?? false) {
+                                            let newby = User(id: String(user?.id ?? 0), name: user?.kakaoAccount?.name ?? "", email: user?.kakaoAccount?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                                            
+                                            userRef.setData([
+                                                "email" : newby.email,
+                                                "pw" : newby.pw,
+                                                "name" : newby.name,
+                                                "proImage" : newby.proImage,
+                                                "badge" : newby.badge,
+                                                "friends" : newby.friends
+                                            ])
+                                        }
+                                    }
+                                }
+                            })
+                            // 로그인 + 회원등록이 완료되면 로그인상태 변경해줌
+                            self.loggedIn = "logIn"
+                        }
+                    }
             }
         }
     }

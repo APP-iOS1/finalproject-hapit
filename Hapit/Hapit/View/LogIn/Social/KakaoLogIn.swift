@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import KakaoSDKAuth
+import KakaoSDKUser
 
 struct KakaoLogIn: View {
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
-        Image("Logo - SIWA - Logo-only - White")
-            .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
+        Button(action: {
+            authManager.kakaoSignIn()
+        }){
+            Text("카카오톡 로그인")
+        }
     }
 }
 

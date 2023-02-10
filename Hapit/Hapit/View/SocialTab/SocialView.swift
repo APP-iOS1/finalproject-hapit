@@ -28,12 +28,17 @@ struct SocialView: View {
                             .font(.custom("IMHyemin-Bold", size: 15))
                     }.padding(.trailing, 20)
                     
+                    // 본인 챌린지 뷰는 안들어가지게 분기처리
                     ScrollView {
                         ForEach(Array(sortMyFriends.enumerated()), id: \.1) { (index, friend) in
-                            NavigationLink {
-                                FriendChallengeView(friend: friend)
-                                    .navigationTitle("친구가 수행중인 챌린지")
-                            } label: {
+                            if friend.id != userInfoManager.currentUserInfo?.id ?? "" {
+                                NavigationLink {
+                                    FriendChallengeView(friend: friend)
+                                        .navigationTitle("친구가 수행중인 챌린지")
+                                } label: {
+                                    FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
+                                }
+                            } else {
                                 FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
                             }
                         }
@@ -138,6 +143,7 @@ struct SocialView: View {
     }
 }
 
+// MARK: FriendsCell
 struct FriendsRow: View {
     let friend: User
     var index: Int
@@ -145,8 +151,6 @@ struct FriendsRow: View {
     
     var body: some View {
         HStack {
-            // TODO: 노션에 적어놓은 랭킹대로 정렬
-            // TODO: (나) 표시 다시 해주기
             Text("\(index)")
                 .font(.largeTitle)
                 .foregroundColor(Color("AccentColor"))
@@ -157,7 +161,6 @@ struct FriendsRow: View {
                 .frame(width: 40, height: 40)
                 .padding(10)
             
-            // TODO: 진행중인 챌린지 개수 가져오기
             VStack(alignment: .leading, spacing: 3) {
                 Text("\(friend.name)")
                     .foregroundColor(.black)

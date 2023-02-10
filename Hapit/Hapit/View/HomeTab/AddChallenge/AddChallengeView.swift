@@ -113,8 +113,6 @@ struct AddChallengeView: View {
 
                             // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
                             $localChallenges.append(newChallenge.localChallenge)
-                            
-                            print("\(localChallenges)")
 
                             dismiss()
                             

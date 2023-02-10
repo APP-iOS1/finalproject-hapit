@@ -17,12 +17,7 @@ struct ChallengeCellView: View {
     @State private var isChecked: Bool = false
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
-    
-//    @ObservedResults(
-//        LocalChallenge.self,
-//      where: { $0.challengeId == true }
-//    ) var localChallenges
-    
+
     // MARK: - Properties
     var challenge: Challenge
     var isCheckedInDevice: Bool = false
@@ -38,9 +33,9 @@ struct ChallengeCellView: View {
                 $localChallenge.isChecked.wrappedValue = isChecked
         
             } label: {
-                Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
+                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor(challenge.isChecked ? .green : .gray)
+                    .foregroundColor(isChecked ? .green : .gray)
                 
             }
             .buttonStyle(PlainButtonStyle())
@@ -108,10 +103,11 @@ struct ChallengeCellView: View {
             // 해당 뷰에서만 쓰이는 체크 변수에다가 서버에 저장된 챌린지 체크 정보 저장
             isChecked = challenge.isChecked
         }
-        .onDisappear {
-            // 뷰가 사라질 때 서버에 체크 정보를 업로드
-//            habitManager.loadChallengeIsChecked(challenge: challenge)
-        }
+//        .onDisappear {
+//            // 뷰가 사라질 때 서버에 체크 정보를 업로드
+//            let tempChallenge = Challenge(id: challenge.id, creator: challenge.creator, mateArray: challenge.mateArray, challengeTitle: challenge.challengeTitle, createdAt: challenge.createdAt, count: challenge.count, isChecked: $localChallenge.isChecked.wrappedValue, uid: challenge.uid)
+//            habitManager.loadChallengeIsChecked(challenge: tempChallenge)
+//        }
         
         //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(

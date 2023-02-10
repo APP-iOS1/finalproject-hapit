@@ -31,7 +31,6 @@ struct HabitSegmentDetailView: View {
                 } else {
                     ScrollView {
                         ForEach(habitManager.currentUserChallenges) { challenge in
-                            Text("\(challenge.challengeTitle)")
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
@@ -60,19 +59,18 @@ struct HabitSegmentDetailView: View {
                                     .padding(.horizontal, 20)
                                     .padding(.bottom, 5)
                                 } // if
-                                
                             } // ForEach - mateArray
                         } // ForEach - currentUserChallenges
                     } // ScrollView
+                    .onAppear {
+                        print("================HabitSegmentDetailView의 localChallenges ForEach=================")
+                        for localChallenge in localChallenges {
+                            print("\(localChallenge)")
+                        } // ForEach - localChallenges
+                    }
                 } // else
             } // VStack
-            .onAppear {
-                print("================HabitSegmentDetailView의 localChallenges ForEach=================")
-                for localChallenge in localChallenges {
-                    print("\(localChallenge)")
-                } // ForEach - localChallenges
-            }
-            
+   
         case 1:
             if habitManager.habits.count < 1{
                 EmptyCellView(currentContentsType: .habit)

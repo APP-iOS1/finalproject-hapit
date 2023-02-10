@@ -44,7 +44,7 @@ struct LocalNotificationSettingView: View {
                     
                     Task{
                         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: scheduledDate)
-                        await lnManager.schedule(localNotification: LocalNotification(identifier: challengeID, title: challengeTitle, body: "챌린지를 할 시간입니다", dateComponents: dateComponents, repeats: true))
+                        await lnManager.schedule(localNotification: LocalNotification(identifier: challengeID, title: challengeTitle, body: "챌린지를 수행할 시간이에요!", dateComponents: dateComponents, repeats: true))
                         
                         // 원래 dismiss쓰다가 isShowingAlarmSheet가 true인 상태여서 백그라운드모드일 때
                         // 다시 모달이 다시 올라가는 현상이 있어서 isShowingAlarmSheet를 바인딩해서 false로 고정.
@@ -56,20 +56,14 @@ struct LocalNotificationSettingView: View {
         }
         .onAppear{
             isChallengeAlarmOn = false // 저장하기 버튼을 안 누르고 모달을 닫을 경우에 알림이 해제되어 있어야 함. (아이콘)
-
-            print("LocalNotificationSettingView의 localChallenge: \(localChallenge)")
-            
+   
             Task {
                 await lnManager.getCurrentSettings()
-            }
-            
-            // AddChallengeView에서 생성한(Realm에 저장된) 챌린지 for으로 돌려서 찾기 -> 성공
-            for challenge in localChallenges {
-                print("LocalNotificationSettingView의 localChallenges For문: \(challenge)")
             }
         }
     }
 }
+
 //
 //struct LocalNotificationSettingView_Previews: PreviewProvider {
 //    static var previews: some View {

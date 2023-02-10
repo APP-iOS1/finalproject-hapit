@@ -26,8 +26,7 @@ struct CustomDatePickerView: View {
     @State var showsCreatePostView: Bool = false
     @State var isChallengeAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
-    //OptionView에서 설정해달라고 애원하는 시트
-    @State private var isAlertOn = false
+    @State private var isAlertOn = false // OptionView에서 설정해달라고 애원하는 시트
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
 
@@ -145,15 +144,25 @@ struct CustomDatePickerView: View {
             .onChange(of: scenePhase) { newValue in
                 //앱이 작동중일 때
                 //노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
-                //
                 if newValue == .active {
                     Task {
                         await lnManager.getCurrentSettings()
+                        // 마이페이지에서 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                        // 하지만 그 반대는 생각 안 해줘도 됨. 마이페이지에서 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
                         if !lnManager.isAlarmOn {
                             isChallengeAlarmOn = lnManager.isAlarmOn
+                            // Realm에 해당 챌린지 알림 설정 업데이트
+                            $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
+                        } else {
+                            isChallengeAlarmOn = $localChallenge.isChallengeAlarmOn.wrappedValue
                         }
+                        
+                        // 아이폰 설정 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                        // 하지만 그 반대는 생각 안 해줘도 됨. 아이폰 설정 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
                         if !lnManager.isGranted {
                             isChallengeAlarmOn = lnManager.isGranted
+                            // Realm에 해당 챌린지 알림 설정 업데이트
+                            $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
                         }
                     }
                 }
@@ -171,21 +180,26 @@ struct CustomDatePickerView: View {
                 Task {
                     await lnManager.getCurrentSettings()
                 }
+                
                 lnManager.isAlarmOn = isUserAlarmOn
                 
-                // Realm에 저장된 알림 설정을 해당 뷰의 알림 설정 변수에 세팅
-                isChallengeAlarmOn = localChallenge.isChallengeAlarmOn
+                // 마이페이지에서 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                // 하지만 그 반대는 생각 안 해줘도 됨. 마이페이지에서 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
+                if !lnManager.isAlarmOn {
+                    isChallengeAlarmOn = lnManager.isAlarmOn
+                    // Realm에 해당 챌린지 알림 설정 업데이트
+                    $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
+                } else {
+                    isChallengeAlarmOn = $localChallenge.isChallengeAlarmOn.wrappedValue
+                }
                 
-                // Realm에 저장된 모든 챌린지를 돌면서 해당 뷰의 챌린지랑 같은 데이터(챌린지 모델)을 LocalNotificationSettingView로 넘기기
-                // AddChallengeView에서 생성한(Realm에 저장된) 챌린지 for으로 돌려서 찾기 -> 성공
-//                for challenge in localChallenges {
-//                    if challenge.challengeId == localChallenge.challengeId {
-//                        self.currentChallenge.localChallenge = challenge
-//                    }
-//                }
-
-                print("CustomDatePickerView의 Realm의 localChallenge: \(localChallenge)")
-                
+                // 아이폰 설정 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                // 하지만 그 반대는 생각 안 해줘도 됨. 아이폰 설정 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
+                if !lnManager.isGranted {
+                    isChallengeAlarmOn = lnManager.isGranted
+                    // Realm에 해당 챌린지 알림 설정 업데이트
+                    $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -202,6 +216,10 @@ struct CustomDatePickerView: View {
                     Button {
                         // 챌린지 알림 설정
                         isChallengeAlarmOn.toggle()
+                        
+                        // Realm에 해당 챌린지 알림 설정 업데이트
+                        $localChallenge.isChallengeAlarmOn.wrappedValue = isChallengeAlarmOn
+                        
                         if isChallengeAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
                             if lnManager.isAlarmOn {
                                 isAlertOn = false
@@ -218,9 +236,6 @@ struct CustomDatePickerView: View {
                             lnManager.removeRequest(withIdentifier: currentChallenge.id)
                             isShowingAlarmSheet = false
                             isChallengeAlarmOn = false
-                            
-                            // Realm에 해당 챌린지 알림 설정 업데이트
-                            $localChallenge.isChallengeAlarmOn.wrappedValue = false
                         }
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
@@ -250,10 +265,13 @@ struct CustomDatePickerView: View {
         .sheet(isPresented: $showsCreatePostView) {
             DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
-        .alert(isPresented: $isAlertOn) {
-            Alert(title: Text("마이페이지의 설정창에서 알림을 켜주세요"), message: nil,
-                  dismissButton: .default(Text("확인")))
-        }
+        .customAlert( // 커스텀 알림창 띄우기
+            isPresented: $isAlertOn,
+            title: "알림을 켜주세요!",
+            message: "마이페이지 > 설정 > 알림",
+            primaryButtonTitle: "확인",
+            primaryAction: { isAlertOn = false },
+            withCancelButton: false)
         .customAlert( // 커스텀 알림창 띄우기
             isPresented: $showsCustomAlert,
             title: "챌린지를 삭제하시겠어요?",

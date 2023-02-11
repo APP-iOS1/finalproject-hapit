@@ -18,7 +18,6 @@ struct ContentView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager
-
     
     @State private var index: Int = 0
     @State private var flag: Int = 1

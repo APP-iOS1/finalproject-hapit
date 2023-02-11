@@ -51,7 +51,6 @@ final class BadgeManager: ObservableObject{
     @Published var celeb: Bool = UserDefaults.standard.bool(forKey: "celeb")
     @Published var firstDayPost: Bool = UserDefaults.standard.bool(forKey: "firstDayPost")
     
-    
     // MARK: - Save the status of badge
     func save(value: Bool = true, forkey key: String) {
         UserDefaults.standard.set(value, forKey: key)

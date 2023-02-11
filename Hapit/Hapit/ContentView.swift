@@ -18,6 +18,7 @@ struct ContentView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager
+
     
     @State private var index: Int = 0
     @State private var flag: Int = 1
@@ -62,13 +63,7 @@ struct ContentView: View {
             .onAppear{
                 Task{
                     states = isFullScreen
-                    authManager.save(value: Key.logIn.rawValue, forkey: "state")
-                    // String에 뱃지 이름을 String으로 가져옴.
-                    try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                    // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
-                    try await authManager.fetchImages(paths: authManager.badges)
-                    
-                    try await authManager.updateBadge(uid: authManager.firebaseAuth.currentUser?.uid ?? "", badge: "bearYellow")
+                    authManager.save(value: Key.logIn.rawValue, forkey: "state")                    
                 }
             }
         default:

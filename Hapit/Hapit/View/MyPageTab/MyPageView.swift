@@ -11,6 +11,7 @@ struct MyPageView: View {
     
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var badgeManager: BadgeManager
     
     @Binding var isFullScreen: String
     @Binding var index: Int
@@ -46,6 +47,20 @@ struct MyPageView: View {
                             let emailTarget = try await authManager.getEmail(uid: current)
                             nickName = nameTarget
                             email = emailTarget
+                            
+                            
+                            // String에 뱃지 이름을 String으로 가져옴.
+                            try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                            // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
+                            
+                            if badgeManager.noob == false{
+                                // Save a status of a newbie badge.
+                                badgeManager.save(forkey: BadgeManager.BadgeName.noob.rawValue)
+                               
+                                // Add a badge to cloud and fetch Images.
+                                try await authManager.updateBadge(uid: authManager.firebaseAuth.currentUser?.uid ?? "", badge: BadgeManager.BadgeImage.noob.rawValue)
+                                //try await authManager.fetchImages(paths: authManager.badges)
+                            }
                            
                         } catch {
                             throw(error)

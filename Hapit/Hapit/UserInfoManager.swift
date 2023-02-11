@@ -22,7 +22,9 @@ final class UserInfoManager: ObservableObject {
     //싱글턴활용해보기
     func getCurrentUserInfo(currentUserUid: String?) async throws -> Void {
         guard let currentUserUid else { return }
+        
         let userPath = database.collection("User").document("\(currentUserUid)")
+        
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
@@ -49,7 +51,9 @@ final class UserInfoManager: ObservableObject {
     func getUserInfoByUID(userUid: String?) async throws -> User? {
         var tempUser: User? = nil
         guard let userUid else { return nil }
+        
         let userPath = database.collection("User").document("\(userUid)")
+        
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {

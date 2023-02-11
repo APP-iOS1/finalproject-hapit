@@ -263,7 +263,7 @@ final class AuthManager: ObservableObject {
                 badges.append(element)
             }
             // 뱃지들 중복처리
-            
+            // print("badges: \(badges)")
             badges = Array(Set(badges))
             
         } catch {
@@ -300,7 +300,6 @@ final class AuthManager: ObservableObject {
         }
     }
         
-
     // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
         guard let token = credential.identityToken else {

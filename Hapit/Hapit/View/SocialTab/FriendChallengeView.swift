@@ -23,7 +23,7 @@ struct FriendChallengeView: View {
                         ForEach(habitManager.challenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self){ mate in
                                 if mate == friend.id{
-                                        FriendChallengeCellView(challenge: challenge)
+                                        FriendChallengeCellView(challenge: challenge, friendId: mate)
                                 }
                             }
                         }
@@ -35,7 +35,7 @@ struct FriendChallengeView: View {
 }
 struct FriendChallengeView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendChallengeView(friend: User(id: "", name: "yewon", email: "yewon", pw: "", proImage: "", badge: [""], friends: [""]))
+        FriendChallengeView(friend: User(id: "", name: "yewon", email: "yewon", pw: "", proImage: "", badge: [""], friends: [""], fcmToken: ""))
         
     }
 }

@@ -83,7 +83,7 @@ final class AuthManager: ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [])
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [], fcmToken: "")
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -104,7 +104,8 @@ final class AuthManager: ObservableObject {
                     "name" : userInfo.name,
                     "proImage" : userInfo.proImage,
                     "badge" : userInfo.badge,
-                    "friends" : userInfo.friends
+                    "friends" : userInfo.friends,
+                    "fcmToken" : userInfo.fcmToken
                 ])
         } catch {
             throw(error)
@@ -229,6 +230,36 @@ final class AuthManager: ObservableObject {
         }
     }
     
+    // MARK: - 유저의 FCM Token을 받아와 추가하기
+    func addFcmToken(uid: String, token: String) async throws {
+        let path = database.collection("User").document("\(uid)")
+        
+        do {
+            try await path.updateData([
+                "fcmToken": token
+            ])
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: - 특정 유저의 FCM Token 반환
+    final func getFCMToken(uid: String) async throws -> String {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpToken: String = docData?["fcmToken"] as? String ?? ""
+            
+            return tmpToken
+        } catch {
+            throw(error)
+        }
+    }
+
+    
     // MARK: - 사용 중인 유저의 뱃지 추가하기
     func updateBadge(uid: String, badge: String) async throws {
         
@@ -322,7 +353,7 @@ final class AuthManager: ObservableObject {
             dbRef.getDocument { (document, error) in
                 // 2. 애플로그인 유저 uid에 해당하는 문서 없다면 새로 만들어준다
                 if !(document?.exists ?? false) {
-                    let newby = User(id: result?.user.uid ?? "", name: result?.user.displayName ?? "", email: result?.user.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                    let newby = User(id: result?.user.uid ?? "", name: result?.user.displayName ?? "", email: result?.user.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [], fcmToken: "")
                     
                     dbRef.setData([
                         "email" : newby.email,
@@ -330,7 +361,8 @@ final class AuthManager: ObservableObject {
                         "name" : newby.name,
                         "proImage" : newby.proImage,
                         "badge" : newby.badge,
-                        "friends" : newby.friends
+                        "friends" : newby.friends,
+                        "fcmToken" : newby.fcmToken
                     ])
                 }
             }
@@ -345,7 +377,7 @@ final class AuthManager: ObservableObject {
                 // firestore에 없는 유저인 경우에는 새로 등록해준다
                 userRef.getDocument { (document, err) in
                     if !(document?.exists ?? false) {
-                        let newby = User(id: user?.userID ?? "", name: user?.profile?.name ?? "", email: user?.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                        let newby = User(id: user?.userID ?? "", name: user?.profile?.name ?? "", email: user?.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [], fcmToken: "")
                         
                         userRef.setData([
                             "email" : newby.email,
@@ -369,7 +401,7 @@ final class AuthManager: ObservableObject {
                     
                     userRef.getDocument { (document, err) in
                         if !(document?.exists ?? false) {
-                            let newby = User(id: googleUser.userID ?? "", name: googleUser.profile?.name ?? "", email: googleUser.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+                            let newby = User(id: googleUser.userID ?? "", name: googleUser.profile?.name ?? "", email: googleUser.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [], fcmToken: "")
                             
                             userRef.setData([
                                 "email" : newby.email,

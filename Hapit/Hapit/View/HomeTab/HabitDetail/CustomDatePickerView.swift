@@ -120,7 +120,7 @@ struct CustomDatePickerView: View {
                                     // 초기화를 하지 않는다면 onAppear 할 때마다 currentInfo가 늘어난다.
                                     for member in sortedMateArray {
                                         let userInfo = try await userInfoManager.getUserInfoByUID(userUid: member)
-                                        habitManager.currentMateInfos.append(userInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: []))
+                                        habitManager.currentMateInfos.append(userInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: [], fcmToken: ""))
                                     }
                                 }
                                 

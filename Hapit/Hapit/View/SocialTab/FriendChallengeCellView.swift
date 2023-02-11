@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let ReceiverFCMToken = "d2Fzp0SUCk2hh5aOenaMFF:APA91bF-IozEiFodJmBoSHxBhODZZkaEuW5z3wWPdF_zsdkT1a_ARXhn-zBP7f3LvFuPYGOi3LxTxXhgMW2YRdchMdrcM4ojdRnyOEQwpuChldgiZhK2o_29KLRsJKcYt4VL7S1Tk6Oa"
-
 struct FriendChallengeCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
@@ -16,9 +14,13 @@ struct FriendChallengeCellView: View {
 
     @State var challengeWithMe: [Challenge] = []
     @State var challenge: Challenge
+    @State var friendId: String
+    @State private var receiverFCMToken: String = ""
     
     @State private var notificationContent: String = ""
     @ObservedObject private var datas = fcmManager
+    
+    
 
     var body: some View {
         HStack {
@@ -31,7 +33,13 @@ struct FriendChallengeCellView: View {
                         Text(challenge.challengeTitle)
                             .font(.custom("IMHyemin-Bold", size: 22))
                         Button{
-                            self.datas.sendMessageTouser(datas: self.datas,to: ReceiverFCMToken, title: "Test" , body: "Test")
+                            self.datas.sendMessageTouser(
+                                datas: self.datas,
+                                // 받을 사람의 FCMToken
+                                to: receiverFCMToken,
+                                title: "Test" ,
+                                body: "Test"
+                            )
                             self.notificationContent = ""
                         } label: {
                             Image(systemName: "hand.tap.fill")
@@ -78,6 +86,7 @@ struct FriendChallengeCellView: View {
                             }
                         }
                     }
+                    receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
                 }
             }
             catch{

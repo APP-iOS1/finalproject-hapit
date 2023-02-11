@@ -69,6 +69,7 @@ struct ContentView: View {
                     try await authManager.fetchImages(paths: authManager.badges)
                     
                     try await authManager.updateBadge(uid: authManager.firebaseAuth.currentUser?.uid ?? "", badge: "bearYellow")
+                    try await authManager.addFcmToken(uid: authManager.firebaseAuth.currentUser?.uid ?? "", token: UserDefaults.standard.string(forKey: "fcmToken") ?? "")
                 }
             }
         default:

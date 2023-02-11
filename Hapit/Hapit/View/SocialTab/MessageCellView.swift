@@ -78,7 +78,7 @@ struct MessageCellView: View {
                     .padding(.horizontal)
                 Text("\(senderNickname)님과 친구가 되었습니다")
                     .font(.custom("IMHyemin-Bold", size: 17))
-            case "cock":
+            case "knock":
                 Text("🫵🏻")
                     .font(.title)
                     .padding(.horizontal)

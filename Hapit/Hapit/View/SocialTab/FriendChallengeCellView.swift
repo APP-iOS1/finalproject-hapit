@@ -11,11 +11,12 @@ struct FriendChallengeCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
-
+    @EnvironmentObject var messageManager: MessageManager
+    
     @State var challengeWithMe: [Challenge] = []
     @State var challenge: Challenge
     @State var friendId: String
-    @State private var receiverFCMToken: String = ""
+    @State var receiverFCMToken: String = ""
     
     @State private var notificationContent: String = ""
     @ObservedObject private var datas = fcmManager
@@ -33,7 +34,7 @@ struct FriendChallengeCellView: View {
                         Text(challenge.challengeTitle)
                             .font(.custom("IMHyemin-Bold", size: 22))
                         Button{
-                            self.datas.sendMessageTouser(
+                            self.datas.sendFirebaseMessageToUser(
                                 datas: self.datas,
                                 // 받을 사람의 FCMToken
                                 to: receiverFCMToken,
@@ -41,6 +42,10 @@ struct FriendChallengeCellView: View {
                                 body: "Test"
                             )
                             self.notificationContent = ""
+                            Task{
+                                try await messageManager.sendMessage(
+                                    Message(id: UUID().uuidString, messageType: "knock", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friendId))
+                            }
                         } label: {
                             Image(systemName: "hand.tap.fill")
                         }

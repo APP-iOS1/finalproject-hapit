@@ -27,7 +27,7 @@ final class FCMManager: ObservableObject {
         }
     }
         
-    func sendMessageTouser(datas:FCMManager, to token: String, title: String, body: String) {
+    func sendFirebaseMessageToUser(datas:FCMManager, to token: String, title: String, body: String) {
         print("sendMessageTouser()")
         let urlString = "https://fcm.googleapis.com/fcm/send"
         let url = NSURL(string: urlString)!

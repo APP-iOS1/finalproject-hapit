@@ -56,7 +56,6 @@ struct ContentView: View {
             }
             .onAppear{
                 Task{
-                    authManager.save(value: Key.logIn.rawValue, forkey: "state")
                     // String에 뱃지 이름을 String으로 가져옴.
                     try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                     // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
@@ -66,19 +65,21 @@ struct ContentView: View {
         default:
             LogInView()
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                        Task {
-                            if authManager.firebaseAuth.currentUser?.uid != "" && flag == 1 {
-                                do {
-                                    try await authManager.logOut()
-                                } catch {
-                                    throw(error)
-                                }
-                            } else if authManager.firebaseAuth.currentUser?.uid != "" && flag == 2 {
-                                do {
-                                    try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                                } catch {
-                                    throw(error)
+                    Task {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                            Task {
+                                if authManager.firebaseAuth.currentUser?.uid != "" && flag == 1 {
+                                    do {
+                                        try await authManager.logOut()
+                                    } catch {
+                                        throw(error)
+                                    }
+                                } else if authManager.firebaseAuth.currentUser?.uid != "" && flag == 2 {
+                                    do {
+                                        try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    } catch {
+                                        throw(error)
+                                    }
                                 }
                             }
                         }

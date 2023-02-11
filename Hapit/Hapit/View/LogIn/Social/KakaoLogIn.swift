@@ -14,15 +14,17 @@ struct KakaoLogIn: View {
     
     var body: some View {
         Button(action: {
-            authManager.kakaoSignIn()
+            Task {
+                await authManager.kakaoSignIn()
+            }
         }){
             Text("카카오톡 로그인")
         }
     }
 }
 
-struct KakaoLogIn_Previews: PreviewProvider {
-    static var previews: some View {
-        KakaoLogIn()
-    }
-}
+//struct KakaoLogIn_Previews: PreviewProvider {
+//    static var previews: some View {
+//        KakaoLogIn(authManager: AuthManager())
+//    }
+//}

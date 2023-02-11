@@ -28,6 +28,7 @@ struct AppleLogIn: View {
                         }
                         authManager.authenticate(credential: credential)
                         authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                        authManager.loginMethod(value: LoginMethod.apple.rawValue, forkey: "loginMethod")
                     }
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
                         authManager.loggedIn = "logIn"

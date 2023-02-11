@@ -16,13 +16,6 @@ struct GoogleLogIn: View {
             authManager.googleSignIn()
         }
         .frame(width: 320, height: 40)
-        
-//        Button(action: {
-//            authManager.googleSignIn()
-//        }){
-//            Image("btn_google_light_normal_ios")
-//                .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
-//        }
     }
 }
 

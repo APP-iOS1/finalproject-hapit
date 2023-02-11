@@ -89,8 +89,13 @@ struct LogInView: View {
                             } else {
                                 do {
                                     try await authManager.login(with: email, pw)
+                                    
+                                    // 1. 로그인 상태 변경
                                     authManager.loggedIn = "logIn"
+                                    // 2. 로그인 상태 UserDefaults에 저장
                                     authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                                    // 3. 로그인 방법 UserDefaults에 저장
+                                    authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
                                     verified = true
                                 } catch {
                                     authManager.loggedIn = "logOut"
@@ -128,7 +133,7 @@ struct LogInView: View {
                         VStack {
                             AppleLogIn()
                             GoogleLogIn()
-                            AppleLogIn()
+                            KakaoLogIn()
                         }
                     }
                     .padding(.vertical, geo.size.height / 50)

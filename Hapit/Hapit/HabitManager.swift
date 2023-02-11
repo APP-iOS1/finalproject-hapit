@@ -27,7 +27,6 @@ final class HabitManager: ObservableObject{
     @Published var challenges: [Challenge] = []
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     @Published var habits: [Challenge] = []
-
     // 해당하는 챌린지의 일지의 배열
 
     @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
@@ -155,7 +154,46 @@ final class HabitManager: ObservableObject{
             .document(challenge.id).delete()
         loadChallenge()
     }
-    
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 mateArray에서 배열의 값 하나를 삭제하는 Method
+    func removeChallegeMate(challenge: Challenge,removeValue: String) {
+        let challegeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challegeDocument.updateData([
+            "mateArray": FieldValue.arrayRemove([removeValue])
+        ])
+        loadChallenge()
+    }
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 cretor를 변경하는 Method
+    func updateChallegecreator(challenge: Challenge,creator: String) {
+        
+        let challengeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challengeDocument.updateData([
+            "creator": creator
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        loadChallenge()
+    }
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 Uid를 변경하는 Method
+    func updateChallegeUid(challenge: Challenge) {
+        let challegeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challegeDocument.updateData([
+            "uid": challenge.mateArray[1]
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        loadChallenge()
+    }
     // MARK: - Update a Habit
     @MainActor
     func updateChallenge() async{

@@ -11,6 +11,7 @@ import FirebaseAuth
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
     @Binding var isFullScreen: String
     @Binding var index: Int
@@ -154,6 +155,15 @@ struct OptionView: View {
             isFullScreen = "logOut"
             authManager.save(value: Key.logOut.rawValue, forkey: "state")
             index = 0
+            
+            // 여기서부터 코드 새로 추가
+            
+            
+            // 친구 전체삭제
+            for friend in userInfoManager.friendArray {
+                try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
+            }
+            try await authManager.deleteUser(uid: userInfoManager.currentUserInfo?.id ?? "")
         }},
                      withCancelButton: true)
     }

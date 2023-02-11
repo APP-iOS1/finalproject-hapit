@@ -70,7 +70,12 @@ final class AuthManager: ObservableObject {
     func deleteUser(uid: String) async throws {
         do {
             try await firebaseAuth.currentUser?.delete()
+            // User Document 삭제
             try await database.collection("User").document("\(uid)").delete()
+            // User의 friendArray에서 uid 삭제 - 완료
+            // Challenge의 mateArray에서 uid 삭제
+            // -> Challenge에서 mateArray에 해당 유저의 id 있으면 mateArray에서 id 삭제
+            // Post의 uid(creatorID) 같은 post 삭제
         } catch {
             throw(error)
         }
@@ -281,7 +286,6 @@ final class AuthManager: ObservableObject {
         self.newBadges.removeAll()
         
         do {
-            
             for path in paths{
                 let ref = storageRef.child("jellybears/" + path + ".png")
                 
@@ -299,8 +303,7 @@ final class AuthManager: ObservableObject {
             throw(error)
         }
     }
-        
-
+    
     // MARK: - 애플로그인 함수
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
         guard let token = credential.identityToken else {
@@ -392,9 +395,9 @@ final class AuthManager: ObservableObject {
             return
         }
         guard let authenticationToken = user?.accessToken.tokenString, let idToken = user?.idToken?.tokenString else { return }
-
+        
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authenticationToken)
-
+        
         Auth.auth().signIn(with: credential) { [unowned self] (_, error) in
             if let error = error {
                 return

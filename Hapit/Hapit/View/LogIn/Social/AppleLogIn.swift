@@ -20,6 +20,8 @@ struct AppleLogIn: View {
             }
         }){
             Image("appleLogo_dark")
+                .mask(Circle())
+                .frame(maxWidth: .infinity, maxHeight: 44)
         }
     }
 }
@@ -27,5 +29,6 @@ struct AppleLogIn: View {
 struct AppleLogIn_Previews: PreviewProvider {
     static var previews: some View {
         AppleLogIn()
+            .environmentObject(AuthManager())
     }
 }

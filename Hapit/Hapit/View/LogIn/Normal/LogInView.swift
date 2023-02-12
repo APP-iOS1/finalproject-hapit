@@ -10,8 +10,6 @@ import SwiftUI
 struct LogInView: View {
     
     @EnvironmentObject var keyboardManager: KeyboardManager
-    @Namespace var topID
-    @Namespace var bottomID
     
     @State private var email: String = ""
     @State private var pw: String = ""
@@ -151,5 +149,6 @@ struct LogInView_Previews: PreviewProvider {
         LogInView()
             .environmentObject(AuthManager())
             .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
     }
 }

@@ -30,13 +30,12 @@ struct HabitSegmentDetailView: View {
                     EmptyCellView(currentContentsType: .challenge)
                 } else {
                     ScrollView {
-                        ForEach(habitManager.currentUserChallenges) { challenge in
+                        ForEach(habitManager.challenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
                                         ZStack{
-                                            ScrollView(showsIndicators: false){
-                                                // TODO: 로컬에 저장되어 있는 챌린지들을 뿌려줌 - 함께 챌린지에 참여 중인 챌린지도 보여줘야 함
+                                            ScrollView(showsIndicators: false) {
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
                                                         ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
@@ -50,7 +49,6 @@ struct HabitSegmentDetailView: View {
                                         } // ZStack
                                         
                                     } label: {
-                                        // TODO: 로컬에 저장되어 있는 챌린지들을 뿌려줌 - 함께 챌린지에 참여 중인 챌린지도 보여줘야 함
                                         ForEach(localChallenges) { localChallenge in
                                             if localChallenge.challengeId == challenge.id {
                                                 ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
@@ -64,15 +62,11 @@ struct HabitSegmentDetailView: View {
                         } // ForEach - currentUserChallenges
                     } // ScrollView
                     .onAppear {
-                        print("================ HabitSegmentDetailView의 localChallenges =================")
-                        for localChallenge in localChallenges {
-                            print("\(localChallenge)")
-                        } // ForEach - localChallenges
-                        
-                        print("서버에 있는 사용자의 챌린지 수 : \(habitManager.currentUserChallenges.count)")
-                        
                         restoreChallenges()
                     } // onAppear
+                    .refreshable { // MARK: - Only iOS 16
+                        restoreChallenges()
+                    } // refreshable
                 } // else
             } // VStack
    
@@ -89,28 +83,43 @@ struct HabitSegmentDetailView: View {
                         } label: {
                             HabitCellView(habit: habit)
                         }
-                        
                     }
                 }
             }
             
         default: Text("something wrong")
         }// switch
-        
     }
     
-    // MARK: - 앱을 삭제했다가 다시 설치했을 때 (로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우) 복구하는 함수
+    // MARK: - 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우 복구하는 함수 (앱을 삭제하고 재설치하는 경우 & 내가 그룹챌린지에 참여하게 된 경우)
     func restoreChallenges() {
-        if countLocalChallenges() != habitManager.currentUserChallenges.count {
+        if countLocalChallenges() != countMyChallengesFromServer() {
             // 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우, 앱이 삭제됐었던 것이므로 서버에 있는 챌린지들을 로컬에 다시 모두 담아준다.
             for localChallenge in localChallenges { // 로컬에 있는 챌린지 모두 삭제 (초기화)
                 $localChallenges.remove(localChallenge)
             }
-            for challenge in habitManager.currentUserChallenges {
-                // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
-                $localChallenges.append(challenge.localChallenge)
+            for challenge in habitManager.challenges {
+                for mate in challenge.mateArray {
+                    if mate == authManager.firebaseAuth.currentUser?.uid {
+                        // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
+                        $localChallenges.append(challenge.localChallenge)
+                    }
+                }
             }
         }
+    }
+    
+    // MARK: - 서버에 있는 내가 참여하는 모든 챌린지의 개수를 반환하는 함수
+    func countMyChallengesFromServer() -> Int {
+        var count = 0
+        for challenge in habitManager.challenges {
+            for mate in challenge.mateArray {
+                if mate == authManager.firebaseAuth.currentUser?.uid {
+                    count += 1
+                }
+            }
+        }
+        return count
     }
     
     func countLocalChallenges() -> Int {

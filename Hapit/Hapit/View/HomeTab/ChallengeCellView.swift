@@ -53,7 +53,7 @@ struct ChallengeCellView: View {
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
-                    Text("연속 \($localChallenge.count.wrappedValue)일째")
+                    Text("연속 \(challenge.count + 1)일째")
                     Spacer()
                     ForEach(currentUserInfos){ user in
                         Image("\(user.proImage)")

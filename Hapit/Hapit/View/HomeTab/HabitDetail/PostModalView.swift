@@ -17,7 +17,7 @@ struct PostModalView: View {
         return habitManager.currentMateInfos
     }
     @State var currentPost: Post = Post(id: "", uid: "", challengeID: "", title: "", content: "", createdAt: Date())
-    
+    @State var isLoading: Bool = true
     @State var selectedMember: String = ""
     
     var body: some View {
@@ -85,6 +85,13 @@ struct PostModalView: View {
                 }
             }
         }
+        //MARK: 컨텐츠가 모달보다 늦게 올라오는 것을 임시로 가려줌으로써 해결
+        .overlay{
+            Rectangle()
+                .foregroundColor(Color("CellColor"))
+                .cornerRadius(20)
+                .opacity(isLoading ? 1 : 0)
+        }
         .padding()
         .frame(width: UIScreen.main.bounds.width - 30, height: 550)
         .background(
@@ -96,6 +103,9 @@ struct PostModalView: View {
             let current = authManager.firebaseAuth
             let currentUser = current.currentUser?.uid
             selectedMember = currentUser ?? ""
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                isLoading = false
+            }
         }
         .onDisappear(){
             habitManager.currentMateInfos = []

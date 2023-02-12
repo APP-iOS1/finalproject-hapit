@@ -99,7 +99,7 @@ struct ChallengeCellView: View {
             Task {
                 // 함께 챌린지 진행하는 친구들 프사
                 for member in challenge.mateArray {
-                    try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member)  ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: []))
+                    try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member)  ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], fcmToken: ""))
                 }
             }
         }

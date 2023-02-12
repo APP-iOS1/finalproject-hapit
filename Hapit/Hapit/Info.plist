@@ -4,6 +4,10 @@
 <dict>
 	<key></key>
 	<string></string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.hapitfinal.Hapit</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

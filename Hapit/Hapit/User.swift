@@ -16,4 +16,5 @@ struct User: Identifiable, Codable, Hashable {
     let badge: [String]
     let friends: [String]
     let loginMethod: String
+    let fcmToken: String
 }

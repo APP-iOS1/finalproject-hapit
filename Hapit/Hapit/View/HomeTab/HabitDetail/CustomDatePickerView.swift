@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct CustomDatePickerView: View {
     
@@ -21,12 +22,13 @@ struct CustomDatePickerView: View {
     @EnvironmentObject var lnManager: LocalNotificationManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
-    @Binding var showsCustomAlert: Bool
+    @State private var showsCustomAlert: Bool = false
     @State var showsCreatePostView: Bool = false
     @State var isChallengeAlarmOn: Bool = false // 챌린지의 알림이 켜져있는지 꺼져있는지의 값이 저장되는 변수
     @State var isShowingAlarmSheet: Bool = false // 챌린지 알림을 설정하는 시트를 띄우기 위한 변수
-    //OptionView에서 설정해달라고 애원하는 시트
-    @State private var isAlertOn = false
+    @State private var isAlertOn = false // OptionView에서 설정해달라고 애원하는 시트
+    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
 
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
     
@@ -120,7 +122,7 @@ struct CustomDatePickerView: View {
                                     // 초기화를 하지 않는다면 onAppear 할 때마다 currentInfo가 늘어난다.
                                     for member in sortedMateArray {
                                         let userInfo = try await userInfoManager.getUserInfoByUID(userUid: member)
-                                        habitManager.currentMateInfos.append(userInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: []))
+                                        habitManager.currentMateInfos.append(userInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [], friends: [], fcmToken: ""))
                                     }
                                 }
                                 
@@ -142,15 +144,25 @@ struct CustomDatePickerView: View {
             .onChange(of: scenePhase) { newValue in
                 //앱이 작동중일 때
                 //노티 authorize 해놓고 나가서 거부하고 다시 돌아오면 enable이 되어있음 => 값이 바뀌어서 씬을 업데이트 해준거임
-                //
                 if newValue == .active {
                     Task {
                         await lnManager.getCurrentSettings()
+                        // 마이페이지에서 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                        // 하지만 그 반대는 생각 안 해줘도 됨. 마이페이지에서 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
                         if !lnManager.isAlarmOn {
                             isChallengeAlarmOn = lnManager.isAlarmOn
+                            // Realm에 해당 챌린지 알림 설정 업데이트
+                            $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
+                        } else {
+                            isChallengeAlarmOn = $localChallenge.isChallengeAlarmOn.wrappedValue
                         }
+                        
+                        // 아이폰 설정 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                        // 하지만 그 반대는 생각 안 해줘도 됨. 아이폰 설정 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
                         if !lnManager.isGranted {
                             isChallengeAlarmOn = lnManager.isGranted
+                            // Realm에 해당 챌린지 알림 설정 업데이트
+                            $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
                         }
                     }
                 }
@@ -165,13 +177,32 @@ struct CustomDatePickerView: View {
                     PostModalView(postsForModalView: $postsForModalView)
                         .offset(y: 200)
                 }
-                
                 Task {
                     await lnManager.getCurrentSettings()
-                    print("lnManager.isGranted: \(lnManager.isGranted)")
                 }
+                
                 lnManager.isAlarmOn = isUserAlarmOn
                 
+                // 마이페이지에서 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                // 하지만 그 반대는 생각 안 해줘도 됨. 마이페이지에서 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
+                if !lnManager.isAlarmOn {
+                    isChallengeAlarmOn = lnManager.isAlarmOn
+                    // Realm에 해당 챌린지 알림 설정 업데이트
+                    $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
+                } else {
+                    isChallengeAlarmOn = $localChallenge.isChallengeAlarmOn.wrappedValue
+                }
+                
+                // 아이폰 설정 알림이 꺼지면 해당 뷰에서의 알림이 같이 꺼져야 함.
+                // 하지만 그 반대는 생각 안 해줘도 됨. 아이폰 설정 알림이 켜져있다면 해당 뷰에서 알림 껐켰은 자유
+                if !lnManager.isGranted {
+                    isChallengeAlarmOn = lnManager.isGranted
+                    // Realm에 해당 챌린지 알림 설정 업데이트
+                    $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isGranted
+                }
+                
+                // Firestore에 체크 정보 업데이트
+                updateCheckInfo()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -188,6 +219,10 @@ struct CustomDatePickerView: View {
                     Button {
                         // 챌린지 알림 설정
                         isChallengeAlarmOn.toggle()
+                        
+                        // Realm에 해당 챌린지 알림 설정 업데이트
+                        $localChallenge.isChallengeAlarmOn.wrappedValue = isChallengeAlarmOn
+                        
                         if isChallengeAlarmOn { // 알림 버튼을 활성화할 때만 알림 설정 시트를 띄워야 함.
                             if lnManager.isAlarmOn {
                                 isAlertOn = false
@@ -200,6 +235,7 @@ struct CustomDatePickerView: View {
                                 isChallengeAlarmOn = false
                             }
                         } else { // 앱의 알림 설정을 해제시켜줘야 함.
+                            // lnManger schedule에서 삭제
                             lnManager.removeRequest(withIdentifier: currentChallenge.id)
                             isShowingAlarmSheet = false
                             isChallengeAlarmOn = false
@@ -220,17 +256,38 @@ struct CustomDatePickerView: View {
                 } // ToolbarItem
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
-                LocalNotificationSettingView(isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
-                    .environmentObject(LocalNotificationManager())
+                ForEach(localChallenges) { localChallenge in
+                    if localChallenge.challengeId == currentChallenge.id {
+                        LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
+                            .environmentObject(LocalNotificationManager())
+                            .environmentObject(HabitManager())
+                    }
+                }
             }
         }
         .sheet(isPresented: $showsCreatePostView) {
             DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }
-        .alert(isPresented: $isAlertOn) {
-            Alert(title: Text("마이페이지의 설정창에서 알림을 켜주세요"), message: nil,
-                  dismissButton: .default(Text("확인")))
-        }
+        .customAlert( // 커스텀 알림창 띄우기
+            isPresented: $isAlertOn,
+            title: "알림을 켜주세요!",
+            message: "마이페이지 > 설정 > 알림",
+            primaryButtonTitle: "확인",
+            primaryAction: { isAlertOn = false },
+            withCancelButton: false)
+        .customAlert( // 커스텀 알림창 띄우기
+            isPresented: $showsCustomAlert,
+            title: "챌린지를 삭제하시겠어요?",
+            message: "삭제된 챌린지는 복구할 수 없어요.",
+            primaryButtonTitle: "삭제",
+            primaryAction: {
+                // Firestore에서 챌린지 삭제
+                habitManager.removeChallenge(challenge: currentChallenge)
+                // Realm에서 챌린지 삭제
+                $localChallenges.remove(localChallenge)
+            },
+            withCancelButton: true)
+        
     }
     //MARK: Methods
     
@@ -352,6 +409,14 @@ struct CustomDatePickerView: View {
         let tempArray = currentUserArray + otherMatesArray
         
         return tempArray
+    }
+    
+    // MARK: - 로컬의 체크 정보를 서버에 업데이트하는 함수
+    func updateCheckInfo() {
+        // 아이디가 일치하고, 로컬과 서버의 챌린지 체크 정보가 다르다면 로컬의 체크 정보를 서버에 업데이트
+        if currentChallenge.id == localChallenge.challengeId && currentChallenge.isChecked != localChallenge.isChecked {
+            habitManager.loadChallengeIsChecked(challenge: currentChallenge, isChecked: localChallenge.isChecked)
+        }
     }
 }
 

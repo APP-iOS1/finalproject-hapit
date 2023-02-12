@@ -143,7 +143,12 @@ final class AuthManager: UIViewController, ObservableObject {
                 print("apple or general")
             }
             try await firebaseAuth.currentUser?.delete()
+            // User Document 삭제
             try await database.collection("User").document("\(uid)").delete()
+            // User의 friendArray에서 uid 삭제 - 완료
+            // Challenge의 mateArray에서 uid 삭제
+            // -> Challenge에서 mateArray에 해당 유저의 id 있으면 mateArray에서 id 삭제
+            // Post의 uid(creatorID) 같은 post 삭제
         } catch {
             throw(error)
         }
@@ -156,7 +161,7 @@ final class AuthManager: UIViewController, ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [])
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [], fcmToken: "")
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -177,7 +182,8 @@ final class AuthManager: UIViewController, ObservableObject {
                     "name" : userInfo.name,
                     "proImage" : userInfo.proImage,
                     "badge" : userInfo.badge,
-                    "friends" : userInfo.friends
+                    "friends" : userInfo.friends,
+                    "fcmToken" : userInfo.fcmToken
                 ])
         } catch {
             throw(error)
@@ -302,6 +308,36 @@ final class AuthManager: UIViewController, ObservableObject {
         }
     }
     
+    // MARK: - 유저의 FCM Token을 받아와 추가하기
+    func addFcmToken(uid: String, token: String) async throws {
+        let path = database.collection("User").document("\(uid)")
+        
+        do {
+            try await path.updateData([
+                "fcmToken": token
+            ])
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: - 특정 유저의 FCM Token 반환
+    final func getFCMToken(uid: String) async throws -> String {
+        do {
+            let target = try await database.collection("User").document("\(uid)")
+                .getDocument()
+            
+            let docData = target.data()
+            
+            let tmpToken: String = docData?["fcmToken"] as? String ?? ""
+            
+            return tmpToken
+        } catch {
+            throw(error)
+        }
+    }
+
+    
     // MARK: - 사용 중인 유저의 뱃지 추가하기
     func updateBadge(uid: String, badge: String) async throws {
         
@@ -328,8 +364,7 @@ final class AuthManager: UIViewController, ObservableObject {
                 .getDocument()
             
             let docData = target.data()
-            
-            let badge: [String] = docData?["badge"] as? [String] ?? []
+            let badge: [String] = docData?["badge"] as? [String] ?? [""]
             
             for element in badge{
                 //self.fetchImages(path: element)
@@ -354,7 +389,6 @@ final class AuthManager: UIViewController, ObservableObject {
         self.newBadges.removeAll()
         
         do {
-            
             for path in paths{
                 let ref = storageRef.child("jellybears/" + path + ".png")
                 
@@ -395,7 +429,7 @@ final class AuthManager: UIViewController, ObservableObject {
         let hashString = hashedData.compactMap {
             return String(format: "%02x", $0)
         }.joined()
-        
+       
         return hashString
     }
 
@@ -418,6 +452,7 @@ final class AuthManager: UIViewController, ObservableObject {
                 return random
             }
             
+
             randoms.forEach { random in
                 if remainingLength == 0 {
                     return

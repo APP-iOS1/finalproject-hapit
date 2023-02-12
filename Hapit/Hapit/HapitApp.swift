@@ -16,6 +16,7 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate{
+    @AppStorage("fcmToken") var fcmToken: String = ""
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
     let gcmMessageIDKey = "gcm.Message_ID"
     
@@ -60,11 +61,13 @@ extension AppDelegate: MessagingDelegate {
       print("Firebase registration token: \(String(describing: fcmToken))")
 
       let dataDict: [String: String] = ["token": fcmToken ?? ""]
-      NotificationCenter.default.post(
+        NotificationCenter.default.post(
         name: Notification.Name("FCMToken"),
         object: nil,
         userInfo: dataDict
       )
+        self.fcmToken = fcmToken ?? ""
+ 
     }
 }
 

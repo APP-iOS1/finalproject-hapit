@@ -13,6 +13,7 @@ struct Message: Hashable, Codable, Identifiable {
     var sendTime: Date
     var senderID: String
     var receiverID: String
+    var isRead: Bool
 }
 
 // MARK: messageType

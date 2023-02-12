@@ -162,6 +162,26 @@ final class HabitManager: ObservableObject{
         // Update a Habit
     }
     
+    // MARK: - 24시간 지나면 isChecked 다 false로 해주는 함수
+    func makeIsCheckedFalse(challenge: Challenge) -> AnyPublisher<Void, Error> {
+        // Update a Challenge
+        // Local
+        let count = updateCount(count: challenge.count, isChecked: challenge.isChecked)
+        
+        return Future<Void, Error> {  promise in
+            
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["isChecked": false])
+            
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["count": count])
+                //promise(.success())
+        }
+        .eraseToAnyPublisher()
+    }
+    
     // MARK: - Update a Habit
     func updateChallengeIsChecked(challenge: Challenge, isChecked: Bool) -> AnyPublisher<Void, Error> {
         // Update a Challenge
@@ -212,6 +232,22 @@ final class HabitManager: ObservableObject{
             }
             .store(in: &cancellables)
         loadChallenge()
+    }
+    // 하루라도 수행하지 않으면 0일로 초기화
+    func updateCount(count: Int, isChecked: Bool) -> Int{
+        if isChecked == true{
+            return count + 1
+        }else{
+            return 0
+        }
+    }
+    
+    func toggleIsChanged(isChecked: Bool) -> Bool{
+        if isChecked == true{
+            return false
+        }else{
+            return true
+        }
     }
     
     @MainActor

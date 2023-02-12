@@ -102,6 +102,14 @@ struct ChallengeCellView: View {
                     try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
                 }
             }
+            print(currentUserInfos)
+            //1초로 넣으면 되는거 확인ㄱㄴ
+            let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+            let timer = Timer(fire: midnight, interval: 86400, repeats: true) { _ in
+                habitManager.makeIsCheckedFalse(challenge: challenge)
+            }
+            RunLoop.main.add(timer, forMode: .common)
+
         }
 
         //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.

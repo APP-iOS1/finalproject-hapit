@@ -39,7 +39,7 @@ struct HabitSegmentDetailView: View {
                                                 // TODO: 로컬에 저장되어 있는 챌린지들을 뿌려줌 - 함께 챌린지에 참여 중인 챌린지도 보여줘야 함
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
-                                                        CustomDatePickerView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
+                                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
                                                     }
                                                 } // ForEach - localChallenges
                                             }

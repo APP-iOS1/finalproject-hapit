@@ -42,6 +42,7 @@ struct SocialView: View {
                             } else {
                                 FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
                             }
+                            .disabled(friend.id == userInfoManager.currentUserInfo?.id)
                         }
                     }
                 }
@@ -75,9 +76,9 @@ struct SocialView: View {
                 try await userInfoManager.getFriendArray()
                 self.myFriends = userInfoManager.friendArray
                 self.friends = userInfoManager.friendArray
-                let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""])
+                let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], fcmToken: "")
                 // 셀에 (나) 표시
-                self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends), at: 0)
+                self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends, fcmToken: tmp.fcmToken), at: 0)
             } catch {
             }
             // 챌린지 진행일수 정렬

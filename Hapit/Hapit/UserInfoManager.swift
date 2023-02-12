@@ -76,8 +76,9 @@ final class UserInfoManager: ObservableObject {
         let proImage: String = requestedData["proImage"] as? String ?? ""
         let badge: [String] = requestedData["badge"] as? [String] ?? [""]
         let friends: [String] = requestedData["friends"] as? [String] ?? [""]
+        let fcmToken: String = requestedData["fcmToken"] as? String ?? ""
         
-        let userInfo = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends)
+        let userInfo = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends, fcmToken: fcmToken)
         
         return userInfo
     }

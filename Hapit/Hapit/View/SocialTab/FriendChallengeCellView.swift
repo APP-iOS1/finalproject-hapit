@@ -50,7 +50,6 @@ struct FriendChallengeCellView: View {
         .background(.white)
         .cornerRadius(20)
         .padding(.horizontal)
-        //FIXME: - 함께하는 챌린지인 경우 표시해주는 코드가 필요
         .task {
             let currentUser = userInfoManager.currentUserInfo?.id ?? ""
             challengeWithMe.removeAll()

@@ -17,6 +17,7 @@ struct SocialView: View {
     @State private var sortMyFriends: [User] = [User]() // currentUser 포함, 정렬
     @State private var friends: [User] = [User]() // currentUser 제외
     @State private var rankCountArray: [[Int]] = [] // 0: count, 1: rank
+    @State private var isAllRead: Bool = true
 
     var body: some View {
         NavigationView {
@@ -47,19 +48,19 @@ struct SocialView: View {
                 .navigationTitle("랭킹")
                 .toolbar {
                     HStack {
+                        // MARK: 친구관리
                         NavigationLink {
                             EditFriendView(friends: $friends)
                         } label: {
+//                            person.2.badge.gearshape
                             Image(systemName: "person.and.person")
                         }
-//                        person.2.badge.gearshape
+                        
+                        // MARK: 메시지함
                         NavigationLink {
-                            MessageFullscreenView()
+                            MessageFullscreenView(isAllRead: $isAllRead)
                         } label: {
-                            // TODO: 나중에 메세지 오면 색깔, 심볼 삼항연산자로 변경
-                            //                            Image(systemName: "envelope")
-                            //                                .foregroundColor(.gray)
-                            Image(systemName: "envelope.badge")
+                            Image(systemName: isAllRead ? "envelope" : "envelope.badge")
                                 .foregroundColor(Color("AccentColor"))
                         }
                     }
@@ -87,6 +88,15 @@ struct SocialView: View {
 //                                                {challengeCount(friend: $0) > challengeCount(friend: $1)})
             rankCountArray = ranking(friends: sortMyFriends)
             
+            // 안 읽은 메세지 있나 확인
+            // FIXME: 한 박자 늦게 뜨는 이슈
+            messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+            for msg in messageManager.messageArray {
+                if !(msg.isRead) {
+                    isAllRead = false
+                    break
+                }
+            }
         }
     }
     

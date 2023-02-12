@@ -26,7 +26,8 @@ final class MessageManager: ObservableObject {
                     "alarmType": msg.messageType,
                     "sendTime": msg.sendTime,
                     "senderID": msg.senderID,
-                    "receiverID": msg.receiverID
+                    "receiverID": msg.receiverID,
+                    "isRead": msg.isRead
                 ])
         } catch {
             throw(error)
@@ -61,17 +62,18 @@ final class MessageManager: ObservableObject {
                         let messageType: String = docData["alarmType"] as? String ?? ""
                         let senderID: String = docData["senderID"] as? String ?? ""
                         let receiverID: String = docData["receiverID"] as? String ?? ""
+                        let isRead: Bool = docData["isRead"] as? Bool ?? false
                         if let sendStamp = docData["sendTime"] as? Timestamp {
                             let sendTime = sendStamp.dateValue()
-                            let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID)
+                            let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID, isRead: isRead)
                             self.messageArray.append(msgData)
                         }
                     }
                 }
             }
-//        print(messageArray)
     }
     
+    // MARK: 친구 메시지 불러오는 함수 (친구 신청 중복 막기 위함)
     func fetchFriendMessage(userID: String) async throws -> [Message] {
         do {
             let snapshot = try await database.collection("User")
@@ -86,14 +88,28 @@ final class MessageManager: ObservableObject {
                 let messageType: String = docData["alarmType"] as? String ?? ""
                 let senderID: String = docData["senderID"] as? String ?? ""
                 let receiverID: String = docData["receiverID"] as? String ?? ""
+                let isRead: Bool = docData["isRead"] as? Bool ?? false
                 if let sendStamp = docData["sendTime"] as? Timestamp {
                     let sendTime = sendStamp.dateValue()
-                    let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID)
+                    let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID, isRead: isRead)
                     self.friendMessageArray.append(msgData)
                 }
             }
             let msgArr = self.friendMessageArray
             return msgArr
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: Message 읽음 처리 해주는 함수
+    func updateIsRead(userID: String, messageID: String) async throws -> Void {
+        let path = database.collection("User")
+            .document(userID)
+            .collection("Message")
+            .document(messageID)
+        do {
+            try await path.updateData(["isRead": true])
         } catch {
             throw(error)
         }

@@ -176,11 +176,3 @@ struct AddChallengeView: View {
         }// NavigationView
     } // Body
 }
-
-
-// MARK: - AddChallengeView Previews
-struct AddChallengeView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddChallengeView()
-    }
-}

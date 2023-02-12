@@ -37,9 +37,7 @@ struct MyPageView: View {
                     }
                 }
                 .onAppear {
-                    
                     Task {
-    
                         do {
                             let current = authManager.firebaseAuth.currentUser?.uid ?? ""
                             let nameTarget = try await authManager.getNickName(uid: current)

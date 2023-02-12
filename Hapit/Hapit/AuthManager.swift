@@ -37,7 +37,7 @@ final class AuthManager: ObservableObject {
     
     @Published var nonce = ""
     @Published var loggedIn: String = UserDefaults.standard.string(forKey: "state") ?? ""
-    @Published var kakaologgedIn: String = UserDefaults.standard.string(forKey: "state") ?? ""
+    @Published var currentUid: String = ""
     
     // 로컬에 저장하는 젤리들의 배열
     @Published var badges: [String] = []
@@ -74,12 +74,28 @@ final class AuthManager: ObservableObject {
         }
     }
     
-    //MARK: - 로그아웃
+    // MARK: - Auth에 등록된 사용자인지 확인하는 함수
+    func isRegistered(email: String, pw: String) async throws -> String {
+        var newUid: String = ""
+        
+        do {
+            let target = try await firebaseAuth.createUser(withEmail: email, password: pw)
+            newUid = target.user.uid
+        } catch {
+            newUid = ""
+            throw(error)
+        }
+        return newUid
+    }
+    
+    //MARK: - 로그아웃 (로그인 방법에 따라 분기처리)
     func logOut() async throws {
         do {
             let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+            
             switch loginMethod {
             case "google":
+                try await firebaseAuth.signOut()
                 GIDSignIn.sharedInstance.signOut()
             case "kakao":
                 try await firebaseAuth.signOut()
@@ -108,7 +124,7 @@ final class AuthManager: ObservableObject {
         }
     }
     
-    // MARK: - 신규회원 생성
+    // MARK: - 일반 회원가입 신규회원 생성
     func register(email: String, pw: String, name: String) async throws {
         do {
             //Auth에 유저등록
@@ -493,50 +509,50 @@ final class AuthManager: ObservableObject {
     // MARK: - 카카오톡 로그인 함수
     func kakaoTalkLogIn() async {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-            if let error = error {
-                print(error)
+            if error != nil{
+                return
             }
             else {
-                print("loginWithKakaoTalk() success.")
-                
                 UserApi.shared.me { user, error in
-                    if let error = error {
-                        print("kakaoUser Info error")
+                    if error != nil {
+                        return
                     } else {
-                        // 우선 firestore에 등록된 유저인지 확인
-                        
-                        // firestore 유저 document 경로
-                        let userRef = self.database.collection("User")
-                            .document(String(user?.id ?? 0))
-                        
-                        userRef.getDocument { (document, error) in
-                            // 1.1 firestore에 유저 document 존재하지 않을 시 --> 최초 로그인 유저임
-                            if !(document?.exists ?? false) {
-                                Task {
-                                    do {
-                                        // 1.1.1 새로운 User 객체 생성
-                                        let newby = User(id: UUID().uuidString, name: user?.kakaoAccount?.profile?.nickname ?? "", email: user?.kakaoAccount?.email ?? "", pw: String(user?.id ?? 0), proImage: "bearWhite", badge: [], friends: [])
-                                        
-                                        // 1.1.2 Auth에 유저 등록
-                                        try await self.firebaseAuth.createUser(withEmail: user?.kakaoAccount?.email ?? "", password: String(user?.id ?? 0))
-                                        
-                                        // 1.1.3 디비에 유저 문서 등록
-                                        try await self.uploadUserInfo(userInfo: newby)
-                                    } catch {
-                                        throw(error)
-                                    }
-                                }
-                            }
-                            // 1.2 Auth에 유저가 있고, firestore에 문서도 있으면 Auth 로그인을 진행한다
-                            Task {
-                                do {
+                        Task {
+                            do {
+                                // 카카오 이메일, Id, 닉네임 값 임시 저장
+                                let kakaoEmail = user?.kakaoAccount?.email ?? ""
+                                let kakaoId = String(user?.id ?? 0)
+                                let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
+                                
+                                // firestore에 등록된 유저인지 확인
+                                let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId)
+                                
+                                // 등록된 유저인 경우
+                                if isNewby == "" {
+                                    // auth 로그인 및 로그인 상태값 변경
                                     try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
+                                    
                                     self.loggedIn = "logIn"
                                     self.save(value: Key.logIn.rawValue, forkey: "state")
                                     self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
-                                } catch {
-                                    throw(error)
+                                } else {
+                                    // 신규 유저인 경우
+                                    
+                                    // 새로운 User 객체 생성
+                                    let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [])
+                                    
+                                    // firestore에 문서 등록
+                                    try await self.uploadUserInfo(userInfo: newby)
+                                    
+                                    // auth 로그인 및 로그인 상태값 변경
+                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
+                                    
+                                    self.loggedIn = "logIn"
+                                    self.save(value: Key.logIn.rawValue, forkey: "state")
+                                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
                                 }
+                            } catch {
+                                throw(error)
                             }
                         }
                     }
@@ -544,61 +560,53 @@ final class AuthManager: ObservableObject {
             }
         }
     }
-        //MARK: - 카카오계정 로그인 함수
+    //MARK: - 카카오계정 로그인 함수
     func kakaoAccountLogIn() async {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-            if let error = error {
-                print(error)
+            if error != nil {
+                return
             }
             else {
-                print("loginWithKakaoAccount() success.")
-                
                 UserApi.shared.me { user, error in
-                    if let error = error {
-                        print("kakaoUser Info error")
+                    if error != nil {
+                        return
                     } else {
-                        // 우선 firestore에 등록된 유저인지 확인
-                        
-                        // firestore 유저 document 경로
-                        let userRef = self.database.collection("User")
-                            .document(String(user?.id ?? 0))
-                        
-                        userRef.getDocument { (document, error) in
-                            // 1.1 firestore에 유저 document 존재하지 않을 시 --> 최초 로그인 유저임
-                            if !(document?.exists ?? false) {
-                                Task {
-                                    do {
-                                        // 1.1.1 새로운 User 객체 생성
-                                        let newby = User(id: String(user?.id ?? 0), name: user?.kakaoAccount?.profile?.nickname ?? "", email: user?.kakaoAccount?.email ?? "", pw: String(user?.id ?? 0), proImage: "bearWhite", badge: [], friends: [])
-                                        
-                                        // 1.1.2 Auth에 유저 등록
-                                        try await self.firebaseAuth.createUser(withEmail: user?.kakaoAccount?.email ?? "", password: String(user?.id ?? 0))
-                                        
-                                        // 1.1.3 디비에 유저 문서 등록
-                                        try await self.uploadUserInfo(userInfo: newby)
-                                        
-                                        // 1.1.4 auth 로그인 밑 로그인 상태값 변경
-                                        try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
-                                        self.loggedIn = "logIn"
-                                        self.save(value: Key.logIn.rawValue, forkey: "state")
-                                        self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
-                                        
-                                    } catch {
-                                        throw(error)
-                                    }
+                        Task {
+                            do {
+                                // 카카오 이메일, Id, 닉네임 값 임시 저장
+                                let kakaoEmail = user?.kakaoAccount?.email ?? ""
+                                let kakaoId = String(user?.id ?? 0)
+                                let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
+                                
+                                // firestore에 등록된 유저인지 확인
+                                let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId)
+                                
+                                // 등록된 유저인 경우
+                                if isNewby == "" {
+                                    // auth 로그인 및 로그인 상태값 변경
+                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
+                                    
+                                    self.loggedIn = "logIn"
+                                    self.save(value: Key.logIn.rawValue, forkey: "state")
+                                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                                } else {
+                                    // 신규 유저인 경우
+                                    
+                                    // 새로운 User 객체 생성
+                                    let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [])
+                                    
+                                    // firestore에 문서 등록
+                                    try await self.uploadUserInfo(userInfo: newby)
+                                    
+                                    // auth 로그인 및 로그인 상태값 변경
+                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
+                                    
+                                    self.loggedIn = "logIn"
+                                    self.save(value: Key.logIn.rawValue, forkey: "state")
+                                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
                                 }
-                            } else {
-                                // 1.2 Auth에 유저가 있고, firestore에 문서도 있으면 Auth 로그인을 진행한다
-                                Task {
-                                    do {
-                                        try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
-                                        self.loggedIn = "logIn"
-                                        self.save(value: Key.logIn.rawValue, forkey: "state")
-                                        self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
-                                    } catch {
-                                        throw(error)
-                                    }
-                                }
+                            } catch {
+                                throw(error)
                             }
                         }
                     }

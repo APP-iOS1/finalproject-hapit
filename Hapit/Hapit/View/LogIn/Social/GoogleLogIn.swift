@@ -12,10 +12,17 @@ struct GoogleLogIn: View {
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        GoogleSignInButton {
-            authManager.googleSignIn()
+        Button(action: {
+            Task {
+                await authManager.googleSignIn()
+            }
+        }){
+            Text("구글 로그인")
         }
-        .frame(width: 320, height: 40)
+//        GoogleSignInButton {
+//            authManager.googleSignIn()
+//        }
+//        .frame(width: 320, height: 40)
     }
 }
 

@@ -37,7 +37,6 @@ final class AuthManager: ObservableObject {
     
     @Published var nonce = ""
     @Published var loggedIn: String = UserDefaults.standard.string(forKey: "state") ?? ""
-    @Published var currentUid: String = ""
     
     // 로컬에 저장하는 젤리들의 배열
     @Published var badges: [String] = []
@@ -65,7 +64,7 @@ final class AuthManager: ObservableObject {
         UserDefaults.standard.set(value ?? "", forKey: key)
     }
     
-    // MARK: - 일반/카카오 Auth 로그인
+    // MARK: - FirebaseAuth 로그인 함수
     func login(with email: String, _ password: String) async throws {
         do{
             try await firebaseAuth.signIn(withEmail: email, password: password)
@@ -74,26 +73,26 @@ final class AuthManager: ObservableObject {
         }
     }
     
-    // MARK: - Auth에 등록된 사용자인지 확인하는 함수
-    func isRegistered(email: String, pw: String) async throws -> String {
+    // MARK: - [카카오/일반] 시도 계정이 Auth에 등록된 사용자인지 확인하는 함수
+    func isRegistered(email: String, pw: String, method: String) async throws -> String {
         var newUid: String = ""
         
-        do {
-            let target = try await firebaseAuth.createUser(withEmail: email, password: pw)
-            newUid = target.user.uid
-            return newUid
-        } catch {
             do {
-                try await login(with: email, pw)
-                
-                self.loggedIn = "logIn"
-                self.save(value: Key.logIn.rawValue, forkey: "state")
-                self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                let target = try await firebaseAuth.createUser(withEmail: email, password: pw)
+                newUid = target.user.uid
+                return newUid
             } catch {
+                do {
+                    try await login(with: email, pw)
+                    
+                    self.loggedIn = "logIn"
+                    self.save(value: Key.logIn.rawValue, forkey: "state")
+                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                } catch {
+                    throw(error)
+                }
                 throw(error)
             }
-            throw(error)
-        }
     }
     
     //MARK: - 로그아웃 (로그인 방법에 따라 분기처리)
@@ -108,7 +107,7 @@ final class AuthManager: ObservableObject {
             case "kakao":
                 try await firebaseAuth.signOut()
                 UserApi.shared.logout { (error) in
-                    if let error = error {
+                    if error != nil {
                         return
                     } else {
                         print("kakao logOut Success")
@@ -132,7 +131,7 @@ final class AuthManager: ObservableObject {
                 GIDSignIn.sharedInstance.signOut()
             case "kakao":
                 UserApi.shared.logout { (error) in
-                    if let error = error {
+                    if error != nil {
                         return
                     } else {
                         print("kakao logOut Success")
@@ -407,21 +406,40 @@ final class AuthManager: ObservableObject {
             }
         }
     }
-    // MARK: - 구글로그인 함수
-    func googleSignIn() {
+    // MARK: - 구글계정 로그인 함수
+    func googleSignIn() async {
+        // 이전에 구글로그인을 한적이 있는 경우
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {
-            GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
-                let userRef = database.collection("User").document(user?.userID ?? "")
-                
-                // 1. 토큰을 생성하여 Credential을 만든 후 Auth 로그인
-                googleAuth(for: user, with: error)
-                
-                // 2. firestore에 없는 유저인 경우에는 새로 등록해준다
-                userRef.getDocument { (document, err) in
-                    if !(document?.exists ?? false) {
-                        let newby = User(id: user?.userID ?? "", name: user?.profile?.name ?? "", email: user?.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
+            Task {
+                do {
+                    // 1. 이전에 구글로그인 했던 계정 목록에 띄워줌 누르면 구글 로그인 자동 진행
+                    let targetUser = try await GIDSignIn.sharedInstance.restorePreviousSignIn()
+                    
+                    // 2. 로그인된 구글계정으로 FirebaseAuth 로그인 진행
+                    try await googleAuth(for: targetUser)
+                    
+                    // 3. gmail, ID, NickName 임시 저장
+                    let gmail = targetUser.profile?.email ?? ""
+                    let gID = targetUser.userID ?? ""
+                    let nickName = targetUser.profile?.name ?? ""
+                    
+                    // 4. Auth 로그인 되어 있는 구글로그인 계정 uid 가져오기
+                    let isNewby = self.firebaseAuth.currentUser?.uid ?? ""
+                    
+                    // 5. 구글로그인 사용자의 정보가 담긴 firestore 문서 경로
+                    let userRef = self.database.collection("User").document(isNewby)
+                    
+                    // 6. 해당 경로에 문서가 존재하는지 확인
+                    let targetDoc = try await userRef.getDocument()
+                    
+                    // 7. 문서가 없을경우
+                    if !(targetDoc.exists) {
                         
-                        userRef.setData([
+                        // 8. 새로운 User 객체 생성
+                        let newby = User(id: isNewby, name: nickName, email: gmail, pw: gID, proImage: "bearWhite", badge: [], friends: [])
+                        
+                        // 9. firestore에 문서를 추가해준다
+                        try await userRef.setData([
                             "email" : newby.email,
                             "pw" : newby.pw,
                             "name" : newby.name,
@@ -430,64 +448,85 @@ final class AuthManager: ObservableObject {
                             "friends" : newby.friends
                         ])
                     }
+                    // 10. 로그인 상태 값 변경 및 UserDefaults 저장하기
+                    self.loggedIn = "logIn"
+                    self.save(value: Key.logIn.rawValue, forkey: "state")
+                    self.loginMethod(value: LoginMethod.google.rawValue, forkey: "loginMethod")
+                } catch {
+                    throw(error)
                 }
             }
         } else {
-            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-            
-            let configuration = GIDConfiguration(clientID: clientID)
-            
-            GIDSignIn.sharedInstance.configuration = configuration
-            
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-            guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-            
-            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [self] result, err in
-                
-                // 1. 토큰을 생성하여 Credential을 만든 후 로그인
-                googleAuth(for: result?.user, with: err)
-                
-                // 2. 디비에 없으면 문서만들어준다
-                if let googleUser = result?.user {
-                    let userRef = self.database.collection("User").document(googleUser.userID ?? "")
+            //이전에 구글로그인 한 적이 없는 경우
+            Task {
+                do {
+                    guard let clientID = FirebaseApp.app()?.options.clientID else { return }
                     
-                    userRef.getDocument { (document, err) in
-                        if !(document?.exists ?? false) {
-                            let newby = User(id: googleUser.userID ?? "", name: googleUser.profile?.name ?? "", email: googleUser.profile?.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
-                            
-                            userRef.setData([
-                                "email" : newby.email,
-                                "pw" : newby.pw,
-                                "name" : newby.name,
-                                "proImage" : newby.proImage,
-                                "badge" : newby.badge,
-                                "friends" : newby.friends
-                            ])
-                        }
+                    let configuration = GIDConfiguration(clientID: clientID)
+                    
+                    GIDSignIn.sharedInstance.configuration = configuration
+                    
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                    guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+                    
+                    // 1. 구글로그인 진행
+                    let target = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+                    
+                    // 2. 구글계정으로 FirbaeAuth 로그인 진행
+                    try await googleAuth(for: target.user)
+                    
+                    // 3. gmail, ID, NickName 임시 저장
+                    let gmail = target.user.profile?.email ?? ""
+                    let gID = target.user.userID ?? ""
+                    let nickName = target.user.profile?.name ?? ""
+                    
+                    // 4. Auth 로그인 되어 있는 구글로그인 계정 uid 가져오기
+                    let isNewby = self.firebaseAuth.currentUser?.uid ?? ""
+                    
+                    // 5. 구글로그인 사용자의 정보가 담긴 firestore 문서 경로
+                    let userRef = self.database.collection("User").document(isNewby)
+                    
+                    // 6. 해당 경로에 문서가 존재하는지 확인
+                    let targetDoc = try await userRef.getDocument()
+                    
+                    // 7. 문서가 없을경우
+                    if !(targetDoc.exists) {
+                        
+                        // 8. 새로운 User 객체 생성
+                        let newby = User(id: isNewby, name: nickName, email: gmail, pw: gID, proImage: "bearWhite", badge: [], friends: [])
+                        
+                        // 9. firestore에 문서를 추가해준다
+                        try await userRef.setData([
+                            "email" : newby.email,
+                            "pw" : newby.pw,
+                            "name" : newby.name,
+                            "proImage" : newby.proImage,
+                            "badge" : newby.badge,
+                            "friends" : newby.friends
+                        ])
                     }
+                    
+                    // 10. 로그인 상태 값 변경 및 UserDefaults 저장하기
+                    self.loggedIn = "logIn"
+                    self.save(value: Key.logIn.rawValue, forkey: "state")
+                    self.loginMethod(value: LoginMethod.google.rawValue, forkey: "loginMethod")
+                } catch {
+                    throw(error)
                 }
             }
         }
     }
     
-    func googleAuth(for user: GIDGoogleUser?, with error: Error?) {
-        if let error = error {
-            return
-        }
-        
-        guard let authenticationToken = user?.accessToken.tokenString, let idToken = user?.idToken?.tokenString else { return }
-        
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authenticationToken)
-        
-        Auth.auth().signIn(with: credential) { (_, error) in
-            if let error = error {
-                return
-            } else {
-                //3. 로그인 절차가 모두 끝나면 "logIn" 상태로 바꿔줌
-                self.loggedIn = "logIn"
-                self.save(value: Key.logIn.rawValue, forkey: "state")
-                self.loginMethod(value: LoginMethod.google.rawValue, forkey: "loginMethod")
-            }
+    // MARK: - 구글계정을 통해 firebaseAuth SignIn 수행하는 함수
+    func googleAuth(for user: GIDGoogleUser?) async throws {
+        do {
+            guard let authenticationToken = user?.accessToken.tokenString, let idToken = user?.idToken?.tokenString else { return }
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authenticationToken)
+            
+            // firebaseAuth 로그인 실행 (신규유저면 자동으로 추가됨)
+            try await self.firebaseAuth.signIn(with: credential)
+        } catch {
+            throw(error)
         }
     }
     
@@ -549,7 +588,7 @@ final class AuthManager: ObservableObject {
                                 let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
                                 
                                 // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
-                                let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId)
+                                let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId, method: "kakao")
                                 
                                 // 신규 유저인 경우
                                 if isNewby != "" {
@@ -561,7 +600,7 @@ final class AuthManager: ObservableObject {
                                     try await self.uploadUserInfo(userInfo: newby)
                                     
                                     // auth 로그인 및 로그인 상태값 변경
-                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
+                                    try await self.login(with: kakaoEmail, kakaoId)
                                     
                                     self.loggedIn = "logIn"
                                     self.save(value: Key.logIn.rawValue, forkey: "state")
@@ -595,7 +634,7 @@ final class AuthManager: ObservableObject {
                                 let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
                                 
                                 // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
-                                let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId)
+                                let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId, method: "kakao")
                                 
                                 // 신규 유저인 경우
                                 if isNewby != "" {
@@ -607,7 +646,7 @@ final class AuthManager: ObservableObject {
                                     try await self.uploadUserInfo(userInfo: newby)
                                     
                                     // auth 로그인 및 로그인 상태값 변경
-                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
+                                    try await self.login(with: kakaoEmail, kakaoId)
                                     
                                     self.loggedIn = "logIn"
                                     self.save(value: Key.logIn.rawValue, forkey: "state")

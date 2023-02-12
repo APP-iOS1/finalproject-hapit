@@ -161,7 +161,7 @@ final class AuthManager: UIViewController, ObservableObject {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw).user
             
             // 신규회원 객체 생성
-            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [], fcmToken: "")
+            let newby = User(id: target.uid, name: name, email: email, pw: pw, proImage: "bearWhite", badge: [], friends: [], loginMethod: "general", fcmToken: "")
             
             // firestore에 신규회원 등록
             try await uploadUserInfo(userInfo: newby)
@@ -497,7 +497,7 @@ final class AuthManager: UIViewController, ObservableObject {
                     if !(targetDoc.exists) {
                         
                         // 8. 새로운 User 객체 생성
-                        let newby = User(id: isNewby, name: nickName, email: gmail, pw: gID, proImage: "bearWhite", badge: [], friends: [])
+                        let newby = User(id: isNewby, name: nickName, email: gmail, pw: gID, proImage: "bearWhite", badge: [], friends: [], loginMethod: "google", fcmToken: "")
                         
                         // 9. firestore에 문서를 추가해준다
                         try await userRef.setData([
@@ -552,7 +552,7 @@ final class AuthManager: UIViewController, ObservableObject {
                     if !(targetDoc.exists) {
                         
                         // 8. 새로운 User 객체 생성
-                        let newby = User(id: isNewby, name: nickName, email: gmail, pw: gID, proImage: "bearWhite", badge: [], friends: [])
+                        let newby = User(id: isNewby, name: nickName, email: gmail, pw: gID, proImage: "bearWhite", badge: [], friends: [], loginMethod: "google", fcmToken: "")
                         
                         // 9. firestore에 문서를 추가해준다
                         try await userRef.setData([
@@ -653,7 +653,7 @@ final class AuthManager: UIViewController, ObservableObject {
                                 if isNewby != "" {
                                     
                                     // 새로운 User 객체 생성
-                                    let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [])
+                                    let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [], loginMethod: "kakao", fcmToken: "")
                                     
                                     // firestore에 문서 등록
                                     try await self.uploadUserInfo(userInfo: newby)
@@ -699,7 +699,7 @@ final class AuthManager: UIViewController, ObservableObject {
                                 if isNewby != "" {
                                     
                                     // 새로운 User 객체 생성
-                                    let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [])
+                                    let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [], loginMethod: "kakao", fcmToken: "")
                                     
                                     // firestore에 문서 등록
                                     try await self.uploadUserInfo(userInfo: newby)

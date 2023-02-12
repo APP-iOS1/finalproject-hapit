@@ -24,7 +24,7 @@ struct HomeView: View {
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
         
         // Use this if NavigationBarTitle is with displayMode = .inline
-        // UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
+        UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 17)!]
     }
     
     var body: some View {
@@ -76,6 +76,7 @@ struct HomeView: View {
                 }
                 
             }//toolbar
+            
         }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
             AddChallengeView()

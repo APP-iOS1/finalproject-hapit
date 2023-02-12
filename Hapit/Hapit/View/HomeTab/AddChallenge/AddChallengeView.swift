@@ -45,44 +45,63 @@ struct AddChallengeView: View {
             VStack(spacing: 5) {
                 HStack{
                     InvitedMateView(temeFriend: $temeFriend)
-                }.padding(.horizontal,15)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 5)
                 
-                TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                    .font(.custom("IMHyemin-Bold", size: 20))
-                    .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
-                    .background(Color("CellColor"))
-                    .cornerRadius(15)
-                    .disableAutocorrection(true)
-                    .textInputAutocapitalization(.never)
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(isOverCount ? .red : .clear)
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .shakeEffect(trigger: isOverCount)
-                
-                HStack {
-                    if isOverCount {
-                        Text("최대 \(maximumCount)자까지만 입력해주세요.")
-                            .foregroundColor(.red)
+                VStack {
+                    TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
+                        .font(.custom("IMHyemin-Bold", size: 18))
+                        .padding(EdgeInsets(top: 30, leading: 20, bottom: 0, trailing: 20))
+                        .cornerRadius(15)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+
+                    HStack {
+                        if isOverCount {
+                            Text("최대 \(maximumCount)자까지만 입력해주세요.")
+                                .foregroundColor(.red)
+                        }
+                        Spacer()
+                        
+                        Text("\(challengeTitle.count) / \(maximumCount)")
+                            .foregroundColor(isOverCount ? .red : .gray)
                     }
-                    
-                    Spacer()
-                    
-                    Text("\(challengeTitle.count) / \(maximumCount)")
-                        .foregroundColor(isOverCount ? .red : .gray)
+                    .font(.custom("IMHyemin-Regular", size: 12))
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 10)
                 }
-                .font(.custom("IMHyemin-Regular", size: 13))
-                .padding(.horizontal, 25)
+                .background(Color("CellColor"))
+                .cornerRadius(15)
+                .overlay (
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(isOverCount ? .red : .clear)
+                )
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                .shakeEffect(trigger: isOverCount)
                 
-                HStack(spacing: 5) {
-                    Image(systemName: "exclamationmark.circle")
-                    Text("66일 동안의 챌린지를 성공하면 종료일이 없는 습관으로 변경돼요.")
+                VStack {
+                    Image("fourbears")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 200)
+                        .padding(.bottom, 30)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("🧸  66일 동안 챌린지를 도전하세요!")
+                        Text("🧸  챌린지를 성공하면 습관으로 변경돼요.")
+                        Text("🧸  습관은 종료일이 없어요.")
+                        Text("🧸  친구들과 그룹 챌린지도 진행할 수 있어요!")
+                        Text("🧸  해핏이 여러분의 습관 형성을 도와줄게요 :)")
+                    }
                 }
-                .foregroundColor(.gray)
-                .font(.custom("IMHyemin-Regular", size: 11))
-                .padding(.top, 30)
+                .font(.custom("IMHyemin-Regular", size: 15))
+                .padding(EdgeInsets(top: 40, leading: 20, bottom: 30, trailing: 20))
+                .frame(maxWidth: .infinity)
+                .background(Color("CellColor"))
+                .cornerRadius(15)
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
                 
                 Spacer()
                 

@@ -11,8 +11,7 @@ struct GetStartView: View {
     
     @EnvironmentObject var keyboardManager: KeyboardManager
     @EnvironmentObject var authManager: AuthManager
-    
-    @Binding var isFullScreen: String
+
     @Binding var email: String
     @Binding var pw: String
     
@@ -50,7 +49,7 @@ struct GetStartView: View {
                     Task {
                         do {
                             try await authManager.login(with: email, pw)
-                            isFullScreen = "logIn"
+                            authManager.loggedIn = "logIn"
                             authManager.save(value: Key.logIn.rawValue, forkey: "state")
                         } catch {
                             throw(error)
@@ -78,6 +77,6 @@ struct GetStartView: View {
 
 struct GetStartView_Previews: PreviewProvider {
     static var previews: some View {
-        GetStartView(isFullScreen: .constant("logIn"), email: .constant(""), pw: .constant(""))
+        GetStartView(email: .constant(""), pw: .constant(""))
     }
 }

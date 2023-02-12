@@ -277,7 +277,12 @@ struct CustomDatePickerView: View {
             title: "챌린지를 삭제하시겠어요?",
             message: "삭제된 챌린지는 복구할 수 없어요.",
             primaryButtonTitle: "삭제",
-            primaryAction: { habitManager.removeChallenge(challenge: currentChallenge) },
+            primaryAction: {
+                // Firestore에서 챌린지 삭제
+                habitManager.removeChallenge(challenge: currentChallenge)
+                // Realm에서 챌린지 삭제
+                $localChallenges.remove(localChallenge)
+            },
             withCancelButton: true)
         
     }

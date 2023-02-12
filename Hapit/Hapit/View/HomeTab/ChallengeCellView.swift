@@ -83,8 +83,11 @@ struct ChallengeCellView: View {
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
         .contextMenu {
             Button(role: .destructive) {
-                // 챌린지 삭제
+                // Firestore에서 챌린지 삭제
                 habitManager.removeChallenge(challenge: challenge)
+                
+                // Realm에서 챌린지 삭제
+                $localChallenges.remove(localChallenge)
             } label: {
                 Text("챌린지 지우기")
                     .font(.custom("IMHyemin-Regular", size: 17))

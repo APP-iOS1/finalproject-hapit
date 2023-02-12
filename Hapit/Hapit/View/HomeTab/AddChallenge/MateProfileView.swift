@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddChallengeMateProfileView: View {
+struct MateProfileView: View {
     @State private var isSelectedJelly = 0
     @State private var showBearModal = false
   //  @State var selectedMate: SelectedMateArray

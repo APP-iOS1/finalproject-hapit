@@ -83,8 +83,7 @@ struct MessageCellView: View {
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님과 친구가 되었습니다")
-                    .font(.custom("IMHyemin-Bold", size: 17))
-                
+                    .font(.custom("IMHyemin-Bold", size: 17))  
                 // MARK: 콕찌르기 메시지
             case "knock":
                 Text("🫵🏻")

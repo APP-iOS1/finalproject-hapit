@@ -10,10 +10,6 @@ import SwiftUI
 struct LogInView: View {
     
     @EnvironmentObject var keyboardManager: KeyboardManager
-    @Namespace var topID
-    @Namespace var bottomID
-    
-    @Binding var isFullScreen: String
     
     @State private var email: String = ""
     @State private var pw: String = ""
@@ -91,11 +87,16 @@ struct LogInView: View {
                             } else {
                                 do {
                                     try await authManager.login(with: email, pw)
-                                    isFullScreen = "logIn"
+                                    
+                                    // 1. 로그인 상태 변경
+                                    authManager.loggedIn = "logIn"
+                                    // 2. 로그인 상태 UserDefaults에 저장
                                     authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                                    // 3. 로그인 방법 UserDefaults에 저장
+                                    authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
                                     verified = true
                                 } catch {
-                                    isFullScreen = "logOut"
+                                    authManager.loggedIn = "logOut"
                                     authManager.save(value: Key.logOut.rawValue, forkey: "state")
                                     verified = true
                                     throw(error)
@@ -118,7 +119,7 @@ struct LogInView: View {
                         HStack {
                             Text("아직 회원이 아니신가요?")
                                 .font(.custom("IMHyemin-Bold", size: 16))
-                            NavigationLink(destination: RegisterView(isFullScreen: $isFullScreen)){
+                            NavigationLink(destination: RegisterView()){
                                 Text("회원가입")
                                     .font(.custom("IMHyemin-Bold", size: 16))
                             }
@@ -127,10 +128,10 @@ struct LogInView: View {
                     .padding(.bottom, geo.size.height / 50)
                     
                     Group {
-                        VStack {
-                            AppleLogIn(isFullScreen: $isFullScreen)
-                            AppleLogIn(isFullScreen: $isFullScreen)
-                            AppleLogIn(isFullScreen: $isFullScreen)
+                        HStack(spacing: geo.size.width / 10) {
+                            AppleLogIn()
+                            GoogleLogIn()
+                            KakaoLogIn()
                         }
                     }
                     .padding(.vertical, geo.size.height / 50)
@@ -145,7 +146,9 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView(isFullScreen: .constant("logOut"))
+        LogInView()
             .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
     }
 }

@@ -9,20 +9,23 @@ import SwiftUI
 
 struct GoogleLogIn: View {
     @EnvironmentObject var authManager: AuthManager
-    @Binding var isFullScreen: String
     
     var body: some View {
         Button(action: {
-            authManager.googleSignIn()
+            Task {
+                await authManager.googleSignIn()
+            }
         }){
-            Image("btn_google_light_normal_ios")
-                .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
+            Image("googlebtn")
+                .mask(Circle())
+                .frame(width: 44, height: 44)
         }
     }
 }
 
 struct GoogleLogIn_Previews: PreviewProvider {
     static var previews: some View {
-        GoogleLogIn(isFullScreen: .constant("logOut"))
+        GoogleLogIn()
+            .environmentObject(AuthManager())
     }
 }

@@ -34,9 +34,9 @@ struct HabitSegmentDetailView: View {
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
-                                        //HabitDetailView(calendar: Calendar.current)
                                         ZStack{
                                             ScrollView(showsIndicators: false){
+                                                // TODO: 로컬에 저장되어 있는 챌린지들을 뿌려줌 - 함께 챌린지에 참여 중인 챌린지도 보여줘야 함
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
                                                         CustomDatePickerView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
@@ -50,11 +50,12 @@ struct HabitSegmentDetailView: View {
                                         } // ZStack
                                         
                                     } label: {
+                                        // TODO: 로컬에 저장되어 있는 챌린지들을 뿌려줌 - 함께 챌린지에 참여 중인 챌린지도 보여줘야 함
                                         ForEach(localChallenges) { localChallenge in
                                             if localChallenge.challengeId == challenge.id {
                                                 ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
                                             }
-                                        }
+                                        } // ForEach - localChallenges
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.bottom, 5)
@@ -63,10 +64,21 @@ struct HabitSegmentDetailView: View {
                         } // ForEach - currentUserChallenges
                     } // ScrollView
                     .onAppear {
-                        print("================HabitSegmentDetailView의 localChallenges ForEach=================")
+                        print("================ HabitSegmentDetailView의 localChallenges =================")
                         for localChallenge in localChallenges {
                             print("\(localChallenge)")
                         } // ForEach - localChallenges
+                        
+                        print("서버에 있는 사용자의 챌린지 수 : \(habitManager.currentUserChallenges.count)")
+                        
+                        // MARK: 앱을 삭제했다가 다시 설치했을 때 (=LocalChallenges가 비어있을 때) 복구해준다.
+                        if localChallenges.isEmpty && !habitManager.currentUserChallenges.isEmpty {
+                            // 로컬엔 비어있는데 서버엔 데이터가 존재한다면, 앱이 삭제됐었던 것이므로 서버에 있는 챌린지들을 로컬에 다시 모두 담아준다.
+                            for challenge in habitManager.currentUserChallenges {
+                                // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
+                                $localChallenges.append(challenge.localChallenge)
+                            }
+                        }
                     }
                 } // else
             } // VStack

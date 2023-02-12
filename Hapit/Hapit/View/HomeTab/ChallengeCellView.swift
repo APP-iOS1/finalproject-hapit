@@ -28,18 +28,19 @@ struct ChallengeCellView: View {
             Button {
                 // 체크 데이터 토글
                 isChecked.toggle()
-
-                // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
-                $localChallenge.isChecked.wrappedValue = isChecked
-        
             } label: {
-                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor(isChecked ? .green : .gray)
+                    .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
                 
             }
             .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
+            .onChange(of: isChecked) { newCheck in // Button Action에서 toggle과 Realm에 저장을 한꺼번에 하니까 클릭을 2번 해야하는 이슈가 발생하여 onChange로 체크 정보 저장
+                // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
+                $localChallenge.isChecked.wrappedValue = newCheck
+            }
+            
             //checkButton
             VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
@@ -53,7 +54,7 @@ struct ChallengeCellView: View {
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
-                    Text("연속 \(challenge.count)일째")
+                    Text("연속 \($localChallenge.count.wrappedValue)일째")
                     Spacer()
                     ForEach(currentUserInfos){ user in
                         Image("\(user.proImage)")
@@ -102,16 +103,8 @@ struct ChallengeCellView: View {
                     try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member)  ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: []))
                 }
             }
-            
-            // 해당 뷰에서만 쓰이는 체크 변수에다가 서버에 저장된 챌린지 체크 정보 저장
-            isChecked = challenge.isChecked
         }
-//        .onDisappear {
-//            // 뷰가 사라질 때 서버에 체크 정보를 업로드
-//            let tempChallenge = Challenge(id: challenge.id, creator: challenge.creator, mateArray: challenge.mateArray, challengeTitle: challenge.challengeTitle, createdAt: challenge.createdAt, count: challenge.count, isChecked: $localChallenge.isChecked.wrappedValue, uid: challenge.uid)
-//            habitManager.loadChallengeIsChecked(challenge: tempChallenge)
-//        }
-        
+
         //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(
 //            VStack{

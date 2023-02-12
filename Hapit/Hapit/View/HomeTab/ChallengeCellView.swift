@@ -61,7 +61,7 @@ struct ChallengeCellView: View {
                             .aspectRatio(contentMode: .fit)
                             .offset(y: 5)
                             .frame(width: 25)
-                            .background(Color(.white))
+                            .background(Color("CellColor"))
                             .clipShape(Circle())
                             .overlay(Circle().stroke())
                             .foregroundColor(.gray)
@@ -75,9 +75,9 @@ struct ChallengeCellView: View {
             
         }//HStack
         .padding(20)
-        .foregroundColor(.black)
+//        .foregroundColor(.black)
         .background(
-            .white
+            Color("CellColor")
         )
         .cornerRadius(20)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))

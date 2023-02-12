@@ -73,7 +73,7 @@
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */; };
-		C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */; };
+		C90766FD2989F8E900D646F7 /* MateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FC2989F8E900D646F7 /* MateProfileView.swift */; };
 		C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9076701298AD81F00D646F7 /* InvitedMateView.swift */; };
 		C958D15F298CD8690057AA5B /* ChallengeFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D15E298CD8690057AA5B /* ChallengeFriends.swift */; };
 		C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */; };
@@ -183,7 +183,7 @@
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
-		C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateProfileView.swift; sourceTree = "<group>"; };
+		C90766FC2989F8E900D646F7 /* MateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MateProfileView.swift; sourceTree = "<group>"; };
 		C9076701298AD81F00D646F7 /* InvitedMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedMateView.swift; sourceTree = "<group>"; };
 		C958D15E298CD8690057AA5B /* ChallengeFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriends.swift; sourceTree = "<group>"; };
 		C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsView.swift; sourceTree = "<group>"; };
@@ -353,7 +353,7 @@
 				C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */,
 				C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */,
 				C9076701298AD81F00D646F7 /* InvitedMateView.swift */,
-				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
+				C90766FC2989F8E900D646F7 /* MateProfileView.swift */,
 			);
 			path = AddChallenge;
 			sourceTree = "<group>";
@@ -726,7 +726,7 @@
 				674F28B32977C4C000390405 /* Post.swift in Sources */,
 				F47BA151297A697F000222EE /* User.swift in Sources */,
 				3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */,
-				C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */,
+				C90766FD2989F8E900D646F7 /* MateProfileView.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
 				95FAB87229920B0100E797EA /* BadgeManager.swift in Sources */,
 				3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */,

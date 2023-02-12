@@ -30,6 +30,7 @@ struct HabitSegmentDetailView: View {
                     EmptyCellView(currentContentsType: .challenge)
                 } else {
                     ScrollView {
+                        // FIXME: currentUserChallenges -> challenges
                         ForEach(habitManager.currentUserChallenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {

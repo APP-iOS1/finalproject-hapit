@@ -60,7 +60,7 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                     if !(targetDoc.exists) {
                         
                         // 6. 새로운 User 객체 생성
-                        let newby = User(id: uid, name: appleName, email: appleMail, pw: providerID, proImage: "bearWhite", badge: [], friends: [])
+                        let newby = User(id: uid, name: appleName, email: appleMail, pw: providerID, proImage: "bearWhite", badge: [], friends: [], loginMethod: "apple", fcmToken: "")
                         
                         // 7. firestore에 문서를 추가해준다
                         try await userRef.setData([

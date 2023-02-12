@@ -35,7 +35,7 @@ struct FriendChallengeView: View {
 }
 struct FriendChallengeView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendChallengeView(friend: User(id: "", name: "yewon", email: "yewon", pw: "", proImage: "", badge: [""], friends: [""], fcmToken: ""))
+        FriendChallengeView(friend: User(id: "", name: "yewon", email: "yewon", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: ""))
         
     }
 }

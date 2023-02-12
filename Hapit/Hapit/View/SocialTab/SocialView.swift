@@ -36,6 +36,7 @@ struct SocialView: View {
                             } label: {
                                 FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
                             }
+                            .disabled(friend.id == userInfoManager.currentUserInfo?.id)
                         }
                     }
                 }

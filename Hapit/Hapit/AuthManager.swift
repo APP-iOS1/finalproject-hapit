@@ -81,11 +81,19 @@ final class AuthManager: ObservableObject {
         do {
             let target = try await firebaseAuth.createUser(withEmail: email, password: pw)
             newUid = target.user.uid
+            return newUid
         } catch {
-            newUid = ""
+            do {
+                try await login(with: email, pw)
+                
+                self.loggedIn = "logIn"
+                self.save(value: Key.logIn.rawValue, forkey: "state")
+                self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+            } catch {
+                throw(error)
+            }
             throw(error)
         }
-        return newUid
     }
     
     //MARK: - 로그아웃 (로그인 방법에 따라 분기처리)
@@ -524,19 +532,11 @@ final class AuthManager: ObservableObject {
                                 let kakaoId = String(user?.id ?? 0)
                                 let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
                                 
-                                // firestore에 등록된 유저인지 확인
+                                // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
                                 let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId)
                                 
-                                // 등록된 유저인 경우
-                                if isNewby == "" {
-                                    // auth 로그인 및 로그인 상태값 변경
-                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
-                                    
-                                    self.loggedIn = "logIn"
-                                    self.save(value: Key.logIn.rawValue, forkey: "state")
-                                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
-                                } else {
-                                    // 신규 유저인 경우
+                                // 신규 유저인 경우
+                                if isNewby != "" {
                                     
                                     // 새로운 User 객체 생성
                                     let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [])
@@ -563,7 +563,7 @@ final class AuthManager: ObservableObject {
     //MARK: - 카카오계정 로그인 함수
     func kakaoAccountLogIn() async {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-            if error != nil {
+            if error != nil{
                 return
             }
             else {
@@ -578,19 +578,11 @@ final class AuthManager: ObservableObject {
                                 let kakaoId = String(user?.id ?? 0)
                                 let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
                                 
-                                // firestore에 등록된 유저인지 확인
+                                // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
                                 let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId)
                                 
-                                // 등록된 유저인 경우
-                                if isNewby == "" {
-                                    // auth 로그인 및 로그인 상태값 변경
-                                    try await self.login(with: user?.kakaoAccount?.email ?? "", String(user?.id ?? 0))
-                                    
-                                    self.loggedIn = "logIn"
-                                    self.save(value: Key.logIn.rawValue, forkey: "state")
-                                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
-                                } else {
-                                    // 신규 유저인 경우
+                                // 신규 유저인 경우
+                                if isNewby != "" {
                                     
                                     // 새로운 User 객체 생성
                                     let newby = User(id: isNewby, name: kakaoNickName, email: kakaoEmail, pw: kakaoId, proImage: "bearWhite", badge: [], friends: [])

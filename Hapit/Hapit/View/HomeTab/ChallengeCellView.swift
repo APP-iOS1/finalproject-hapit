@@ -28,19 +28,18 @@ struct ChallengeCellView: View {
             Button {
                 // 체크 데이터 토글
                 isChecked.toggle()
+                // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
+                $localChallenge.isChecked.wrappedValue = isChecked
+
             } label: {
                 Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .font(.title)
                     .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
                 
             }
-            .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
-            .onChange(of: isChecked) { newCheck in // Button Action에서 toggle과 Realm에 저장을 한꺼번에 하니까 클릭을 2번 해야하는 이슈가 발생하여 onChange로 체크 정보 저장
-                // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
-                $localChallenge.isChecked.wrappedValue = newCheck
-            }
-            
+            .buttonStyle(PlainButtonStyle())
+
             //checkButton
             VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){

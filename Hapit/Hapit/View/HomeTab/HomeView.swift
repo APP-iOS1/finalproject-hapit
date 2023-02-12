@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SegmentedPicker
-import RealmSwift
 
 struct HomeView: View {
     
@@ -19,8 +18,6 @@ struct HomeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
-    
-    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
 
     init() {
         // Use this if NavigationBarTitle is with Large Font
@@ -79,16 +76,6 @@ struct HomeView: View {
                 }
                 
             }//toolbar
-//            .onDisappear {
-//                for challenge in habitManager.currentUserChallenges {
-//                    for localChallenge in localChallenges {
-//                        if challenge.id == localChallenge.challengeId {
-//                            habitManager.loadChallengeIsChecked(challenge: challenge, isChecked: localChallenge.isChecked)
-//                        }
-//                    }
-//                }
-//            }
-            
         }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
             AddChallengeView()

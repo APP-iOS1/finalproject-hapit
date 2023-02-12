@@ -192,10 +192,10 @@ final class HabitManager: ObservableObject{
     }
     
     func updateCount(count: Int, isChecked: Bool) -> Int{
-        if isChecked == true{
-            return count - 1
-        }else{
+        if isChecked {
             return count + 1
+        }else{
+            return count - 1
         }
     }
 

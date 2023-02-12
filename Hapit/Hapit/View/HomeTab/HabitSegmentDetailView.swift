@@ -99,15 +99,26 @@ struct HabitSegmentDetailView: View {
         
     }
     
-    // MARK: - 앱을 삭제했다가 다시 설치했을 때 (=LocalChallenges가 비어있을 때) 복구하는 함수
+    // MARK: - 앱을 삭제했다가 다시 설치했을 때 (로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우) 복구하는 함수
     func restoreChallenges() {
-        if localChallenges.isEmpty && !habitManager.currentUserChallenges.isEmpty {
-            // 로컬엔 비어있는데 서버엔 데이터가 존재한다면, 앱이 삭제됐었던 것이므로 서버에 있는 챌린지들을 로컬에 다시 모두 담아준다.
+        if countLocalChallenges() != habitManager.currentUserChallenges.count {
+            // 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우, 앱이 삭제됐었던 것이므로 서버에 있는 챌린지들을 로컬에 다시 모두 담아준다.
+            for localChallenge in localChallenges { // 로컬에 있는 챌린지 모두 삭제 (초기화)
+                $localChallenges.remove(localChallenge)
+            }
             for challenge in habitManager.currentUserChallenges {
                 // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
                 $localChallenges.append(challenge.localChallenge)
             }
         }
+    }
+    
+    func countLocalChallenges() -> Int {
+        var count = 0
+        for _ in localChallenges {
+            count += 1
+        }
+        return count
     }
     
 }

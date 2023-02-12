@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import GoogleSignInSwift
 
 struct GoogleLogIn: View {
     @EnvironmentObject var authManager: AuthManager
@@ -17,7 +16,9 @@ struct GoogleLogIn: View {
                 await authManager.googleSignIn()
             }
         }){
-            Text("구글 로그인")
+            Image("googlebtn")
+                .mask(Circle())
+                .frame(width: 44, height: 44)
         }
     }
 }
@@ -25,5 +26,6 @@ struct GoogleLogIn: View {
 struct GoogleLogIn_Previews: PreviewProvider {
     static var previews: some View {
         GoogleLogIn()
+            .environmentObject(AuthManager())
     }
 }

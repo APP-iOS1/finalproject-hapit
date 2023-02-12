@@ -69,6 +69,7 @@ final class AuthManager: UIViewController, ObservableObject {
     func login(with email: String, _ password: String) async throws {
         do {
             try await firebaseAuth.signIn(withEmail: email, password: password)
+            self.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
         } catch{
             throw(error)
         }

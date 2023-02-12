@@ -125,6 +125,22 @@ final class AuthManager: ObservableObject {
     //MARK: - 회원탈퇴
     func deleteUser(uid: String) async throws {
         do {
+            let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+            
+            switch loginMethod {
+            case "google":
+                GIDSignIn.sharedInstance.signOut()
+            case "kakao":
+                UserApi.shared.logout { (error) in
+                    if let error = error {
+                        return
+                    } else {
+                        print("kakao logOut Success")
+                    }
+                }
+            default:
+                print("apple or general")
+            }
             try await firebaseAuth.currentUser?.delete()
             try await database.collection("User").document("\(uid)").delete()
         } catch {

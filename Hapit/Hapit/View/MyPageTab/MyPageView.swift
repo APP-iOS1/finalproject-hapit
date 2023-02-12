@@ -64,7 +64,8 @@ struct MyPageView: View {
                             email = emailTarget
                             
                             // String에 뱃지 이름을 String으로 가져옴.
-                            try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                            try await authManager.fetchBadgeList(uid: current)
+                            try await authManager.fetchImages(paths: authManager.badges)
                             // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
                             // Test 용
                             UserDefaults.standard.set(false, forKey: "noob")

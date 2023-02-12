@@ -17,32 +17,39 @@ struct JellyBadgeView: View {
                 Image("bearLock")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 60, height: 80)
-                    .background(Circle()
-                        .fill(Color(.systemGray6))
-                        .frame(width: 100, height: 100))
-                    .padding(.bottom, 15)
-                
-                Text("비어 있음")
-                    .font(.custom("IMHyemin-Regular", size: 12))
-                    .frame(width: 60)
-            }else{
-                Image(uiImage: UIImage(data: badge.imageData) ?? UIImage())
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
                     .frame(width: 70, height: 70)
                     .background(Circle()
                         .fill(Color(.systemGray6))
                         .frame(width: 100, height: 100))
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 10)
+                    //.border(.black)
+                
+                Text("비어 있음")
+                    .font(.custom("IMHyemin-Regular", size: 12))
+                    .frame(width: 60)
+                    .padding(.bottom, 5)
+                    //.border(.black)
+            }else{
+                Image(uiImage: UIImage(data: badge.imageData) ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 70, height: 70)
+                    .background(Circle()
+                        .fill(Color(.systemGray6))
+                        .frame(width: 100, height: 100))
+                    .padding(.bottom, 10)
+                    //.border(.black)
                 
                 Text(badge.title)
                     .font(.custom("IMHyemin-Regular", size: 12))
                     .frame(width: 60)
+                    .padding(.bottom, 5)
+                    //.border(.black)
                 
             }
         }
-        .padding(10)
+        //.border(.black)
+        //.padding(10)
         
     }
 }

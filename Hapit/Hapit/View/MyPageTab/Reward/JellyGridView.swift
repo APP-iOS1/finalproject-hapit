@@ -28,6 +28,7 @@ struct JellyGridView: View {
                     
                     ForEach(authManager.bearBadges, id: \.id) { badge in
                             JellyBadgeView(badge: badge)
+                                //.border(.black)
                         }
                 }
                 

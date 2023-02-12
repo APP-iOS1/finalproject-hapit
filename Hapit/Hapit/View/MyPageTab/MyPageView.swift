@@ -68,7 +68,7 @@ struct MyPageView: View {
                             try await authManager.fetchImages(paths: authManager.badges)
                             // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
                             // Test 용
-                            UserDefaults.standard.set(false, forKey: "noob")
+                            // UserDefaults.standard.set(false, forKey: "noob")
                             
                             // MARK: First Login Check and there is a chance to get back
                             if (badgeManager.noob == false && !authManager.badges.contains(BadgeManager.BadgeImage.noob.rawValue)) {
@@ -80,7 +80,7 @@ struct MyPageView: View {
                                 
                                 isShowedConfetti.toggle()
                                 newOneName = "noob"
-                            }
+                          }
                             
                         } catch {
                             throw(error)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JellyGridView: View {
-   
+    
     @EnvironmentObject var authManager: AuthManager
     
     @State var badgeList: [Badge] = []
@@ -27,18 +27,31 @@ struct JellyGridView: View {
                 LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
                     
                     ForEach(authManager.bearBadges, id: \.id) { badge in
-                            JellyBadgeView(badge: badge)
-                                //.border(.black)
-                        }
+                        JellyBadgeView(badge: badge)
+                        //.border(.black)
+                    }
                 }
                 
             }
             .padding()
         }
+//        .onReceive(authManager.$badges){_ in
+//            
+//            for (badgeName, data) in zip(authManager.newBadges, authManager.bearimagesDatas){
+//                
+//                let id = UUID().uuidString
+//                let newBadge = Badge(id: id, imageName: badgeName, title: showmetheTitle(imageName: badgeName), imageData: data)
+//                
+//                authManager.bearBadges.append(newBadge)
+//            }
+//            
+//            authManager.bearBadges = authManager.bearBadges.reversed()
+//            
+//        }
         .onAppear{
             
             authManager.bearBadges.removeAll()
-
+            
             Task{
                 for _ in 0..<20{
                     
@@ -48,16 +61,18 @@ struct JellyGridView: View {
                 }
                 
                 for (badgeName, data) in zip(authManager.newBadges, authManager.bearimagesDatas){
-
+                    
                     let id = UUID().uuidString
                     let newBadge = Badge(id: id, imageName: badgeName, title: showmetheTitle(imageName: badgeName), imageData: data)
-
+                    
                     authManager.bearBadges.append(newBadge)
                 }
                 
                 authManager.bearBadges = authManager.bearBadges.reversed()
+                
             }
         }
+        
     }
     
     func showmetheTitle(imageName: String) -> String{

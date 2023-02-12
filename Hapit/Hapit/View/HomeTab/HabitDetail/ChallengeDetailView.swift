@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct CustomDatePickerView: View {
+struct ChallengeDetailView: View {
     
     private let timeIntervalAfter66Days: TimeInterval = 60 * 60 * 24 * 66
     //MARK: - Property Wrappers

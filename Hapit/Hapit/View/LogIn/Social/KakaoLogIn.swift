@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import KakaoSDKAuth
-import KakaoSDKUser
 
 struct KakaoLogIn: View {
     @EnvironmentObject var authManager: AuthManager

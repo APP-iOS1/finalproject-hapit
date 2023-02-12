@@ -11,7 +11,7 @@ struct RemoteNotification: Identifiable {
     var id: String
     var userID: String
     var content: String
-    var date:String
+    var date: String
 }
 
 func makeToday() -> String {

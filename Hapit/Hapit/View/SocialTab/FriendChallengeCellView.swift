@@ -70,16 +70,20 @@ struct FriendChallengeCellView: View {
         .cornerRadius(20)
         .padding(.horizontal)
         .task {
-            let currentUser = userInfoManager.currentUserInfo?.id ?? ""
-            challengeWithMe.removeAll()
-            
-            for challenge in habitManager.challenges {
-                for mate in challenge.mateArray {
-                    if mate == currentUser {
-                        challengeWithMe.append(challenge)
+            do {
+                let currentUser = userInfoManager.currentUserInfo?.id ?? ""
+                challengeWithMe.removeAll()
+                
+                for challenge in habitManager.challenges {
+                    for mate in challenge.mateArray {
+                        if mate == currentUser {
+                            challengeWithMe.append(challenge)
+                        }
+                        receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
                     }
-                    receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
                 }
+            } catch {
+                
             }
         }
     }

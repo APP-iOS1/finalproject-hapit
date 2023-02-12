@@ -38,11 +38,8 @@ struct SocialView: View {
                                         .navigationTitle("친구가 수행중인 챌린지")
                                 } label: {
                                     FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
-                                }
-                            } else {
-                                FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
+                                }.disabled(friend.id == userInfoManager.currentUserInfo?.id)
                             }
-                            .disabled(friend.id == userInfoManager.currentUserInfo?.id)
                         }
                     }
                 }

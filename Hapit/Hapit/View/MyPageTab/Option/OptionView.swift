@@ -11,8 +11,9 @@ import FirebaseAuth
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
-    @Binding var isFullScreen: String
+ 
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
@@ -141,7 +142,7 @@ struct OptionView: View {
                      primaryButtonTitle: "로그아웃",
                      primaryAction: { Task {
                 flag = 1
-                isFullScreen = "logOut"
+                authManager.loggedIn = "logOut"
                 authManager.save(value: Key.logOut.rawValue, forkey: "state")
                 index = 0 } },
                      withCancelButton: true)
@@ -151,9 +152,14 @@ struct OptionView: View {
                      primaryButtonTitle: "탈퇴",
                      primaryAction: { Task {
             flag = 2
-            isFullScreen = "logOut"
+            authManager.loggedIn = "logOut"
             authManager.save(value: Key.logOut.rawValue, forkey: "state")
             index = 0
+            // 회원 탈퇴 시 친구 전체삭제
+//            for friend in userInfoManager.friendArray {
+//                try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
+//            }
+//            try await authManager.deleteUser(uid: userInfoManager.currentUserInfo?.id ?? "")
         }},
                      withCancelButton: true)
     }
@@ -163,12 +169,11 @@ struct ListTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("IMHyemin-Bold", size: 16))
-            .foregroundColor(.black)
     }
 }
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(isFullScreen: .constant("logIn"), index: .constant(0), flag: .constant(1))
+        OptionView(index: .constant(0), flag: .constant(1))
     }
 }

@@ -11,6 +11,9 @@ import FirebaseCore
 import UserNotifications
 import FirebaseMessaging
 import UIKit
+import GoogleSignIn
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate{
     @AppStorage("fcmToken") var fcmToken: String = ""
@@ -20,6 +23,7 @@ class AppDelegate: NSObject, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        KakaoSDK.initSDK(appKey: "fa6e48dad20c3ead13f0758608cb305f")
 
         UNUserNotificationCenter.current().delegate = self
 
@@ -35,6 +39,13 @@ class AppDelegate: NSObject, UIApplicationDelegate{
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
          Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.handleOpenUrl(url: url)
+        }
+        return false
     }
     
 }
@@ -59,10 +70,21 @@ extension AppDelegate: MessagingDelegate {
  
     }
 }
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
+    }
+}
     
 @main
 struct HapitApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var googleSignIn = AuthManager()
     //private var modalManager: ModalManager = ModalManager()
     
     var body: some Scene {

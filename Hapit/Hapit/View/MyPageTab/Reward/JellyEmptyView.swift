@@ -6,9 +6,6 @@
 //
 
 import Foundation
-
-
-
 import SwiftUI
 
 struct JellyEmptyBadgeView: View {
@@ -26,7 +23,6 @@ struct JellyEmptyBadgeView: View {
                     .fill(Color(.systemGray6))
                     .frame(width: 100, height: 100))
                 .padding(.bottom, 15)
-            
             
                 Text("비어 있음")
                     .font(.custom("IMHyemin-Regular", size: 12))

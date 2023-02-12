@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct BadgeManager{
     
     func didItInFirst(){

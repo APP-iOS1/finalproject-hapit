@@ -50,16 +50,6 @@ struct BearModalView: View {
                 }
                 .padding(10)
             }
-            
-//            Button {
-//                showModal = false
-//            } label: {
-//                Text("확인")
-//                    .foregroundColor(.white)
-//                    .padding(10)
-//                    .background(RoundedRectangle(cornerRadius: 15)
-//                        .fill(Color.accentColor))
-//            }
         }
         .padding()
     }

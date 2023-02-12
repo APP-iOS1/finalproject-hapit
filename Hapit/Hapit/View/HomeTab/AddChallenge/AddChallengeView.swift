@@ -17,8 +17,6 @@ struct AddChallengeView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     
-    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
-    
     @State private var challengeTitle: String = ""
     
     //FIXME: 알람데이터 저장이 필요
@@ -31,56 +29,79 @@ struct AddChallengeView: View {
     @State var temeFriend: [ChallengeFriends] = []
     
     @State private var notiTime = Date()
+    
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    
+    // MARK: - Properties
     let maximumCount: Int = 12
     
     private var isOverCount: Bool {
         challengeTitle.count > maximumCount
     }
-    
+
     // MARK: - Body
     var body: some View {
         NavigationView {
             VStack(spacing: 5) {
                 HStack{
                     InvitedMateView(temeFriend: $temeFriend)
-                }.padding(.horizontal,15)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 5)
                 
-                TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
-                    .font(.custom("IMHyemin-Bold", size: 20))
-                    .padding(EdgeInsets(top: 40, leading: 20, bottom: 40, trailing: 20))
-                    .background(Color("CellColor"))
-                    .cornerRadius(15)
-                    .disableAutocorrection(true)
-                    .textInputAutocapitalization(.never)
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(isOverCount ? .red : .clear)
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .shakeEffect(trigger: isOverCount)
-                
-                HStack {
-                    if isOverCount {
-                        Text("최대 \(maximumCount)자까지만 입력해주세요.")
-                            .foregroundColor(.red)
+                VStack {
+                    TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
+                        .font(.custom("IMHyemin-Bold", size: 18))
+                        .padding(EdgeInsets(top: 30, leading: 20, bottom: 0, trailing: 20))
+                        .cornerRadius(15)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+
+                    HStack {
+                        if isOverCount {
+                            Text("최대 \(maximumCount)자까지만 입력해주세요.")
+                                .foregroundColor(.red)
+                        }
+                        Spacer()
+                        
+                        Text("\(challengeTitle.count) / \(maximumCount)")
+                            .foregroundColor(isOverCount ? .red : .gray)
                     }
-                    
-                    Spacer()
-                    
-                    Text("\(challengeTitle.count) / \(maximumCount)")
-                        .foregroundColor(isOverCount ? .red : .gray)
+                    .font(.custom("IMHyemin-Regular", size: 12))
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 10)
                 }
-                .font(.custom("IMHyemin-Regular", size: 13))
-                .padding(.horizontal, 25)
+                .background(Color("CellColor"))
+                .cornerRadius(15)
+                .overlay (
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(isOverCount ? .red : .clear)
+                )
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                .shakeEffect(trigger: isOverCount)
                 
-                HStack(spacing: 5) {
-                    Image(systemName: "exclamationmark.circle")
-                    Text("66일 동안의 챌린지를 성공하면 종료일이 없는 습관으로 변경돼요.")
+                VStack {
+                    Image("fourbears")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 200)
+                        .padding(.bottom, 30)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("🧸  66일 동안 챌린지를 도전하세요!")
+                        Text("🧸  챌린지를 성공하면 습관으로 변경돼요.")
+                        Text("🧸  습관은 종료일이 없어요.")
+                        Text("🧸  친구들과 그룹 챌린지도 진행할 수 있어요!")
+                        Text("🧸  해핏이 여러분의 습관 형성을 도와줄게요 :)")
+                    }
                 }
-                .foregroundColor(.gray)
-                .font(.custom("IMHyemin-Regular", size: 11))
-                .padding(.top, 30)
+                .font(.custom("IMHyemin-Regular", size: 15))
+                .padding(EdgeInsets(top: 40, leading: 20, bottom: 30, trailing: 20))
+                .frame(maxWidth: .infinity)
+                .background(Color("CellColor"))
+                .cornerRadius(15)
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
                 
                 Spacer()
                 
@@ -100,10 +121,18 @@ struct AddChallengeView: View {
                             for friend in habitManager.seletedFriends {
                                 let uid = friend.uid
                                 mateArray.append(uid)
+
                             }
                             
-                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: current.currentUser?.uid ?? ""))
+                            // Firestore에 올리기 위한 새로운 챌린지 객체 변수 생성 (따로 빼준 이유: mateArray로부터 mateList를 뽑아내기 위함.)
+                            let newChallenge = Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: current.currentUser?.uid ?? "")
                             
+                            // Firestore에 업로드 (Firestore)
+                            habitManager.createChallenge(challenge: newChallenge)
+
+                            // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
+                            $localChallenges.append(newChallenge.localChallenge)
+
                             dismiss()
                             
                             habitManager.loadChallenge()

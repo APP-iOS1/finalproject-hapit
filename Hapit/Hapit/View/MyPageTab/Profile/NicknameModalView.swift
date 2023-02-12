@@ -36,6 +36,7 @@ struct NicknameModalView: View {
 
             TextField("닉네임을 입력하세요.", text: $nickname)
                 .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
                 .font(.custom("IMHyemin-Regular", size: 17))
                 .padding()
                 .frame(width: 350, height: 65)
@@ -52,8 +53,10 @@ struct NicknameModalView: View {
             // TODO: 공백 입력, 글자수 제한
             Button {
                 Task {
+                    // UserDefaults nickname 업데이트
                     if isValid {
                         userNickname = nickname
+                        UserDefaults.standard.set(userNickname, forKey: "localNickname")
                         showModal = false
                         
                         do {
@@ -70,10 +73,10 @@ struct NicknameModalView: View {
                     .foregroundColor(.white)
                     .padding(10)
                     .background(RoundedRectangle(cornerRadius: 15).fill(Color.accentColor))
-            }.disabled(!isValid)
+            }
+            .disabled(!isValid)
             
             Spacer()
-
         }
     }
 }

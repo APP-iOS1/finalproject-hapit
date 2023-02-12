@@ -183,11 +183,11 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - Update a Habit
-    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<Void, Error> {
+    func updateChallengeIsChecked(challenge: Challenge, isChecked: Bool) -> AnyPublisher<Void, Error> {
         // Update a Challenge
         // Local
-        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
-        let count = updateCount(count: challenge.count, isChecked: challenge.isChecked)
+//        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
+        let count = updateCount(count: challenge.count, isChecked: isChecked)
         
         return Future<Void, Error> {  promise in
             
@@ -202,9 +202,25 @@ final class HabitManager: ObservableObject{
         }
         .eraseToAnyPublisher()
     }
-    //이제 뷰에서 Realm을 이용해서 뿌려주니까, 이 함수 필요없어보이는데....
-    func loadChallengeIsChecked(challenge: Challenge){
-        self.updateChallengeIsChecked(challenge: challenge)
+    
+    func toggleIsChanged(isChecked: Bool) -> Bool{
+        if isChecked == true{
+            return false
+        }else{
+            return true
+        }
+    }
+    
+    func updateCount(count: Int, isChecked: Bool) -> Int{
+        if isChecked {
+            return count + 1
+        }else{
+            return count - 1
+        }
+    }
+
+    func loadChallengeIsChecked(challenge: Challenge, isChecked: Bool){
+        self.updateChallengeIsChecked(challenge: challenge, isChecked: isChecked)
             .sink { (completion) in
                 switch completion{
                 case .failure( _):

@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileCellView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager
+    @AppStorage("localNickname") var localNickname = ""
     @Binding var nickName: String
     @Binding var email: String
     @State private var isSelectedJelly = 0
@@ -49,7 +50,7 @@ struct ProfileCellView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("\(nickName)")
+                            Text(localNickname)
                                 .font(.custom("IMHyemin-Bold", size: 22))
                                 .padding(.leading, -5)
                             

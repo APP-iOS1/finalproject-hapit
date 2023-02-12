@@ -202,22 +202,6 @@ final class HabitManager: ObservableObject{
         }
         .eraseToAnyPublisher()
     }
-    
-    func toggleIsChanged(isChecked: Bool) -> Bool{
-        if isChecked == true{
-            return false
-        }else{
-            return true
-        }
-    }
-    
-    func updateCount(count: Int, isChecked: Bool) -> Int{
-        if isChecked {
-            return count + 1
-        }else{
-            return count - 1
-        }
-    }
 
     func loadChallengeIsChecked(challenge: Challenge, isChecked: Bool){
         self.updateChallengeIsChecked(challenge: challenge, isChecked: isChecked)
@@ -238,7 +222,8 @@ final class HabitManager: ObservableObject{
         if isChecked == true{
             return count + 1
         }else{
-            return 0
+            // 0 아님?
+            return count - 1
         }
     }
     

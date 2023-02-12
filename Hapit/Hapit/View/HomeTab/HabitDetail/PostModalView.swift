@@ -143,8 +143,24 @@ struct PostModalView: View {
                     currentPost = Post(id: "", uid: "", challengeID: "", title: "", content: "", createdAt: Date())
                 }
             }
+//            print(currentPost)
         }
+    }
+
+    func sortMateArray(_ mateArray: [String], currentUserUid: String) -> [String] {
+        var currentUserArray: [String] = []
+        var otherMatesArray: [String] = []
         
+        for uid in mateArray {
+            
+            if uid == currentUserUid {
+                currentUserArray.append(uid)
+            }
+            else {
+                otherMatesArray.append((uid))
+            }
+        }
+        return currentUserArray + otherMatesArray
     }
     
 }

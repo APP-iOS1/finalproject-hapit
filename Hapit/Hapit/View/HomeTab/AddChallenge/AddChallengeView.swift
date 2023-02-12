@@ -17,8 +17,6 @@ struct AddChallengeView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     
-    @ObservedResults(HapitPushInfo.self) var hapitPushInfo
-    
     @State private var challengeTitle: String = ""
     
     //FIXME: 알람데이터 저장이 필요
@@ -31,12 +29,16 @@ struct AddChallengeView: View {
     @State var temeFriend: [ChallengeFriends] = []
     
     @State private var notiTime = Date()
+    
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    
+    // MARK: - Properties
     let maximumCount: Int = 12
     
     private var isOverCount: Bool {
         challengeTitle.count > maximumCount
     }
-    
+
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -100,10 +102,18 @@ struct AddChallengeView: View {
                             for friend in habitManager.seletedFriends {
                                 let uid = friend.uid
                                 mateArray.append(uid)
+
                             }
                             
-                            habitManager.createChallenge(challenge: Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: current.currentUser?.uid ?? ""))
+                            // Firestore에 올리기 위한 새로운 챌린지 객체 변수 생성 (따로 빼준 이유: mateArray로부터 mateList를 뽑아내기 위함.)
+                            let newChallenge = Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: current.currentUser?.uid ?? "")
                             
+                            // Firestore에 업로드 (Firestore)
+                            habitManager.createChallenge(challenge: newChallenge)
+
+                            // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
+                            $localChallenges.append(newChallenge.localChallenge)
+
                             dismiss()
                             
                             habitManager.loadChallenge()
@@ -176,7 +186,6 @@ struct AddChallengeView: View {
         }// NavigationView
     } // Body
 }
-
 
 // MARK: - AddChallengeView Previews
 struct AddChallengeView_Previews: PreviewProvider {

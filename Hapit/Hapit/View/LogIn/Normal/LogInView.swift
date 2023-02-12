@@ -130,7 +130,7 @@ struct LogInView: View {
                     .padding(.bottom, geo.size.height / 50)
                     
                     Group {
-                        VStack {
+                        HStack {
                             AppleLogIn()
                             GoogleLogIn()
                             KakaoLogIn()

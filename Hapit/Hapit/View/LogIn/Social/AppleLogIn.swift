@@ -19,7 +19,7 @@ struct AppleLogIn: View {
                 await authManager.startSignInWithAppleFlow()
             }
         }){
-            Text("애플 로그인")
+            Image("appleLogo_dark")
         }
     }
 }

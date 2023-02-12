@@ -19,10 +19,6 @@ struct GoogleLogIn: View {
         }){
             Text("구글 로그인")
         }
-//        GoogleSignInButton {
-//            authManager.googleSignIn()
-//        }
-//        .frame(width: 320, height: 40)
     }
 }
 

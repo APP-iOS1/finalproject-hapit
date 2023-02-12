@@ -11,7 +11,6 @@ struct FriendChallengeCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
-
     @State var challengeWithMe: [Challenge] = []
     @State var challenge: Challenge
     @State var friendId: String
@@ -19,8 +18,6 @@ struct FriendChallengeCellView: View {
     
     @State private var notificationContent: String = ""
     @ObservedObject private var datas = fcmManager
-    
-    
 
     var body: some View {
         HStack {
@@ -72,25 +69,17 @@ struct FriendChallengeCellView: View {
         .background(.white)
         .cornerRadius(20)
         .padding(.horizontal)
-//FIXME: - 함께하는 챌린지인 경우 표시해주는 코드가 필요
-        .onAppear {
-            do{
-                Task{
-                    let current = authManager.firebaseAuth
-                   let currentUser = current.currentUser?.uid
-
-                    for challenge in habitManager.challenges {
-                        for mate in challenge.mateArray{
-                            if mate == currentUser{
-                                challengeWithMe.append(challenge)
-                            }
-                        }
+        .task {
+            let currentUser = userInfoManager.currentUserInfo?.id ?? ""
+            challengeWithMe.removeAll()
+            
+            for challenge in habitManager.challenges {
+                for mate in challenge.mateArray {
+                    if mate == currentUser {
+                        challengeWithMe.append(challenge)
                     }
                     receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
                 }
-            }
-            catch{
-
             }
         }
     }

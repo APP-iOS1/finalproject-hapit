@@ -11,6 +11,7 @@ import FirebaseAuth
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
     @Binding var isFullScreen: String
     @Binding var index: Int
@@ -154,6 +155,11 @@ struct OptionView: View {
             isFullScreen = "logOut"
             authManager.save(value: Key.logOut.rawValue, forkey: "state")
             index = 0
+            // 회원 탈퇴 시 친구 전체삭제
+//            for friend in userInfoManager.friendArray {
+//                try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: friend.id)
+//            }
+//            try await authManager.deleteUser(uid: userInfoManager.currentUserInfo?.id ?? "")
         }},
                      withCancelButton: true)
     }
@@ -163,7 +169,6 @@ struct ListTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("IMHyemin-Bold", size: 16))
-            .foregroundColor(.black)
     }
 }
 

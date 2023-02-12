@@ -26,7 +26,7 @@ struct ChallengeFriendsView: View {
                 ScrollView {
                         ForEach(friends, id: \.self) { friend in
                             let mate = ChallengeFriends(uid: friend.uid, proImage: friend.proImage ,name: friend.name)
-                            ChallengeFriendsCellView(challengeFriends: mate,temeFriend: $temeFriend)
+                            ChallengeFriendsCellView(challengeFriends: mate, temeFriend: $temeFriend)
                         }.padding(.top,20)
                     
                 }

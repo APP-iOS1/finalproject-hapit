@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import AuthenticationServices
-import CryptoKit
 
 struct AppleLogIn: View {
     
@@ -21,7 +19,7 @@ struct AppleLogIn: View {
         }){
             Image("appleLogo_dark")
                 .mask(Circle())
-                .frame(maxWidth: .infinity, maxHeight: 44)
+                .frame(width: 44, height: 44)
         }
     }
 }

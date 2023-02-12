@@ -18,13 +18,16 @@ struct KakaoLogIn: View {
                 await authManager.kakaoSignIn()
             }
         }){
-            Text("카카오톡 로그인")
+            Image("kakaobtn")
+                .mask(Circle())
+                .frame(width: 44, height: 44)
         }
     }
 }
 
-//struct KakaoLogIn_Previews: PreviewProvider {
-//    static var previews: some View {
-//        KakaoLogIn(authManager: AuthManager())
-//    }
-//}
+struct KakaoLogIn_Previews: PreviewProvider {
+    static var previews: some View {
+        KakaoLogIn()
+            .environmentObject(AuthManager())
+    }
+}

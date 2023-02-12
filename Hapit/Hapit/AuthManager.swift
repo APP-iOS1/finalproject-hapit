@@ -13,6 +13,7 @@ import FirebaseCore
 import FirebaseStorage
 import SwiftUI
 import AuthenticationServices
+import CryptoKit
 import GoogleSignIn
 import KakaoSDKCommon
 import KakaoSDKAuth
@@ -33,9 +34,9 @@ enum LoginMethod: String {
 }
 
 @MainActor
-final class AuthManager: ObservableObject {
-    
-    @Published var nonce = ""
+final class AuthManager: UIViewController, ObservableObject {
+
+    @Published var nonce: String?
     @Published var loggedIn: String = UserDefaults.standard.string(forKey: "state") ?? ""
     
     // 로컬에 저장하는 젤리들의 배열
@@ -64,16 +65,16 @@ final class AuthManager: ObservableObject {
         UserDefaults.standard.set(value ?? "", forKey: key)
     }
     
-    // MARK: - FirebaseAuth 로그인 함수
+    // MARK: - [일반] FirebaseAuth 로그인 함수
     func login(with email: String, _ password: String) async throws {
-        do{
+        do {
             try await firebaseAuth.signIn(withEmail: email, password: password)
         } catch{
             throw(error)
         }
     }
     
-    // MARK: - [카카오/일반] 시도 계정이 Auth에 등록된 사용자인지 확인하는 함수
+    // MARK: - [카카오] 로그인 시도 계정이 Auth에 등록된 사용자인지 확인하는 함수
     func isRegistered(email: String, pw: String, method: String) async throws -> String {
         var newUid: String = ""
         
@@ -95,7 +96,7 @@ final class AuthManager: ObservableObject {
             }
     }
     
-    //MARK: - 로그아웃 (로그인 방법에 따라 분기처리)
+    //MARK: - 로그아웃
     func logOut() async throws {
         do {
             let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
@@ -147,7 +148,7 @@ final class AuthManager: ObservableObject {
         }
     }
     
-    // MARK: - 일반 회원가입 신규회원 생성
+    // MARK: - [일반] 회원가입 신규회원 생성
     func register(email: String, pw: String, name: String) async throws {
         do {
             //Auth에 유저등록
@@ -371,44 +372,68 @@ final class AuthManager: ObservableObject {
         }
     }
     
-    // MARK: - 애플로그인 함수
-    func authenticate(credential: ASAuthorizationAppleIDCredential) {
-        guard let token = credential.identityToken else {
-            return
-        }
+    // MARK: - 애플로그인 실행함수
+    func startSignInWithAppleFlow() async {
+        let newNonce = randomNonceString()
+        nonce = newNonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce ?? "")
         
-        guard let tokenString = String(data: token, encoding: .utf8) else{
-            return
-        }
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    // MARK: - 애플로그인 토큰 발급을 위해 필요한 함수들
+    func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            return String(format: "%02x", $0)
+        }.joined()
         
-        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
+        return hashString
+    }
+
+    func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
         
-        // 1. Authentication에 로그인
-        firebaseAuth.signIn(with: firebaseCredential) { (result, err) in
-            // 애플로그인 사용자의 uid에 해당하는 문서 접근 경로
-            let dbRef = self.database.collection("User")
-                .document(result?.user.uid ?? "")
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError(
+                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                    )
+                }
+                return random
+            }
             
-            dbRef.getDocument { (document, error) in
-                // 2. 애플로그인 유저 uid에 해당하는 문서 없다면 새로 만들어준다
-                if !(document?.exists ?? false) {
-                    let newby = User(id: result?.user.uid ?? "", name: result?.user.displayName ?? "", email: result?.user.email ?? "", pw: "", proImage: "bearWhite", badge: [], friends: [])
-                    
-                    dbRef.setData([
-                        "email" : newby.email,
-                        "pw" : newby.pw,
-                        "name" : newby.name,
-                        "proImage" : newby.proImage,
-                        "badge" : newby.badge,
-                        "friends" : newby.friends
-                    ])
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
                 }
             }
         }
+        return result
     }
+
     // MARK: - 구글계정 로그인 함수
     func googleSignIn() async {
-        // 이전에 구글로그인을 한적이 있는 경우
+        // 앱에서 이전에 구글로그인을 한적이 있는 경우
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {
             Task {
                 do {
@@ -457,7 +482,7 @@ final class AuthManager: ObservableObject {
                 }
             }
         } else {
-            //이전에 구글로그인 한 적이 없는 경우
+            //앱에서 이전에 구글로그인 한 적이 없는 경우
             Task {
                 do {
                     guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -468,11 +493,9 @@ final class AuthManager: ObservableObject {
                     
                     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                     guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-                    
-                    // 1. 구글로그인 진행
+
                     let target = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
-                    
-                    // 2. 구글계정으로 FirbaeAuth 로그인 진행
+
                     try await googleAuth(for: target.user)
                     
                     // 3. gmail, ID, NickName 임시 저장

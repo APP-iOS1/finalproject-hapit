@@ -83,6 +83,7 @@
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F4007A212995019A00AA8919 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A202995019A00AA8919 /* GoogleSignIn */; };
 		F4007A2329952BE900AA8919 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A2229952BE900AA8919 /* GoogleSignInSwift */; };
+		F4007A272998C7C500AA8919 /* AuthManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
 		F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4101A5C29935BE800006039 /* KeyboardManager.swift */; };
@@ -192,6 +193,7 @@
 		C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsCellView.swift; sourceTree = "<group>"; };
 		C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeCellView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagerExtension.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F4101A5C29935BE800006039 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		F423787E2990A2C40005B12D /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			children = (
 				F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */,
 				F423787E2990A2C40005B12D /* NavigationBarColor.swift */,
+				F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
 				950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */,
 				67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */,
+				F4007A272998C7C500AA8919 /* AuthManagerExtension.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,

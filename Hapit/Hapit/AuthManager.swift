@@ -142,9 +142,11 @@ final class AuthManager: UIViewController, ObservableObject {
             default:
                 print("apple or general")
             }
+            
             try await firebaseAuth.currentUser?.delete()
+            
             // User Document 삭제
-            try await database.collection("User").document("\(uid)").delete()
+            try await database.collection("User").document(uid).delete()
             // User의 friendArray에서 uid 삭제 - 완료
             // Challenge의 mateArray에서 uid 삭제
             // -> Challenge에서 mateArray에 해당 유저의 id 있으면 mateArray에서 id 삭제

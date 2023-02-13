@@ -30,11 +30,15 @@ struct ChallengeCellView: View {
                 isChecked.toggle()
                 // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
                 $localChallenge.isChecked.wrappedValue = isChecked
+                
+                print("****** 버튼 액션 *******")
+                print("isChecked: \(isChecked)")
+                print("$localChallenge.isChecked.wrappedValue: \($localChallenge.isChecked.wrappedValue)")
 
             } label: {
-                Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
+                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
+                    .foregroundColor(isChecked ? .green : .gray)
                 
             }
             .padding(.trailing, 5)
@@ -53,7 +57,7 @@ struct ChallengeCellView: View {
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
-                    Text("연속 \(challenge.count + 1)일째")
+                    Text("연속 \($localChallenge.count.wrappedValue)일째")
                     Spacer()
                     ForEach(currentUserInfos){ user in
                         Image("\(user.proImage)")
@@ -96,6 +100,11 @@ struct ChallengeCellView: View {
         } // contextMenu
         .onAppear(){
             currentUserInfos = []
+            print("****** 온어피어 *******")
+            print("isChecked: \(isChecked)")
+            print("$localChallenge.isChecked.wrappedValue: \($localChallenge.isChecked.wrappedValue)")
+            isChecked = $localChallenge.isChecked.wrappedValue
+            
             Task {
                 // 함께 챌린지 진행하는 친구들 프사
                 for member in challenge.mateArray {
@@ -103,10 +112,20 @@ struct ChallengeCellView: View {
                 }
             }
             print(currentUserInfos)
-            //1초로 넣으면 되는거 확인ㄱㄴ
+            
+            
+
             let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
-            let timer = Timer(fire: midnight, interval: 86400, repeats: true) { _ in
-                habitManager.makeIsCheckedFalse(challenge: challenge)
+            let timer = Timer(fire: midnight, interval: 10, repeats: true) { _ in // 1일 = 86400초
+                // 서버에 업데이트
+                //habitManager.makeIsCheckedFalse(challenge: challenge)
+                
+                // 연속일수 업데이트 - 로컬
+                $localChallenge.count.wrappedValue = habitManager.countDays(count:  $localChallenge.count.wrappedValue, isChecked: $localChallenge.isChecked.wrappedValue)
+                
+                // 24시간 후에 초기화 - 로컬
+                $localChallenge.isChecked.wrappedValue = false
+                isChecked = false
             }
             RunLoop.main.add(timer, forMode: .common)
 

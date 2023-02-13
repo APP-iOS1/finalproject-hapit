@@ -61,12 +61,12 @@ struct HabitSegmentDetailView: View {
                             } // ForEach - mateArray
                         } // ForEach - currentUserChallenges
                     } // ScrollView
-                    .onAppear {
-                        restoreChallenges()
-                    } // onAppear
-                    .refreshable { // MARK: - Only iOS 16
-                        restoreChallenges()
-                    } // refreshable
+//                    .onAppear {
+//                        restoreChallenges()
+//                    } // onAppear
+//                    .refreshable { // MARK: - Only iOS 16
+//                        restoreChallenges()
+//                    } // refreshable
                 } // else
             } // VStack
    

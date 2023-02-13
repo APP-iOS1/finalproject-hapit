@@ -37,7 +37,7 @@ struct ChallengeFriendsCellView: View {
                     
                     Text(challengeFriends.name)
                         .font(.custom("IMHyemin-Bold", size: 17)).padding(10)
-                    Text(String(challengeFriends.isChecked))
+
                     Spacer()
                     
                     Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")

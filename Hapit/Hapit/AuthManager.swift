@@ -368,7 +368,6 @@ final class AuthManager: UIViewController, ObservableObject {
         }
     }
 
-    
     // MARK: - 사용 중인 유저의 뱃지 추가하기
     func updateBadge(uid: String, badge: String) async throws {
         
@@ -511,7 +510,7 @@ final class AuthManager: UIViewController, ObservableObject {
                     // 3. gmail, ID, NickName 임시 저장
                     let gmail = targetUser.profile?.email ?? ""
                     let gID = targetUser.userID ?? ""
-                    let nickName = targetUser.profile?.name ?? ""
+                    let nickName = "user" + UUID().uuidString
                     
                     // 4. Auth 로그인 되어 있는 구글로그인 계정 uid 가져오기
                     let isNewby = self.firebaseAuth.currentUser?.uid ?? ""
@@ -566,7 +565,7 @@ final class AuthManager: UIViewController, ObservableObject {
                     // 3. gmail, ID, NickName 임시 저장
                     let gmail = target.user.profile?.email ?? ""
                     let gID = target.user.userID ?? ""
-                    let nickName = target.user.profile?.name ?? ""
+                    let nickName = "user" + UUID().uuidString
                     
                     // 4. Auth 로그인 되어 있는 구글로그인 계정 uid 가져오기
                     let isNewby = self.firebaseAuth.currentUser?.uid ?? ""
@@ -673,7 +672,7 @@ final class AuthManager: UIViewController, ObservableObject {
                                 // 카카오 이메일, Id, 닉네임 값 임시 저장
                                 let kakaoEmail = user?.kakaoAccount?.email ?? ""
                                 let kakaoId = String(user?.id ?? 0)
-                                let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
+                                let kakaoNickName = "user" + UUID().uuidString
                                 
                                 // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
                                 let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId, method: "kakao")
@@ -719,7 +718,7 @@ final class AuthManager: UIViewController, ObservableObject {
                                 // 카카오 이메일, Id, 닉네임 값 임시 저장
                                 let kakaoEmail = user?.kakaoAccount?.email ?? ""
                                 let kakaoId = String(user?.id ?? 0)
-                                let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
+                                let kakaoNickName = "user" + UUID().uuidString
                                 
                                 // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
                                 let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId, method: "kakao")

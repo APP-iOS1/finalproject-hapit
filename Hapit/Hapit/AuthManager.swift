@@ -482,8 +482,6 @@ final class AuthManager: UIViewController, ObservableObject {
                 }
                 return random
             }
-            
-
             randoms.forEach { random in
                 if remainingLength == 0 {
                     return

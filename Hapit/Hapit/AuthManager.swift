@@ -78,18 +78,23 @@ final class AuthManager: UIViewController, ObservableObject {
     // MARK: - [카카오] 로그인 시도 계정이 Auth에 등록된 사용자인지 확인하는 함수
     func isRegistered(email: String, pw: String, method: String) async throws -> String {
         var newUid: String = ""
-        
             do {
                 let target = try await firebaseAuth.createUser(withEmail: email, password: pw)
                 newUid = target.user.uid
                 return newUid
             } catch {
                 do {
-                    try await login(with: email, pw)
+                    //1. 이메일이 이미 firestore에 등록된 이메일인지를 확인한다
+                    let emailDup = try await isEmailDuplicated(email: email)
                     
-                    self.loggedIn = "logIn"
-                    self.save(value: Key.logIn.rawValue, forkey: "state")
-                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                    //2. 이미 가입되어 있는 이메일이라면 해당 이메일 + 이메일이 든 document의 pw를 통해 로그인을 시도함
+                    if emailDup {
+                        try await login(with: email, pw)
+                        
+                        self.loggedIn = "logIn"
+                        self.save(value: Key.logIn.rawValue, forkey: "state")
+                        self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                    }
                 } catch {
                     throw(error)
                 }
@@ -185,6 +190,27 @@ final class AuthManager: UIViewController, ObservableObject {
                     "friends" : userInfo.friends,
                     "fcmToken" : userInfo.fcmToken
                 ])
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: - 이메일을 통해 비밀번호를 찾아 반환하는 함수
+    func getPassword(email: String) async throws -> String {
+        do {
+            let target = try await database.collection("User")
+                .whereField("email", isEqualTo: email).getDocuments()
+            
+            if target.isEmpty {
+                return ""
+            } else {
+                // 어짜피 email은 고유한 존재이므로 문서는 무조건 1개가 걸려옴
+                let docData = target.documents[0].data()
+                // 비밀번호 추출
+                let password = docData["pw"] as? String ?? ""
+                
+                return password
+            }
         } catch {
             throw(error)
         }

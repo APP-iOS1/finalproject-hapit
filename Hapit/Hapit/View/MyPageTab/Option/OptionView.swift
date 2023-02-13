@@ -14,7 +14,6 @@ struct OptionView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     
     @EnvironmentObject var lnManager: LocalNotificationManager
-    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
  
     @Binding var index: Int

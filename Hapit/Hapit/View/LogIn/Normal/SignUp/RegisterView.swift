@@ -128,11 +128,13 @@ struct RegisterView: View {
                                     .textContentType(.oneTimeCode)
                                     .focused($pwFocusField) // 커서가 올라가있을 때 상태를 저장.
                                     .modifier(ClearTextFieldModifier())
+                                    .padding(.bottom, 0.2)
                             } else { // 비밀번호 보임 아이콘일 때
                                 TextField("비밀번호를 입력해주세요.", text: $pw)
                                     .font(.custom("IMHyemin-Regular", size: 16))
                                     .focused($pwFocusField)
                                     .modifier(ClearTextFieldModifier())
+                                    .padding(.bottom, 0.2)
                             }
                             
                             Button(action: {
@@ -185,11 +187,13 @@ struct RegisterView: View {
                                     .textContentType(.oneTimeCode)
                                     .focused($pwCheckFocusField) // 커서가 올라가있을 때 상태를 저장.
                                     .modifier(ClearTextFieldModifier())
+                                    .padding(.bottom, 0.2)
                             } else { // 비밀번호 보임 아이콘일 때
                                 TextField("비밀번호를 다시 입력해주세요", text: $pwCheck)
                                     .font(.custom("IMHyemin-Regular", size: 16))
                                     .focused($pwCheckFocusField)
                                     .modifier(ClearTextFieldModifier())
+                                    .padding(.bottom, 0.2)
                             }
                             
                             Button(action: {

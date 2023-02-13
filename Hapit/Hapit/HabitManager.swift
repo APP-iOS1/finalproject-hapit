@@ -362,7 +362,7 @@ final class HabitManager: ObservableObject{
     func createService(_ post: Post) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { promise in
             self.database.collection("Post")
-                .document()
+                .document(post.id)
                 .setData([
                     "id": post.id,
                     "uid": post.uid,

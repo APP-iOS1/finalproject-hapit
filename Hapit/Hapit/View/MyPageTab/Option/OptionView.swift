@@ -162,16 +162,14 @@ struct OptionView: View {
             
             //MARK: - 1. 일기(POST)(실패-보류)
             // fetchPosts 후 post 먼저 삭제한 후 챌린지 삭제
+            // matearry에 내가 있으면 삭제
+            
             for challenge in habitManager.challenges {
-                if challenge.uid == currentUser {
-                    habitManager.loadPosts(challengeID: challenge.id, userID: currentUser ?? "")
-                }
+                habitManager.loadPosts(challengeID: challenge.id, userID: currentUser ?? "")
             }
             print("포스트다!!@!@#!@#!@#!@#!@#!@#\(habitManager.posts)")
-            // 내가 적은 내용만 패치 함. 따라서 불러온 post는 다 삭제함.
-            for post in habitManager.posts{
-                habitManager.deletePost(post: post)
-            }
+           
+           
             //MARK: - 2. 내가 만든 챌린지(성공)
             ///2-1. creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count >1" creator,Challenge.uid를 변경 후 mateArray에서 나를 삭제
             ///2-2. creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count <= 1"인 경우, 바로 삭제

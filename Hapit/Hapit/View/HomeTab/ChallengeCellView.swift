@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealmSwift
+import Combine
 
 struct ChallengeCellView: View {
 
@@ -14,33 +15,30 @@ struct ChallengeCellView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @State var currentUserInfos: [User]
-    @State private var isChecked: Bool = false
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
-
-    // MARK: - Properties
     var challenge: Challenge
-    var isCheckedInDevice: Bool = false
-    
-    // MARK: - Body
+    var timer = Timer.publish(
+        every: 86400 - Date().timeIntervalSince(Calendar.current.startOfDay(for: Date())),
+        on: .main, in: .common).autoconnect()
+
+ // MARK: - Body
     var body: some View {
         HStack {
             Button {
-                // 체크 데이터 토글
-                isChecked.toggle()
-                // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
-                $localChallenge.isChecked.wrappedValue = isChecked
-                
-                print("****** 버튼 액션 *******")
-                print("isChecked: \(isChecked)")
-                print("$localChallenge.isChecked.wrappedValue: \($localChallenge.isChecked.wrappedValue)")
-
+                print(Date().timeIntervalSince(Calendar.current.startOfDay(for: Date())))
+                $localChallenge.isChecked.wrappedValue.toggle()
             } label: {
-                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor(isChecked ? .green : .gray)
+                    .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
                 
             }
+            .onReceive(timer, perform: { time in
+                $localChallenge.count.wrappedValue = habitManager.countDays(count:  $localChallenge.count.wrappedValue, isChecked: $localChallenge.isChecked.wrappedValue)
+
+                $localChallenge.isChecked.wrappedValue = false
+            })
             .padding(.trailing, 5)
             .buttonStyle(PlainButtonStyle())
 
@@ -100,38 +98,16 @@ struct ChallengeCellView: View {
         } // contextMenu
         .onAppear(){
             currentUserInfos = []
-            print("****** 온어피어 *******")
-            print("isChecked: \(isChecked)")
-            print("$localChallenge.isChecked.wrappedValue: \($localChallenge.isChecked.wrappedValue)")
-            isChecked = $localChallenge.isChecked.wrappedValue
-            
             Task {
                 // 함께 챌린지 진행하는 친구들 프사
                 for member in challenge.mateArray {
                     try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
                 }
             }
-            print(currentUserInfos)
-            
-            
-
-            let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
-            let timer = Timer(fire: midnight, interval: 10, repeats: true) { _ in // 1일 = 86400초
-                // 서버에 업데이트
-                //habitManager.makeIsCheckedFalse(challenge: challenge)
-                
-                // 연속일수 업데이트 - 로컬
-                $localChallenge.count.wrappedValue = habitManager.countDays(count:  $localChallenge.count.wrappedValue, isChecked: $localChallenge.isChecked.wrappedValue)
-                
-                // 24시간 후에 초기화 - 로컬
-                $localChallenge.isChecked.wrappedValue = false
-                isChecked = false
-            }
-            RunLoop.main.add(timer, forMode: .common)
-
         }
-
-        //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
+    }
+}
+//MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(
 //            VStack{
 //                Spacer()
@@ -140,14 +116,14 @@ struct ChallengeCellView: View {
 //                        .frame(height: 4)
 //                        .padding([.top, .leading, .trailing], 10)
 //                        .foregroundColor(Color(UIColor.lightGray))
-//                    
+//
 //                    HStack{
 //                        //                    Image("duckBoat")
 //                        //                        .resizable()
 //                        //                        .aspectRatio(contentMode: .fit)
 //                        //                        .frame(width: 20)
-//                        
-//                        
+//
+//
 //                        Rectangle()
 //                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
 //                            .padding([.top, .leading, .trailing], 10)
@@ -156,11 +132,4 @@ struct ChallengeCellView: View {
 //                }
 //            }
 //        )
-    }// body
-}
 
-//struct ChallengeCellView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChallengeCellView(challenge: .constant(Challenge(id: UUID().uuidString, creator: "박진주", mateArray: [], challengeTitle: "물 500ml 마시기", createdAt: Date(), count: 0, isChecked: false)))
-//    }
-//}

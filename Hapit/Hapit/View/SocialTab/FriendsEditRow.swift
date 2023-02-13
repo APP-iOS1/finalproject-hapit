@@ -64,7 +64,7 @@ struct FriendsEditRow: View {
                         
                         // 친구상태 아니고 친구신청 보내지 않았으면 친구 추가
                         if !friendOrNot && !isAdded {
-                            try await messageManager.sendMessage(Message(id: UUID().uuidString, messageType: "add", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friend.id, isRead: false))
+                            try await messageManager.sendMessage(Message(id: UUID().uuidString, messageType: "add", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friend.id, isRead: false, challengeID: ""))
                             selectedFriend = friend
                             isAddAlert = true
                         }

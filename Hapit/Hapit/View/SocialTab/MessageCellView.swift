@@ -91,7 +91,8 @@ struct MessageCellView: View {
                     .profileImageModifier()
                     .padding(.horizontal)
                 Text("\(senderNickname)님과 친구가 되었습니다")
-                    .font(.custom("IMHyemin-Bold", size: 17))  
+                    .font(.custom("IMHyemin-Bold", size: 17))
+                
                 // MARK: 콕찌르기 메시지
             case "knock":
                 Image("\(senderProfileImage)")
@@ -99,6 +100,7 @@ struct MessageCellView: View {
                     .padding(.horizontal)
                 Text("\(senderNickname)님이 콕 찔렀습니다")
                     .font(.custom("IMHyemin-Bold", size: 17))
+                
                 // MARK: 챌린지 초대 메시지
             case "invite":
                 VStack {
@@ -141,6 +143,7 @@ struct MessageCellView: View {
             default:
                 Text("")
             }
+            
             Spacer()
             // 새로운 메시지 안읽음 표시
             if !msg.isRead {
@@ -150,6 +153,7 @@ struct MessageCellView: View {
                         .foregroundColor(Color.accentColor)
                     Spacer()
                 }
+                .padding(.horizontal)
             }
         }
         .task {

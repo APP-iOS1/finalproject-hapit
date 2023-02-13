@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
+// MARK: 이 뷰는 EditFriendView와 AddFriendView의 공용 셀뷰입니다
 struct FriendsEditRow: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var messageManager: MessageManager
@@ -39,6 +40,7 @@ struct FriendsEditRow: View {
                 Task {
                     // 삭제 셀
                     if isRemoveOrAdd {
+                        // MARK: 친구 선택해서 selectedFriend 커스텀 모달로 넘겨주기
                         selectedFriend = friend
                         isRemoveAlert = true
                     } else {
@@ -62,9 +64,15 @@ struct FriendsEditRow: View {
                             }
                         }
                         
-                        // 친구상태 아니고 친구신청 보내지 않았으면 친구 추가
+                        // MARK: 친구상태 아니고 친구신청 보내지 않았으면 친구 추가
                         if !friendOrNot && !isAdded {
-                            try await messageManager.sendMessage(Message(id: UUID().uuidString, messageType: "add", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friend.id, isRead: false, challengeID: ""))
+                            try await messageManager.sendMessage(Message(id: UUID().uuidString,
+                                                                         messageType: "add",
+                                                                         sendTime: Date(),
+                                                                         senderID: userInfoManager.currentUserInfo?.id ?? "",
+                                                                         receiverID: friend.id,
+                                                                         isRead: false,
+                                                                         challengeID: ""))
                             selectedFriend = friend
                             isAddAlert = true
                         }

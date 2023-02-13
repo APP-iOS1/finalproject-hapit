@@ -53,15 +53,9 @@ struct PostModalView: View {
                                         Button {
                                             //MARK: 버튼을 누르면 selectedUser의 값이 변경된다.
                                             selectedMember = userinfo.id
-                                            print("postsFormodalView", postsForModalView)
                                             for post in postsForModalView {
-                                                print("post.uid",post.creatorID)
-                                                print("selectedMember", selectedMember)
                                                 if post.creatorID == selectedMember {
                                                     currentPost = post
-                                                }
-                                                else {
-                                                    currentPost = Post(id: "", creatorID: "", challengeID: "", title: "", content: "", createdAt: Date())
                                                 }
                                             }
                                         } label: {
@@ -118,6 +112,7 @@ struct PostModalView: View {
             .offset(y: modalManager.modal.position == .open ? -200 : 0 )
         }
     }
+    
     @ViewBuilder
     func showContentsView(_ selectedMember: String) -> some View {
         
@@ -139,7 +134,8 @@ struct PostModalView: View {
                 EmptyCellView(currentContentsType: .post)
             }
         }
-        .onAppear(){
+        .onAppear {
+            // 처음 실행될 때 본인 post 띄워주는 코드
             for post in postsForModalView {
                 if post.creatorID == selectedMember {
                     currentPost = post

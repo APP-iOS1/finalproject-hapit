@@ -18,13 +18,14 @@ struct GetStartView: View {
     // 화면비율 1/4 : 1/12.5 : 1/50
     var body: some View {
         GeometryReader { geo in
-            VStack() {
-                HStack() {
-                    StepBar(nowStep: 3)
-                        .padding(.leading, -8)
-                    Spacer()
+            VStack {
+                
+                if #available(iOS 16.0, *) {
+                    StepBar_16()
+                        .padding(.top, 30)
+                } else {
+                    StepBar_15()
                 }
-                .frame(height: 30)
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {

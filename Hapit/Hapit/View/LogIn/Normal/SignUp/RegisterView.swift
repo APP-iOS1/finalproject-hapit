@@ -64,7 +64,7 @@ struct RegisterView: View, KeyboardReadable {
                             .foregroundColor(Color.accentColor)
                         Text("입력해주세요")
                     }
-                    .font(.custom("IMHyemin-Bold", size: 30))
+                    .font(.custom("IMHyemin-Bold", size: 34))
                     Spacer()
                 }
                 .padding(.bottom, geo.size.height / 10)

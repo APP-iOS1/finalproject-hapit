@@ -28,12 +28,12 @@ struct ToSView: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                HStack() {
-                    StepBar(nowStep: 2)
-                        .padding(.leading, -8)
-                    Spacer()
+                
+                if #available(iOS 16.0, *) {
+                    StepBar_16()
+                } else {
+                    StepBar_15()
                 }
-                .frame(height: 30)
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
@@ -44,7 +44,7 @@ struct ToSView: View {
                         }
                         Text("동의해주세요")
                     }
-                    .font(.custom("IMHyemin-Bold", size: 30))
+                    .font(.custom("IMHyemin-Bold", size: 34))
                     Spacer()
                 }
                 .padding(.bottom, geo.size.height / 3.4)

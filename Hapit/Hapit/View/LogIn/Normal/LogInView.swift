@@ -44,6 +44,7 @@ struct LogInView: View {
                     VStack(spacing: 20) {
                         VStack() {
                             TextField("이메일", text: $email)
+                                .keyboardType(.emailAddress)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($emailFocusField)
                                 .modifier(ClearTextFieldModifier())
@@ -143,6 +144,7 @@ struct LogInView: View {
                 .padding(.horizontal, 20)
                 .edgesIgnoringSafeArea(.top)
                 .ignoresSafeArea(.keyboard)
+                .disableAutocorrection(true)
             }
         }
     }

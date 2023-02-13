@@ -245,6 +245,7 @@ struct RegisterView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             TextField("닉네임을 입력해주세요.", text: $nickName)
+                                .keyboardType(.namePhonePad)
                                 .font(.custom("IMHyemin-Regular", size: 16))
                                 .focused($nickNameFocusField)
                                 .modifier(ClearTextFieldModifier())

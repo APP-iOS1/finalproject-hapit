@@ -89,7 +89,20 @@ struct MyPageView: View {
             }
             .background(Color("BackgroundColor"))
             .navigationBarTitleDisplayMode(.inline)
+            .customToolbarBackground()
+        }
+    }
+}
 
+// .toolbarBackground 는 iOS 16부터 사용 가능
+extension View {
+    @ViewBuilder
+    func customToolbarBackground() -> some View {
+        if #available(iOS 16, *) {
+            self
+                .toolbarBackground(Color("BackgroundColor"), for: .navigationBar)
+        } else {
+            self
         }
     }
 }

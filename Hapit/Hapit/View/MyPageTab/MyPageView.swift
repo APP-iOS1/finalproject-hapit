@@ -101,6 +101,8 @@ extension View {
         if #available(iOS 16, *) {
             self
                 .toolbarBackground(Color("BackgroundColor"), for: .navigationBar)
+        } else {
+            self
         }
     }
 }

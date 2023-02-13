@@ -37,7 +37,7 @@ struct LogInView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding(.bottom, geo.size.height / 30)
-                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+//                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                     
                     Spacer()
                     
@@ -142,10 +142,12 @@ struct LogInView: View {
                     .padding(.bottom, geo.size.height / 50)
                 }
                 .padding(.horizontal, 20)
-                .edgesIgnoringSafeArea(.top)
+                .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+                //.edgesIgnoringSafeArea(.top)
                 .ignoresSafeArea(.keyboard)
                 .disableAutocorrection(true)
             }
+            .ignoresSafeArea(.all)
         }
     }
 }

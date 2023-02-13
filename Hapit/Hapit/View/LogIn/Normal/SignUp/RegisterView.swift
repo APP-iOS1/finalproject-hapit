@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RegisterView: View {
+struct RegisterView: View, KeyboardReadable {
     
     @State private var email: String = ""
     @State private var mailDuplicated: Bool = false
@@ -50,12 +50,12 @@ struct RegisterView: View {
     var body: some View {
         GeometryReader { geo in
             VStack() {
-                HStack() {
-                    StepBar(nowStep: 1)
-                        .padding(.leading, -8)
-                    Spacer()
+                
+                if #available(iOS 16.0, *) {
+                    StepBar_16()
+                } else {
+                    StepBar_15()
                 }
-                .frame(height: 30)
                 
                 // MARK: TITLE
                 HStack {
@@ -67,7 +67,7 @@ struct RegisterView: View {
                     .font(.custom("IMHyemin-Bold", size: 30))
                     Spacer()
                 }
-                .padding(.bottom, geo.size.height / 6.6)
+                .padding(.bottom, geo.size.height / 10)
                 .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                 
                 //Spacer()

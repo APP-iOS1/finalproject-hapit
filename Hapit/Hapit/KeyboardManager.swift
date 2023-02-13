@@ -29,3 +29,7 @@ class KeyboardManager: ObservableObject {
             }
     }
 }
+
+protocol KeyboardReadable {
+    var keyboardEventPublisher: AnyPublisher<Bool, Never> { get }
+}

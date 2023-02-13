@@ -11,7 +11,8 @@ import FirebaseAuth
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
-
+    @EnvironmentObject var userInfoManager: UserInfoManager
+    
     @EnvironmentObject var lnManager: LocalNotificationManager
     @Environment(\.scenePhase) var scenePhase
     @Binding var isFullScreen: String
@@ -159,35 +160,46 @@ struct OptionView: View {
                 let current = authManager.firebaseAuth
                 let currentUser = current.currentUser?.uid
             
-            //MARK: - 1. 내가 만든 챌린지
-            ///creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count >1" creator,Challenge.uid를 변경 후 mateArray에서 나를 삭제
-            ///creator,Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count <= 1"인 경우, 바로 삭제
-            
+            //MARK: - 1. 일기(POST)
+            // fetchPosts 후 post 먼저 삭제한 후 챌린지 삭제
             for challenge in habitManager.challenges {
-                if challenge.creator == currentUser {
-                    if challenge.mateArray.count > 1{ //1보다 큰 경우(함께 챌린지인 경우)
+                if challenge.uid == currentUser {
+                    habitManager.loadPosts(challengeID: challenge.id, userID: currentUser ?? "")
+                }
+            }
+            // 내가 적은 내용만 패치 함. 따라서 불러온 post는 다 삭제함.
+            for post in habitManager.posts{
+                habitManager.deletePost(post: post)
+            }
+            //MARK: - 2. 내가 만든 챌린지
+            ///1-1. creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count >1" creator,Challenge.uid를 변경 후 mateArray에서 나를 삭제
+            ///1-2. creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count <= 1"인 경우, 바로 삭제
+            for challenge in habitManager.challenges {
+                if challenge.uid == currentUser {
+                    //2-1. 1보다 큰 경우(함께 챌린지인 경우)
+                    if challenge.mateArray.count > 1{
                         habitManager.updateChallegecreator(challenge: challenge, creator: challenge.mateArray[1])
-                        habitManager.removeChallegeMate(challenge: challenge,removeValue: currentUser!) // 친구 목록에서 나를 지움
-
+                        habitManager.removeChallegeMate(challenge: challenge,removeValue: currentUser!) //친구 목록에서 나를 지움
                     }
-                    else{ // 1보다 작은 경우
-                        
+                    //2-2. 1보다 작은 경우(개인 챌린지인 경우)
+                    else{
+                        habitManager.removeChallenge(challenge: challenge)// 챌린지 삭제하기
                     }
                 }
             }
-            // 내가 참여중인 챌린지(함께 챌린지)
+            
+            //MARK: - 3. 내가 참여중인 챌린지(함께 하는 챌린지)
             ///mateArray에서 나의 uid와 같은 데이터를 찾아서 지움
             for challenge in habitManager.challenges {
-                for mate in challenge.mateArray{
-                    if mate == currentUser{ // mateArray에 내 아이디가 있다면
-                        habitManager.removeChallegeMate(challenge: challenge,removeValue: challenge.) // 친구 목록에서 나를 지움
-                    }
-                }
+                habitManager.removeChallenge(challenge: challenge)
             }
+            //MARK: - 4. 내 친구에 저장된 나를 삭제
+            try await userInfoManager.getFriendArray()
             
-            
-            
-            
+            for friend in userInfoManager.friendArray {
+                try await userInfoManager.removeFriendData(userID: currentUser!, friendID: friend.id)
+            }
+            //MARK: - 5. 로그아웃
             //로그인 뷰를 띄워주기 위함(logOut 상태를 표현함)
            isFullScreen = "logOut"
 
@@ -195,8 +207,11 @@ struct OptionView: View {
             authManager.save(value: Key.logOut.rawValue, forkey: "state")
             
              index = 0
-        }},
-                     withCancelButton: true)
+            
+            //MARK: - 6. 유저에서 나를 삭제
+          try await authManager.deleteUser(uid: currentUser ?? "")
+            
+        }},withCancelButton: true)
     }
 }
 

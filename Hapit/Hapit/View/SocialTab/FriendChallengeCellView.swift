@@ -41,7 +41,7 @@ struct FriendChallengeCellView: View {
                             self.notificationContent = ""
                             Task{
                                 try await messageManager.sendMessage(
-                                    Message(id: UUID().uuidString, messageType: "knock", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friendId, isRead: false))
+                                    Message(id: UUID().uuidString, messageType: "knock", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friendId, isRead: false, challengeID: challenge.id))
                             }
                         } label: {
                             Image(systemName: "hand.tap.fill")

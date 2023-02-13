@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+// TODO: case 별로 View 파일 다 쪼개기
 struct MessageCellView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var messageManager: MessageManager
+    @EnvironmentObject var habitManager: HabitManager
     @State private var senderNickname = ""
+    @State private var challengeTitle = ""
     @Binding var isAllRead: Bool
     let msg: Message
     
@@ -40,12 +43,16 @@ struct MessageCellView: View {
                                                                              messageType: "accept",
                                                                              sendTime: Date(),
                                                                              senderID: msg.receiverID,
-                                                                             receiverID: msg.senderID, isRead: false))
+                                                                             receiverID: msg.senderID,
+                                                                             isRead: false,
+                                                                             challengeID: ""))
                                 try await messageManager.sendMessage(Message(id: UUID().uuidString,
                                                                              messageType: "match",
                                                                              sendTime: Date(),
                                                                              senderID: msg.senderID,
-                                                                             receiverID: msg.receiverID, isRead: false))
+                                                                             receiverID: msg.receiverID,
+                                                                             isRead: false,
+                                                                             challengeID: ""))
                                 try await messageManager.removeMessage(userID: msg.receiverID,
                                                                        messageID: msg.id)
                             }
@@ -86,11 +93,49 @@ struct MessageCellView: View {
                     .font(.custom("IMHyemin-Bold", size: 17))  
                 // MARK: 콕찌르기 메시지
             case "knock":
-                Text("🫵🏻")
+                Text("💥")
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님이 콕 찔렀습니다")
                     .font(.custom("IMHyemin-Bold", size: 17))
+                
+            case "invite":
+                VStack {
+                    Text("🤝")
+                        .font(.title)
+                    Spacer()
+                }.padding(.horizontal)
+                
+                VStack(alignment: .leading) {
+                    Text("\(senderNickname)님이 \(challengeTitle) 챌린지에 초대했습니다")
+                        .font(.custom("IMHyemin-Bold", size: 17))
+                    HStack {
+                        Button {
+                            Task {
+                                habitManager.addChallegeMate(challengeID: msg.challengeID,
+                                                             addValue: msg.receiverID)
+                                try await messageManager.removeMessage(userID: msg.receiverID,
+                                                                       messageID: msg.id)
+                            }
+                        } label: {
+                            Text("수락")
+                                .padding(-5)
+                                .modifier(FriendButtonModifier())
+                        }
+                        
+                        Button {
+                            Task {
+                                try await messageManager.removeMessage(userID: msg.receiverID,
+                                                                       messageID: msg.id)
+                            }
+                        } label: {
+                            Text("거절")
+                                .padding(-5)
+                                .modifier(FriendButtonModifier())
+                        }
+                    }
+                    .padding(.bottom, 10)
+                }
                 
             default:
                 Text("")
@@ -109,6 +154,9 @@ struct MessageCellView: View {
         .task {
             do {
                 self.senderNickname = try await authManager.getNickName(uid: msg.senderID)
+                if msg.challengeID != "" {
+                    self.challengeTitle = try await habitManager.getChallengeTitle(challengeID: msg.challengeID)
+                }
             } catch {
             }
         }
@@ -145,6 +193,6 @@ struct FriendButtonModifier: ViewModifier {
 
 struct MessageCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageCellView(isAllRead: .constant(true), msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: "", isRead: false))
+        MessageCellView(isAllRead: .constant(true), msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: "", isRead: false, challengeID: ""))
     }
 }

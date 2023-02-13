@@ -73,29 +73,29 @@ struct SocialView: View {
                 let current = authManager.firebaseAuth
                 try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
                 try await userInfoManager.getFriendArray()
-                self.myFriends = userInfoManager.friendArray
                 self.friends = userInfoManager.friendArray
+                self.myFriends = userInfoManager.friendArray
+                
                 let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: "")
                 // 셀에 (나) 표시
                 self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends, loginMethod: tmp.loginMethod, fcmToken: tmp.fcmToken), at: 0)
-            } catch {
-            }
-            // 챌린지 진행일수 정렬
-            sortMyFriends = myFriends.sorted(by:
-                                                {challengeDaysCount(friend: $0) > challengeDaysCount(friend: $1)})
-            // 챌린지 개수 정렬
-//            sortMyFriends = myFriends.sorted(by:
-//                                                {challengeCount(friend: $0) > challengeCount(friend: $1)})
-            rankCountArray = ranking(friends: sortMyFriends)
-            
-            // 안 읽은 메세지 있나 확인
-            // FIXME: 한 박자 늦게 뜨는 이슈
-            messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
-            for msg in messageManager.messageArray {
-                if !(msg.isRead) {
-                    isAllRead = false
-                    break
+                
+                // 챌린지 진행일수 정렬
+                sortMyFriends = myFriends.sorted(by:
+                                                    {challengeDaysCount(friend: $0) > challengeDaysCount(friend: $1)})
+
+                rankCountArray = ranking(friends: sortMyFriends)
+                
+                // 안 읽은 메세지 있나 확인
+                // FIXME: 한 박자 늦게 뜨는 이슈
+                messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+                for msg in messageManager.messageArray {
+                    if !(msg.isRead) {
+                        isAllRead = false
+                        break
+                    }
                 }
+            } catch {
             }
         }
     }

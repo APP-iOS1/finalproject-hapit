@@ -155,6 +155,7 @@ final class HabitManager: ObservableObject{
             .document(challenge.id).delete()
         loadChallenge()
     }
+    
     // MARK: - 서버의 Challenge Collection에서 Challenge의 mateArray에서 배열의 값 하나를 삭제하는 Method
     func removeChallegeMate(challenge: Challenge,removeValue: String) {
         let challegeDocument = database.collection("Challenge").document(challenge.id)
@@ -164,6 +165,32 @@ final class HabitManager: ObservableObject{
         ])
         loadChallenge()
     }
+    
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 mateArray에서 배열의 값 하나를 추가하는 Method
+    // 챌린지 초대 메시지 수락 버튼에서 사용
+    func addChallegeMate(challengeID: String, addValue: String) {
+        let challegeDocument = database.collection("Challenge").document(challengeID)
+        
+        challegeDocument.updateData([
+            "mateArray": FieldValue.arrayUnion([addValue])
+        ])
+        loadChallenge()
+    }
+    
+    // MARK: - 사용 중인 유저의 이메일을 반환
+    func getChallengeTitle(challengeID: String) async throws -> String {
+        do {
+            let target = try await database.collection("Challenge").document("\(challengeID)")
+                .getDocument()
+            let docData = target.data()
+            let challengeTitle: String = docData?["challengeTitle"] as? String ?? ""
+            
+            return challengeTitle
+        } catch {
+            throw(error)
+        }
+    }
+    
     // MARK: - 서버의 Challenge Collection에서 Challenge의 cretor를 변경하는 Method
     func updateChallegecreator(challenge: Challenge,creator: String) {
         

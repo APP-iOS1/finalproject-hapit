@@ -95,6 +95,10 @@ struct LogInView: View {
                                     // 3. 로그인 방법 UserDefaults에 저장
                                     authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
                                     verified = true
+                                    
+                                    let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    print(localNickname)
+                                    UserDefaults.standard.set(localNickname, forKey: "localNickname")
                                 } catch {
                                     authManager.loggedIn = "logOut"
                                     authManager.save(value: Key.logOut.rawValue, forkey: "state")

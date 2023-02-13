@@ -11,19 +11,25 @@ struct FriendChallengeView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
-    
+    @State var hasChallenge: Bool = false
     // 친구의 User 정보
     @State var friend: User
     
     var body: some View {
         ZStack {
+            EmptyCellView(currentContentsType: .challenge)
+                .opacity(hasChallenge ? 0 : 1)
             VStack {
                 ScrollView{
                     VStack{
                         ForEach(habitManager.challenges) { challenge in
+                        
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == friend.id{
-                                        FriendChallengeCellView(challenge: challenge, friendId: mate)
+                                    FriendChallengeCellView(challenge: challenge, friendId: mate)
+                                        .onAppear{
+                                            hasChallenge = true
+                                        }
                                 }
                             }
                         }

@@ -42,7 +42,7 @@ struct LogInView: View {
                     Spacer()
                     
                     VStack(spacing: 20) {
-                        VStack(spacing: 5) {
+                        VStack() {
                             TextField("이메일", text: $email)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($emailFocusField)
@@ -52,7 +52,7 @@ struct LogInView: View {
                         }
                         .frame(height: 40)
                         
-                        VStack(spacing: 5) {
+                        VStack() {
                             SecureField("비밀번호", text: $pw)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($pwFocusField)

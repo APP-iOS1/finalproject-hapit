@@ -47,6 +47,7 @@
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
+		95F63A6A299763C400FBF966 /* JellyConfetti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F63A69299763C400FBF966 /* JellyConfetti.swift */; };
 		95FAB86E2991DB5100E797EA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86D2991DB5100E797EA /* FirebaseStorage */; };
 		95FAB8702991DB5100E797EA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */; };
 		95FAB87229920B0100E797EA /* BadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FAB87129920B0100E797EA /* BadgeManager.swift */; };
@@ -157,6 +158,7 @@
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
 		950580852994994B00381AE8 /* JellyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyEmptyView.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
+		95F63A69299763C400FBF966 /* JellyConfetti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyConfetti.swift; sourceTree = "<group>"; };
 		95FAB87129920B0100E797EA /* BadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManager.swift; sourceTree = "<group>"; };
 		95FAB8732992334900E797EA /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -323,6 +325,7 @@
 				C5FAC88029765E7500E58C84 /* RewardView.swift */,
 				C5FAC88429766BE100E58C84 /* JellyGridView.swift */,
 				950580852994994B00381AE8 /* JellyEmptyView.swift */,
+				95F63A69299763C400FBF966 /* JellyConfetti.swift */,
 				C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */,
 			);
 			path = Reward;
@@ -699,6 +702,7 @@
 				F49E28E5297639F4009EEB1A /* RegisterView.swift in Sources */,
 				F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
+				95F63A6A299763C400FBF966 /* JellyConfetti.swift in Sources */,
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
 				F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,

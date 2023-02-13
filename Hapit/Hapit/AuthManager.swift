@@ -371,7 +371,7 @@ final class AuthManager: UIViewController, ObservableObject {
                 badges.append(element)
             }
             // 뱃지들 중복처리
-            
+            // print("badges: \(badges)")
             badges = Array(Set(badges))
             
         } catch {
@@ -415,7 +415,7 @@ final class AuthManager: UIViewController, ObservableObject {
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce ?? "")
-        
+
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self

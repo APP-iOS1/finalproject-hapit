@@ -11,19 +11,34 @@ struct MyPageView: View {
     
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var badgeManager: BadgeManager
     
     @Binding var index: Int
     @Binding var flag: Int
     
     @State private var nickName = ""
     @State private var email = ""
-
+    
+    // About Badge
+    @State var isShowedConfetti: Bool = false
+    @State var newOneName: String = ""
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    ProfileCellView(nickName: $nickName, email: $email)
-                    RewardView()
+                        ProfileCellView(nickName: $nickName, email: $email)
+                        RewardView()
+                        .overlay(content: {
+                            if isShowedConfetti{
+                                JellyConfetti(title: newOneName)
+                                    .onAppear{
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                            isShowedConfetti.toggle()
+                                        }
+                                    }
+                            }
+                        })
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
@@ -36,6 +51,7 @@ struct MyPageView: View {
                         }
                     }
                 }
+     
                 .onAppear {
                     Task {
                         do {
@@ -44,16 +60,36 @@ struct MyPageView: View {
                             let emailTarget = try await authManager.getEmail(uid: current)
                             nickName = nameTarget
                             email = emailTarget
-                           
+                            
+                            // String에 뱃지 이름을 String으로 가져옴.
+                            try await authManager.fetchBadgeList(uid: current)
+                            try await authManager.fetchImages(paths: authManager.badges)
+                            // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
+                            // Test 용
+                            // UserDefaults.standard.set(false, forKey: "noob")
+                            
+                            // MARK: First Login Check and there is a chance to get back
+                            if (badgeManager.noob == false && !authManager.badges.contains(BadgeManager.BadgeImage.noob.rawValue)) {
+                                // Save a status of a newbie badge.
+                                badgeManager.save(forkey: BadgeManager.BadgeName.noob.rawValue)
+                                
+                                // Add a badge to cloud and fetch Images.
+                                try await authManager.updateBadge(uid: authManager.firebaseAuth.currentUser?.uid ?? "", badge: BadgeManager.BadgeImage.noob.rawValue)
+                                
+                                isShowedConfetti.toggle()
+                                newOneName = "noob"
+                          }
+                            
                         } catch {
                             throw(error)
                         }
-
+                        
                     }
                 }
             }
             .background(Color("BackgroundColor"))
             .navigationBarTitleDisplayMode(.inline)
+
         }
     }
 }

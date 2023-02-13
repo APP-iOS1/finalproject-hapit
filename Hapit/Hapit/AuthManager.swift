@@ -89,8 +89,13 @@ final class AuthManager: UIViewController, ObservableObject {
                     
                     //2. 이미 가입되어 있는 이메일이라면 해당 이메일 + 이메일이 든 document의 pw를 통해 로그인을 시도함
                     if emailDup {
-                        try await login(with: email, pw)
+                        //3. 이미 가입된 이메일 계정의 비밀번호를 가져옴
+                        let password = try await getPassword(email: email)
+                            
+                        //4. 이미 가입된 계정으로 로그인
+                        try await login(with: email, password)
                         
+                        //5. 로그인 상태 변경
                         self.loggedIn = "logIn"
                         self.save(value: Key.logIn.rawValue, forkey: "state")
                         self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")

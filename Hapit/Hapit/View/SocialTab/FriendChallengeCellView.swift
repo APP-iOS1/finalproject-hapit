@@ -11,9 +11,15 @@ struct FriendChallengeCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
-
-    @State var challengeWithMe:[Challenge] = []
+    @EnvironmentObject var messageManager: MessageManager
+    @State var challengeWithMe: [Challenge] = []
     @State var challenge: Challenge
+    @State var friendId: String
+    @State var receiverFCMToken: String = ""
+    
+    @State private var notificationContent: String = ""
+    @ObservedObject private var datas = fcmManager
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 1){
@@ -21,8 +27,26 @@ struct FriendChallengeCellView: View {
                     Text(challenge.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))
                         .foregroundColor(.gray)
-                    Text(challenge.challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 22))
+                    HStack {
+                        Text(challenge.challengeTitle)
+                            .font(.custom("IMHyemin-Bold", size: 22))
+                        Button{
+                            self.datas.sendFirebaseMessageToUser(
+                                datas: self.datas,
+                                // 받을 사람의 FCMToken
+                                to: receiverFCMToken,
+                                title: "Test" ,
+                                body: "Test"
+                            )
+                            self.notificationContent = ""
+                            Task{
+                                try await messageManager.sendMessage(
+                                    Message(id: UUID().uuidString, messageType: "knock", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friendId, isRead: false))
+                            }
+                        } label: {
+                            Image(systemName: "hand.tap.fill")
+                        }
+                    }
                 }//VStack
                 
                 HStack(spacing: 5){
@@ -50,31 +74,28 @@ struct FriendChallengeCellView: View {
         .background(.white)
         .cornerRadius(20)
         .padding(.horizontal)
-//FIXME: - 함께하는 챌린지인 경우 표시해주는 코드가 필요
-        .onAppear {
-            do{
-                Task{
-                    let current = authManager.firebaseAuth
-                   let currentUser = current.currentUser?.uid
-
-                    for challenge in habitManager.challenges {
-                        for mate in challenge.mateArray{
-                            if mate == currentUser{
-                                challengeWithMe.append(challenge)
-                            }
+        .task {
+            do {
+                let currentUser = userInfoManager.currentUserInfo?.id ?? ""
+                challengeWithMe.removeAll()
+                
+                for challenge in habitManager.challenges {
+                    for mate in challenge.mateArray {
+                        if mate == currentUser {
+                            challengeWithMe.append(challenge)
                         }
+                        receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
                     }
                 }
-            }
-            catch{
-
+            } catch {
+                
             }
         }
     }
 }
 
-struct FriendChallengeCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        FriendChallengeCellView(challenge: Challenge(id: "", creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: ""))
-    }
-}
+//struct FriendChallengeCellView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FriendChallengeCellView(challenge: Challenge(id: "", creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: ""))
+//    }
+//}

@@ -27,7 +27,6 @@ final class HabitManager: ObservableObject{
     @Published var challenges: [Challenge] = []
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     @Published var habits: [Challenge] = []
-
     // 해당하는 챌린지의 일지의 배열
 
     @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
@@ -49,6 +48,7 @@ final class HabitManager: ObservableObject{
     @Published var posts: [Post] = []
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
+    
     //친구의 챌린지를 받을 변수
     @Published var friendchallenges: [Challenge] = []
 
@@ -155,19 +155,78 @@ final class HabitManager: ObservableObject{
             .document(challenge.id).delete()
         loadChallenge()
     }
-    
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 mateArray에서 배열의 값 하나를 삭제하는 Method
+    func removeChallegeMate(challenge: Challenge,removeValue: String) {
+        let challegeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challegeDocument.updateData([
+            "mateArray": FieldValue.arrayRemove([removeValue])
+        ])
+        loadChallenge()
+    }
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 cretor를 변경하는 Method
+    func updateChallegecreator(challenge: Challenge,creator: String) {
+        
+        let challengeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challengeDocument.updateData([
+            "creator": creator
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        loadChallenge()
+    }
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 Uid를 변경하는 Method
+    func updateChallegeUid(challenge: Challenge) {
+        let challegeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challegeDocument.updateData([
+            "uid": challenge.mateArray[1]
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        loadChallenge()
+    }
     // MARK: - Update a Habit
     @MainActor
     func updateChallenge() async{
         // Update a Habit
     }
     
-    // MARK: - Update a Habit
-    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<Void, Error> {
+    // MARK: - 24시간 지나면 isChecked 다 false로 해주는 함수
+    func makeIsCheckedFalse(challenge: Challenge) -> AnyPublisher<Void, Error> {
         // Update a Challenge
         // Local
-        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
-        let count = updateCount(count: challenge.count,isChecked: challenge.isChecked)
+        let count = updateCount(count: challenge.count, isChecked: challenge.isChecked)
+        
+        return Future<Void, Error> {  promise in
+            
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["isChecked": false])
+            
+            self.database.collection("Challenge")
+                .document(challenge.id)
+                .updateData(["count": count])
+                //promise(.success())
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Update a Habit
+    func updateChallengeIsChecked(challenge: Challenge, isChecked: Bool) -> AnyPublisher<Void, Error> {
+        // Update a Challenge
+        // Local
+//        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
+        let count = updateCount(count: challenge.count, isChecked: isChecked)
         
         return Future<Void, Error> {  promise in
             
@@ -182,25 +241,9 @@ final class HabitManager: ObservableObject{
         }
         .eraseToAnyPublisher()
     }
-    
-    func toggleIsChanged(isChecked: Bool) -> Bool{
-        if isChecked == true{
-            return false
-        }else{
-            return true
-        }
-    }
-    
-    func updateCount(count: Int, isChecked: Bool) -> Int{
-        if isChecked == true{
-            return count - 1
-        }else{
-            return count + 1
-        }
-    }
 
-    func loadChallengeIsChecked(challenge: Challenge){
-        self.updateChallengeIsChecked(challenge: challenge)
+    func loadChallengeIsChecked(challenge: Challenge, isChecked: Bool){
+        self.updateChallengeIsChecked(challenge: challenge, isChecked: isChecked)
             .sink { (completion) in
                 switch completion{
                 case .failure( _):
@@ -212,6 +255,23 @@ final class HabitManager: ObservableObject{
             }
             .store(in: &cancellables)
         loadChallenge()
+    }
+    // 하루라도 수행하지 않으면 0일로 초기화
+    func updateCount(count: Int, isChecked: Bool) -> Int{
+        if isChecked == true{
+            return count + 1
+        }else{
+            // 0 아님?
+            return count - 1
+        }
+    }
+    
+    func toggleIsChanged(isChecked: Bool) -> Bool{
+        if isChecked == true{
+            return false
+        }else{
+            return true
+        }
     }
     
     @MainActor

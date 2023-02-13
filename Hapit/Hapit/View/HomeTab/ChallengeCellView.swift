@@ -6,31 +6,40 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct ChallengeCellView: View {
- 
-    var challenge: Challenge
-    var isCheckedInDevice: Bool = false
-    
+
+    // MARK: - Property Wrappers
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @State var currentUserInfos: [User]
+    @State private var isChecked: Bool = false
+    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+
+    // MARK: - Properties
+    var challenge: Challenge
+    var isCheckedInDevice: Bool = false
+    
     // MARK: - Body
     var body: some View {
         HStack {
             Button {
-                // firestore에 업데이트 함수 제작 요망
-                // challenge.isChecked.toggle()
-                habitManager.loadChallengeIsChecked(challenge: challenge)
-        
+                // 체크 데이터 토글
+                isChecked.toggle()
+                // Realm에 체크 정보 저장 - 뷰가 바뀌기 전까지 로컬에 체크 정보를 저장해두기 위함.
+                $localChallenge.isChecked.wrappedValue = isChecked
+
             } label: {
-                Image(systemName: challenge.isChecked ? "checkmark.circle.fill" : "circle")
+                Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor(challenge.isChecked ? .green : .gray)
+                    .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
                 
             }
-            .buttonStyle(PlainButtonStyle())
             .padding(.trailing, 5)
+            .buttonStyle(PlainButtonStyle())
+
             //checkButton
             VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
@@ -44,7 +53,7 @@ struct ChallengeCellView: View {
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
-                    Text("연속 \(challenge.count)일째")
+                    Text("연속 \(challenge.count + 1)일째")
                     Spacer()
                     ForEach(currentUserInfos){ user in
                         Image("\(user.proImage)")
@@ -52,7 +61,7 @@ struct ChallengeCellView: View {
                             .aspectRatio(contentMode: .fit)
                             .offset(y: 5)
                             .frame(width: 25)
-                            .background(Color(.white))
+                            .background(Color("CellColor"))
                             .clipShape(Circle())
                             .overlay(Circle().stroke())
                             .foregroundColor(.gray)
@@ -66,21 +75,43 @@ struct ChallengeCellView: View {
             
         }//HStack
         .padding(20)
-        .foregroundColor(.black)
+//        .foregroundColor(.black)
         .background(
-            .white
+            Color("CellColor")
         )
         .cornerRadius(20)
+        .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
+        .contextMenu {
+            Button(role: .destructive) {
+                // Firestore에서 챌린지 삭제
+                habitManager.removeChallenge(challenge: challenge)
+                
+                // Realm에서 챌린지 삭제
+                $localChallenges.remove(localChallenge)
+            } label: {
+                Text("챌린지 지우기")
+                    .font(.custom("IMHyemin-Regular", size: 17))
+                Image(systemName: "trash")
+            }
+        } // contextMenu
         .onAppear(){
             currentUserInfos = []
-            Task{
+            Task {
+                // 함께 챌린지 진행하는 친구들 프사
                 for member in challenge.mateArray {
-                    try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member)  ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: []))
+                    try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
                 }
-                
             }
             print(currentUserInfos)
+            //1초로 넣으면 되는거 확인ㄱㄴ
+            let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+            let timer = Timer(fire: midnight, interval: 86400, repeats: true) { _ in
+                habitManager.makeIsCheckedFalse(challenge: challenge)
+            }
+            RunLoop.main.add(timer, forMode: .common)
+
         }
+
         //MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
 //        .overlay(
 //            VStack{

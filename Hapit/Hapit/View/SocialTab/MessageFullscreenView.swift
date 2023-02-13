@@ -11,6 +11,7 @@ struct MessageFullscreenView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var messageManager: MessageManager
     @State private var trash = false
+    @Binding var isAllRead: Bool
     
     var body: some View {
         ScrollView {
@@ -26,7 +27,7 @@ struct MessageFullscreenView: View {
             } else {
                 ForEach(messageManager.messageArray) { msg in
                     VStack {
-                        MessageCellView(msg: msg)
+                        MessageCellView(isAllRead: $isAllRead, msg: msg)
                         Divider()
                     }
                 }
@@ -49,14 +50,11 @@ struct MessageFullscreenView: View {
             }
             Button("취소", role: .cancel) {  }
         }
-        .task {
-            messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
-        }
     }
 }
 
 struct MessageFullscreenView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageFullscreenView()
+        MessageFullscreenView(isAllRead: .constant(true))
     }
 }

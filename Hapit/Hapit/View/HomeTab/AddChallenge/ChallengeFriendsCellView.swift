@@ -9,14 +9,11 @@ import SwiftUI
 
 struct ChallengeFriendsCellView: View {
     @EnvironmentObject var habitManager: HabitManager
-    
     // 친구 데이터
     @State var challengeFriends: ChallengeFriends
     //선택한 친구 임시 저장
     @Binding var temeFriend: [ChallengeFriends]
-
     @State var isChecked: Bool = false
-    
     @State private var isSelectedJelly = 0
     let bearArray = Jelly.allCases.map({"\($0)"})
     

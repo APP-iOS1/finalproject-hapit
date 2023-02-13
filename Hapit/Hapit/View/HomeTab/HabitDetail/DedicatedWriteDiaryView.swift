@@ -59,7 +59,7 @@ struct DedicatedWriteDiaryView: View {
                                 content = String(content.prefix(maxCharacterLength))
                             }
                         })
-                        
+                    
                     // 현재 글자수
                     HStack {
                         Spacer()
@@ -68,7 +68,7 @@ struct DedicatedWriteDiaryView: View {
                             .foregroundColor(.gray)
                     }
                     
-                    Spacer()
+                    
      
                 } // VStack
                 //.formStyle(.columns) // ios 15
@@ -82,7 +82,7 @@ struct DedicatedWriteDiaryView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 17)
                                 .foregroundColor(.gray)
-                                .font(.custom("IMHyemin-Bold", size: 17))
+                                
                         } // label
                     } // ToolbarItem
                     // 아직은 사진 구현하지 않음.

@@ -140,9 +140,9 @@ struct PostModalView: View {
                 if post.creatorID == selectedMember {
                     currentPost = post
                 }
-                else {
-                    currentPost = Post(id: "", creatorID: "", challengeID: "", title: "", content: "", createdAt: Date())
-                }
+//                else {
+//                    currentPost = Post(id: "", creatorID: "", challengeID: "", title: "", content: "", createdAt: Date())
+//                }
             }
         }
     }

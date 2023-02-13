@@ -30,7 +30,7 @@ struct HabitSegmentDetailView: View {
                     EmptyCellView(currentContentsType: .challenge)
                 } else {
                     ScrollView {
-                        ForEach(habitManager.challenges) { challenge in
+                        ForEach(habitManager.currentUserChallenges) { challenge in
                             ForEach(challenge.mateArray, id: \.self) { mate in
                                 if mate == authManager.firebaseAuth.currentUser?.uid {
                                     NavigationLink {
@@ -98,7 +98,7 @@ struct HabitSegmentDetailView: View {
             for localChallenge in localChallenges { // 로컬에 있는 챌린지 모두 삭제 (초기화)
                 $localChallenges.remove(localChallenge)
             }
-            for challenge in habitManager.challenges {
+            for challenge in habitManager.currentUserChallenges {
                 for mate in challenge.mateArray {
                     if mate == authManager.firebaseAuth.currentUser?.uid {
                         // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
@@ -112,13 +112,9 @@ struct HabitSegmentDetailView: View {
     // MARK: - 서버에 있는 내가 참여하는 모든 챌린지의 개수를 반환하는 함수
     func countMyChallengesFromServer() -> Int {
         var count = 0
-        for challenge in habitManager.challenges {
-            for mate in challenge.mateArray {
-                if mate == authManager.firebaseAuth.currentUser?.uid {
-                    count += 1
-                }
+        for challenge in habitManager.currentUserChallenges {
+                count += 1
             }
-        }
         return count
     }
     

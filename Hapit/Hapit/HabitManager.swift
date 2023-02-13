@@ -35,7 +35,7 @@ final class HabitManager: ObservableObject{
         var tempChallenges: [Challenge] = []
         for challenge in challenges {
             if let currentUser = currentUser {
-                if challenge.uid == currentUser.uid {
+                if challenge.mateArray.contains(currentUser.uid){
                     tempChallenges.append(challenge)
                 }
             } else {
@@ -99,9 +99,7 @@ final class HabitManager: ObservableObject{
     }
 
     func loadChallenge(){
-        
         challenges.removeAll()
-        
         self.fetchChallengeCombine()
             .sink { (completion) in
                 switch completion{

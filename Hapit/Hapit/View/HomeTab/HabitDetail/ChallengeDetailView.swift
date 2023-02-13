@@ -101,6 +101,7 @@ struct ChallengeDetailView: View {
                                 currentDate = value.date
                                 //MARK: 탭 했을 때 해당 날짜에 대한 Diaries가 뜨도록
                                 postsForModalView = []
+                                //MARK: 오늘에 해당하는 포스트들을 모두 불러온다.
                                 for post in habitManager.posts{
                                     if isSameDay(date1: currentDate, date2: post.createdAt){
                                         postsForModalView.append(post)
@@ -108,7 +109,6 @@ struct ChallengeDetailView: View {
                                 }
                                 self.modalManager.openModal()
                                 habitManager.currentMateInfos = []
-                                
                                 Task{
                                     // customModalView에서 불러온 mateArray의 순서를 변경할 필요가 있다.
                                     // CurrentUser의 uid가 mateArray[0으로 와야함]
@@ -116,7 +116,7 @@ struct ChallengeDetailView: View {
                                     let current = authManager.firebaseAuth
                                     let currentUser = current.currentUser?.uid
                                     let mateArray = habitManager.currentChallenge.mateArray
-                                    var sortedMateArray = sortMateArray(mateArray, currentUserUid: currentUser ?? "")
+                                    let sortedMateArray = sortMateArray(mateArray, currentUserUid: currentUser ?? "")
                                     
                                     // currentMateInfo를 초기화 해주는 부분.
                                     // 초기화를 하지 않는다면 onAppear 할 때마다 currentInfo가 늘어난다.
@@ -131,6 +131,7 @@ struct ChallengeDetailView: View {
                     }
                 }
                 .padding(.top, -20)
+                .padding(.bottom, 10)
                 //Spacer()
             }//VStack
             .padding([.top, .leading, .trailing])
@@ -167,10 +168,14 @@ struct ChallengeDetailView: View {
                     }
                 }
             }
+            //MARK: onAppear
             .onAppear{
                 // MARK: 포스트 불러오기
                 habitManager.fetchChallenge(challengeID: currentChallenge.id)
-                habitManager.loadPosts(challengeID: currentChallenge.id, userID: authManager.firebaseAuth.currentUser?.uid ?? "")
+                // 현재 챌린지에 해당하는 모든 포스트들을 불러온다.
+                habitManager.loadPosts(challengeID: currentChallenge.id)
+                print("currentChalleng.id", currentChallenge.id)
+                print("habitmanager.posts", habitManager.posts)
                 currentDate = Date()
                 
                 self.modalManager.newModal(position: .closed) {
@@ -248,7 +253,25 @@ struct ChallengeDetailView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         //MARK: 챌린지 추가
-                        showsCreatePostView.toggle()
+                        //오늘 할당된 포스트가 없다면?
+                        var isAbleToPost: Bool = true
+                        // 이 챌린지에 할당된 모든 포스트들 중에서
+                        for post in habitManager.posts {
+                            if let currentUser = authManager.firebaseAuth.currentUser?.uid {
+                                // 내가 쓴 포스트들 중에서
+                                if post.creatorID == currentUser {
+                                    // 오늘 작성한 포스트가 있다면?
+                                    if isSameDay(date1: post.createdAt, date2: Date()){
+                                        isAbleToPost = false
+                                    }
+                                }
+                            }
+                        }
+                        print("isAbleToPost", isAbleToPost)
+                        if isAbleToPost{
+                            showsCreatePostView.toggle()
+                        }
+                       
                     } label: {
                         Image(systemName: "square.and.pencil")
                             .foregroundColor(.gray)
@@ -307,7 +330,7 @@ struct ChallengeDetailView: View {
                     //.fill(isSameDay(date1: diary.createdAt, date2: currentDate) ? .pink : .pi)
                         .fill(.pink)
                         .frame(width: 8, height: 8)
-                        .padding(.top, 20)
+                        .padding(.top, 10)
                     
                 } else {
                     
@@ -419,12 +442,6 @@ struct ChallengeDetailView: View {
         }
     }
 }
-
-//struct CustomDatePicker_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CustomDatePickerView(currentChallenge: (Challenge(id: UUID().uuidString, creator: "릴루", mateArray: ["현호", "진형", "예원"], challengeTitle: "물 마시기", createdAt: Date(), count: 0, isChecked: true, uid: "")) , currentDate: .constant(Date()))
-//    }
-//}
 
 extension Date{
     

@@ -44,8 +44,12 @@ final class HabitManager: ObservableObject{
         }
         return tempChallenges
     }
-    
+    //나의 다이어리가 저장되는 변수
     @Published var posts: [Post] = []
+    
+    //챌린지를 같이 진행하고 있는 친구들의 다이어리가 저장되는 변수
+    @Published var currentMatePosts: [Post] = []
+    
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
     
@@ -308,12 +312,11 @@ final class HabitManager: ObservableObject{
     // MARK: - Post CRUD Part
     // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
-    func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
+    func fetchPosts(challengeID: String) -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
             
             let query = self.database.collection("Post")
-                .whereField("uid", isEqualTo: userID)
                 .whereField("challengeID", isEqualTo: challengeID)
             
             query.getDocuments{(snapshot, error) in
@@ -341,10 +344,10 @@ final class HabitManager: ObservableObject{
     
     // MARK: - R: Fetch Posts 함수 (ViewModel)
     @MainActor
-    func loadPosts(challengeID: String, userID: String){
+    func loadPosts(challengeID: String){
         posts.removeAll()
         
-        self.fetchPosts(challengeID: challengeID, userID: userID)
+        self.fetchPosts(challengeID: challengeID)
             .sink { (completion) in
                 switch completion{
                 case .failure(_):
@@ -365,7 +368,7 @@ final class HabitManager: ObservableObject{
                 .document()
                 .setData([
                     "id": post.id,
-                    "uid": post.uid,
+                    "creatorID": post.creatorID,
                     "challengeID": post.challengeID,
                     "title": post.title,
                     "content": post.content,

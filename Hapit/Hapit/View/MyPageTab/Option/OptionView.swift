@@ -12,9 +12,7 @@ struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
-    
     @EnvironmentObject var lnManager: LocalNotificationManager
-    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
  
     @Binding var index: Int
@@ -165,7 +163,7 @@ struct OptionView: View {
             // fetchPosts 후 post 먼저 삭제한 후 챌린지 삭제
             for challenge in habitManager.challenges {
                 if challenge.uid == currentUser {
-                    habitManager.loadPosts(challengeID: challenge.id, userID: currentUser ?? "")
+                    habitManager.loadPosts(challengeID: challenge.id)
                 }
             }
             // 내가 적은 내용만 패치 함. 따라서 불러온 post는 다 삭제함.

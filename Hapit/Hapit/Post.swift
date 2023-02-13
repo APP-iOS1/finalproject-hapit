@@ -11,7 +11,7 @@ struct Post: Identifiable, Codable {
     // 고유 아이디
     var id: String
     // 이 포스트를 만든 유저 아이디
-    var uid: String
+    var creatorID: String
     // 이 포스트가 속한 챌린지 아이디
     var challengeID: String
     // 제목

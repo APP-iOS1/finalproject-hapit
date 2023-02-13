@@ -16,7 +16,7 @@ struct InvitedMateView: View {
             HStack{
                 ForEach(habitManager.seletedFriends){ friend in
                     if friend.isChecked{
-                        AddChallengeMateProfileView(mateName: friend.name, proImage: friend.proImage)
+                        MateProfileView(mateName: friend.name, proImage: friend.proImage)
                     }
                 }
             }.padding(.horizontal)

@@ -12,11 +12,13 @@ struct MessageCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var messageManager: MessageManager
     @State private var senderNickname = ""
+    @Binding var isAllRead: Bool
     let msg: Message
     
     var body: some View {
         HStack {
             switch msg.messageType {
+                // MARK: 친구 신청 메시지
             case "add":
                 VStack {
                     Text("💝")
@@ -38,12 +40,12 @@ struct MessageCellView: View {
                                                                              messageType: "accept",
                                                                              sendTime: Date(),
                                                                              senderID: msg.receiverID,
-                                                                             receiverID: msg.senderID))
+                                                                             receiverID: msg.senderID, isRead: false))
                                 try await messageManager.sendMessage(Message(id: UUID().uuidString,
                                                                              messageType: "match",
                                                                              sendTime: Date(),
                                                                              senderID: msg.senderID,
-                                                                             receiverID: msg.receiverID))
+                                                                             receiverID: msg.receiverID, isRead: false))
                                 try await messageManager.removeMessage(userID: msg.receiverID,
                                                                        messageID: msg.id)
                             }
@@ -66,34 +68,64 @@ struct MessageCellView: View {
                     }
                     .padding(.bottom, 10)
                 }
+                
+                // MARK: 친구 수락 메시지
             case "accept":
                 Text("💖")
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님이 친구 요청을 수락했습니다")
                     .font(.custom("IMHyemin-Bold", size: 17))
+                
+                // MARK: 친구 매칭 메시지
             case "match":
                 Text("💘")
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님과 친구가 되었습니다")
-                    .font(.custom("IMHyemin-Bold", size: 17))
-            case "cock":
+                    .font(.custom("IMHyemin-Bold", size: 17))  
+                // MARK: 콕찌르기 메시지
+            case "knock":
                 Text("🫵🏻")
                     .font(.title)
                     .padding(.horizontal)
                 Text("\(senderNickname)님이 콕 찔렀습니다")
                     .font(.custom("IMHyemin-Bold", size: 17))
+                
             default:
                 Text("")
             }
             Spacer()
+            // 새로운 메시지 안읽음 표시
+            if !msg.isRead {
+                VStack {
+                    Text("•")
+                        .font(.title)
+                        .foregroundColor(Color.accentColor)
+                    Spacer()
+                }
+            }
         }
-
         .task {
             do {
                 self.senderNickname = try await authManager.getNickName(uid: msg.senderID)
             } catch {
+            }
+        }
+        .onDisappear {
+            Task {
+                // 메시지 전부 읽음처리
+                try await messageManager.updateIsRead(userID: userInfoManager.currentUserInfo?.id ?? "", messageID: msg.id)
+                // fetch 후 메시지함 뱃지 제거 (전부 읽음)
+                messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+                for msg in messageManager.messageArray {
+                    if !(msg.isRead) {
+                        isAllRead = false
+                        break
+                    } else {
+                        isAllRead = true
+                    }
+                }
             }
         }
     }
@@ -113,6 +145,6 @@ struct FriendButtonModifier: ViewModifier {
 
 struct MessageCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageCellView(msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: ""))
+        MessageCellView(isAllRead: .constant(true), msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: "", isRead: false))
     }
 }

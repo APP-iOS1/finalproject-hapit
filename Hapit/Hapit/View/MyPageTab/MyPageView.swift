@@ -12,9 +12,9 @@ struct MyPageView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
     
-    @Binding var isFullScreen: String
     @Binding var index: Int
     @Binding var flag: Int
+    
     @State private var nickName = ""
     @State private var email = ""
 
@@ -28,7 +28,7 @@ struct MyPageView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing){
                         NavigationLink {
-                            OptionView(isFullScreen: $isFullScreen, index: $index, flag: $flag)
+                            OptionView(index: $index, flag: $flag)
                         } label: {
                             Image(systemName: "gearshape")
                                 .resizable()
@@ -37,9 +37,7 @@ struct MyPageView: View {
                     }
                 }
                 .onAppear {
-                    
                     Task {
-    
                         do {
                             let current = authManager.firebaseAuth.currentUser?.uid ?? ""
                             let nameTarget = try await authManager.getNickName(uid: current)

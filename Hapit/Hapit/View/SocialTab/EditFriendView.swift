@@ -15,7 +15,7 @@ struct EditFriendView: View {
     @State private var isRemoveAlert = false
     @State private var friendOrNot = false
     @State private var isAdded = false
-    @State private var selectedFriend = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""])
+    @State private var selectedFriend = User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: "")
     
     var body: some View {
         ZStack {

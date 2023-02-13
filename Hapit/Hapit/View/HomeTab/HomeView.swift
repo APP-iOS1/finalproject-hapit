@@ -24,7 +24,7 @@ struct HomeView: View {
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 30)!]
         
         // Use this if NavigationBarTitle is with displayMode = .inline
-        // UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "Georgia-Bold", size: 20)!]
+        UINavigationBar.appearance().titleTextAttributes = [.font : UIFont(name: "IMHyemin-Bold", size: 17)!]
     }
     
     var body: some View {
@@ -56,10 +56,9 @@ struct HomeView: View {
                         
                     })
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
-                //                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
+                .animation(.easeInOut(duration: 0.3)) // iOS 15는 animation을 사용할 때 value를 꼭 할당해주거나 withAnimation을 써야 함.
                 .onAppear {
                     selectedIndex = 0
-                    //habitManager.loadChallenge()
                 }
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
@@ -95,5 +94,3 @@ struct HomeView: View {
         return dateFormatter.string(from: dateCreatedAt)
     }
 }
-
-

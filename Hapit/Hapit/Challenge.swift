@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 // MARK: - 습관
 struct Challenge: Hashable, Codable, Identifiable {
@@ -41,4 +42,19 @@ struct Challenge: Hashable, Codable, Identifiable {
         return dateFormatter.string(from: createdAt)
     }
     
+    // MARK: Local Challenge에서 사용될 List<String>형의 변수
+    var mateList: List<String> {
+        var tempList: List<String> = List<String>()
+        for mate in mateArray {
+            tempList.append(mate)
+        }
+        return tempList
+    }
+
+    // MARK: LocalChallenge형의 변수
+    var localChallenge: LocalChallenge {
+        var tempLocalChallenge = LocalChallenge(challengeId: id, creator: creator, mateList: mateList, challengeTitle: challengeTitle, createdAt: createdAt, count: count, isChecked: isChecked, isChallengeAlarmOn: false)
+        
+        return tempLocalChallenge
+    }
 }

@@ -14,8 +14,9 @@ struct OptionView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
-    @Binding var isFullScreen: String
+ 
     @Binding var index: Int
     @Binding var flag: Int
     @State private var isLogoutAlert = false
@@ -145,7 +146,7 @@ struct OptionView: View {
                      primaryButtonTitle: "로그아웃",
                      primaryAction: { Task {
                 flag = 1
-                isFullScreen = "logOut"
+                authManager.loggedIn = "logOut"
                 authManager.save(value: Key.logOut.rawValue, forkey: "state")
                 index = 0 } },
                      withCancelButton: true)
@@ -201,7 +202,7 @@ struct OptionView: View {
             }
             //MARK: - 5. 로그아웃
             //로그인 뷰를 띄워주기 위함(logOut 상태를 표현함)
-           isFullScreen = "logOut"
+            authManager.loggedIn = "logOut"
 
             // 로그아웃 인 상태를 저장함
             authManager.save(value: Key.logOut.rawValue, forkey: "state")
@@ -210,7 +211,7 @@ struct OptionView: View {
             
             //MARK: - 6. 유저에서 나를 삭제
           try await authManager.deleteUser(uid: currentUser ?? "")
-            
+                      
         }},withCancelButton: true)
     }
 }
@@ -219,12 +220,11 @@ struct ListTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("IMHyemin-Bold", size: 16))
-            .foregroundColor(.black)
     }
 }
 
 struct OptionView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionView(isFullScreen: .constant("logIn"), index: .constant(0), flag: .constant(1))
+        OptionView(index: .constant(0), flag: .constant(1))
     }
 }

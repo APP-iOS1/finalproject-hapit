@@ -17,6 +17,7 @@ struct SocialView: View {
     @State private var sortMyFriends: [User] = [User]() // currentUser 포함, 정렬
     @State private var friends: [User] = [User]() // currentUser 제외
     @State private var rankCountArray: [[Int]] = [] // 0: count, 1: rank
+    @State private var isAllRead: Bool = true
 
     var body: some View {
         NavigationView {
@@ -28,12 +29,17 @@ struct SocialView: View {
                             .font(.custom("IMHyemin-Bold", size: 15))
                     }.padding(.trailing, 20)
                     
+                    // 본인 챌린지 뷰는 안들어가지게 분기처리
                     ScrollView {
                         ForEach(Array(sortMyFriends.enumerated()), id: \.1) { (index, friend) in
-                            NavigationLink {
-                                FriendChallengeView(friend: friend)
-                                    .navigationTitle("친구가 수행중인 챌린지")
-                            } label: {
+                            if friend.id != userInfoManager.currentUserInfo?.id ?? "" {
+                                NavigationLink {
+                                    FriendChallengeView(friend: friend)
+                                        .navigationTitle("친구가 수행중인 챌린지")
+                                } label: {
+                                    FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
+                                }.disabled(friend.id == userInfoManager.currentUserInfo?.id)
+                            } else {
                                 FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
                             }
                         }
@@ -42,19 +48,19 @@ struct SocialView: View {
                 .navigationTitle("랭킹")
                 .toolbar {
                     HStack {
+                        // MARK: 친구관리
                         NavigationLink {
                             EditFriendView(friends: $friends)
                         } label: {
+//                            person.2.badge.gearshape
                             Image(systemName: "person.and.person")
                         }
-//                        person.2.badge.gearshape
+                        
+                        // MARK: 메시지함
                         NavigationLink {
-                            MessageFullscreenView()
+                            MessageFullscreenView(isAllRead: $isAllRead)
                         } label: {
-                            // TODO: 나중에 메세지 오면 색깔, 심볼 삼항연산자로 변경
-                            //                            Image(systemName: "envelope")
-                            //                                .foregroundColor(.gray)
-                            Image(systemName: "envelope.badge")
+                            Image(systemName: isAllRead ? "envelope" : "envelope.badge")
                                 .foregroundColor(Color("AccentColor"))
                         }
                     }
@@ -69,9 +75,9 @@ struct SocialView: View {
                 try await userInfoManager.getFriendArray()
                 self.myFriends = userInfoManager.friendArray
                 self.friends = userInfoManager.friendArray
-                let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""])
+                let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: "")
                 // 셀에 (나) 표시
-                self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends), at: 0)
+                self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends, loginMethod: tmp.loginMethod, fcmToken: tmp.fcmToken), at: 0)
             } catch {
             }
             // 챌린지 진행일수 정렬
@@ -82,6 +88,15 @@ struct SocialView: View {
 //                                                {challengeCount(friend: $0) > challengeCount(friend: $1)})
             rankCountArray = ranking(friends: sortMyFriends)
             
+            // 안 읽은 메세지 있나 확인
+            // FIXME: 한 박자 늦게 뜨는 이슈
+            messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+            for msg in messageManager.messageArray {
+                if !(msg.isRead) {
+                    isAllRead = false
+                    break
+                }
+            }
         }
     }
     
@@ -138,6 +153,7 @@ struct SocialView: View {
     }
 }
 
+// MARK: FriendsCell
 struct FriendsRow: View {
     let friend: User
     var index: Int
@@ -145,8 +161,6 @@ struct FriendsRow: View {
     
     var body: some View {
         HStack {
-            // TODO: 노션에 적어놓은 랭킹대로 정렬
-            // TODO: (나) 표시 다시 해주기
             Text("\(index)")
                 .font(.largeTitle)
                 .foregroundColor(Color("AccentColor"))
@@ -157,7 +171,6 @@ struct FriendsRow: View {
                 .frame(width: 40, height: 40)
                 .padding(10)
             
-            // TODO: 진행중인 챌린지 개수 가져오기
             VStack(alignment: .leading, spacing: 3) {
                 Text("\(friend.name)")
                     .foregroundColor(.black)

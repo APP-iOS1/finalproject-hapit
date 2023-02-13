@@ -15,31 +15,7 @@ struct DiaryModalView: View {
 //                .ignoresSafeArea()
 //            
             VStack {
-//                HStack{
-//                    // 이거 버튼 구조체 만들어서 이미지 이름만 넣게 하고 ForEach로 돌리면 댐
-//                    Image("bearBlue")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .clipShape(Circle())
-//                        .frame(width: 60)
-//                    Image("bearBlue")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .clipShape(Circle())
-//                        .frame(width: 60)
-//                    Image("bearBlue")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .clipShape(Circle())
-//                        .frame(width: 60)
-//                    Image("bearBlue")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .clipShape(Circle())
-//                        .frame(width: 60)
-//                }
-//                .background(Color(.white), in: RoundedRectangle(cornerRadius: 10.0))
-//
+
                 Image("diaryImage")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -49,7 +25,6 @@ struct DiaryModalView: View {
                     .background(Color(.white), in: RoundedRectangle(cornerRadius: 10.0)
                         //.frame(width:300, height: 300)
                     )
-                    
                     .padding()
                 Text("대충 글")
             }

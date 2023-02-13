@@ -19,7 +19,7 @@ struct DedicatedWriteDiaryView: View {
     
     @State private var selectedImage: UIImage?// ios 15
     @State private var isShowingPhotoPicker: Bool = false
-    
+    @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
 
     let maxCharacterLength = Int(300)
@@ -98,12 +98,12 @@ struct DedicatedWriteDiaryView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             habitManager.createPost(post: Post(id: UUID().uuidString,
-                                                               uid: currentChallenge.uid,
+                                                               creatorID: authManager.firebaseAuth.currentUser?.uid ?? "",
                                                                challengeID: currentChallenge.id,
                                                                title: currentChallenge.challengeTitle,
                                                                content: content,
                                                                createdAt: Date()))
-                            habitManager.loadPosts(challengeID: currentChallenge.id, userID: currentChallenge.uid)
+                            habitManager.loadPosts(challengeID: currentChallenge.id)
                             
                             dismiss()
                         } label: {

@@ -165,7 +165,13 @@ struct OptionView: View {
             // matearry에 내가 있으면 삭제
             
             for challenge in habitManager.challenges {
-                habitManager.loadPosts(challengeID: challenge.id, userID: currentUser ?? "")
+                if challenge.uid == currentUser {
+                    habitManager.loadPosts(challengeID: challenge.id)
+                }
+            }
+            // 내가 적은 내용만 패치 함. 따라서 불러온 post는 다 삭제함.
+            for post in habitManager.posts{
+                habitManager.deletePost(post: post)
             }
             print("포스트다!!@!@#!@#!@#!@#!@#!@#\(habitManager.posts)")
            

@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+@available(iOS 15, *)
 struct StepBar_15: View {
+    var step: Int
+    
     var body: some View {
         HStack() {
-            StepBar(nowStep: 1)
+            StepBar(nowStep: step)
                 .padding(.leading, -8)
             Spacer()
         }
@@ -19,8 +22,8 @@ struct StepBar_15: View {
     }
 }
 
-struct StepBar_15_Previews: PreviewProvider {
-    static var previews: some View {
-        StepBar_15()
-    }
-}
+//struct StepBar_15_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StepBar_15(step: 2, frameSize: 30, fontSize: 15)
+//    }
+//}

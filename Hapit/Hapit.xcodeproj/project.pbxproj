@@ -91,6 +91,9 @@
 		F4622DC1299A6DF60055D2AE /* KeyboardReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */; };
 		F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC3299A74250055D2AE /* StepBar_15.swift */; };
 		F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC5299A74990055D2AE /* StepBar_16.swift */; };
+		F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCA299A89350055D2AE /* RegisterGuideText.swift */; };
+		F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCC299A893F0055D2AE /* ToSGuideText.swift */; };
+		F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
 		F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47BA153297A75EE000222EE /* FirebaseAuth */; };
@@ -202,6 +205,9 @@
 		F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardReadable.swift; sourceTree = "<group>"; };
 		F4622DC3299A74250055D2AE /* StepBar_15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_15.swift; sourceTree = "<group>"; };
 		F4622DC5299A74990055D2AE /* StepBar_16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_16.swift; sourceTree = "<group>"; };
+		F4622DCA299A89350055D2AE /* RegisterGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterGuideText.swift; sourceTree = "<group>"; };
+		F4622DCC299A893F0055D2AE /* ToSGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSGuideText.swift; sourceTree = "<group>"; };
+		F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartGuideText.swift; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		F47BA150297A697F000222EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -418,6 +424,16 @@
 			path = StepBar;
 			sourceTree = "<group>";
 		};
+		F4622DC9299A89220055D2AE /* GuideText */ = {
+			isa = PBXGroup;
+			children = (
+				F4622DCA299A89350055D2AE /* RegisterGuideText.swift */,
+				F4622DCC299A893F0055D2AE /* ToSGuideText.swift */,
+				F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */,
+			);
+			path = GuideText;
+			sourceTree = "<group>";
+		};
 		F49E28BE29762C9B009EEB1A = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +570,7 @@
 		F49E28F32976813E009EEB1A /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				F4622DC9299A89220055D2AE /* GuideText */,
 				F4622DC2299A74020055D2AE /* StepBar */,
 				F49E28E4297639F4009EEB1A /* RegisterView.swift */,
 				F49E28E829765DFA009EEB1A /* ToSView.swift */,
@@ -737,6 +754,7 @@
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */,
 				3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */,
+				F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
@@ -783,6 +801,8 @@
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
 				C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */,
+				F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */,
+				F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */,
 				C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */,
 				369D01D729777E97004CB739 /* Dairy.swift in Sources */,
 			);

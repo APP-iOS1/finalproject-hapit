@@ -51,24 +51,39 @@ struct RegisterView: View, KeyboardReadable {
         GeometryReader { geo in
             VStack() {
                 
-                if #available(iOS 16.0, *) {
-                    StepBar_16()
-                } else {
-                    StepBar_15()
-                }
+                // 1. 디바이스의 높이 구하기
+                let deviceHeight = geo.size.height
                 
-                // MARK: TITLE
-                HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("기본정보를")
-                            .foregroundColor(Color.accentColor)
-                        Text("입력해주세요")
+                Group {
+                    // 2. iOS 버전을 기준으로 StepBar 분기처리
+                    // 3. 분기 내에서 디바이스 높이를 기준으로 GuideText 분기처리
+                    if #available(iOS 16.0, *) {
+                        StepBar_16(step: 1)
+                        
+                        if deviceHeight < CGFloat(700.0) {
+                            RegisterGuideText(fontSize: 20)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            RegisterGuideText(fontSize: 22)
+                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            RegisterGuideText(fontSize: 34)
+                        } else {
+                            RegisterGuideText(fontSize: 34)
+                        }
+                    } else {
+                        StepBar_15(step: 1)
+                        
+                        if deviceHeight < CGFloat(700.0) {
+                            RegisterGuideText(fontSize: 20)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            RegisterGuideText(fontSize: 22)
+                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            RegisterGuideText(fontSize: 28)
+                        } else {
+                            RegisterGuideText(fontSize: 34)
+                        }
                     }
-                    .font(.custom("IMHyemin-Bold", size: 34))
-                    Spacer()
                 }
                 .padding(.bottom, geo.size.height / 10)
-                .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                 
                 //Spacer()
                 
@@ -344,7 +359,8 @@ struct RegisterView: View, KeyboardReadable {
                 //.padding(.vertical, 5)
                 //Spacer()
             }
-            .ignoresSafeArea(.keyboard)
+            .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+            //.ignoresSafeArea(.keyboard)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             .padding(.horizontal, 20)

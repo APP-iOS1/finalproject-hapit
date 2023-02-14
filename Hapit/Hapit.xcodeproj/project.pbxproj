@@ -88,6 +88,12 @@
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
 		F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4101A5C29935BE800006039 /* KeyboardManager.swift */; };
 		F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423787E2990A2C40005B12D /* NavigationBarColor.swift */; };
+		F4622DC1299A6DF60055D2AE /* KeyboardReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */; };
+		F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC3299A74250055D2AE /* StepBar_15.swift */; };
+		F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC5299A74990055D2AE /* StepBar_16.swift */; };
+		F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCA299A89350055D2AE /* RegisterGuideText.swift */; };
+		F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCC299A893F0055D2AE /* ToSGuideText.swift */; };
+		F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
 		F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47BA153297A75EE000222EE /* FirebaseAuth */; };
@@ -196,6 +202,12 @@
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F4101A5C29935BE800006039 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		F423787E2990A2C40005B12D /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
+		F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardReadable.swift; sourceTree = "<group>"; };
+		F4622DC3299A74250055D2AE /* StepBar_15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_15.swift; sourceTree = "<group>"; };
+		F4622DC5299A74990055D2AE /* StepBar_16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_16.swift; sourceTree = "<group>"; };
+		F4622DCA299A89350055D2AE /* RegisterGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterGuideText.swift; sourceTree = "<group>"; };
+		F4622DCC299A893F0055D2AE /* ToSGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSGuideText.swift; sourceTree = "<group>"; };
+		F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartGuideText.swift; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		F47BA150297A697F000222EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,8 +409,29 @@
 				F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */,
 				F423787E2990A2C40005B12D /* NavigationBarColor.swift */,
 				F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */,
+				F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		F4622DC2299A74020055D2AE /* StepBar */ = {
+			isa = PBXGroup;
+			children = (
+				F49E2918297714E8009EEB1A /* StepBar.swift */,
+				F4622DC3299A74250055D2AE /* StepBar_15.swift */,
+				F4622DC5299A74990055D2AE /* StepBar_16.swift */,
+			);
+			path = StepBar;
+			sourceTree = "<group>";
+		};
+		F4622DC9299A89220055D2AE /* GuideText */ = {
+			isa = PBXGroup;
+			children = (
+				F4622DCA299A89350055D2AE /* RegisterGuideText.swift */,
+				F4622DCC299A893F0055D2AE /* ToSGuideText.swift */,
+				F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */,
+			);
+			path = GuideText;
 			sourceTree = "<group>";
 		};
 		F49E28BE29762C9B009EEB1A = {
@@ -537,10 +570,11 @@
 		F49E28F32976813E009EEB1A /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				F4622DC9299A89220055D2AE /* GuideText */,
+				F4622DC2299A74020055D2AE /* StepBar */,
 				F49E28E4297639F4009EEB1A /* RegisterView.swift */,
 				F49E28E829765DFA009EEB1A /* ToSView.swift */,
 				F49E291629770195009EEB1A /* GetStartView.swift */,
-				F49E2918297714E8009EEB1A /* StepBar.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -688,9 +722,11 @@
 			files = (
 				67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */,
 				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
+				F4622DC1299A6DF60055D2AE /* KeyboardReadable.swift in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */,
 				C50FEE422991F35F00C18D3F /* MessageCellView.swift in Sources */,
+				F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
 				3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */,
@@ -718,6 +754,7 @@
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */,
 				3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */,
+				F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
@@ -755,6 +792,7 @@
 				368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
 				C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */,
+				F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */,
 				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
@@ -763,6 +801,8 @@
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
 				C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */,
+				F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */,
+				F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */,
 				C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */,
 				369D01D729777E97004CB739 /* Dairy.swift in Sources */,
 			);
@@ -896,7 +936,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
-				DEVELOPMENT_TEAM = AU882HP6MX;
+				DEVELOPMENT_TEAM = 66PR7H87SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -931,7 +971,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
-				DEVELOPMENT_TEAM = AU882HP6MX;
+				DEVELOPMENT_TEAM = 66PR7H87SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;

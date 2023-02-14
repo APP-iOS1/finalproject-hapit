@@ -24,28 +24,41 @@ struct ToSView: View {
     
     @EnvironmentObject var authManager: AuthManager
     
+    var deviceWidth = UIScreen.main.bounds.size.width
+    var deviceHeight = UIScreen.main.bounds.size.height
+    
     //  1/3.4 - 1/50 - 1/50 비율로 쪼갬
     var body: some View {
         GeometryReader { geo in
             VStack {
-                HStack() {
-                    StepBar(nowStep: 2)
-                        .padding(.leading, -8)
-                    Spacer()
-                }
-                .frame(height: 30)
-                
-                HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Hapit")
-                                .foregroundColor(Color.accentColor)
-                            Text("이용 약관에")
+                Group {
+                    // 2. iOS 버전을 기준으로 StepBar 분기처리
+                    // 3. 분기 내에서 디바이스 높이를 기준으로 GuideText 분기처리
+                    if #available(iOS 16.0, *) {
+                        StepBar_16(step: 1)
+                        
+                        if deviceHeight < CGFloat(700.0) {
+                            ToSGuideText(fontSize: 20)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            ToSGuideText(fontSize: 22)
+                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            ToSGuideText(fontSize: 28)
+                        } else {
+                            ToSGuideText(fontSize: 34)
                         }
-                        Text("동의해주세요")
+                    } else {
+                        StepBar_15(step: 1)
+                        
+                        if deviceHeight < CGFloat(700.0) {
+                            ToSGuideText(fontSize: 20)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            ToSGuideText(fontSize: 22)
+                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            ToSGuideText(fontSize: 28)
+                        } else {
+                            ToSGuideText(fontSize: 34)
+                        }
                     }
-                    .font(.custom("IMHyemin-Bold", size: 30))
-                    Spacer()
                 }
                 .padding(.bottom, geo.size.height / 3.4)
                 

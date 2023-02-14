@@ -210,11 +210,11 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     // MARK: - 서버의 Challenge Collection에서 Challenge의 Uid를 변경하는 Method
-    func updateChallegeUid(challenge: Challenge) {
+    func updateChallegeUid(challenge: Challenge,uid: String) {
         let challegeDocument = database.collection("Challenge").document(challenge.id)
         
         challegeDocument.updateData([
-            "uid": challenge.mateArray[1]
+            "uid": uid
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -454,11 +454,11 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - D: Post Delete 함수 (Service)
-    func deletePostService(_ post: Post) -> AnyPublisher<Void, Error>{
+    func deletePostService(_ postID: String) -> AnyPublisher<Void, Error>{
         Future<Void, Error> { promise in
             self.database.collection("Post")
-                .document(post.id)
-                .delete() { error in
+                .document(postID).delete()
+            { error in
                     if let error = error {
                         promise(.failure(error))
                     } else {
@@ -470,8 +470,8 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - D: Post Delete 함수 (ViewModel)
-    func deletePost(post: Post) {
-        self.deletePostService(post)
+    func deletePost(postID: String) {
+        self.deletePostService(postID)
             .sink { (completion) in
                 switch completion {
                 case .failure(_):

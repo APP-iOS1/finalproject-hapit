@@ -19,9 +19,6 @@ struct ChallengeCellView: View {
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     var challenge: Challenge
-    var timer = Timer.publish(
-        every: 86400 - Date().timeIntervalSince(Calendar.current.startOfDay(for: Date())),
-        on: .main, in: .common).autoconnect()
     
     @AppStorage("currentDate") var currentDate: String = UserDefaults.standard.string(forKey: "currentDate") ?? ""
     
@@ -42,7 +39,6 @@ struct ChallengeCellView: View {
     var body: some View {
         HStack {
             Button {
-                print(Date().timeIntervalSince(Calendar.current.startOfDay(for: Date())))
                 $localChallenge.isChecked.wrappedValue.toggle()
             } label: {
                 Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
@@ -111,12 +107,12 @@ struct ChallengeCellView: View {
             if currentDate != getToday() { // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우 - 앱이 켜질 때마다 서버에 업로드되는 메모리 낭비를 방지
                 $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
                                                                             isChecked: $localChallenge.isChecked.wrappedValue)
-                $localChallenge.isChecked.wrappedValue = false // 초기화
+                // 서버에 업데이트
+                habitManager.updateCount(challenge: challenge, count: $localChallenge.count.wrappedValue)
+                // 초기화
+                $localChallenge.isChecked.wrappedValue = false
             }
-            
-            // 서버에 업데이트
-            
-            
+            currentDate = getToday()
             currentUserInfos = []
             Task {
                 // 함께 챌린지 진행하는 친구들 프사
@@ -129,6 +125,7 @@ struct ChallengeCellView: View {
             if currentDate != getToday() { // 자정이 되는 순간
                 $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
                                                                             isChecked: $localChallenge.isChecked.wrappedValue)
+                habitManager.updateCount(challenge: challenge, count: $localChallenge.count.wrappedValue)
                 $localChallenge.isChecked.wrappedValue = false
             }
             currentDate = getToday()

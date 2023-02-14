@@ -19,7 +19,7 @@ struct DedicatedWriteDiaryView: View {
     
     @State private var selectedImage: UIImage?// ios 15
     @State private var isShowingPhotoPicker: Bool = false
-    
+    @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
 
     let maxCharacterLength = Int(300)
@@ -59,7 +59,7 @@ struct DedicatedWriteDiaryView: View {
                                 content = String(content.prefix(maxCharacterLength))
                             }
                         })
-                        
+                    
                     // 현재 글자수
                     HStack {
                         Spacer()
@@ -68,7 +68,7 @@ struct DedicatedWriteDiaryView: View {
                             .foregroundColor(.gray)
                     }
                     
-                    Spacer()
+                    
      
                 } // VStack
                 //.formStyle(.columns) // ios 15
@@ -82,7 +82,7 @@ struct DedicatedWriteDiaryView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 17)
                                 .foregroundColor(.gray)
-                                .font(.custom("IMHyemin-Bold", size: 17))
+                                
                         } // label
                     } // ToolbarItem
                     // 아직은 사진 구현하지 않음.
@@ -98,12 +98,12 @@ struct DedicatedWriteDiaryView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             habitManager.createPost(post: Post(id: UUID().uuidString,
-                                                               uid: currentChallenge.uid,
+                                                               creatorID: authManager.firebaseAuth.currentUser?.uid ?? "",
                                                                challengeID: currentChallenge.id,
                                                                title: currentChallenge.challengeTitle,
                                                                content: content,
                                                                createdAt: Date()))
-                            habitManager.loadPosts(challengeID: currentChallenge.id, userID: currentChallenge.uid)
+                            habitManager.loadPosts(challengeID: currentChallenge.id)
                             
                             dismiss()
                         } label: {

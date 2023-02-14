@@ -46,9 +46,9 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                     
                     // 2. 애플계정 uid, 이름, email, ID값 임시저장
                     let uid = target.user.uid
-                    let appleName = target.user.displayName ?? ""
                     let appleMail = target.user.email ?? ""
                     let providerID = target.user.providerID
+                    let appleName = "user" + UUID().uuidString
                     
                     // 3. 구글로그인 사용자의 정보가 담긴 firestore 문서 경로
                     let userRef = self.database.collection("User").document(uid)

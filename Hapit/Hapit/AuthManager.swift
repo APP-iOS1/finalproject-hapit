@@ -78,18 +78,28 @@ final class AuthManager: UIViewController, ObservableObject {
     // MARK: - [카카오] 로그인 시도 계정이 Auth에 등록된 사용자인지 확인하는 함수
     func isRegistered(email: String, pw: String, method: String) async throws -> String {
         var newUid: String = ""
-        
             do {
                 let target = try await firebaseAuth.createUser(withEmail: email, password: pw)
                 newUid = target.user.uid
                 return newUid
             } catch {
                 do {
-                    try await login(with: email, pw)
+                    //1. 이메일이 이미 firestore에 등록된 이메일인지를 확인한다
+                    let emailDup = try await isEmailDuplicated(email: email)
                     
-                    self.loggedIn = "logIn"
-                    self.save(value: Key.logIn.rawValue, forkey: "state")
-                    self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                    //2. 이미 가입되어 있는 이메일이라면 해당 이메일 + 이메일이 든 document의 pw를 통해 로그인을 시도함
+                    if emailDup {
+                        //3. 이미 가입된 이메일 계정의 비밀번호를 가져옴
+                        let password = try await getPassword(email: email)
+                            
+                        //4. 이미 가입된 계정으로 로그인
+                        try await login(with: email, password)
+                        
+                        //5. 로그인 상태 변경
+                        self.loggedIn = "logIn"
+                        self.save(value: Key.logIn.rawValue, forkey: "state")
+                        self.loginMethod(value: LoginMethod.kakao.rawValue, forkey: "loginMethod")
+                    }
                 } catch {
                     throw(error)
                 }
@@ -142,9 +152,11 @@ final class AuthManager: UIViewController, ObservableObject {
             default:
                 print("apple or general")
             }
+            
             try await firebaseAuth.currentUser?.delete()
+            
             // User Document 삭제
-            try await database.collection("User").document("\(uid)").delete()
+            try await database.collection("User").document(uid).delete()
             // User의 friendArray에서 uid 삭제 - 완료
             // Challenge의 mateArray에서 uid 삭제
             // -> Challenge에서 mateArray에 해당 유저의 id 있으면 mateArray에서 id 삭제
@@ -185,6 +197,27 @@ final class AuthManager: UIViewController, ObservableObject {
                     "friends" : userInfo.friends,
                     "fcmToken" : userInfo.fcmToken
                 ])
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: - 이메일을 통해 비밀번호를 찾아 반환하는 함수
+    func getPassword(email: String) async throws -> String {
+        do {
+            let target = try await database.collection("User")
+                .whereField("email", isEqualTo: email).getDocuments()
+            
+            if target.isEmpty {
+                return ""
+            } else {
+                // 어짜피 email은 고유한 존재이므로 문서는 무조건 1개가 걸려옴
+                let docData = target.documents[0].data()
+                // 비밀번호 추출
+                let password = docData["pw"] as? String ?? ""
+                
+                return password
+            }
         } catch {
             throw(error)
         }
@@ -337,7 +370,6 @@ final class AuthManager: UIViewController, ObservableObject {
         }
     }
 
-    
     // MARK: - 사용 중인 유저의 뱃지 추가하기
     func updateBadge(uid: String, badge: String) async throws {
         
@@ -451,8 +483,6 @@ final class AuthManager: UIViewController, ObservableObject {
                 }
                 return random
             }
-            
-
             randoms.forEach { random in
                 if remainingLength == 0 {
                     return
@@ -482,7 +512,7 @@ final class AuthManager: UIViewController, ObservableObject {
                     // 3. gmail, ID, NickName 임시 저장
                     let gmail = targetUser.profile?.email ?? ""
                     let gID = targetUser.userID ?? ""
-                    let nickName = targetUser.profile?.name ?? ""
+                    let nickName = "user" + UUID().uuidString
                     
                     // 4. Auth 로그인 되어 있는 구글로그인 계정 uid 가져오기
                     let isNewby = self.firebaseAuth.currentUser?.uid ?? ""
@@ -537,7 +567,7 @@ final class AuthManager: UIViewController, ObservableObject {
                     // 3. gmail, ID, NickName 임시 저장
                     let gmail = target.user.profile?.email ?? ""
                     let gID = target.user.userID ?? ""
-                    let nickName = target.user.profile?.name ?? ""
+                    let nickName = "user" + UUID().uuidString
                     
                     // 4. Auth 로그인 되어 있는 구글로그인 계정 uid 가져오기
                     let isNewby = self.firebaseAuth.currentUser?.uid ?? ""
@@ -644,7 +674,7 @@ final class AuthManager: UIViewController, ObservableObject {
                                 // 카카오 이메일, Id, 닉네임 값 임시 저장
                                 let kakaoEmail = user?.kakaoAccount?.email ?? ""
                                 let kakaoId = String(user?.id ?? 0)
-                                let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
+                                let kakaoNickName = "user" + UUID().uuidString
                                 
                                 // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
                                 let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId, method: "kakao")
@@ -690,7 +720,7 @@ final class AuthManager: UIViewController, ObservableObject {
                                 // 카카오 이메일, Id, 닉네임 값 임시 저장
                                 let kakaoEmail = user?.kakaoAccount?.email ?? ""
                                 let kakaoId = String(user?.id ?? 0)
-                                let kakaoNickName = user?.kakaoAccount?.profile?.nickname ?? ""
+                                let kakaoNickName = "user" + UUID().uuidString
                                 
                                 // firestore에 등록된 유저인지 확인 -> 등록된 유저면 로그인/신규유저면 회원가입하고 uid 획득
                                 let isNewby = try await self.isRegistered(email: kakaoEmail, pw: kakaoId, method: "kakao")

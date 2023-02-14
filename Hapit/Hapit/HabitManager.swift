@@ -35,7 +35,7 @@ final class HabitManager: ObservableObject{
         var tempChallenges: [Challenge] = []
         for challenge in challenges {
             if let currentUser = currentUser {
-                if challenge.uid == currentUser.uid {
+                if challenge.mateArray.contains(currentUser.uid){
                     tempChallenges.append(challenge)
                 }
             } else {
@@ -44,8 +44,12 @@ final class HabitManager: ObservableObject{
         }
         return tempChallenges
     }
-    
+    //나의 다이어리가 저장되는 변수
     @Published var posts: [Post] = []
+    
+    //챌린지를 같이 진행하고 있는 친구들의 다이어리가 저장되는 변수
+    @Published var currentMatePosts: [Post] = []
+    
     //나의 친구들을 받을 변수
     @Published var friends: [User] = []
     
@@ -95,9 +99,7 @@ final class HabitManager: ObservableObject{
     }
 
     func loadChallenge(){
-        
         challenges.removeAll()
-        
         self.fetchChallengeCombine()
             .sink { (completion) in
                 switch completion{
@@ -208,11 +210,11 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     // MARK: - 서버의 Challenge Collection에서 Challenge의 Uid를 변경하는 Method
-    func updateChallegeUid(challenge: Challenge) {
+    func updateChallegeUid(challenge: Challenge,uid: String) {
         let challegeDocument = database.collection("Challenge").document(challenge.id)
         
         challegeDocument.updateData([
-            "uid": challenge.mateArray[1]
+            "uid": uid
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -335,12 +337,11 @@ final class HabitManager: ObservableObject{
     // MARK: - Post CRUD Part
     // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
-    func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
+    func fetchPosts(challengeID: String) -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
             
             let query = self.database.collection("Post")
-                .whereField("uid", isEqualTo: userID)
                 .whereField("challengeID", isEqualTo: challengeID)
             
             query.getDocuments{(snapshot, error) in
@@ -368,10 +369,10 @@ final class HabitManager: ObservableObject{
     
     // MARK: - R: Fetch Posts 함수 (ViewModel)
     @MainActor
-    func loadPosts(challengeID: String, userID: String){
+    func loadPosts(challengeID: String){
         posts.removeAll()
         
-        self.fetchPosts(challengeID: challengeID, userID: userID)
+        self.fetchPosts(challengeID: challengeID)
             .sink { (completion) in
                 switch completion{
                 case .failure(_):
@@ -389,10 +390,10 @@ final class HabitManager: ObservableObject{
     func createService(_ post: Post) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { promise in
             self.database.collection("Post")
-                .document()
+                .document(post.id)
                 .setData([
                     "id": post.id,
-                    "uid": post.uid,
+                    "creatorID": post.creatorID,
                     "challengeID": post.challengeID,
                     "title": post.title,
                     "content": post.content,
@@ -453,11 +454,11 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - D: Post Delete 함수 (Service)
-    func deletePostService(_ post: Post) -> AnyPublisher<Void, Error>{
+    func deletePostService(_ postID: String) -> AnyPublisher<Void, Error>{
         Future<Void, Error> { promise in
             self.database.collection("Post")
-                .document(post.id)
-                .delete() { error in
+                .document(postID).delete()
+            { error in
                     if let error = error {
                         promise(.failure(error))
                     } else {
@@ -469,8 +470,8 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - D: Post Delete 함수 (ViewModel)
-    func deletePost(post: Post) {
-        self.deletePostService(post)
+    func deletePost(postID: String) {
+        self.deletePostService(postID)
             .sink { (completion) in
                 switch completion {
                 case .failure(_):

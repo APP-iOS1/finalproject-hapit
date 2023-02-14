@@ -19,10 +19,16 @@ struct EmptyCellView: View {
         VStack{
             Spacer()
             //TODO: 트레이에 곰 들어간 사진 만들어보기
-            Image(systemName: "tray")
-                .font(.system(size: 72))
-                .padding()
-            
+            ZStack{
+                Image("bearOMG")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 300)
+                Image(systemName: "tray")
+                    .font(.system(size: 72))
+                    .foregroundColor(.white)
+                    .padding()
+            }
             Text("텅")
                 .font(.custom("IMHyemin-Bold", size: 34))
             

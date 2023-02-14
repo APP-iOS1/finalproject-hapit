@@ -23,7 +23,7 @@ struct FriendChallengeCellView: View {
                 VStack(alignment: .leading, spacing: 2){
                     Text(challenge.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("GrayFontColor"))
                     HStack {
                         Text(challenge.challengeTitle)
                             .font(.custom("IMHyemin-Bold", size: 22))
@@ -33,8 +33,8 @@ struct FriendChallengeCellView: View {
                                 datas: self.datas,
                                 // 받을 사람의 FCMToken
                                 to: receiverFCMToken,
-                                title: "Test" ,
-                                body: "Test"
+                                title: "\(userInfoManager.currentUserInfo?.name ?? "친구")가 콕 찔렀어요",
+                                body: "\(challenge.challengeTitle) 챌린지를 수행하세요!"
                             )
                             self.notificationContent = ""
                             
@@ -74,8 +74,7 @@ struct FriendChallengeCellView: View {
             
         }
         .padding(20)
-        .foregroundColor(.black)
-        .background(.white)
+        .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal)
         .task {

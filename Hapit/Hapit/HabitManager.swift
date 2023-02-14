@@ -224,74 +224,37 @@ final class HabitManager: ObservableObject{
         }
         loadChallenge()
     }
-    // MARK: - Update a Habit
-    @MainActor
-    func updateChallenge() async{
-        // Update a Habit
-    }
     
-    // MARK: - 24시간 지나면 isChecked 다 false로 해주는 함수
+    // MARK: - 24시간 지나면 isChecked 다 false로 해주는 함수 - 그룹 챌린지
     func makeIsCheckedFalse(challenge: Challenge) -> AnyPublisher<Void, Error> {
         // Update a Challenge
-        // Local
-        let count = updateCount(count: challenge.count, isChecked: challenge.isChecked)
-        
         return Future<Void, Error> {  promise in
-            
             self.database.collection("Challenge")
                 .document(challenge.id)
                 .updateData(["isChecked": false])
-            
-            self.database.collection("Challenge")
-                .document(challenge.id)
-                .updateData(["count": count])
-                //promise(.success())
+            //promise(.success())
         }
         .eraseToAnyPublisher()
     }
     
-    // MARK: - Update a Habit
-    func updateChallengeIsChecked(challenge: Challenge, isChecked: Bool) -> AnyPublisher<Void, Error> {
-        // Update a Challenge
-        // Local
-//        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
-        let count = updateCount(count: challenge.count, isChecked: isChecked)
-        
+    // MARK: - 로컬에서 변경된 연속일수를 업데이트하는 함수
+    func updateCount(challenge: Challenge, count: Int) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> {  promise in
-            
-            self.database.collection("Challenge")
-                .document(challenge.id)
-                .updateData(["isChecked": isChecked])
-            
             self.database.collection("Challenge")
                 .document(challenge.id)
                 .updateData(["count": count])
-                //promise(.success())
+            //promise(.success())
         }
         .eraseToAnyPublisher()
     }
 
-    func loadChallengeIsChecked(challenge: Challenge, isChecked: Bool){
-        self.updateChallengeIsChecked(challenge: challenge, isChecked: isChecked)
-            .sink { (completion) in
-                switch completion{
-                case .failure( _):
-                    return
-                case .finished:
-                    return
-                }
-            } receiveValue: { _ in
-            }
-            .store(in: &cancellables)
-        loadChallenge()
-    }
-    // 하루라도 수행하지 않으면 0일로 초기화
-    func updateCount(count: Int, isChecked: Bool) -> Int{
+    // MARK: - 24시간 지나면 체크 상태를 기반으로 일수를 계산하는 함수
+    /// 하루라도 수행하지 않으면 0일로 초기화
+    func countDays(count: Int, isChecked: Bool) -> Int{
         if isChecked == true{
             return count + 1
-        }else{
-            // 0 아님?
-            return count - 1
+        } else {
+            return 0
         }
     }
     

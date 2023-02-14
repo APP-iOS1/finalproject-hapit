@@ -66,7 +66,7 @@ struct AddChallengeView: View {
                         Spacer()
                         
                         Text("\(challengeTitle.count) / \(maximumCount)")
-                            .foregroundColor(isOverCount ? .red : .gray)
+                            .foregroundColor(isOverCount ? .red : Color("GrayFontColor"))
                     }
                     .font(.custom("IMHyemin-Regular", size: 12))
                     .padding(.horizontal, 20)
@@ -178,7 +178,7 @@ struct AddChallengeView: View {
                         dismiss()
                     } label: {
                         Image(systemName: "multiply")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
                 

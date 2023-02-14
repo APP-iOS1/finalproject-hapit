@@ -160,7 +160,7 @@ struct RegisterView: View, KeyboardReadable {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20.5)
-                                    .accentColor(.gray)
+                                    .accentColor(Color("GrayFontColor"))
                             }
                             // password가 비어있지 않으면서, 6자리 이상일 때 체크 아이콘 띄움.
                             if !pw.isEmpty && checkPasswordType(password: pw) {
@@ -219,7 +219,7 @@ struct RegisterView: View, KeyboardReadable {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20.5)
-                                    .accentColor(.gray)
+                                    .accentColor(Color("GrayFontColor"))
                             }
                             // password가 비어있지 않으면서, 6자리 이상일 때 체크 아이콘 띄움.
                             if !pwCheck.isEmpty && checkPasswordType(password: pwCheck) {
@@ -350,7 +350,7 @@ struct RegisterView: View, KeyboardReadable {
                             .frame(maxWidth: .infinity)
                             .background {
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(isOk() ? .gray : Color.accentColor)
+                                    .fill(isOk() ? Color("GrayFontColor") : Color.accentColor)
                             }
                     }
                 }
@@ -416,8 +416,8 @@ struct TextFieldUnderLineRectangleModifier: ViewModifier {
     var padding: CGFloat = 20
     func body(content: Content) -> some View {
         content
-            .frame(height: 1.5)
-            .foregroundColor(stateTyping ? .accentColor : Color(UIColor.systemGray3))
+            .frame(height: (stateTyping ? 1.5 : 1.2))
+            .foregroundColor(stateTyping ? .accentColor : Color("GrayFontColor"))
     }
 }
 

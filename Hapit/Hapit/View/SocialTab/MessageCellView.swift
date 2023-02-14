@@ -82,7 +82,7 @@ struct MessageCellView: View {
                 Image("\(senderProfileImage)")
                     .profileImageModifier()
                     .padding(.horizontal)
-                Text("\(senderNickname)님이 친구 요청을 수락했습니다")
+                Text("\(senderNickname)님이 친구 요청을 수락했어요.")
                     .font(.custom("IMHyemin-Bold", size: 17))
                 
                 // MARK: 친구 매칭 메시지
@@ -90,7 +90,7 @@ struct MessageCellView: View {
                 Image("\(senderProfileImage)")
                     .profileImageModifier()
                     .padding(.horizontal)
-                Text("\(senderNickname)님과 친구가 되었습니다")
+                Text("\(senderNickname)님과 친구가 되었어요.")
                     .font(.custom("IMHyemin-Bold", size: 17))
                 
                 // MARK: 콕찌르기 메시지
@@ -98,7 +98,7 @@ struct MessageCellView: View {
                 Image("\(senderProfileImage)")
                     .profileImageModifier()
                     .padding(.horizontal)
-                Text("\(senderNickname)님이 콕 찔렀습니다")
+                Text("\(senderNickname)님이 콕 찔렀어요!")
                     .font(.custom("IMHyemin-Bold", size: 17))
                 
                 // MARK: 챌린지 초대 메시지
@@ -110,7 +110,7 @@ struct MessageCellView: View {
                 }.padding(.horizontal)
                 
                 VStack(alignment: .leading) {
-                    Text("\(senderNickname)님이 \(challengeTitle) 챌린지에 초대했습니다")
+                    Text("\(senderNickname)님이 \(challengeTitle) 챌린지에 초대했어요.")
                         .font(.custom("IMHyemin-Bold", size: 17))
                     HStack {
                         Button {

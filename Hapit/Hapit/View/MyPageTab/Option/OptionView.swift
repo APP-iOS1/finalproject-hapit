@@ -91,9 +91,9 @@ struct OptionView: View {
             } label: {
                 Text("로그아웃")
                     .font(.custom("IMHyemin-Regular", size: 16))
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("GrayFontColor"))
                     .frame(width: 350, height: 50)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(.gray))
+                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color("GrayFontColor")))
                     .padding()
             }
             
@@ -106,7 +106,7 @@ struct OptionView: View {
                 } label: {
                     Text("회원탈퇴")
                         .font(.custom("IMHyemin-Regular", size: 16))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("GrayFontColor"))
                 }
             }
             .frame(width: 350)

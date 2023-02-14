@@ -37,7 +37,7 @@ struct RewardView: View {
             JellyGridView()
                 .padding(10)
         }
-        .background()
+        .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(EdgeInsets(top: 5, leading: 20, bottom: 20, trailing: 20))
     }

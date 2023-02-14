@@ -50,6 +50,7 @@ struct EditFriendView: View {
                         FriendsEditRow(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, isAdded: $isAdded, selectedFriend: $selectedFriend, friend: friend, isRemoveOrAdd: true)
                     }
                 }
+                .padding(.top, 10)
             }
         }
         .navigationBarTitleDisplayMode(.inline)

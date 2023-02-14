@@ -35,27 +35,32 @@ struct ToSView: View {
                     // 2. iOS 버전을 기준으로 StepBar 분기처리
                     // 3. 분기 내에서 디바이스 높이를 기준으로 GuideText 분기처리
                     if #available(iOS 16.0, *) {
-                        StepBar_16(step: 1)
-                        
                         if deviceHeight < CGFloat(700.0) {
-                            ToSGuideText(fontSize: 20)
+                            StepBar_16(step: 1, frameSize: 25, fontSize: 15)
+                            ToSGuideText(fontSize: 26)
                         } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            StepBar_16(step: 1, frameSize: 27, fontSize: 17)
                             ToSGuideText(fontSize: 22)
                         } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
-                            ToSGuideText(fontSize: 28)
+                            StepBar_16(step: 1, frameSize: 28, fontSize: 18)
+                            ToSGuideText(fontSize: 34)
                         } else {
+                            StepBar_16(step: 1, frameSize: 30, fontSize: 20)
                             ToSGuideText(fontSize: 34)
                         }
                     } else {
-                        StepBar_15(step: 1)
-                        
                         if deviceHeight < CGFloat(700.0) {
-                            ToSGuideText(fontSize: 20)
+                            StepBar_15(step: 1, frameSize: 25, fontSize: 15)
+                            ToSGuideText(fontSize: 26)
+                                .padding(.top, -50)
                         } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
-                            ToSGuideText(fontSize: 22)
+                            StepBar_15(step: 1, frameSize: 27, fontSize: 17)
+                            ToSGuideText(fontSize: 27)
                         } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            StepBar_15(step: 1, frameSize: 28, fontSize: 18)
                             ToSGuideText(fontSize: 28)
                         } else {
+                            StepBar_15(step: 1, frameSize: 30, fontSize: 20)
                             ToSGuideText(fontSize: 34)
                         }
                     }

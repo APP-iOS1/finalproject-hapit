@@ -37,12 +37,12 @@ struct ChallengeFriendsCellView: View {
                     
                     Text(challengeFriends.name)
                         .font(.custom("IMHyemin-Bold", size: 17)).padding(10)
-                    Text(String(challengeFriends.isChecked))
+
                     Spacer()
                     
                     Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
                         .font(.title)
-                        .foregroundColor(isChecked ? .green : .gray)
+                        .foregroundColor(isChecked ? .green : Color("GrayFontColor"))
                     
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -50,8 +50,7 @@ struct ChallengeFriendsCellView: View {
                 
             }//HStack
             .padding(10)
-            .foregroundColor(.black)
-            .background(.white)
+            .background(Color("CellColor"))
             .cornerRadius(15)
             .padding(.horizontal, 20)
             .padding(.bottom, 5)

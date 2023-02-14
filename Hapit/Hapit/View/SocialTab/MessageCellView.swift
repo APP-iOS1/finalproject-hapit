@@ -81,21 +81,26 @@ struct MessageCellView: View {
             case "accept":
                 Image("\(senderProfileImage)")
                     .profileImageModifier()
-                Text("\(senderNickname)님이 친구 요청을 수락했습니다")
+                    .padding(.horizontal)
+                Text("\(senderNickname)님이 친구 요청을 수락했어요.")
                     .font(.custom("IMHyemin-Bold", size: 17))
                 
                 // MARK: 친구 매칭 메시지
             case "match":
                 Image("\(senderProfileImage)")
                     .profileImageModifier()
-                Text("\(senderNickname)님과 친구가 되었습니다")
-                    .font(.custom("IMHyemin-Bold", size: 17))  
+                    .padding(.horizontal)
+                Text("\(senderNickname)님과 친구가 되었어요.")
+                    .font(.custom("IMHyemin-Bold", size: 17))
+                
                 // MARK: 콕찌르기 메시지
             case "knock":
                 Image("\(senderProfileImage)")
                     .profileImageModifier()
-                Text("\(senderNickname)님이 콕 찔렀습니다")
+                    .padding(.horizontal)
+                Text("\(senderNickname)님이 콕 찔렀어요!")
                     .font(.custom("IMHyemin-Bold", size: 17))
+                
                 // MARK: 챌린지 초대 메시지
             case "invite":
                 VStack {
@@ -105,7 +110,7 @@ struct MessageCellView: View {
                 }.padding(.horizontal)
                 
                 VStack(alignment: .leading) {
-                    Text("\(senderNickname)님이 \(challengeTitle) 챌린지에 초대했습니다")
+                    Text("\(senderNickname)님이 \(challengeTitle) 챌린지에 초대했어요.")
                         .font(.custom("IMHyemin-Bold", size: 17))
                     HStack {
                         Button {
@@ -138,6 +143,7 @@ struct MessageCellView: View {
             default:
                 Text("")
             }
+            
             Spacer()
             // 새로운 메시지 안읽음 표시
             if !msg.isRead {
@@ -147,6 +153,7 @@ struct MessageCellView: View {
                         .foregroundColor(Color.accentColor)
                     Spacer()
                 }
+                .padding(.horizontal)
             }
         }
         .task {

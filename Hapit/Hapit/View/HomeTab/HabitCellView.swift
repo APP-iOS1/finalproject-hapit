@@ -22,7 +22,7 @@ struct HabitCellView: View {
 
                     Text(habit.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("GrayFontColor"))
                     Text(habit.challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 22))
                 }//VStack
@@ -41,9 +41,8 @@ struct HabitCellView: View {
             
         }//HStack
         .padding(20)
-        .foregroundColor(.black)
         .background(
-            .white
+            Color("CellColor")
         )
         .cornerRadius(20)
         .padding(.horizontal, 20)

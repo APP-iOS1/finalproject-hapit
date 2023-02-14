@@ -29,12 +29,12 @@ struct StepBar: View {
                 } else {
                     Spacer().frame(width: 8)
                     Circle()
-                        .stroke(Color.gray, lineWidth: 0.7)
+                        .stroke(Color("GrayFontColor"), lineWidth: 0.7)
                         .frame(width: frameSize)
                         .overlay {
                             Text("\(index)")
                                 .font(.custom("IMHyemin-Bold", size: fontSize))
-                                .foregroundColor(index == nowStep ? Color.white : Color.gray)
+                                .foregroundColor(index == nowStep ? Color.white : Color("GrayFontColor"))
                         }
                 }
                 
@@ -56,13 +56,13 @@ struct StepBar: View {
                     } else {
                         HStack {
                             Circle()
-                                .fill(Color.gray)
+                                .fill(Color("GrayFontColor"))
                                 .frame(width: 3)
                             Circle()
-                                .fill(Color.gray)
+                                .fill(Color("GrayFontColor"))
                                 .frame(width: 3)
                             Circle()
-                                .fill(Color.gray)
+                                .fill(Color("GrayFontColor"))
                                 .frame(width: 3)
                         }
                     }

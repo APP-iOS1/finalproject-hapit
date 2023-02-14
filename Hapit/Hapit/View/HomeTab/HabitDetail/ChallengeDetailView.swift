@@ -205,9 +205,6 @@ struct ChallengeDetailView: View {
                     // Realm에 해당 챌린지 알림 설정 업데이트
                     $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isGranted
                 }
-                
-                // Firestore에 체크 정보 업데이트
-                updateCheckInfo()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -216,7 +213,7 @@ struct ChallengeDetailView: View {
                         showsCustomAlert.toggle()
                     } label: {
                         Image(systemName: "trash")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
                 
@@ -247,7 +244,7 @@ struct ChallengeDetailView: View {
                         }
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -274,7 +271,7 @@ struct ChallengeDetailView: View {
                        
                     } label: {
                         Image(systemName: "square.and.pencil")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
             } // toolbar
@@ -432,14 +429,6 @@ struct ChallengeDetailView: View {
         let tempArray = currentUserArray + otherMatesArray
         
         return tempArray
-    }
-    
-    // MARK: - 로컬의 체크 정보를 서버에 업데이트하는 함수
-    func updateCheckInfo() {
-        // 아이디가 일치하고, 로컬과 서버의 챌린지 체크 정보가 다르다면 로컬의 체크 정보를 서버에 업데이트
-        if currentChallenge.id == localChallenge.challengeId && currentChallenge.isChecked != localChallenge.isChecked {
-            habitManager.loadChallengeIsChecked(challenge: currentChallenge, isChecked: localChallenge.isChecked)
-        }
     }
 }
 

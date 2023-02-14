@@ -10,13 +10,10 @@ import SwiftUI
 struct FriendChallengeCellView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var authManager: AuthManager
-    @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var messageManager: MessageManager
-    @State var challengeWithMe: [Challenge] = []
     @State var challenge: Challenge
     @State var friendId: String
-    @State var receiverFCMToken: String = ""
-    
+    @State private var receiverFCMToken: String = ""
     @State private var notificationContent: String = ""
     @ObservedObject private var datas = fcmManager
 
@@ -31,6 +28,7 @@ struct FriendChallengeCellView: View {
                         Text(challenge.challengeTitle)
                             .font(.custom("IMHyemin-Bold", size: 22))
                         Button{
+                            // FCM 전송
                             self.datas.sendFirebaseMessageToUser(
                                 datas: self.datas,
                                 // 받을 사람의 FCMToken
@@ -39,15 +37,23 @@ struct FriendChallengeCellView: View {
                                 body: "\(challenge.challengeTitle) 챌린지를 수행하세요!"
                             )
                             self.notificationContent = ""
+                            
+                            // 앱 내 메시지 전송
                             Task{
                                 try await messageManager.sendMessage(
-                                    Message(id: UUID().uuidString, messageType: "knock", sendTime: Date(), senderID: userInfoManager.currentUserInfo?.id ?? "", receiverID: friendId, isRead: false))
+                                    Message(id: UUID().uuidString,
+                                            messageType: "knock",
+                                            sendTime: Date(),
+                                            senderID: userInfoManager.currentUserInfo?.id ?? "",
+                                            receiverID: friendId,
+                                            isRead: false,
+                                            challengeID: challenge.id))
                             }
                         } label: {
                             Image(systemName: "hand.tap.fill")
                         }
                     }
-                }//VStack
+                }
                 
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
@@ -55,39 +61,26 @@ struct FriendChallengeCellView: View {
                     Text("연속 \(challenge.count)일째")
                     Spacer()
                     
-                    ForEach(challengeWithMe){ challenge in
-                        if challenge.id == self.challenge.id {
-                            Text("함께 챌린지 중")
-                                .foregroundColor(Color("AccentColor"))
-                                .font(.custom("IMHyemin-Bold", size: 12))
-                        }
+                    if challenge.mateArray.contains(userInfoManager.currentUserInfo?.id ?? "") {
+                        Text("함께 챌린지 중")
+                            .foregroundColor(Color("AccentColor"))
+                            .font(.custom("IMHyemin-Bold", size: 12))
                     }
                 }
                 .font(.custom("IMHyemin-Regular", size: 15))//HStack
                 
-            }//VStack
+            }
             Spacer()
             
-        }//HStack
+        }
         .padding(20)
         .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal)
         .task {
             do {
-                let currentUser = userInfoManager.currentUserInfo?.id ?? ""
-                challengeWithMe.removeAll()
-                
-                for challenge in habitManager.challenges {
-                    for mate in challenge.mateArray {
-                        if mate == currentUser {
-                            challengeWithMe.append(challenge)
-                        }
-                        receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
-                    }
-                }
+                receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
             } catch {
-                
             }
         }
     }

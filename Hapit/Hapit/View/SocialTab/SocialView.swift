@@ -32,16 +32,12 @@ struct SocialView: View {
                     // 본인 챌린지 뷰는 안들어가지게 분기처리
                     ScrollView {
                         ForEach(Array(sortMyFriends.enumerated()), id: \.1) { (index, friend) in
-                            if friend.id != userInfoManager.currentUserInfo?.id ?? "" {
                                 NavigationLink {
                                     FriendChallengeView(friend: friend)
                                         .navigationTitle("친구가 수행중인 챌린지")
                                 } label: {
                                     FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
                                 }.disabled(friend.id == userInfoManager.currentUserInfo?.id)
-                            } else {
-                                FriendsRow(friend: friend, index: rankCountArray[index][1], count: challengeCount(friend: friend))
-                            }
                         }
                     }
                 }
@@ -52,8 +48,7 @@ struct SocialView: View {
                         NavigationLink {
                             EditFriendView(friends: $friends)
                         } label: {
-//                            person.2.badge.gearshape
-                            Image(systemName: "person.and.person")
+                            Image("person.2.badge.gearshape")
                         }
                         
                         // MARK: 메시지함
@@ -68,34 +63,35 @@ struct SocialView: View {
             }.background(Color("BackgroundColor"))
         }
         // FIXME: 뷰 들어올 때마다가 아니라 친구 목록의 변화가 있을때마다 실행되게끔 바꾸기
+        // currentUser 로그인할 때 fetch 해봤더니 실패..
         .task {
             do {
                 let current = authManager.firebaseAuth
                 try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
                 try await userInfoManager.getFriendArray()
-                self.myFriends = userInfoManager.friendArray
                 self.friends = userInfoManager.friendArray
+                self.myFriends = userInfoManager.friendArray
+                
                 let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: "")
                 // 셀에 (나) 표시
                 self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends, loginMethod: tmp.loginMethod, fcmToken: tmp.fcmToken), at: 0)
-            } catch {
-            }
-            // 챌린지 진행일수 정렬
-            sortMyFriends = myFriends.sorted(by:
-                                                {challengeDaysCount(friend: $0) > challengeDaysCount(friend: $1)})
-            // 챌린지 개수 정렬
-//            sortMyFriends = myFriends.sorted(by:
-//                                                {challengeCount(friend: $0) > challengeCount(friend: $1)})
-            rankCountArray = ranking(friends: sortMyFriends)
-            
-            // 안 읽은 메세지 있나 확인
-            // FIXME: 한 박자 늦게 뜨는 이슈
-            messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
-            for msg in messageManager.messageArray {
-                if !(msg.isRead) {
-                    isAllRead = false
-                    break
+                
+                // 챌린지 진행일수 정렬
+                sortMyFriends = myFriends.sorted(by:
+                                                    {challengeDaysCount(friend: $0) > challengeDaysCount(friend: $1)})
+
+                rankCountArray = ranking(friends: sortMyFriends)
+                
+                // 안 읽은 메세지 있나 확인
+                // FIXME: 한 박자 늦게 뜨는 이슈
+                messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+                for msg in messageManager.messageArray {
+                    if !(msg.isRead) {
+                        isAllRead = false
+                        break
+                    }
                 }
+            } catch {
             }
         }
     }

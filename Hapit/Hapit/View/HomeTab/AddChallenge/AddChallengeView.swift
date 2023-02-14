@@ -16,6 +16,7 @@ struct AddChallengeView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var messageManager: MessageManager
     
     @State private var challengeTitle: String = ""
     
@@ -118,10 +119,22 @@ struct AddChallengeView: View {
                             mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                             
                             //친구들 uid 저장
+//                            for friend in habitManager.seletedFriends {
+//                                let uid = friend.uid
+//                                mateArray.append(uid)
+//
+//                            }
+                            
+                            // 함께챌린지 초대 메시지 보내기
+                            // TODO: 파베에서 메시지랑 챌린지 uuid 다른지 확인하기
                             for friend in habitManager.seletedFriends {
-                                let uid = friend.uid
-                                mateArray.append(uid)
-
+                                try await messageManager.sendMessage(Message(id: UUID().uuidString,
+                                                                             messageType: "invite",
+                                                                             sendTime: Date(),
+                                                                             senderID: current.currentUser?.uid ?? "",
+                                                                             receiverID: friend.uid,
+                                                                             isRead: false,
+                                                                             challengeID: id))
                             }
                             
                             // Firestore에 올리기 위한 새로운 챌린지 객체 변수 생성 (따로 빼준 이유: mateArray로부터 mateList를 뽑아내기 위함.)

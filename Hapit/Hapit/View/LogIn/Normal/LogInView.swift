@@ -37,13 +37,14 @@ struct LogInView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding(.bottom, geo.size.height / 30)
-                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+//                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                     
                     Spacer()
                     
                     VStack(spacing: 20) {
-                        VStack(spacing: 5) {
+                        VStack() {
                             TextField("이메일", text: $email)
+                                .keyboardType(.emailAddress)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($emailFocusField)
                                 .modifier(ClearTextFieldModifier())
@@ -52,11 +53,12 @@ struct LogInView: View {
                         }
                         .frame(height: 40)
                         
-                        VStack(spacing: 5) {
+                        VStack() {
                             SecureField("비밀번호", text: $pw)
                                 .font(.custom("IMHyemin-Bold", size: 16))
                                 .focused($pwFocusField)
                                 .modifier(ClearTextFieldModifier())
+                                .padding(.bottom, 0.2)
                             Rectangle()
                                 .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
                         }
@@ -88,14 +90,19 @@ struct LogInView: View {
                                 do {
                                     try await authManager.login(with: email, pw)
                                     
-                                    // 1. 로그인 상태 변경
+                                    //2.3 로그인 상태 변경
                                     authManager.loggedIn = "logIn"
-                                    // 2. 로그인 상태 UserDefaults에 저장
+                                    //2.4 로그인 상태 UserDefaults에 저장
                                     authManager.save(value: Key.logIn.rawValue, forkey: "state")
-                                    // 3. 로그인 방법 UserDefaults에 저장
+                                    //2.5 로그인 방법 UserDefaults에 저장
                                     authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
                                     verified = true
+                                    
+                                    let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                    print(localNickname)
+                                    UserDefaults.standard.set(localNickname, forKey: "localNickname")
                                 } catch {
+                                    // 로그인 과정 or 이메일 불러오는 과정에서 오류 발생 시
                                     authManager.loggedIn = "logOut"
                                     authManager.save(value: Key.logOut.rawValue, forkey: "state")
                                     verified = true
@@ -128,18 +135,23 @@ struct LogInView: View {
                     .padding(.bottom, geo.size.height / 50)
                     
                     Group {
-                        HStack(spacing: geo.size.width / 10) {
-                            AppleLogIn()
-                            GoogleLogIn()
-                            KakaoLogIn()
+                        VStack(alignment: .center) {
+                            HStack(spacing: geo.size.width / 8) {
+                                AppleLogIn()
+                                GoogleLogIn()
+                                KakaoLogIn()
+                            }
                         }
                     }
-                    .padding(.vertical, geo.size.height / 50)
+                    .padding(.bottom, geo.size.height / 50)
                 }
                 .padding(.horizontal, 20)
-                .edgesIgnoringSafeArea(.top)
+                .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+                //.edgesIgnoringSafeArea(.top)
                 .ignoresSafeArea(.keyboard)
+                .disableAutocorrection(true)
             }
+            .ignoresSafeArea(.all)
         }
     }
 }
@@ -150,5 +162,36 @@ struct LogInView_Previews: PreviewProvider {
             .environmentObject(AuthManager())
             .environmentObject(HabitManager())
             .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
+        LogInView()
+            .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+        LogInView()
+            .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Plus"))
+        LogInView()
+            .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        LogInView()
+            .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
+        LogInView()
+            .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8 Plus"))
+        LogInView()
+            .environmentObject(AuthManager())
+            .environmentObject(HabitManager())
+            .environmentObject(KeyboardManager())
+            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }

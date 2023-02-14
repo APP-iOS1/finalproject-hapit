@@ -20,11 +20,6 @@ struct JellyConfetti: View{
                 .modifier(ParticlesModifier())
                 .offset(x: -100, y : -50)
             
-//            Text("축하합니다. \(title)을 얻으셨어요.")
-//                .font(.custom("IMHyemin-Regular", size: 13))
-//                .foregroundColor(.pink)
-                
-            
             Circle()
                 .fill(Color.red)
                 .frame(width: 12, height: 12)

@@ -47,7 +47,10 @@ struct AddFriendView: View {
             ScrollView {
                 ForEach(Array(users.enumerated()), id: \.1) { (index, user) in
                     if user.name.contains(friendNameText) {
-                        FriendsEditRow(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, isAdded: $isAdded, selectedFriend: $selectedFriend, friend: user, isRemoveOrAdd: false)
+                        FriendsEditRow(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert,
+                                       isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot,
+                                       isAdded: $isAdded, selectedFriend: $selectedFriend,
+                                       friend: user, isRemoveOrAdd: false)
                     }
                 }
             }
@@ -63,15 +66,14 @@ struct AddFriendView: View {
                 }
             }
         }
-        // TODO: 삼항연산자에서 isAdded 포함해서 enum으로 변경하기
         .customAlert(isPresented: $isAddAlert,
                      title: friendOrNot ? "😮" : "친구 신청 완료!",
                      message: friendOrNot ? "이미 친구인 유저예요❗️" : "해피들이 메시지를 전달했어요 💌",
                      primaryButtonTitle: "완료",
-                     primaryAction: { Task {
+                     primaryAction: {
             isAddAlert = false
             friendOrNot = false
-        }},
+        },
                      withCancelButton: false)
         .customAlert(isPresented: $isAddedAlert,
                      title: "친구 신청 완료!",
@@ -84,9 +86,3 @@ struct AddFriendView: View {
                      withCancelButton: false)
     }
 }
-
-//struct AddFriendView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddFriendView()
-//    }
-//}

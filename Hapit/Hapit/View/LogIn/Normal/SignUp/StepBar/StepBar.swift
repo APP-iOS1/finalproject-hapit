@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StepBar: View {
     let nowStep: Int
+    
     var body: some View {
         HStack(spacing: 0) {
             ForEach(1...3, id: \.self) { index in
@@ -20,7 +21,7 @@ struct StepBar: View {
                         .frame(width: 30)
                         .overlay {
                             Text("\(index)")
-                                .font(.title3)
+                                .font(.custom("IMHyemin-Bold", size: 28))
                                 .foregroundColor(Color.white)
                         }
                 } else {
@@ -30,7 +31,7 @@ struct StepBar: View {
                         .frame(width: 30)
                         .overlay {
                             Text("\(index)")
-                                .font(.title3)
+                                .font(.custom("IMHyemin-Bold", size: 28))
                                 .foregroundColor(index == nowStep ? Color.white : Color("GrayFontColor"))
                         }
                 }
@@ -69,8 +70,8 @@ struct StepBar: View {
     }
 }
 
-struct StepBar_Previews: PreviewProvider {
-    static var previews: some View {
-        StepBar(nowStep: 2)
-    }
-}
+//struct StepBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StepBar(nowStep: 2)
+//    }
+//}

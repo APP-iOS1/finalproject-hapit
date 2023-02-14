@@ -21,7 +21,9 @@ struct EditFriendView: View {
         ZStack {
             VStack {
                 NavigationLink {
-                    AddFriendView(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert, isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot, isAdded: $isAdded, selectedFriend: $selectedFriend)
+                    AddFriendView(isAddAlert: $isAddAlert, isAddedAlert: $isAddedAlert,
+                                  isRemoveAlert: $isRemoveAlert, friendOrNot: $friendOrNot,
+                                  isAdded: $isAdded, selectedFriend: $selectedFriend)
                 } label: {
                     Text("새로운 친구 추가하기")
                         .font(.custom("IMHyemin-Bold", size: 17))
@@ -54,25 +56,17 @@ struct EditFriendView: View {
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity)
         .background(Color("BackgroundColor"))
-        .onAppear {
-            Task {
-                // 여기서 바로 패치안됨;
-                await userInfoManager.fetchUserInfo()
-            }
+        .task {
+            await userInfoManager.fetchUserInfo()
         }
         .customAlert(isPresented: $isRemoveAlert,
                      title: "정말 삭제하실 건가요?",
                      message: "삭제해도 메시지는 가지 않아요❗️",
                      primaryButtonTitle: "삭제",
                      primaryAction: { Task {
-            try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "", friendID: selectedFriend.id)
+            try await userInfoManager.removeFriendData(userID: userInfoManager.currentUserInfo?.id ?? "",
+                                                       friendID: selectedFriend.id)
         }},
                      withCancelButton: true)
-    }
-}
-
-struct EditFriendView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditFriendView(friends: .constant([User]()))
     }
 }

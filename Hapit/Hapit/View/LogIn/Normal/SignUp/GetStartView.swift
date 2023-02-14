@@ -15,25 +15,41 @@ struct GetStartView: View {
     @Binding var email: String
     @Binding var pw: String
     
+    var deviceWidth = UIScreen.main.bounds.size.width
+    var deviceHeight = UIScreen.main.bounds.size.height
+    
     // 화면비율 1/4 : 1/12.5 : 1/50
     var body: some View {
         GeometryReader { geo in
-            VStack() {
-                HStack() {
-                    StepBar(nowStep: 3)
-                        .padding(.leading, -8)
-                    Spacer()
-                }
-                .frame(height: 30)
-                
-                HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Hapit")
-                            .foregroundColor(Color.accentColor)
-                        Text("회원가입 완료!")
+            VStack {
+                Group {
+                    // 2. iOS 버전을 기준으로 StepBar 분기처리
+                    // 3. 분기 내에서 디바이스 높이를 기준으로 GuideText 분기처리
+                    if #available(iOS 16.0, *) {
+                        StepBar_16(step: 1)
+                        
+                        if deviceHeight < CGFloat(700.0) {
+                            GetStartGuideText(fontSize: 20)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            GetStartGuideText(fontSize: 22)
+                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            GetStartGuideText(fontSize: 28)
+                        } else {
+                            GetStartGuideText(fontSize: 34)
+                        }
+                    } else {
+                        StepBar_15(step: 1)
+                        
+                        if deviceHeight < CGFloat(700.0) {
+                            GetStartGuideText(fontSize: 20)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
+                            GetStartGuideText(fontSize: 22)
+                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
+                            GetStartGuideText(fontSize: 28)
+                        } else {
+                            GetStartGuideText(fontSize: 34)
+                        }
                     }
-                    .font(.custom("IMHyemin-Bold", size: 34))
-                    Spacer()
                 }
                 .padding(.bottom, geo.size.height / 4)
                 

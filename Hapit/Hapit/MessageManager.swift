@@ -27,7 +27,8 @@ final class MessageManager: ObservableObject {
                     "sendTime": msg.sendTime,
                     "senderID": msg.senderID,
                     "receiverID": msg.receiverID,
-                    "isRead": msg.isRead
+                    "isRead": msg.isRead,
+                    "challengeID": msg.challengeID
                 ])
         } catch {
             throw(error)
@@ -49,6 +50,7 @@ final class MessageManager: ObservableObject {
     }
     
     // TODO: async
+    // TODO: 밑에 fetchFriendMessage랑 if문 써서 합칠 수 있을 것 같음
     func fetchMessage(userID: String) {
         database.collection("User")
             .document(userID).collection("Message")
@@ -63,9 +65,16 @@ final class MessageManager: ObservableObject {
                         let senderID: String = docData["senderID"] as? String ?? ""
                         let receiverID: String = docData["receiverID"] as? String ?? ""
                         let isRead: Bool = docData["isRead"] as? Bool ?? false
+                        let challengeID: String = docData["challengeID"] as? String ?? ""
                         if let sendStamp = docData["sendTime"] as? Timestamp {
                             let sendTime = sendStamp.dateValue()
-                            let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID, isRead: isRead)
+                            let msgData: Message = Message(id: id,
+                                                           messageType: messageType,
+                                                           sendTime: sendTime,
+                                                           senderID: senderID,
+                                                           receiverID: receiverID,
+                                                           isRead: isRead,
+                                                           challengeID: challengeID)
                             self.messageArray.append(msgData)
                         }
                     }
@@ -89,9 +98,16 @@ final class MessageManager: ObservableObject {
                 let senderID: String = docData["senderID"] as? String ?? ""
                 let receiverID: String = docData["receiverID"] as? String ?? ""
                 let isRead: Bool = docData["isRead"] as? Bool ?? false
+                let challengeID: String = docData["challengeID"] as? String ?? ""
                 if let sendStamp = docData["sendTime"] as? Timestamp {
                     let sendTime = sendStamp.dateValue()
-                    let msgData: Message = Message(id: id, messageType: messageType, sendTime: sendTime, senderID: senderID, receiverID: receiverID, isRead: isRead)
+                    let msgData: Message = Message(id: id,
+                                                   messageType: messageType,
+                                                   sendTime: sendTime,
+                                                   senderID: senderID,
+                                                   receiverID: receiverID,
+                                                   isRead: isRead,
+                                                   challengeID: challengeID)
                     self.friendMessageArray.append(msgData)
                 }
             }

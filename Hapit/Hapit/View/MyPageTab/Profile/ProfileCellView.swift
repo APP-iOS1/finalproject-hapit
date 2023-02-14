@@ -89,7 +89,7 @@ struct ProfileCellView: View {
                 isSelectedJelly = bearArray.firstIndex(of: userInfoManager.currentUserInfo?.proImage ?? "") ?? 0
             }
         }
-        .background()
+        .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal, 20)
         .padding(.top)

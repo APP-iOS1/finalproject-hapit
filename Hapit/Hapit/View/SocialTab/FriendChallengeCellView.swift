@@ -70,8 +70,7 @@ struct FriendChallengeCellView: View {
             
         }//HStack
         .padding(20)
-        .foregroundColor(.black)
-        .background(.white)
+        .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal)
         .task {

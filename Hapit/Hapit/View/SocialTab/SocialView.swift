@@ -162,7 +162,7 @@ struct FriendsRow: View {
     var body: some View {
         HStack {
             Text("\(index)")
-                .font(.largeTitle)
+                .font(.custom("IMHyemin-Bold", size: 34))
                 .foregroundColor(Color("AccentColor"))
             
             Image(friend.proImage)
@@ -173,17 +173,16 @@ struct FriendsRow: View {
             
             VStack(alignment: .leading, spacing: 3) {
                 Text("\(friend.name)")
-                    .foregroundColor(.black)
-                    .bold()
+                    .font(.custom("IMHyemin-Bold", size: 17))
                 
                 Text("현재 챌린지 개수: \(count)")
-                    .font(.subheadline)
-                    .foregroundColor(Color(.systemGray))
+                    .font(.custom("IMHyemin-Regular", size: 15))
+                    .foregroundColor(Color(.systemGray2))
             }
             Spacer()
         }
         .padding()
-        .background(.white)
+        .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal)
     }

@@ -10,10 +10,11 @@ import RealmSwift
 import Combine
 
 struct ChallengeCellView: View {
-
+    
     // MARK: - Property Wrappers
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
+    @Environment(\.scenePhase) var scenePhase
     @State var currentUserInfos: [User]
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
@@ -21,8 +22,23 @@ struct ChallengeCellView: View {
     var timer = Timer.publish(
         every: 86400 - Date().timeIntervalSince(Calendar.current.startOfDay(for: Date())),
         on: .main, in: .common).autoconnect()
-
- // MARK: - Body
+    
+    @AppStorage("currentDate") var currentDate: String = UserDefaults.standard.string(forKey: "currentDate") ?? ""
+    
+    // MARK: - Method
+    /// 오늘 날짜를 "yy년 MM월 dd일" 형태로 반환하는 함수
+    func getToday() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dateFormatter.dateFormat = "yy년 MM월 dd일" // "yyyy-MM-dd HH:mm:ss"
+        
+        let dateCreatedAt = Date(timeIntervalSince1970: Date().timeIntervalSince1970)
+        
+        return dateFormatter.string(from: dateCreatedAt)
+    }
+    
+    // MARK: - Body
     var body: some View {
         HStack {
             Button {
@@ -34,14 +50,9 @@ struct ChallengeCellView: View {
                     .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
                 
             }
-            .onReceive(timer, perform: { time in
-                $localChallenge.count.wrappedValue = habitManager.countDays(count:  $localChallenge.count.wrappedValue, isChecked: $localChallenge.isChecked.wrappedValue)
-
-                $localChallenge.isChecked.wrappedValue = false
-            })
             .padding(.trailing, 5)
             .buttonStyle(PlainButtonStyle())
-
+            
             //checkButton
             VStack(alignment: .leading, spacing: 1){
                 VStack(alignment: .leading, spacing: 2){
@@ -49,7 +60,7 @@ struct ChallengeCellView: View {
                         .font(.custom("IMHyemin-Regular", size: 13))
                         .foregroundColor(.gray)
                     Text(challenge.challengeTitle)
-                        .font(.custom("IMHyemin-Bold", size: 22))
+                        .font(.custom("IMHyemin-Bold", size: 20))
                 }//VStack
                 
                 HStack(spacing: 5){
@@ -77,7 +88,7 @@ struct ChallengeCellView: View {
             
         }//HStack
         .padding(20)
-//        .foregroundColor(.black)
+        //        .foregroundColor(.black)
         .background(
             Color("CellColor")
         )
@@ -96,7 +107,16 @@ struct ChallengeCellView: View {
                 Image(systemName: "trash")
             }
         } // contextMenu
-        .onAppear(){
+        .onAppear() {
+            if currentDate != getToday() { // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우 - 앱이 켜질 때마다 서버에 업로드되는 메모리 낭비를 방지
+                $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
+                                                                            isChecked: $localChallenge.isChecked.wrappedValue)
+                $localChallenge.isChecked.wrappedValue = false // 초기화
+            }
+            
+            // 서버에 업데이트
+            
+            
             currentUserInfos = []
             Task {
                 // 함께 챌린지 진행하는 친구들 프사
@@ -104,6 +124,14 @@ struct ChallengeCellView: View {
                     try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
                 }
             }
+        }
+        .onChange(of: scenePhase) { _ in // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우
+            if currentDate != getToday() { // 자정이 되는 순간
+                $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
+                                                                            isChecked: $localChallenge.isChecked.wrappedValue)
+                $localChallenge.isChecked.wrappedValue = false
+            }
+            currentDate = getToday()
         }
     }
 }

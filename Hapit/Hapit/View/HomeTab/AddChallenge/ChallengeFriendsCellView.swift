@@ -50,8 +50,7 @@ struct ChallengeFriendsCellView: View {
                 
             }//HStack
             .padding(10)
-            .foregroundColor(.black)
-            .background(.white)
+            .background(Color("CellColor"))
             .cornerRadius(15)
             .padding(.horizontal, 20)
             .padding(.bottom, 5)

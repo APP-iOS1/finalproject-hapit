@@ -19,13 +19,11 @@ struct CustomAlert: View {
   var body: some View {
     VStack(spacing: 12) {
       Text(title)
-        .foregroundColor(.black)
         .font(.custom("IMHyemin-Bold", size: 20))
         .padding(.top, 30)
 
       Text(message)
         .font(.custom("IMHyemin-Regular", size: 17))
-        .foregroundColor(.black)
         .multilineTextAlignment(.center)
         .padding(.bottom, 50)
 

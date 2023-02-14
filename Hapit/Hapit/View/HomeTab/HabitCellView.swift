@@ -41,9 +41,8 @@ struct HabitCellView: View {
             
         }//HStack
         .padding(20)
-        .foregroundColor(.black)
         .background(
-            .white
+            Color("CellColor")
         )
         .cornerRadius(20)
         .padding(.horizontal, 20)

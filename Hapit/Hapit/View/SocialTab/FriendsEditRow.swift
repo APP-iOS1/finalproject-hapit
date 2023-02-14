@@ -76,7 +76,7 @@ struct FriendsEditRow: View {
             }
         }
         .padding()
-        .background(.white)
+        .background(Color("CellColor"))
         .cornerRadius(20)
         .padding(.horizontal)
     }

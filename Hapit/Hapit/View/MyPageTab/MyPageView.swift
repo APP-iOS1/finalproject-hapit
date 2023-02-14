@@ -31,9 +31,7 @@ struct MyPageView: View {
                     ProfileCellView(nickName: $nickName, email: $email)
                     
                     ZStack{
-                        
-    
-                        
+                    
                         if isShowedConfetti{
                             
                             ZStack{

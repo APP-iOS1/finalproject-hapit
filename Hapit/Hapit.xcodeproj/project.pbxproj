@@ -44,6 +44,7 @@
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
 		950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950580852994994B00381AE8 /* JellyEmptyView.swift */; };
 		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
+		959DCC3E299B52F4005CB3A2 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959DCC3D299B52F4005CB3A2 /* Screen.swift */; };
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
@@ -157,6 +158,7 @@
 		67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
 		950580852994994B00381AE8 /* JellyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyEmptyView.swift; sourceTree = "<group>"; };
+		959DCC3D299B52F4005CB3A2 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		95F63A69299763C400FBF966 /* JellyConfetti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyConfetti.swift; sourceTree = "<group>"; };
 		95FAB87129920B0100E797EA /* BadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManager.swift; sourceTree = "<group>"; };
@@ -299,6 +301,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		959DCC3C299B52B6005CB3A2 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				959DCC3D299B52F4005CB3A2 /* Screen.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		C54829822987503B000C743E /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
+				959DCC3C299B52B6005CB3A2 /* Configuration */,
 				F40B9A512988CDFB00385014 /* Extension */,
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
@@ -741,6 +752,7 @@
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
+				959DCC3E299B52F4005CB3A2 /* Screen.swift in Sources */,
 				95FAB8742992334900E797EA /* Badge.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				673EA3942995495400AB5EA8 /* LocalChallenge.swift in Sources */,

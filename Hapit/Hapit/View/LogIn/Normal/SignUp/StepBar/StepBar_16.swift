@@ -10,14 +10,16 @@ import SwiftUI
 @available(iOS 16, *)
 struct StepBar_16: View {
     var step: Int
+    var frameSize: CGFloat
+    var fontSize: CGFloat
     
     var body: some View {
         HStack() {
-            StepBar(nowStep: step)
+            StepBar(nowStep: step, frameSize: frameSize, fontSize: fontSize)
                 .padding(.leading, -8)
             Spacer()
         }
-        .frame(height: 30)
+        .frame(height: frameSize)
         .padding(.top, 22)
     }
 }

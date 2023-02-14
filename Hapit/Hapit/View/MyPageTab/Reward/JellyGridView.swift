@@ -24,41 +24,36 @@ struct JellyGridView: View {
         ScrollView{
             VStack{
                 
-                LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
+                if authManager.bearBadges.count > 20{
+                    LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
+                        
+                        ForEach(authManager.bearBadges, id: \.id) { badge in
+                            JellyBadgeView(badge: badge)
+                            //.border(.black)
+                        }
+                    }
                     
-                    ForEach(authManager.bearBadges, id: \.id) { badge in
-                        JellyBadgeView(badge: badge)
-                        //.border(.black)
+                }else{
+                    if #available(iOS 15.0, *) {
+                        ProgressView("가져오는 중...")
+                            .tint(.pink)
+                            .foregroundColor(.pink)
+                            
+                    } else {
+                        ProgressView("가져오는 중...")
+                            .progressViewStyle(CircularProgressViewStyle(tint: .pink))
+                            .foregroundColor(.pink)
                     }
                 }
                 
             }
             .padding()
         }
-//        .onReceive(authManager.$badges){_ in
-//            
-//            for (badgeName, data) in zip(authManager.newBadges, authManager.bearimagesDatas){
-//                
-//                let id = UUID().uuidString
-//                let newBadge = Badge(id: id, imageName: badgeName, title: showmetheTitle(imageName: badgeName), imageData: data)
-//                
-//                authManager.bearBadges.append(newBadge)
-//            }
-//            
-//            authManager.bearBadges = authManager.bearBadges.reversed()
-//            
-//        }
-        .onAppear{
+        .task {
             
             authManager.bearBadges.removeAll()
             
-            Task{
-                for _ in 0..<20{
-                    
-                    let id = UUID().uuidString
-                    
-                    authManager.bearBadges.append(Badge(id: id, imageName: "", title: "", imageData: Data()))
-                }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){
                 
                 for (badgeName, data) in zip(authManager.newBadges, authManager.bearimagesDatas){
                     
@@ -68,7 +63,12 @@ struct JellyGridView: View {
                     authManager.bearBadges.append(newBadge)
                 }
                 
-                authManager.bearBadges = authManager.bearBadges.reversed()
+                for _ in 0..<20{
+                    
+                    let id = UUID().uuidString
+                    
+                    authManager.bearBadges.append(Badge(id: id, imageName: "", title: "", imageData: Data()))
+                }
                 
             }
         }

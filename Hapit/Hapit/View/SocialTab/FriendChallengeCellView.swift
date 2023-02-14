@@ -35,8 +35,8 @@ struct FriendChallengeCellView: View {
                                 datas: self.datas,
                                 // 받을 사람의 FCMToken
                                 to: receiverFCMToken,
-                                title: "Test" ,
-                                body: "Test"
+                                title: "\(userInfoManager.currentUserInfo?.name ?? "친구")가 콕 찔렀어요",
+                                body: "\(challenge.challengeTitle) 챌린지를 수행하세요!"
                             )
                             self.notificationContent = ""
                             Task{

@@ -208,10 +208,8 @@ final class HabitManager: ObservableObject{
         .eraseToAnyPublisher()
     }
     
-    // MARK: - 24시간 지나면 연속일수를 업데이트하는 함수
-    func updateCount(challenge: Challenge) -> AnyPublisher<Void, Error> {
-        let count = countDays(count: challenge.count, isChecked: challenge.isChecked)
-        
+    // MARK: - 로컬에서 변경된 연속일수를 업데이트하는 함수
+    func updateCount(challenge: Challenge, count: Int) -> AnyPublisher<Void, Error> {
         return Future<Void, Error> {  promise in
             self.database.collection("Challenge")
                 .document(challenge.id)

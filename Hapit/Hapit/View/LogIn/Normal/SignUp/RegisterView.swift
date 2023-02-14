@@ -143,8 +143,6 @@ struct RegisterView: View, KeyboardReadable {
                 }
                 .padding(.bottom, geo.size.height / 16)
                 
-                //Spacer()
-                
                 VStack(spacing: stackSpacing) {
                     VStack(alignment: .leading) {
                         HStack {
@@ -428,7 +426,6 @@ struct RegisterView: View, KeyboardReadable {
                 }
                 .disabled(isOk())
                 .padding(.vertical, geo.size.height / 50)
-                //.padding(.vertical, 5)
             }
             //.edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
             .ignoresSafeArea(.keyboard)
@@ -477,7 +474,6 @@ struct ClearTextFieldModifier: ViewModifier {
         content
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
-            //.font(.subheadline)
     }
 }
 

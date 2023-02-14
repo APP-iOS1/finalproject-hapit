@@ -41,7 +41,6 @@
 		67BD574E298FE3C600DD37B0 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574D298FE3C600DD37B0 /* LocalNotification.swift */; };
 		67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */; };
 		67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */; };
-		67CEE3F2299B5CC500A718D9 /* TextFieldPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CEE3F1299B5CC500A718D9 /* TextFieldPlaceholder.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
 		950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950580852994994B00381AE8 /* JellyEmptyView.swift */; };
 		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -157,7 +156,6 @@
 		67BD574D298FE3C600DD37B0 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
-		67CEE3F1299B5CC500A718D9 /* TextFieldPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPlaceholder.swift; sourceTree = "<group>"; };
 		950580852994994B00381AE8 /* JellyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyEmptyView.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
 		95F63A69299763C400FBF966 /* JellyConfetti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyConfetti.swift; sourceTree = "<group>"; };
@@ -399,7 +397,6 @@
 				F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */,
 				F423787E2990A2C40005B12D /* NavigationBarColor.swift */,
 				F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */,
-				67CEE3F1299B5CC500A718D9 /* TextFieldPlaceholder.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -722,7 +719,6 @@
 				F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */,
 				3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
-				67CEE3F2299B5CC500A718D9 /* TextFieldPlaceholder.swift in Sources */,
 				674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
 				C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */,

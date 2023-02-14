@@ -30,8 +30,7 @@ struct FriendsEditRow: View {
                 .padding(10)
             
                 Text(friend.name)
-                    .foregroundColor(.black)
-                    .bold()
+                .font(.custom("IMHyemin-Bold", size: 17))
             
             Spacer()
             
@@ -78,7 +77,8 @@ struct FriendsEditRow: View {
         .padding()
         .background(Color("CellColor"))
         .cornerRadius(20)
-        .padding(.horizontal)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 7)
     }
 }
 

@@ -65,7 +65,7 @@ struct DedicatedWriteDiaryView: View {
                         Spacer()
                         Text("\(content.count)/\(maxCharacterLength)")
                             .font(.footnote)
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     }
                     
                     Spacer()
@@ -81,7 +81,7 @@ struct DedicatedWriteDiaryView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 17)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("GrayFontColor"))
                                 .font(.custom("IMHyemin-Bold", size: 17))
                         } // label
                     } // ToolbarItem

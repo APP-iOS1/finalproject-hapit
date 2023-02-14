@@ -42,7 +42,7 @@ struct ChallengeFriendsCellView: View {
                     
                     Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
                         .font(.title)
-                        .foregroundColor(isChecked ? .green : .gray)
+                        .foregroundColor(isChecked ? .green : Color("GrayFontColor"))
                     
                 }
                 .buttonStyle(PlainButtonStyle())

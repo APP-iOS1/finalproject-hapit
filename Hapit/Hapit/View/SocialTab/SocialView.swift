@@ -174,10 +174,11 @@ struct FriendsRow: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text("\(friend.name)")
                     .font(.custom("IMHyemin-Bold", size: 17))
+                    .foregroundColor(Color("MainFontColor"))
                 
                 Text("현재 챌린지 개수: \(count)")
                     .font(.custom("IMHyemin-Regular", size: 15))
-                    .foregroundColor(Color(.systemGray2))
+                    .foregroundColor(Color("GrayFontColor"))
             }
             Spacer()
         }

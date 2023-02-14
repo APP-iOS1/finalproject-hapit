@@ -33,7 +33,7 @@ struct CustomAlert: View {
             Text("취소")
                   .font(.custom("IMHyemin-Bold", size: 17))
               .padding(.vertical, 10)
-              .foregroundColor(.gray)
+              .foregroundColor(Color("GrayFontColor"))
               .frame(maxWidth: .infinity)
           }
         }

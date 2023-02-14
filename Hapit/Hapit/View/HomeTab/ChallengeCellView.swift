@@ -47,7 +47,7 @@ struct ChallengeCellView: View {
             } label: {
                 Image(systemName: $localChallenge.isChecked.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .font(.title)
-                    .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : .gray)
+                    .foregroundColor($localChallenge.isChecked.wrappedValue ? .green : Color("GrayFontColor"))
                 
             }
             .padding(.trailing, 5)
@@ -58,15 +58,17 @@ struct ChallengeCellView: View {
                 VStack(alignment: .leading, spacing: 2){
                     Text(challenge.createdDate)
                         .font(.custom("IMHyemin-Regular", size: 13))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("GrayFontColor"))
                     Text(challenge.challengeTitle)
                         .font(.custom("IMHyemin-Bold", size: 20))
+                        .foregroundColor(Color("MainFontColor"))
                 }//VStack
                 
                 HStack(spacing: 5){
                     Text(Image(systemName: "flame.fill"))
                         .foregroundColor(.orange)
                     Text("연속 \($localChallenge.count.wrappedValue)일째")
+                        .foregroundColor(Color("MainFontColor"))
                     Spacer()
                     ForEach(currentUserInfos){ user in
                         Image("\(user.proImage)")
@@ -77,7 +79,7 @@ struct ChallengeCellView: View {
                             .background(Color("CellColor"))
                             .clipShape(Circle())
                             .overlay(Circle().stroke())
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                             .padding(.trailing, -12)
                     }
                 }

@@ -208,7 +208,7 @@ struct ChallengeDetailView: View {
                         showsCustomAlert.toggle()
                     } label: {
                         Image(systemName: "trash")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
                 
@@ -239,7 +239,7 @@ struct ChallengeDetailView: View {
                         }
                     } label: {
                         Image(systemName: isChallengeAlarmOn ? "bell.fill" : "bell.slash.fill")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -248,7 +248,7 @@ struct ChallengeDetailView: View {
                         showsCreatePostView.toggle()
                     } label: {
                         Image(systemName: "square.and.pencil")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
             } // toolbar

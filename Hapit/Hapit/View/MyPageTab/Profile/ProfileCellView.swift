@@ -52,7 +52,6 @@ struct ProfileCellView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(localNickname)
                                 .font(.custom("IMHyemin-Bold", size: 22))
-                                .padding(.leading, -5)
                             
                             Text("\(email)")
                                 .font(.custom("IMHyemin-Regular", size: 12))
@@ -66,7 +65,7 @@ struct ProfileCellView: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke()
-                            .frame(width: 210, height: 25)
+                            .frame(width: 200, height: 25)
                             .overlay{
                                 Text("닉네임 수정")
                                     .font(.custom("IMHyemin-Bold", size: 13))

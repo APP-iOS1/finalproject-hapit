@@ -51,7 +51,7 @@ struct LocalNotificationSettingView: View {
                         isShowingAlarmSheet = false
                     } label: {
                         Image(systemName: "multiply")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     } // label
                 } // ToolbarItem
                 

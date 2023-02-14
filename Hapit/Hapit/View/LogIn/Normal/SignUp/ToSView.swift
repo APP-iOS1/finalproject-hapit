@@ -67,7 +67,7 @@ struct ToSView: View {
                             }
                         }){
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(agreeAll ? Color.accentColor : .gray)
+                                .foregroundColor(agreeAll ? Color.accentColor : Color("GrayFontColor"))
                                 .font(.title)
                         }
                         Text("약관 전체동의")
@@ -76,7 +76,7 @@ struct ToSView: View {
                     }
                     
                     Divider()
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("GrayFontColor"))
                     
                     Group {
                         HStack {
@@ -85,7 +85,7 @@ struct ToSView: View {
                                 isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
                             }){
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(agreeService ? Color.accentColor : .gray)
+                                    .foregroundColor(agreeService ? Color.accentColor : Color("GrayFontColor"))
                             }
                             Text("(필수) 서비스 이용약관 동의")
                                 .font(.custom("IMHyemin-Regular", size: 16))
@@ -102,7 +102,7 @@ struct ToSView: View {
                                 isAllChecked(service: agreeService, privates: agreePrivate, ad: agreeAD)
                             }){
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(agreePrivate ? Color.accentColor : .gray)
+                                    .foregroundColor(agreePrivate ? Color.accentColor : Color("GrayFontColor"))
                             }
                             Text("(필수) 개인정보 수집 및 이용동의")
                                 .font(.custom("IMHyemin-Regular", size: 16))
@@ -118,7 +118,7 @@ struct ToSView: View {
                                 agreeAD.toggle()
                             }){
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(agreeAD ? Color.accentColor : .gray)
+                                    .foregroundColor(agreeAD ? Color.accentColor : Color("GrayFontColor"))
                             }
                             Text("(선택) E-mail 광고성 정보 수신동의") // 크게 중요해보이지 않음
                                 .font(.custom("IMHyemin-Regular", size: 16))
@@ -159,7 +159,7 @@ struct ToSView: View {
                                     .frame(maxWidth: .infinity)
                                     .background {
                                         RoundedRectangle(cornerRadius: 10)
-                                            .fill(agreeAll ? Color.accentColor : .gray)
+                                            .fill(agreeAll ? Color.accentColor : Color("GrayFontColor"))
                                     }
                             } else {
                                 Text("가입하기")
@@ -169,7 +169,7 @@ struct ToSView: View {
                                     .frame(maxWidth: .infinity)
                                     .background {
                                         RoundedRectangle(cornerRadius: 10)
-                                            .fill(agreeAll ? Color.accentColor : .gray)
+                                            .fill(agreeAll ? Color.accentColor : Color("GrayFontColor"))
                                     }
                             }
                         }

@@ -81,7 +81,7 @@ struct LocalNotificationSettingView: View {
             .onAppear {
                 // 저장하기 버튼을 안 누르고 모달을 닫을 경우에 알림이 해제되어 있어야 함. (아이콘)
                 isChallengeAlarmOn = false
-                
+
                 Task {
                     await lnManager.getCurrentSettings()
                 }

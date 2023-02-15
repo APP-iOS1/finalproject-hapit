@@ -36,12 +36,14 @@ struct ChallengeFriendsView: View {
                     dismiss()
                 }label: {
                     Text("함께할 친구 추가하기")
+                        .font(.custom("IMHyemin-Bold", size: 16))
                         .foregroundColor(.white)
                         .frame(width: 330,height: 50)
                         .background {
                             RoundedRectangle(cornerRadius: 10)
                         }
                 }//Button
+                .padding(.bottom, 10)
             }//VStack
         }//ZStack
         .background(Color("BackgroundColor").ignoresSafeArea())

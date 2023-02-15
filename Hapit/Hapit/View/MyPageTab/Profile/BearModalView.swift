@@ -24,7 +24,7 @@ struct BearModalView: View {
     
     var body: some View {
         VStack {
-            Text("대표 이미지 설정")
+            Text("프로필 이미지 설정")
                 .font(.custom("IMHyemin-Bold", size: 22))
             
             ScrollView {
@@ -41,9 +41,9 @@ struct BearModalView: View {
                                     .frame(width: 50, height: 50)
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .padding(5)
-                                    .overlay(RoundedRectangle(cornerRadius: 20)
+                                    .overlay(RoundedRectangle(cornerRadius: 50)
                                         .stroke(self.isSelectedJelly == index ? Color("DarkPinkColor") : Color("GrayFontColor"),
-                                                lineWidth: 2))
+                                                lineWidth: 1.5))
                             }
                         }
                     }

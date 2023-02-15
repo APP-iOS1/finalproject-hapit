@@ -80,7 +80,10 @@ struct HomeView: View {
         }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
             AddChallengeView(isAddHabitViewShown: $isAddHabitViewShown)
+                .background(Color("BackgroundColor"))
+
         }
+        
     }//body
     
     func getToday() -> String {

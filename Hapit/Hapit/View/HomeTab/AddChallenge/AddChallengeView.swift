@@ -16,6 +16,9 @@ struct AddChallengeView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var messageManager: MessageManager
+    @State private var receiverFCMToken: String = ""
+    @State private var notificationContent: String = ""
+    @ObservedObject private var datas = fcmManager
     
     @State private var challengeTitle: String = ""
     @Binding var isAddHabitViewShown: Bool
@@ -58,7 +61,7 @@ struct AddChallengeView: View {
                             .cornerRadius(15)
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
-                        
+
                         HStack {
                             if isOverCount {
                                 Text("최대 \(maximumCount)자까지만 입력해주세요.")
@@ -120,13 +123,13 @@ struct AddChallengeView: View {
                                 mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                                 
                                 //친구들 uid 저장
-                                //                            for friend in habitManager.seletedFriends {
-                                //                                let uid = friend.uid
-                                //                                mateArray.append(uid)
-                                //
-                                //                            }
-                                
-                                // 함께챌린지 초대 메시지 보내기
+
+    //                            for friend in habitManager.seletedFriends {
+    //                                let uid = friend.uid
+    //                                mateArray.append(uid)
+    //
+    //                            }
+
                                 for friend in habitManager.seletedFriends {
                                     try await messageManager.sendMessage(Message(id: UUID().uuidString,
                                                                                  messageType: "invite",
@@ -142,10 +145,25 @@ struct AddChallengeView: View {
                                 
                                 // Firestore에 업로드 (Firestore)
                                 habitManager.createChallenge(challenge: newChallenge)
-                                
+
                                 // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
                                 $localChallenges.append(newChallenge.localChallenge)
                                 
+                                // mateArray에 있는 친구들 돌면서 초대 메세지(FCM) 보내기
+                                if newChallenge.mateArray.count > 1 {
+                                    for friendId in newChallenge.mateArray{
+                                        receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
+                                        
+                                        self.datas.sendFirebaseMessageToUser(
+                                            datas: self.datas,
+                                            // 받을 사람의 FCMToken
+                                            to: receiverFCMToken,
+                                            title: "그룹챌린지 요청이 왔어요!",
+                                            body: "나랑 챌린지할래? :)"
+                                        )
+                                    }
+                                }
+
                                 isAddHabitViewShown = false
                                 
                                 habitManager.loadChallenge()
@@ -154,6 +172,7 @@ struct AddChallengeView: View {
                                 throw(error)
                             }
                         }
+
                     } label: {
                         Text("챌린지 생성하기")
                             .font(.custom("IMHyemin-Bold", size: 16))
@@ -165,6 +184,8 @@ struct AddChallengeView: View {
                                     .fill(Color.accentColor)
                             }
                             .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
+
                     } // label
                     .disabled((isOverCount == true) || (challengeTitle.count < 1))
                 } // VStack
@@ -176,6 +197,7 @@ struct AddChallengeView: View {
                         Button {
                             habitManager.seletedFriends = []
                             isAddHabitViewShown = false
+
                         } label: {
                             Image(systemName: "multiply")
                                 .foregroundColor(Color("GrayFontColor"))
@@ -186,6 +208,7 @@ struct AddChallengeView: View {
                         NavigationLink {
                             // 친구 데이터 전달
                             ChallengeFriendsView(friends: friends, tempFriend: $tempFriend)
+
                                 .navigationBarBackButtonHidden(true)
                         } label: {
                             Image(systemName: "person.badge.plus")
@@ -207,6 +230,7 @@ struct AddChallengeView: View {
                                 let proImage = try await authManager.getPorImage(uid: friend)
                                 
                                 self.friends.append(ChallengeFriends(uid: friend, proImage: proImage, name: nickname))
+
                             }
                             
                         } catch {
@@ -216,12 +240,11 @@ struct AddChallengeView: View {
                 } // onAppear
             } // ScrollView
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                                VStack{
+                VStack{
+                }
+            }
+            .background(Color("BackgroundColor"))
 
-                                }
-
-                            }
-                            .background(Color("BackgroundColor"))
         }// NavigationView
     } // Body
 }

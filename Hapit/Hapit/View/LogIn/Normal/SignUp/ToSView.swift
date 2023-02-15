@@ -24,43 +24,66 @@ struct ToSView: View {
     
     @EnvironmentObject var authManager: AuthManager
     
-    var deviceWidth = UIScreen.main.bounds.size.width
     var deviceHeight = UIScreen.main.bounds.size.height
     
-    //  1/3.4 - 1/50 - 1/50 비율로 쪼갬
+    var fontSize: CGFloat {
+        if deviceHeight < CGFloat(700.0) {
+            return 14
+        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+            return 15
+        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+            return 16
+        } else {
+            return 17
+        }
+    }
+    
     var body: some View {
         GeometryReader { geo in
             VStack {
                 Group {
-                    // 2. iOS 버전을 기준으로 StepBar 분기처리
-                    // 3. 분기 내에서 디바이스 높이를 기준으로 GuideText 분기처리
+                    // 1. iOS 버전을 기준으로 StepBar 분기처리
+                    // 2. 분기 내에서 디바이스 높이를 기준으로 GuideText 분기처리
                     if #available(iOS 16.0, *) {
-                        StepBar_16(step: 1)
-                        
                         if deviceHeight < CGFloat(700.0) {
-                            ToSGuideText(fontSize: 20)
-                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
-                            ToSGuideText(fontSize: 22)
-                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
-                            ToSGuideText(fontSize: 28)
+                            StepBar_16(step: 2, frameSize: 23, fontSize: 13)
+                            ToSGuideText(fontSize: 23)
+                                .padding(.top, -30)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+                            StepBar_16(step: 2, frameSize: 25, fontSize: 15)
+                            ToSGuideText(fontSize: 25)
+                                .padding(.top, -30)
+                        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+                            StepBar_16(step: 2, frameSize: 28, fontSize: 18)
+                            ToSGuideText(fontSize: 30)
+                                .padding(.top, -30)
                         } else {
+                            StepBar_16(step: 2, frameSize: 30, fontSize: 20)
                             ToSGuideText(fontSize: 34)
+                                .padding(.top, -30)
                         }
                     } else {
-                        StepBar_15(step: 1)
-                        
                         if deviceHeight < CGFloat(700.0) {
-                            ToSGuideText(fontSize: 20)
-                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(750.0) {
-                            ToSGuideText(fontSize: 22)
-                        } else if deviceHeight >= CGFloat(750.0) && deviceHeight < CGFloat(860.0) {
-                            ToSGuideText(fontSize: 28)
+                            StepBar_15(step: 2, frameSize: 23, fontSize: 13)
+                            ToSGuideText(fontSize: 23)
+                                .padding(.top, -30)
+                            Spacer()
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+                            StepBar_15(step: 2, frameSize: 25, fontSize: 15)
+                            ToSGuideText(fontSize: 25)
+                                .padding(.top, -30)
+                        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+                            StepBar_15(step: 2, frameSize: 28, fontSize: 18)
+                            ToSGuideText(fontSize: 30)
+                                .padding(.top, -30)
                         } else {
+                            StepBar_15(step: 2, frameSize: 30, fontSize: 20)
                             ToSGuideText(fontSize: 34)
+                                .padding(.top, -30)
                         }
                     }
                 }
-                .padding(.bottom, geo.size.height / 3.4)
+                .padding(.bottom, geo.size.height / 16)
                 
                 Spacer()
                 
@@ -176,7 +199,7 @@ struct ToSView: View {
                                     }
                             } else {
                                 Text("가입하기")
-                                    .font(.custom("IMHyemin-Bold", size: 16))
+                                    .font(.custom("IMHyemin-Bold", size: fontSize))
                                     .foregroundColor(.white)
                                     .padding()
                                     .frame(maxWidth: .infinity)
@@ -189,7 +212,6 @@ struct ToSView: View {
                     }
                     .disabled(!agreeAll)
                     .padding(.vertical, geo.size.height / 50)
-                    //Spacer()
                 }
             }
             .padding(.horizontal, 20)

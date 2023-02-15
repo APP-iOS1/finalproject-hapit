@@ -21,30 +21,33 @@ struct ChallengeFriendsView: View {
     
     var body: some View {
         ZStack {
-            Spacer()
-            VStack {
-                ScrollView {
+            HStack{
+                Spacer()
+                VStack {
+                    ScrollView {
                         ForEach(friends, id: \.self) { friend in
                             let mate = ChallengeFriends(uid: friend.uid, proImage: friend.proImage ,name: friend.name)
                             ChallengeFriendsCellView(challengeFriends: mate, tempFriend: $tempFriend)
                         }.padding(.top,20)
-                    
-                }
-                Button{
-                    habitManager.seletedFriends = tempFriend
-                    tempFriend = []
-                    dismiss()
-                }label: {
-                    Text("함께할 친구 추가하기")
-                        .font(.custom("IMHyemin-Bold", size: 16))
-                        .foregroundColor(.white)
-                        .frame(width: 330,height: 50)
-                        .background {
-                            RoundedRectangle(cornerRadius: 10)
-                        }
-                }//Button
-                .padding(.bottom, 10)
-            }//VStack
+                        
+                    }
+                    Button{
+                        habitManager.seletedFriends = tempFriend
+                        tempFriend = []
+                        dismiss()
+                    }label: {
+                        Text("함께할 친구 추가하기")
+                            .font(.custom("IMHyemin-Bold", size: 16))
+                            .foregroundColor(.white)
+                            .frame(width: 330,height: 50)
+                            .background {
+                                RoundedRectangle(cornerRadius: 10)
+                            }
+                    }//Button
+                    .padding(.bottom, 10)
+                }//VStack
+            Spacer()
+            }
         }//ZStack
         .background(Color("BackgroundColor").ignoresSafeArea())
         .navigationBarTitle("함께할 친구 고르기")

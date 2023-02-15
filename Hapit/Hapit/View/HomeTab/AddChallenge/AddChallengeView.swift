@@ -165,6 +165,7 @@ struct AddChallengeView: View {
                                 .fill(Color.accentColor)
                         }
                         .padding(.horizontal, 20)
+                        .padding(.bottom, 10)
                 } // label
                 .disabled((isOverCount == true) || (challengeTitle.count < 1))
             } // VStack

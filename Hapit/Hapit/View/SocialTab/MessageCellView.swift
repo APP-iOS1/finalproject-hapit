@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 // TODO: case 별로 View 파일 다 쪼개기
 struct MessageCellView: View {
@@ -17,6 +18,7 @@ struct MessageCellView: View {
     @State private var senderProfileImage = ""
     @State private var challengeTitle = ""
     @Binding var isAllRead: Bool
+    @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     let msg: Message
     
     var body: some View {
@@ -119,6 +121,13 @@ struct MessageCellView: View {
                                                              addValue: msg.receiverID)
                                 try await messageManager.removeMessage(userID: msg.receiverID,
                                                                        messageID: msg.id)
+                                
+                                // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드
+                                for challenge in habitManager.challenges {
+                                    if challenge.id == msg.challengeID {
+                                        $localChallenges.append(challenge.localChallenge)
+                                    }
+                                }
                             }
                         } label: {
                             Text("수락")
@@ -211,8 +220,8 @@ extension Image {
             .padding(.trailing, -12)
     }
 }
-struct MessageCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageCellView(isAllRead: .constant(true), msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: "", isRead: false, challengeID: ""))
-    }
-}
+//struct MessageCellView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MessageCellView(isAllRead: .constant(true), msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: "", isRead: false, challengeID: ""))
+//    }
+//}

@@ -70,7 +70,7 @@ struct HomeView: View {
             //MARK: 툴바 버튼. 습관 작성하기 뷰로 넘어간다.
             .toolbar {
                 Button {
-                    isAddHabitViewShown.toggle()
+                    isAddHabitViewShown = true
                 } label: {
                     Label("Add Habit", systemImage: "plus.app")
                 }
@@ -79,8 +79,9 @@ struct HomeView: View {
             
         }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
-            AddChallengeView()
+            AddChallengeView(isAddHabitViewShown: $isAddHabitViewShown)
                 .background(Color("BackgroundColor"))
+
         }
         
     }//body

@@ -17,7 +17,7 @@ struct ChallengeFriendsView: View {
     //친구 더미 데이터
     @State var friends: [ChallengeFriends]
     //친구 데이터 임시 저장
-    @Binding var temeFriend: [ChallengeFriends]
+    @Binding var tempFriend: [ChallengeFriends]
     
     var body: some View {
         ZStack {
@@ -26,13 +26,13 @@ struct ChallengeFriendsView: View {
                 ScrollView {
                         ForEach(friends, id: \.self) { friend in
                             let mate = ChallengeFriends(uid: friend.uid, proImage: friend.proImage ,name: friend.name)
-                            ChallengeFriendsCellView(challengeFriends: mate, temeFriend: $temeFriend)
+                            ChallengeFriendsCellView(challengeFriends: mate, tempFriend: $tempFriend)
                         }.padding(.top,20)
                     
                 }
                 Button{
-                    habitManager.seletedFriends = temeFriend
-                    temeFriend = []
+                    habitManager.seletedFriends = tempFriend
+                    tempFriend = []
                     dismiss()
                 }label: {
                     Text("함께할 친구 추가하기")
@@ -51,7 +51,7 @@ struct ChallengeFriendsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    temeFriend = []
+                    tempFriend = []
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")
@@ -63,6 +63,6 @@ struct ChallengeFriendsView: View {
 
 struct ChallengeFriendsView_Previews: PreviewProvider {
     static var previews: some View {
-        ChallengeFriendsView(friends: [ChallengeFriends(uid: "1", proImage: "",name: "김예원"),ChallengeFriends(uid: "2", proImage: "",name: "박민주"),ChallengeFriends(uid: "3", proImage: "",name: "신현준"),ChallengeFriends(uid: "4", proImage: "",name: "이주희"),ChallengeFriends(uid: "5", proImage: "",name: "김응관"),ChallengeFriends(uid: "6", proImage: "",name: "추현호")],temeFriend: .constant([ChallengeFriends(uid: "1", proImage: "",name: "김예원")]))
+        ChallengeFriendsView(friends: [ChallengeFriends(uid: "1", proImage: "",name: "김예원"),ChallengeFriends(uid: "2", proImage: "",name: "박민주"),ChallengeFriends(uid: "3", proImage: "",name: "신현준"),ChallengeFriends(uid: "4", proImage: "",name: "이주희"),ChallengeFriends(uid: "5", proImage: "",name: "김응관"),ChallengeFriends(uid: "6", proImage: "",name: "추현호")],tempFriend: .constant([ChallengeFriends(uid: "1", proImage: "",name: "김예원")]))
     }
 }

@@ -12,7 +12,7 @@ struct ChallengeFriendsCellView: View {
     // 친구 데이터
     @State var challengeFriends: ChallengeFriends
     //선택한 친구 임시 저장
-    @Binding var temeFriend: [ChallengeFriends]
+    @Binding var tempFriend: [ChallengeFriends]
     @State var isChecked: Bool = false
     @State private var isSelectedJelly = 0
     let bearArray = Jelly.allCases.map({"\($0)"})
@@ -23,7 +23,7 @@ struct ChallengeFriendsCellView: View {
                 // 친구 선택
                 isChecked.toggle()
                 challengeFriends.isChecked.toggle()
-                temeFriend.append(challengeFriends)
+                tempFriend.append(challengeFriends)
             } label: {
                 HStack{
                     Image(bearArray[isSelectedJelly % 7])
@@ -60,9 +60,7 @@ struct ChallengeFriendsCellView: View {
 }
 
 struct ChallengeFriendsCellView_Previews: PreviewProvider {
-    
     static var previews: some View {
-        ChallengeFriendsCellView(challengeFriends: ChallengeFriends(uid: "1231211", proImage: "", name: "bearJelly"),temeFriend: .constant([ChallengeFriends(uid: "1231211", proImage: "", name: "bearJelly")]))
+        ChallengeFriendsCellView(challengeFriends: ChallengeFriends(uid: "1231211", proImage: "", name: "bearJelly"),tempFriend: .constant([ChallengeFriends(uid: "1231211", proImage: "", name: "bearJelly")]))
     }
-    
 }

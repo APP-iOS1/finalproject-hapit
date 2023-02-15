@@ -12,7 +12,6 @@ import RealmSwift
 // MARK: - AddChallengeView Struct
 struct AddChallengeView: View {
     // MARK: Property Wrappers
-    @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
@@ -22,6 +21,7 @@ struct AddChallengeView: View {
     @ObservedObject private var datas = fcmManager
     
     @State private var challengeTitle: String = ""
+    @Binding var isAddHabitViewShown: Bool
     
     //FIXME: 알람데이터 저장이 필요
     @State private var isAlarmOn: Bool = false
@@ -30,7 +30,7 @@ struct AddChallengeView: View {
     //user의 친구 더미 데이터 (디비에서 받아오기)
     @State var friends: [ChallengeFriends] = []
     //친구 리스트 임시 저장
-    @State var temeFriend: [ChallengeFriends] = []
+    @State var tempFriend: [ChallengeFriends] = []
     
     @State private var notiTime = Date()
     
@@ -49,7 +49,7 @@ struct AddChallengeView: View {
             ScrollView {
                 VStack(spacing: 5) {
                     HStack{
-                        InvitedMateView(temeFriend: $temeFriend)
+                        InvitedMateView(temeFriend: $tempFriend)
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 5)
@@ -123,14 +123,13 @@ struct AddChallengeView: View {
                                 mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                                 
                                 //친구들 uid 저장
+
     //                            for friend in habitManager.seletedFriends {
     //                                let uid = friend.uid
     //                                mateArray.append(uid)
     //
     //                            }
-                                
-                                // 함께챌린지 초대 메시지 보내기
-                                // TODO: 파베에서 메시지랑 챌린지 uuid 다른지 확인하기
+
                                 for friend in habitManager.seletedFriends {
                                     try await messageManager.sendMessage(Message(id: UUID().uuidString,
                                                                                  messageType: "invite",
@@ -165,7 +164,7 @@ struct AddChallengeView: View {
                                     }
                                 }
 
-                                dismiss()
+                                isAddHabitViewShown = false
                                 
                                 habitManager.loadChallenge()
                                 habitManager.seletedFriends = []
@@ -186,6 +185,7 @@ struct AddChallengeView: View {
                             }
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)
+
                     } // label
                     .disabled((isOverCount == true) || (challengeTitle.count < 1))
                 } // VStack
@@ -196,7 +196,8 @@ struct AddChallengeView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
                             habitManager.seletedFriends = []
-                            dismiss()
+                            isAddHabitViewShown = false
+
                         } label: {
                             Image(systemName: "multiply")
                                 .foregroundColor(Color("GrayFontColor"))
@@ -206,7 +207,8 @@ struct AddChallengeView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
                             // 친구 데이터 전달
-                            ChallengeFriendsView(friends: friends, temeFriend: $temeFriend)
+                            ChallengeFriendsView(friends: friends, tempFriend: $tempFriend)
+
                                 .navigationBarBackButtonHidden(true)
                         } label: {
                             Image(systemName: "person.badge.plus")
@@ -226,9 +228,9 @@ struct AddChallengeView: View {
                             for friend in friends{
                                 let nickname = try await authManager.getNickName(uid: friend)
                                 let proImage = try await authManager.getPorImage(uid: friend)
-
+                                
                                 self.friends.append(ChallengeFriends(uid: friend, proImage: proImage, name: nickname))
-                                print("\(self.friends)")
+
                             }
                             
                         } catch {
@@ -242,6 +244,7 @@ struct AddChallengeView: View {
                 }
             }
             .background(Color("BackgroundColor"))
+
         }// NavigationView
     } // Body
 }

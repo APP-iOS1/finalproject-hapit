@@ -9,6 +9,8 @@ import SwiftUI
 
 struct StepBar: View {
     let nowStep: Int
+    let frameSize: CGFloat
+    let fontSize: CGFloat
     
     var body: some View {
         HStack(spacing: 0) {
@@ -18,21 +20,21 @@ struct StepBar: View {
                     Spacer().frame(width: 8)
                     Circle()
                         .fill(Color.accentColor)
-                        .frame(width: 30)
+                        .frame(width: frameSize)
                         .overlay {
                             Text("\(index)")
-                                .font(.custom("IMHyemin-Bold", size: 28))
+                                .font(.custom("IMHyemin-Bold", size: fontSize))
                                 .foregroundColor(Color.white)
                         }
                 } else {
                     Spacer().frame(width: 8)
                     Circle()
-                        .stroke(Color.gray, lineWidth: 0.7)
-                        .frame(width: 30)
+                        .stroke(Color("GrayFontColor"), lineWidth: 0.7)
+                        .frame(width: frameSize)
                         .overlay {
                             Text("\(index)")
-                                .font(.custom("IMHyemin-Bold", size: 28))
-                                .foregroundColor(index == nowStep ? Color.white : Color.gray)
+                                .font(.custom("IMHyemin-Bold", size: fontSize))
+                                .foregroundColor(index == nowStep ? Color.white : Color("GrayFontColor"))
                         }
                 }
                 
@@ -54,13 +56,13 @@ struct StepBar: View {
                     } else {
                         HStack {
                             Circle()
-                                .fill(Color.gray)
+                                .fill(Color("GrayFontColor"))
                                 .frame(width: 3)
                             Circle()
-                                .fill(Color.gray)
+                                .fill(Color("GrayFontColor"))
                                 .frame(width: 3)
                             Circle()
-                                .fill(Color.gray)
+                                .fill(Color("GrayFontColor"))
                                 .frame(width: 3)
                         }
                     }

@@ -40,7 +40,7 @@ struct HomeView: View {
                     selectionAlignment: .bottom,
                     content: { item, isSelected in
                         Text(item)
-                            .foregroundColor(isSelected ? Color.accentColor : Color.gray )
+                            .foregroundColor(isSelected ? Color.accentColor : Color("GrayFontColor"))
                         //.padding(.horizontal, 70)
                             .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)

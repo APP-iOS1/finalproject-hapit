@@ -55,7 +55,6 @@ struct AddChallengeView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 5)
-                        
                         VStack {
                             TextField("챌린지 이름을 입력해주세요.", text: $challengeTitle)
                                 .font(.custom("IMHyemin-Bold", size: 18))
@@ -63,7 +62,7 @@ struct AddChallengeView: View {
                                 .cornerRadius(15)
                                 .disableAutocorrection(true)
                                 .textInputAutocapitalization(.never)
-                            
+                                                      
                             HStack {
                                 if isOverCount {
                                     Text("최대 \(maximumCount)자까지만 입력해주세요.")
@@ -108,8 +107,6 @@ struct AddChallengeView: View {
                         .background(Color("CellColor"))
                         .cornerRadius(15)
                         .padding(.horizontal, 20)
-                        .padding(.top, 10)
-                        
                         Spacer()
                         
                         Button {
@@ -174,7 +171,6 @@ struct AddChallengeView: View {
                         } // label
                         .disabled((isOverCount == true) || (challengeTitle.count < 1))
                         .padding(.bottom, 20)
-                
                     } // VStack
                     .background(Color("BackgroundColor")
                         
@@ -188,7 +184,7 @@ struct AddChallengeView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "multiply")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color("GrayFontColor")
                             } // label
                         } // ToolbarItem
                         ToolbarItem(placement: .navigationBarTrailing) {

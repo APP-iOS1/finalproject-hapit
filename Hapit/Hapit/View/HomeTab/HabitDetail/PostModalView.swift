@@ -66,9 +66,9 @@ struct PostModalView: View {
                                                     .aspectRatio(contentMode: .fit)
                                                     .offset(y: 10)
                                                     .clipShape(Circle())
-                                                    .overlay(Circle().stroke(selectedMember == userinfo.id ? Color.green : Color.gray, lineWidth: selectedMember == userinfo.id ? 3 : 2))
+                                                    .overlay(Circle().stroke(selectedMember == userinfo.id ? Color.green : Color("GrayFontColor"), lineWidth: selectedMember == userinfo.id ? 3 : 2))
                                                 Text(userinfo.name)
-                                                    .foregroundColor(selectedMember == userinfo.id ? Color("AccentColor") : .gray)
+                                                    .foregroundColor(selectedMember == userinfo.id ? Color("AccentColor") : Color("GrayFontColor"))
                                             } //VStack
                                             .padding([.top, .leading, .trailing])
                                         } // label
@@ -78,7 +78,6 @@ struct PostModalView: View {
                         }
                         showContentsView(selectedMember)
                         Spacer()
-                        //
                     }
                 }
             }

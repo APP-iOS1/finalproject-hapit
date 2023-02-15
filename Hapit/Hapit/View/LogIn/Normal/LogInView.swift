@@ -71,7 +71,7 @@ struct LogInView: View {
                             Text("이메일과 비밀번호가 일치하지 않습니다")
                             Spacer()
                         } else {
-                            Text("이")
+                            Text("")
                                 .foregroundColor(.white)
                         }
                     }

@@ -64,7 +64,7 @@ struct WriteDiaryView: View {
                                             .font(.title3)
                                             .overlay {
                                                 Image(systemName: "multiply.circle.fill")
-                                                    .foregroundColor(.gray)
+                                                    .foregroundColor(Color("GrayFontColor"))
                                                     .font(.title3)
                                             }
                                     }
@@ -89,7 +89,7 @@ struct WriteDiaryView: View {
                         Spacer()
                         Text("\(content.count)/\(maxCharacterLength)")
                             .font(.footnote)
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("GrayFontColor"))
                     }
                     .padding(.horizontal, 20)
                     
@@ -106,7 +106,7 @@ struct WriteDiaryView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 17)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("GrayFontColor"))
                                 .font(.custom("IMHyemin-Bold", size: 17))
                         } // label
                     } // ToolbarItem

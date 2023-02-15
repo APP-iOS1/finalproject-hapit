@@ -48,9 +48,8 @@ struct JellyBadgeView: View {
                 
             }
         }
-        //.border(.black)
-        //.padding(10)
-        
+        //.frame(width:Screen.maxWidth / 6, height: Screen.maxheight / 9)
+        .padding(10)
     }
 }
 

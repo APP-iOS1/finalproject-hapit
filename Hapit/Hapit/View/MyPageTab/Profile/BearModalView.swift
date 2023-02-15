@@ -42,7 +42,7 @@ struct BearModalView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .padding(5)
                                     .overlay(RoundedRectangle(cornerRadius: 20)
-                                        .stroke(self.isSelectedJelly == index ? Color("DarkPinkColor") : Color.gray ,
+                                        .stroke(self.isSelectedJelly == index ? Color("DarkPinkColor") : Color("GrayFontColor"),
                                                 lineWidth: 2))
                             }
                         }

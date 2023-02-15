@@ -23,7 +23,7 @@ struct EmptyCellView: View {
                 Image("bearOMG")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: 300)
+                    .frame(height: UIScreen.main.bounds.size.height * ( 1 / 3 ))
                 Image(systemName: "tray")
                     .font(.system(size: 72))
                     .foregroundColor(.white)

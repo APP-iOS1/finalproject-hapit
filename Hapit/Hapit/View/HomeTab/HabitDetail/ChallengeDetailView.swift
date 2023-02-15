@@ -13,7 +13,6 @@ struct ChallengeDetailView: View {
     private let timeIntervalAfter66Days: TimeInterval = 60 * 60 * 24 * 66
     //MARK: - Property Wrappers
     @Binding var currentDate: Date
-    @State var isShownModalView: Bool = false
     @State var postsForModalView: [Post] = []
     //MARK: 화살표 버튼을 통해 month를 업데이트 해주는 변수
     @State private var currentMonth: Int = 0
@@ -29,8 +28,14 @@ struct ChallengeDetailView: View {
     @State private var isAlertOn = false // OptionView에서 설정해달라고 애원하는 시트
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
-
     @AppStorage("isUserAlarmOn") var isUserAlarmOn: Bool = false
+    var isShownModalView: Bool {
+        if modalManager.modal.position == .closed{
+            return false
+        } else{
+            return true
+        }
+    }
     
     // Login
     @EnvironmentObject var authManager: AuthManager
@@ -100,6 +105,7 @@ struct ChallengeDetailView: View {
                             .onTapGesture {
                                 currentDate = value.date
                                 //MARK: 탭 했을 때 해당 날짜에 대한 Diaries가 뜨도록
+                                
                                 postsForModalView = []
                                 //MARK: 오늘에 해당하는 포스트들을 모두 불러온다.
                                 for post in habitManager.posts{
@@ -138,7 +144,7 @@ struct ChallengeDetailView: View {
             .background(Color("CellColor"))
             .cornerRadius(20)
             .navigationBarTitle(currentChallenge.challengeTitle)
-            .ignoresSafeArea()
+            //.ignoresSafeArea()
             .onChange(of: currentMonth) { newValue in
                 currentDate = getCurrentMonth()
             }

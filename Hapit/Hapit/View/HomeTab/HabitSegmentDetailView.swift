@@ -44,7 +44,6 @@ struct HabitSegmentDetailView: View {
                                             }
                                             .padding()
                                             .background(Color("BackgroundColor"))
-                                            
                                             ModalAnchorView()
                                         } // ZStack
                                         

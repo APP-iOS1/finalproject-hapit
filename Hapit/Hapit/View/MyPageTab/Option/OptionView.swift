@@ -160,41 +160,41 @@ struct OptionView: View {
                      primaryButtonTitle: "탈퇴",
                      primaryAction: { Task {
             //MARK: - 1. 일기(POST)(실패-보류)
-            Task {
-                    for post in habitManager.posts{
-                      //  if post.creatorID.contains(currentUser ?? ""){
-                        habitManager.deletePost(postID: post.id)
-                       // }
-                    }
-
-            }
-            //MARK: - 2.챌린지(Challenge)
-            ///2-1. 내가 만든 챌린지(함께하는 챌린지)
-            ///creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count <= 1"인 경우, 바로 삭제
-            ///2-2. 내가 만든 챌린지(개인 챌린지)
-            ///creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count >1" creator,Challenge.uid를 변경 후 mateArray에서 나를 삭제
-            ///2-3. 내가 참여중인 챌린지(함께 하는 챌린지)
+//            Task {
+//                    for post in habitManager.posts{
+//                      //  if post.creatorID.contains(currentUser ?? ""){
+//                        habitManager.deletePost(postID: post.id)
+//                       // }
+//                    }
+//
+//            }
+            //MARK: - 2.챌린지(Challenge)(성공)
+            ///2-1. 내가 참여중인 챌린지(함께 하는 챌린지)
             ///mateArray에서 나의 uid와 같은 데이터를 찾아서 지움
+            ///2-2. 내가 만든 챌린지(함께하는 챌린지)
+            ///creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count >1" creator,Challenge.uid를 변경 후 mateArray에서 나를 삭제
+            ///2-3. 내가 만든 챌린지(개인 챌린지)
+            ///creator, Challenge.uid 가 '나' 인 챌린지들 중 "mateArray.count <= 1"인 경우, 바로 삭제
+            
             Task{
                 for challenge in habitManager.challenges {
                     if challenge.mateArray.contains(currentUser ?? "") {
-                        //2-1. 1보다 큰 경우(함께 챌린지인 경우)(성공)
+                        //2-1~2-2. 1보다 큰 경우(함께 챌린지인 경우)
                         if challenge.mateArray.count > 1{
-                            
-                            try await habitManager.updateChallegecreator(challenge: challenge, creator: authManager.getNickName(uid: challenge.mateArray[1]))
-                            habitManager.updateChallegeUid(challenge: challenge, uid: challenge.mateArray[1])
-                            habitManager.removeChallegeMate(challenge: challenge,removeValue: currentUser!) //친구 목록에서 나를 지움
-                            
+                            //2-1. 내가 참여중인 모든 함께 챌린지에서 친구 리스트에 내 이름을 지움
+                            habitManager.removeChallegeMate(challenge: challenge,removeValue: currentUser ?? "")
+                            // 2-2. 내가 만든 함께 챌린지라면 creator와 uid도 업데이트 함
+                            if challenge.uid.contains(currentUser ?? ""){
+                                // 참여중인 챌린지의 마지막 사람에게 할당함.
+                                try await habitManager.updateChallegecreator(challenge: challenge, creator: authManager.getNickName(uid: challenge.mateArray.last ?? ""))
+                                habitManager.updateChallegeUid(challenge: challenge, uid: challenge.mateArray.last ?? "")
+                            }
                         }
-                        //2-2. 1보다 작은 경우(개인 챌린지인 경우)(성공)
+                        //2-3. 1보다 작은 경우(개인 챌린지인 경우)(성공)
                         else{
                             habitManager.removeChallenge(challenge: challenge)// 챌린지 삭제하기
                         }
                     }
-                }
-                //2-3. 내가 참여중인 챌린지(함께 하는 챌린지)(실패)
-                for challenge in habitManager.currentUserChallenges {
-                    habitManager.removeChallegeMate(challenge: challenge, removeValue: currentUser ?? "") //친구 목록에서 나를 지움
                 }
             }
             //MARK: - 4. 내 친구에 저장된 나를 삭제(성공)
@@ -228,10 +228,10 @@ struct OptionView: View {
                 
             }
             //MARK: - 6. 유저에서 나를 삭제(--)
-            Task{
-                // 6-2. user 삭제()
-            //    try await authManager.deleteUser(uid: currentUser ?? "")
-            }
+//            Task{
+//                // 6-2. user 삭제()
+//            //    try await authManager.deleteUser(uid: currentUser ?? "")
+//            }
         }},withCancelButton: true)
     }
 }

@@ -17,6 +17,9 @@ struct AddChallengeView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var messageManager: MessageManager
+    @State private var receiverFCMToken: String = ""
+    @State private var notificationContent: String = ""
+    @ObservedObject private var datas = fcmManager
     
     @State private var challengeTitle: String = ""
     
@@ -145,6 +148,21 @@ struct AddChallengeView: View {
 
                             // newChallenge의 연산 프로퍼티인 localChallenge를 Realm에 업로드 (Realm)
                             $localChallenges.append(newChallenge.localChallenge)
+                            
+                            // mateArray에 있는 친구들 돌면서 초대 메세지(FCM) 보내기
+                            if newChallenge.mateArray.count > 1 {
+                                for friendId in newChallenge.mateArray{
+                                    receiverFCMToken = try await authManager.getFCMToken(uid: friendId)
+                                    
+                                    self.datas.sendFirebaseMessageToUser(
+                                        datas: self.datas,
+                                        // 받을 사람의 FCMToken
+                                        to: receiverFCMToken,
+                                        title: "그룹챌린지 요청이 왔어요!",
+                                        body: "나랑 챌린지할래? :)"
+                                    )
+                                }
+                            }
 
                             dismiss()
                             
@@ -154,6 +172,7 @@ struct AddChallengeView: View {
                             throw(error)
                         }
                     }
+
                 } label: {
                     Text("챌린지 생성하기")
                         .font(.custom("IMHyemin-Bold", size: 16))

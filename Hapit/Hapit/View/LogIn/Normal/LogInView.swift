@@ -23,135 +23,236 @@ struct LogInView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
     
-    // ScrollView의 y값 찾아서 -> hidden 해보기
-    // 키보드 높이만큼 뷰 올리는 방법..!
+    let deviceHeight = UIScreen.main.bounds.height
+    
+    var fontSize: CGFloat {
+        if deviceHeight < CGFloat(700.0) {
+            return 14
+        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+            return 15
+        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+            return 16
+        } else {
+            return 17
+        }
+    }
+    
+    var errorFontSize: CGFloat {
+        if deviceHeight < CGFloat(700.0) {
+            return 10
+        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+            return 11
+        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+            return 12
+        } else {
+            return 13
+        }
+    }
+    
+    var frameSize: CGFloat {
+        if deviceHeight < CGFloat(700.0) {
+            return 28
+        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+            return 29
+        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+            return 30
+        } else {
+            return 31
+        }
+    }
+
+    var stackSpacing: CGFloat {
+        if deviceHeight < CGFloat(700.0) {
+            return 10
+        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+            return 12
+        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+            return 14
+        } else {
+            return 16
+        }
+    }
     
     // 화면비율: 1/20 : 1/50 : 1/50
     var body: some View {
         NavigationView {
             GeometryReader { geo in
-                VStack() {
-                    Spacer()
+                VStack {
                     
-                    Image("logo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.bottom, geo.size.height / 30)
-//                        .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
-                    
-                    Spacer()
-                    
-                    VStack(spacing: 20) {
-                        VStack() {
-                            TextField("이메일", text: $email)
-                                .keyboardType(.emailAddress)
-                                .font(.custom("IMHyemin-Bold", size: 16))
-                                .focused($emailFocusField)
-                                .modifier(ClearTextFieldModifier())
-                            Rectangle()
-                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
-                        }
-                        .frame(height: 40)
-                        
-                        VStack() {
-                            SecureField("비밀번호", text: $pw)
-                                .font(.custom("IMHyemin-Bold", size: 16))
-                                .focused($pwFocusField)
-                                .modifier(ClearTextFieldModifier())
-                                .padding(.bottom, 0.2)
-                            Rectangle()
-                                .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
-                        }
-                        .frame(height: 40)
-                    }
-                    
-                    HStack(alignment: .center, spacing: 5) {
-                        if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
-                            Image(systemName: "exclamationmark.circle")
-                            Text("이메일과 비밀번호가 일치하지 않습니다")
-                            Spacer()
+                    if #available(iOS 16, *) {
+                        if deviceHeight < CGFloat(700.0) {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 10)
+                                .padding(.horizontal, 20)
+                                .padding(.top, 70)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 10)
+                                .padding(.horizontal, 20)
+                                .padding(.top, 70)
+                        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 10)
+                                .padding(.horizontal, 10)
+                                .padding(.top, 106)
                         } else {
-                            Text("")
-                                .foregroundColor(.white)
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 10)
+                                .padding(.horizontal, 10)
+                                .padding(.top, 126)
+                        }
+                    } else {
+                        if deviceHeight < CGFloat(700.0) {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 13)
+                                .padding(.horizontal, 20)
+                                .padding(.top, 5)
+                        } else if deviceHeight >= CGFloat(700.0) && deviceHeight < CGFloat(820.0) {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 11)
+                                .padding(.horizontal, 20)
+                                .padding(.top, 10)
+                        } else if deviceHeight >= CGFloat(820.0) && deviceHeight < CGFloat(860.0) {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 9)
+                                .padding(.horizontal, 10)
+                                .padding(.top, 25)
+                        } else {
+                            Image("new_logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.bottom, geo.size.height / 8)
+                                .padding(.horizontal, 10)
+                                .padding(.top, 30)
                         }
                     }
-                    .font(.custom("IMHyemin-Bold", size: 12))
-                    .foregroundColor(.red)
-                    .padding(.bottom, 15)
                     
-                    Button(action: {
-                        Task {
-                            //이메일 또는 비밀번호를 입력하지 않았을 경우
-                            if email == "" {
-                                emailFocusField = true
-                            } else if pw == "" {
-                                pwFocusField = true
+                    Group {
+                        VStack(spacing: 25) {
+                            VStack() {
+                                TextField("이메일", text: $email)
+                                    .keyboardType(.emailAddress)
+                                    .font(.custom("IMHyemin-Bold", size: fontSize))
+                                    .focused($emailFocusField)
+                                    .modifier(ClearTextFieldModifier())
+                                Rectangle()
+                                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: emailFocusField))
+                            }
+                            .frame(height: frameSize)
+                            
+                            VStack() {
+                                SecureField("비밀번호", text: $pw)
+                                    .font(.custom("IMHyemin-Bold", size: fontSize))
+                                    .focused($pwFocusField)
+                                    .modifier(ClearTextFieldModifier())
+                                    .padding(.bottom, 0.2)
+                                Rectangle()
+                                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: pwFocusField))
+                            }
+                            .frame(height: frameSize)
+                        }
+                        
+                        HStack(alignment: .center, spacing: 5) {
+                            if UserDefaults.standard.string(forKey: "state") ?? "" == "logOut" && verified {
+                                Image(systemName: "exclamationmark.circle")
+                                Text("이메일과 비밀번호가 일치하지 않습니다")
+                                Spacer()
                             } else {
-                                do {
-                                    try await authManager.login(with: email, pw)
-                                    
-                                    //2.3 로그인 상태 변경
-                                    authManager.loggedIn = "logIn"
-                                    //2.4 로그인 상태 UserDefaults에 저장
-                                    authManager.save(value: Key.logIn.rawValue, forkey: "state")
-                                    //2.5 로그인 방법 UserDefaults에 저장
-                                    authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
-                                    verified = true
-                                    
-                                    let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
-                                    print(localNickname)
-                                    UserDefaults.standard.set(localNickname, forKey: "localNickname")
-                                } catch {
-                                    // 로그인 과정 or 이메일 불러오는 과정에서 오류 발생 시
-                                    authManager.loggedIn = "logOut"
-                                    authManager.save(value: Key.logOut.rawValue, forkey: "state")
-                                    verified = true
-                                    throw(error)
+                                Text("")
+                                    .foregroundColor(.clear)
+                            }
+                        }
+                        .font(.custom("IMHyemin-Bold", size: errorFontSize))
+                        .foregroundColor(.red)
+                        .padding(.bottom, 15)
+                    }
+                    //.edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
+                    .disableAutocorrection(true)
+                    
+                        Button(action: {
+                            Task {
+                                //이메일 또는 비밀번호를 입력하지 않았을 경우
+                                if email == "" {
+                                    emailFocusField = true
+                                } else if pw == "" {
+                                    pwFocusField = true
+                                } else {
+                                    do {
+                                        try await authManager.login(with: email, pw)
+                                        
+                                        //2.3 로그인 상태 변경
+                                        authManager.loggedIn = "logIn"
+                                        //2.4 로그인 상태 UserDefaults에 저장
+                                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                                        //2.5 로그인 방법 UserDefaults에 저장
+                                        authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
+                                        verified = true
+                                        
+                                        let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                        
+                                        UserDefaults.standard.set(localNickname, forKey: "localNickname")
+                                    } catch {
+                                        // 로그인 과정 or 이메일 불러오는 과정에서 오류 발생 시
+                                        authManager.loggedIn = "logOut"
+                                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                                        verified = true
+                                        throw(error)
+                                    }
+                                }
+                            }
+                        }){
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(.pink)
+                                .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
+                                .overlay {
+                                    Text("로그인")
+                                        .font(.custom("IMHyemin-Bold", size: fontSize))
+                                        .foregroundColor(.white)
+                                }
+                        }
+                        .padding(.bottom, geo.size.height / 50)
+                        
+                        Group {
+                            HStack {
+                                Text("아직 회원이 아니신가요?")
+                                    .font(.custom("IMHyemin-Bold", size: fontSize))
+                                NavigationLink(destination: RegisterView()){
+                                    Text("회원가입")
+                                        .font(.custom("IMHyemin-Bold", size: fontSize))
                                 }
                             }
                         }
-                    }){
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.pink)
-                            .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40)
-                            .overlay {
-                                Text("로그인")
-                                    .font(.custom("IMHyemin-Bold", size: 16))
-                                    .foregroundColor(.white)
-                            }
-                    }
-                    .padding(.bottom, geo.size.height / 50)
-                    
-                    Group {
-                        HStack {
-                            Text("아직 회원이 아니신가요?")
-                                .font(.custom("IMHyemin-Bold", size: 16))
-                            NavigationLink(destination: RegisterView()){
-                                Text("회원가입")
-                                    .font(.custom("IMHyemin-Bold", size: 16))
+                        .padding(.bottom, geo.size.height / 20)
+                        
+                        Group {
+                            VStack(alignment: .center) {
+                                HStack(spacing: geo.size.width / 8) {
+                                    AppleLogIn()
+                                    GoogleLogIn()
+                                    KakaoLogIn()
+                                }
                             }
                         }
-                    }
-                    .padding(.bottom, geo.size.height / 50)
-                    
-                    Group {
-                        VStack(alignment: .center) {
-                            HStack(spacing: geo.size.width / 8) {
-                                AppleLogIn()
-                                GoogleLogIn()
-                                KakaoLogIn()
-                            }
-                        }
-                    }
-                    .padding(.bottom, geo.size.height / 50)
+                        Spacer()
+                        //.padding(.bottom, geo.size.height / 20)
                 }
-                .padding(.horizontal, 20)
-                .edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
-                //.edgesIgnoringSafeArea(.top)
                 .ignoresSafeArea(.keyboard)
-                .disableAutocorrection(true)
+                .padding(.horizontal, 20)
             }
-            .ignoresSafeArea(.all)
         }
     }
 }
@@ -162,36 +263,5 @@ struct LogInView_Previews: PreviewProvider {
             .environmentObject(AuthManager())
             .environmentObject(HabitManager())
             .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
-        LogInView()
-            .environmentObject(AuthManager())
-            .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-        LogInView()
-            .environmentObject(AuthManager())
-            .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Plus"))
-        LogInView()
-            .environmentObject(AuthManager())
-            .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-        LogInView()
-            .environmentObject(AuthManager())
-            .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
-        LogInView()
-            .environmentObject(AuthManager())
-            .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone 8 Plus"))
-        LogInView()
-            .environmentObject(AuthManager())
-            .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
     }
 }

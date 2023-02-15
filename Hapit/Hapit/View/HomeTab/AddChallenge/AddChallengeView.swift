@@ -152,7 +152,7 @@ struct AddChallengeView: View {
                                 // mateArray에 있는 친구들 돌면서 초대 메세지(FCM) 보내기
                                 if habitManager.seletedFriends.count > 0 {
                                     for friend in habitManager.seletedFriends{
-                                        receiverFCMToken = try await authManager.getFCMToken(uid: friend.id.uuidString)
+                                        receiverFCMToken = try await authManager.getFCMToken(uid: friend.uid)
                                         
                                         self.datas.sendFirebaseMessageToUser(
                                             datas: self.datas,

@@ -44,7 +44,6 @@ struct HabitSegmentDetailView: View {
                                             }
                                             .padding()
                                             .background(Color("BackgroundColor"))
-                                            
                                             ModalAnchorView()
                                         } // ZStack
                                         
@@ -61,12 +60,12 @@ struct HabitSegmentDetailView: View {
                             } // ForEach - mateArray
                         } // ForEach - currentUserChallenges
                     } // ScrollView
-//                    .onAppear {
-//                        restoreChallenges()
-//                    } // onAppear
-//                    .refreshable { // MARK: - Only iOS 16
-//                        restoreChallenges()
-//                    } // refreshable
+                    .onAppear {
+                        restoreChallenges()
+                    } // onAppear
+                    .refreshable { // MARK: - Only iOS 16
+                        restoreChallenges()
+                    } // refreshable
                 } // else
             } // VStack
    
@@ -91,9 +90,9 @@ struct HabitSegmentDetailView: View {
         }// switch
     }
     
-    // MARK: - 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우 복구하는 함수 (앱을 삭제하고 재설치하는 경우 & 내가 그룹챌린지에 참여하게 된 경우)
+    // MARK: - 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우 복구하는 함수 (앱을 삭제하고 재설치하는 경우)
     func restoreChallenges() {
-        if countLocalChallenges() != countMyChallengesFromServer() {
+        if countMyChallengesFromServer() != 0 && countLocalChallenges() == 0 {
             // 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우, 앱이 삭제됐었던 것이므로 서버에 있는 챌린지들을 로컬에 다시 모두 담아준다.
             for localChallenge in localChallenges { // 로컬에 있는 챌린지 모두 삭제 (초기화)
                 $localChallenges.remove(localChallenge)

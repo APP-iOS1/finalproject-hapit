@@ -28,7 +28,7 @@ struct BearModalView: View {
     
     var body: some View {
         VStack {
-            Text("대표 이미지 설정")
+            Text("프로필 이미지 설정")
                 .font(.custom("IMHyemin-Bold", size: 22))
             
             ScrollView {

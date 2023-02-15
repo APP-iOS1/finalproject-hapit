@@ -581,11 +581,11 @@
 		F49E28F32976813E009EEB1A /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				F4622DC9299A89220055D2AE /* GuideText */,
-				F4622DC2299A74020055D2AE /* StepBar */,
 				F49E28E4297639F4009EEB1A /* RegisterView.swift */,
 				F49E28E829765DFA009EEB1A /* ToSView.swift */,
 				F49E291629770195009EEB1A /* GetStartView.swift */,
+				F4622DC9299A89220055D2AE /* GuideText */,
+				F4622DC2299A74020055D2AE /* StepBar */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";

@@ -71,7 +71,7 @@ struct AddChallengeView: View {
                                 Spacer()
                                 
                                 Text("\(challengeTitle.count) / \(maximumCount)")
-                                    .foregroundColor(isOverCount ? .red : .gray)
+                                    .foregroundColor(isOverCount ? .red : Color("GrayFontColor"))
                             }
                             .font(.custom("IMHyemin-Regular", size: 12))
                             .padding(.horizontal, 20)
@@ -86,7 +86,8 @@ struct AddChallengeView: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 10)
                         .shakeEffect(trigger: isOverCount)
-                        
+                        .padding(.bottom)
+
                         VStack {
                             Image("fourbears")
                                 .resizable()
@@ -184,7 +185,7 @@ struct AddChallengeView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "multiply")
-                                    .foregroundColor(Color("GrayFontColor")
+                                    .foregroundColor(Color("GrayFontColor"))
                             } // label
                         } // ToolbarItem
                         ToolbarItem(placement: .navigationBarTrailing) {

@@ -58,9 +58,9 @@ struct ContentView: View {
                 Task{
 
                     // String에 뱃지 이름을 String으로 가져옴.
-                    try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                    // try await authManager.fetchBadgeList(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                     // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
-                    try await authManager.fetchImages(paths: authManager.badges)
+                    // try await authManager.fetchImages(paths: authManager.badges)
                     
                     try await authManager.addFcmToken(uid: authManager.firebaseAuth.currentUser?.uid ?? "", token: UserDefaults.standard.string(forKey: "fcmToken") ?? "")
                 }

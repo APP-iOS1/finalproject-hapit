@@ -6,7 +6,8 @@
 //
 
 import Foundation
-struct ChallengeFriends: Identifiable,Hashable{
+
+struct ChallengeFriends: Identifiable, Hashable {
     var id = UUID()
     var isChecked: Bool = false
     var uid: String

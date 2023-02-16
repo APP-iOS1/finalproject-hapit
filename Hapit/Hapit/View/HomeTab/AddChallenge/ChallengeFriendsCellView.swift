@@ -10,23 +10,45 @@ import SwiftUI
 struct ChallengeFriendsCellView: View {
     @EnvironmentObject var habitManager: HabitManager
     // 친구 데이터
-    @State var challengeFriends: ChallengeFriends
-    //선택한 친구 임시 저장
-    @Binding var tempFriend: [ChallengeFriends]
-    @State var isChecked: Bool = false
-    @State private var isSelectedJelly = 0
-    let bearArray = Jelly.allCases.map({"\($0)"})
+//    @Binding var challengeFriend: ChallengeFriends
+//    //선택한 친구 임시 저장
+//    @Binding var tempFriend: [ChallengeFriends]
+
+    var selectedFriend: User
+    @Binding var tempFriends: [User]
+    @State private var isChecked: Bool = false
     
     var body: some View {
         VStack {
             Button {
                 // 친구 선택
                 isChecked.toggle()
-                challengeFriends.isChecked.toggle()
-                tempFriend.append(challengeFriends)
+                
+                // true면 추가, false면 삭제
+                if isChecked {
+                    tempFriends.append(selectedFriend)
+                } else {
+                    for (index, friend) in tempFriends.enumerated() {
+                        if friend == selectedFriend {
+                            tempFriends.remove(at: index)
+                        }
+                    }
+                }
+                
+//                    habitManager.selectedFriends.append(selectedFriend)
+//                    print(selectedFriend)
+//                }
+//                else {
+//                    for (index, friend) in habitManager.selectedFriends.enumerated() {
+//                        if friend == selectedFriend {
+//                            print(habitManager.selectedFriends[index])
+//                            habitManager.selectedFriends.removeLast(index)
+//                        }
+//                    }
+//                }
             } label: {
                 HStack{
-                    Image(bearArray[isSelectedJelly % 7])
+                    Image(selectedFriend.proImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 20, height: 40)
@@ -35,7 +57,7 @@ struct ChallengeFriendsCellView: View {
                             .frame(width: 60, height: 60))
                         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                     
-                    Text(challengeFriends.name)
+                    Text(selectedFriend.name)
                         .font(.custom("IMHyemin-Bold", size: 17)).padding(10)
 
                     Spacer()
@@ -56,11 +78,5 @@ struct ChallengeFriendsCellView: View {
             .padding(.bottom, 5)
             
         }
-    }
-}
-
-struct ChallengeFriendsCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChallengeFriendsCellView(challengeFriends: ChallengeFriends(uid: "1231211", proImage: "", name: "bearJelly"),tempFriend: .constant([ChallengeFriends(uid: "1231211", proImage: "", name: "bearJelly")]))
     }
 }

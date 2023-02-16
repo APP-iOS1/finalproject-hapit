@@ -94,6 +94,8 @@ struct GetStartView: View {
                     Task {
                         do {
                             try await authManager.login(with: email, pw)
+                            let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                            UserDefaults.standard.set(localNickname, forKey: "localNickname")
                             authManager.loggedIn = "logIn"
                             authManager.save(value: Key.logIn.rawValue, forkey: "state")
                         } catch {

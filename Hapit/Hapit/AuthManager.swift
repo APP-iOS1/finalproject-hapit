@@ -316,7 +316,7 @@ final class AuthManager: UIViewController, ObservableObject {
     }
     
     // MARK: - 사용 중인 유저의 프로필사진을 반환
-    func getPorImage(uid: String) async throws -> String {
+    func getProImage(uid: String) async throws -> String {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()

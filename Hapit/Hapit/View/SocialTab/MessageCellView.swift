@@ -168,7 +168,7 @@ struct MessageCellView: View {
         .task {
             do {
                 self.senderNickname = try await authManager.getNickName(uid: msg.senderID)
-                self.senderProfileImage = try await authManager.getPorImage(uid: msg.senderID)
+                self.senderProfileImage = try await authManager.getProImage(uid: msg.senderID)
                 if msg.challengeID != "" {
                     self.challengeTitle = try await habitManager.getChallengeTitle(challengeID: msg.challengeID)
                 }

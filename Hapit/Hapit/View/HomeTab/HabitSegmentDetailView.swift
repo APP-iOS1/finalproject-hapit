@@ -62,6 +62,7 @@ struct HabitSegmentDetailView: View {
                     } // ScrollView
                     .onAppear {
                         restoreChallenges()
+                        print(localChallenges)
                     } // onAppear
                     .refreshable { // MARK: - Only iOS 16
                         restoreChallenges()

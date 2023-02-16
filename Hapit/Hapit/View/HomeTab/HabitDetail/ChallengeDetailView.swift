@@ -169,7 +169,7 @@ struct ChallengeDetailView: View {
                         if !lnManager.isGranted {
                             isChallengeAlarmOn = lnManager.isGranted
                             // Realm에 해당 챌린지 알림 설정 업데이트
-                            $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isAlarmOn
+                            $localChallenge.isChallengeAlarmOn.wrappedValue = lnManager.isGranted
                         }
                     }
                 }

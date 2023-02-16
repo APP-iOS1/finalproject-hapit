@@ -18,6 +18,7 @@ struct ChallengeFriendsView: View {
     
     var body: some View {
         ZStack {
+          HStack{
             Spacer()
             VStack {
                 ScrollView {
@@ -42,6 +43,8 @@ struct ChallengeFriendsView: View {
                 }//Button
                 .padding(.bottom, 10)
             }//VStack
+            Spacer()
+            }//HStack
         }//ZStack
         .background(Color("BackgroundColor").ignoresSafeArea())
         .navigationBarTitle("함께할 친구 고르기")

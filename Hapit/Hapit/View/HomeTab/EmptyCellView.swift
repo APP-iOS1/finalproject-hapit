@@ -36,14 +36,15 @@ struct EmptyCellView: View {
                     Image("bearOMG")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: UIScreen.main.bounds.size.height * ( 1 / 3 ))
-                    Image(systemName: "tray")
-                        .font(.system(size: 72))
-                        .foregroundColor(.white)
-                        .padding()
+                        .frame(height: UIScreen.main.bounds.size.height * ( 1 / 5 ))
+//                    Image(systemName: "tray")
+//                        .font(.system(size: 72))
+//                        .foregroundColor(.white)
+//                        .padding()
                 }
                 Text("텅")
                     .font(.custom("IMHyemin-Bold", size: 34))
+                    .padding(.bottom, 1)
                 
                 switch currentContentsType {
                     

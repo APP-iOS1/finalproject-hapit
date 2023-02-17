@@ -43,7 +43,7 @@ struct BearModalView: View {
                                     .padding(5)
                                     .overlay(RoundedRectangle(cornerRadius: 50)
                                         .stroke(self.isSelectedJelly == index ? Color("DarkPinkColor") : Color("GrayFontColor"),
-                                                lineWidth: 1))
+                                                lineWidth: 1.5))
                             }
                         }
                     }

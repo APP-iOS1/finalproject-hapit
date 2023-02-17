@@ -107,6 +107,7 @@ struct ChallengeCellView: View {
         } // contextMenu
         .onAppear() {
             if currentDate != getToday() { // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우 - 앱이 켜질 때마다 서버에 업로드되는 메모리 낭비를 방지
+                // 로컬에 업데이트
                 $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
                                                                             isChecked: $localChallenge.isChecked.wrappedValue)
                 // 서버에 업데이트
@@ -125,9 +126,12 @@ struct ChallengeCellView: View {
         }
         .onChange(of: scenePhase) { _ in // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우
             if currentDate != getToday() { // 자정이 되는 순간
+                // 로컬에 업데이트
                 $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
                                                                             isChecked: $localChallenge.isChecked.wrappedValue)
+                // 서버에 업데이트
                 habitManager.updateCount(challenge: challenge, count: $localChallenge.count.wrappedValue)
+                // 초기화
                 $localChallenge.isChecked.wrappedValue = false
             }
             currentDate = getToday()

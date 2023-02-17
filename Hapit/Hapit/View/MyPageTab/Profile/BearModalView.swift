@@ -39,7 +39,7 @@ struct BearModalView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 50, height: 50)
-                                    .clipShape(RoundedRectangle(cornerRadius: 50))
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .padding(5)
                                     .overlay(RoundedRectangle(cornerRadius: 50)
                                         .stroke(self.isSelectedJelly == index ? Color("DarkPinkColor") : Color("GrayFontColor"),

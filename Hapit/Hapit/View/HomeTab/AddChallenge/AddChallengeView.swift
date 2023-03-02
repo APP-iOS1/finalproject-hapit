@@ -112,10 +112,11 @@ struct AddChallengeView: View {
                                 let creator = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                                 
                                 // 챌린지 작성자 uid 저장
-                                // TODO: authManager.firebaseAuth.currentUser?.uid ?? "" 부분이 중복되는 코드. 전체적으로 고칠 필요가 있음
+                                // TODO: authManager.firebaseAuth.currentUser?.uid ?? "" 변수로 저장해놓으면 더 간단하지 않을까잉?
                                 var mateArray: [String] = []
                                 mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                                 
+                                // 앱 내 메시지 보내는 기능...
                                 for friend in habitManager.selectedFriends {
                                     try await messageManager.sendMessage(Message(id: UUID().uuidString,
                                                                                  messageType: "invite",
@@ -129,6 +130,7 @@ struct AddChallengeView: View {
                                 // Firestore에 올리기 위한 새로운 챌린지 객체 변수 생성 (따로 빼준 이유: mateArray로부터 mateList를 뽑아내기 위함.)
                                 let newChallenge = Challenge(id: id, creator: creator, mateArray: mateArray, challengeTitle: challengeTitle, createdAt: currentDate, count: 0, isChecked: false, uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                                 
+                                // TODO: 이부분은 냄겨야할 수도 있겠넹...
                                 // Firestore에 업로드 (Firestore)
                                 habitManager.createChallenge(challenge: newChallenge)
                                 
@@ -151,7 +153,7 @@ struct AddChallengeView: View {
                                         print(friend)
                                     }
                                 }
-                                
+                                //TODO: 이거 필 없을듯..!
                                 habitManager.loadChallenge()
                                 
                                 isAddHabitViewShown = false

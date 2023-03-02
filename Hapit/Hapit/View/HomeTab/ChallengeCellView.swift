@@ -19,6 +19,7 @@ struct ChallengeCellView: View {
     @State var tempIsChecked: Bool = false
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    //TODO: 로컬중심으로 개편하기 때문에 challenge 변수는 필 없당..
     var challenge: Challenge
     
     @AppStorage("currentDate") var currentDate: String = UserDefaults.standard.string(forKey: "currentDate") ?? ""
@@ -53,6 +54,7 @@ struct ChallengeCellView: View {
                 .buttonStyle(PlainButtonStyle())
                 
                 //checkButton
+                //TODO: 로컬데이터로 개편부탁ㅎ;
                 VStack(alignment: .leading, spacing: 1){
                     VStack(alignment: .leading, spacing: 2){
                         Text(challenge.createdDate)
@@ -97,6 +99,7 @@ struct ChallengeCellView: View {
             .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
             .contextMenu {
                 Button(role: .destructive) {
+                    //TODO: 로컬에서만 먼저 삭제하고, Firestore는 냅둬보자..(성능 업시키려고)
                     // Firestore에서 챌린지 삭제
                     habitManager.removeChallenge(challenge: challenge)
                     
@@ -114,12 +117,14 @@ struct ChallengeCellView: View {
                     $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
                                                                                 isChecked: $localChallenge.isChecked.wrappedValue)
                     // 서버에 업데이트
+                    //TODO: 이거도 잠시 넣어두고 나중에 한꺼번에 업데이트 해주기
                     habitManager.updateCount(challenge: challenge, count: $localChallenge.count.wrappedValue)
                     // 초기화
                     $localChallenge.isChecked.wrappedValue = false
                 }
                 currentDate = getToday()
                 currentUserInfos = []
+                //TODO: 로컬에 메이트 어레이 불러오는 거로...
                 Task {
                     // 함께 챌린지 진행하는 친구들 프사
                     for member in challenge.mateArray {
@@ -153,29 +158,3 @@ struct ChallengeCellView: View {
         }
     }
 }
-//MARK: 프로그레스 뷰를 사용하게 된다면 이 부분.
-//        .overlay(
-//            VStack{
-//                Spacer()
-//                ZStack{
-//                    Rectangle()
-//                        .frame(height: 4)
-//                        .padding([.top, .leading, .trailing], 10)
-//                        .foregroundColor(Color(UIColor.lightGray))
-//
-//                    HStack{
-//                        //                    Image("duckBoat")
-//                        //                        .resizable()
-//                        //                        .aspectRatio(contentMode: .fit)
-//                        //                        .frame(width: 20)
-//
-//
-//                        Rectangle()
-//                            .frame(width: (CGFloat(dateFromStart)/CGFloat(66)) * UIScreen.main.bounds.size.width ,height: 4)
-//                            .padding([.top, .leading, .trailing], 10)
-//                        Spacer()
-//                    }
-//                }
-//            }
-//        )
-

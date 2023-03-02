@@ -34,18 +34,6 @@ struct ChallengeFriendsCellView: View {
                         }
                     }
                 }
-                
-//                    habitManager.selectedFriends.append(selectedFriend)
-//                    print(selectedFriend)
-//                }
-//                else {
-//                    for (index, friend) in habitManager.selectedFriends.enumerated() {
-//                        if friend == selectedFriend {
-//                            print(habitManager.selectedFriends[index])
-//                            habitManager.selectedFriends.removeLast(index)
-//                        }
-//                    }
-//                }
             } label: {
                 HStack{
                     Image(selectedFriend.proImage)

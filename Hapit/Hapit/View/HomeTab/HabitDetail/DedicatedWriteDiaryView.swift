@@ -10,12 +10,13 @@ import SwiftUI
 import Combine
 import PhotosUI
 import class PhotosUI.PHPickerViewController
+import RealmSwift
 
 struct DedicatedWriteDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @State var content = ""
     
-    var currentChallenge: Challenge
+    @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     
     @State private var selectedImage: UIImage?// ios 15
     @State private var isShowingPhotoPicker: Bool = false
@@ -29,9 +30,9 @@ struct DedicatedWriteDiaryView: View {
             ScrollView {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("\(currentChallenge.challengeTitle)")
+                        Text("\($localChallenge.challengeTitle.wrappedValue)")
                             .font(.custom("IMHyemin-Bold", size: 22))
-                        Text("\(currentChallenge.createdDate)")
+                        Text("\($localChallenge.createdDate.wrappedValue)")
                             .font(.custom("IMHyemin-Regular", size: 17))
                     }
                     Spacer()
@@ -67,9 +68,7 @@ struct DedicatedWriteDiaryView: View {
                             .font(.footnote)
                             .foregroundColor(Color("GrayFontColor"))
                     }
-                    
-                    
-     
+
                 } // VStack
                 //.formStyle(.columns) // ios 15
                 .toolbar {
@@ -98,11 +97,11 @@ struct DedicatedWriteDiaryView: View {
                         Button {
                             habitManager.createPost(post: Post(id: UUID().uuidString,
                                                                creatorID: authManager.firebaseAuth.currentUser?.uid ?? "",
-                                                               challengeID: currentChallenge.id,
-                                                               title: currentChallenge.challengeTitle,
+                                                               challengeID: $localChallenge.challengeId.wrappedValue,
+                                                               title: $localChallenge.challengeTitle.wrappedValue,
                                                                content: content,
                                                                createdAt: Date()))
-                            habitManager.loadPosts(challengeID: currentChallenge.id)
+                            habitManager.loadPosts(challengeID: $localChallenge.challengeId.wrappedValue)
                             
                             dismiss()
                         } label: {

@@ -19,51 +19,44 @@ struct HabitSegmentDetailView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
+    //로컬데이터 안에있는 챌린지와 습관을 분리해서 배열에 저장해줌
+    @State private var challengeArray: [LocalChallenge] = []
+    @State private var habitArray: [LocalChallenge] = []
     
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
     var body: some View {
         switch selectedIndex {
+        //case 0 은 챌린지
         case 0:
             VStack {
                 //TODO: 서버에 있는 챌린지 기준으로 분기처리 중(로컬중심으로 개편 필요)
-                if habitManager.currentUserChallenges.count < 1 {
-                    EmptyCellView(currentContentsType: .challenge)
+                if challengeArray.isEmpty {
+                    EmptyCellView(currentContentsType: .habit)
                 } else {
                     ScrollView {
                         //TODO: 이거 우리 이제 필 없음
                         //TODO: 개인챌린지랑 함께하기챌린지랑 db구조상의 차이점이 없어짐
                         //TODO: 초대 시 수락받으면 로컬에 저장을 해주는 중
-                        ForEach(habitManager.currentUserChallenges) { challenge in
-                            ForEach(challenge.mateArray, id: \.self) { mate in
-                                if mate == authManager.firebaseAuth.currentUser?.uid {
-                                    NavigationLink {
-                                        ZStack{
-                                            ScrollView(showsIndicators: false) {
-                                                //TODO: 로컬에 있는 챌린지 불러오는 중
-                                                ForEach(localChallenges) { localChallenge in
-                                                    if localChallenge.challengeId == challenge.id {
-                                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
-                                                    }
-                                                } // ForEach - localChallenges
-                                            }
-                                            .padding()
-                                            .background(Color("BackgroundColor"))
-                                            ModalAnchorView()
-                                        } // ZStack
-                                        
-                                    } label: {
-                                        ForEach(localChallenges) { localChallenge in
-                                            if localChallenge.challengeId == challenge.id {
-                                                ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
-                                            }
-                                        } // ForEach - localChallenges
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.bottom, 5)
-                                } // if
-                            } // ForEach - mateArray
-                        } // ForEach - currentUserChallenges
+                        NavigationLink {
+                            ZStack{
+                                ScrollView(showsIndicators: false) {
+                                    //TODO: 로컬에 있는 챌린지 불러오는 중
+                                    ForEach(challengeArray) { localChallenge in
+                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge)
+                                    } // ForEach - challengeArray
+                                }
+                                .padding()
+                                .background(Color("BackgroundColor"))
+                                ModalAnchorView()
+                            } // ZStack
+                        } label: {
+                            ForEach(challengeArray) { localChallenge in
+                                    ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge)
+                            } // ForEach - challengeArray
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 5)
                     } // ScrollView
                     .onAppear {
                         restoreChallenges()
@@ -73,21 +66,31 @@ struct HabitSegmentDetailView: View {
                     } // refreshable
                 } // else
             } // VStack
-   
+            //시작할때 0번 인덱스에 해당하는 챌린지뷰를 먼저 그리기 때문에 챌린지 뷰 onAppear시에 챌린지와 습관을 분리해서 각각 배열에 저장해줌
+            .onAppear {
+                for localChallenge in localChallenges {
+                    if localChallenge.isHabit == false {
+                        challengeArray.append(localChallenge)
+                    } else {
+                        habitArray.append(localChallenge)
+                    }
+                }
+            }
+        //case 1은 습관
         case 1:
             //TODO: 서버에 있는 배열 기준으로 체크중 -> 수정요망
-            if habitManager.habits.count < 1{
+            if habitArray.isEmpty {
                 EmptyCellView(currentContentsType: .habit)
             }
             else{
                 //TODO: 로컬 데이터 기준으로 수정 요망
                 ScrollView {
-                    ForEach(habitManager.habits) { habit in
+                    ForEach(habitArray) { localHabit in
                         
                         NavigationLink {
                             //HabitDetailView(calendar: Calendar.current)
                         } label: {
-                            HabitCellView(habit: habit)
+                            HabitCellView(habit: localHabit)
                         }
                     }
                 }

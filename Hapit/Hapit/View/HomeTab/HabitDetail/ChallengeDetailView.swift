@@ -40,9 +40,6 @@ struct ChallengeDetailView: View {
     // Login
     @EnvironmentObject var authManager: AuthManager
     
-    // MARK: - Properties
-    var currentChallenge: Challenge
-    
     // MARK: - Body
     var body: some View {
         ZStack{
@@ -143,7 +140,7 @@ struct ChallengeDetailView: View {
             .padding([.top, .leading, .trailing])
             .background(Color("CellColor"))
             .cornerRadius(20)
-            .navigationBarTitle(currentChallenge.challengeTitle)
+            .navigationBarTitle($localChallenge.challengeTitle.wrappedValue)
             //.ignoresSafeArea()
             .onChange(of: currentMonth) { newValue in
                 currentDate = getCurrentMonth()
@@ -177,10 +174,10 @@ struct ChallengeDetailView: View {
             //MARK: onAppear
             .onAppear{
                 // MARK: 포스트 불러오기
-                habitManager.fetchChallenge(challengeID: currentChallenge.id)
+                habitManager.fetchChallenge(challengeID: $localChallenge.challengeId.wrappedValue)
                 // 현재 챌린지에 해당하는 모든 포스트들을 불러온다.
-                habitManager.loadPosts(challengeID: currentChallenge.id)
-                print("currentChalleng.id", currentChallenge.id)
+                habitManager.loadPosts(challengeID: $localChallenge.challengeId.wrappedValue)
+                print("currentChalleng.id", $localChallenge.challengeId.wrappedValue)
                 print("habitmanager.posts", habitManager.posts)
                 currentDate = Date()
                 
@@ -244,7 +241,7 @@ struct ChallengeDetailView: View {
                             }
                         } else { // 앱의 알림 설정을 해제시켜줘야 함.
                             // lnManger schedule에서 삭제
-                            lnManager.removeRequest(withIdentifier: currentChallenge.id)
+                            lnManager.removeRequest(withIdentifier: $localChallenge.challengeId.wrappedValue)
                             isShowingAlarmSheet = false
                             isChallengeAlarmOn = false
                         }
@@ -283,8 +280,8 @@ struct ChallengeDetailView: View {
             } // toolbar
             .halfSheet(showSheet: $isShowingAlarmSheet) { // 챌린지 알림 설정 창 시트
                 ForEach(localChallenges) { localChallenge in
-                    if localChallenge.challengeId == currentChallenge.id {
-                        LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: currentChallenge.id, challengeTitle: currentChallenge.challengeTitle)
+                    if localChallenge.challengeId == $localChallenge.challengeId.wrappedValue {
+                        LocalNotificationSettingView(localChallenge: localChallenge, isChallengeAlarmOn: $isChallengeAlarmOn, isShowingAlarmSheet: $isShowingAlarmSheet, challengeID: $localChallenge.challengeId.wrappedValue, challengeTitle: $localChallenge.challengeTitle.wrappedValue)
                             .environmentObject(LocalNotificationManager())
                             .environmentObject(HabitManager())
                     }
@@ -292,7 +289,7 @@ struct ChallengeDetailView: View {
             }
         }
         .sheet(isPresented: $showsCreatePostView) {
-            DedicatedWriteDiaryView(currentChallenge: currentChallenge)
+            DedicatedWriteDiaryView(localChallenge: localChallenge)
         }
         .customAlert( // 커스텀 알림창 띄우기
             isPresented: $isAlertOn,
@@ -307,8 +304,8 @@ struct ChallengeDetailView: View {
             message: "삭제된 챌린지는 복구할 수 없어요.",
             primaryButtonTitle: "삭제",
             primaryAction: {
-                // Firestore에서 챌린지 삭제
-                habitManager.removeChallenge(challenge: currentChallenge)
+//                // Firestore에서 챌린지 삭제
+//                habitManager.removeChallenge(challenge: $localChallenge)
                 // Realm에서 챌린지 삭제
                 $localChallenges.remove(localChallenge)
             },
@@ -346,7 +343,7 @@ struct ChallengeDetailView: View {
                     
                 }
             }
-            if (isSameDay(date1: value.date, date2: currentChallenge.createdAt.addingTimeInterval(timeIntervalAfter66Days))){
+            if (isSameDay(date1: value.date, date2: $localChallenge.createdAt.wrappedValue.addingTimeInterval(timeIntervalAfter66Days))){
                 Text("D-day")
                     .font(.custom("IMHyemin-Regular", size: 10))
                     .foregroundColor(.accentColor)

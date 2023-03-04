@@ -19,9 +19,8 @@ struct HabitSegmentDetailView: View {
     
     @State private var isOnAlarm: Bool = false // 알림 설정
     @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
-    //로컬데이터 안에있는 챌린지와 습관을 분리해서 배열에 저장해줌
-    @State private var challengeArray: [LocalChallenge] = []
-    @State private var habitArray: [LocalChallenge] = []
+    @State private var challengeCount: Int = 0
+    @State private var habitCount: Int = 0
     
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
@@ -30,8 +29,8 @@ struct HabitSegmentDetailView: View {
         //case 0 은 챌린지
         case 0:
             VStack {
-                //TODO: 서버에 있는 챌린지 기준으로 분기처리 중(로컬중심으로 개편 필요)
-                if challengeArray.isEmpty {
+                
+                if challengeCount == 0 {
                     EmptyCellView(currentContentsType: .habit)
                 } else {
                     ScrollView {
@@ -42,8 +41,10 @@ struct HabitSegmentDetailView: View {
                             ZStack{
                                 ScrollView(showsIndicators: false) {
                                     //TODO: 로컬에 있는 챌린지 불러오는 중
-                                    ForEach(challengeArray) { localChallenge in
-                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge)
+                                    ForEach(localChallenges) { localChallenge in
+                                        if localChallenge.isHabit == false {
+                                            ChallengeDetailView(currentDate: $date, localChallenge: localChallenge)
+                                        }
                                     } // ForEach - challengeArray
                                 }
                                 .padding()
@@ -51,8 +52,10 @@ struct HabitSegmentDetailView: View {
                                 ModalAnchorView()
                             } // ZStack
                         } label: {
-                            ForEach(challengeArray) { localChallenge in
+                            ForEach(localChallenges) { localChallenge in
+                                if localChallenge.isHabit == false {
                                     ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge)
+                                }
                             } // ForEach - challengeArray
                         }
                         .padding(.horizontal, 20)
@@ -70,28 +73,39 @@ struct HabitSegmentDetailView: View {
             .onAppear {
                 for localChallenge in localChallenges {
                     if localChallenge.isHabit == false {
-                        challengeArray.append(localChallenge)
-                    } else {
-                        habitArray.append(localChallenge)
+                        challengeCount += 1
                     }
                 }
             }
         //case 1은 습관
         case 1:
             //TODO: 서버에 있는 배열 기준으로 체크중 -> 수정요망
-            if habitArray.isEmpty {
-                EmptyCellView(currentContentsType: .habit)
-            }
-            else{
-                //TODO: 로컬 데이터 기준으로 수정 요망
-                ScrollView {
-                    ForEach(habitArray) { localHabit in
-                        
-                        NavigationLink {
-                            //HabitDetailView(calendar: Calendar.current)
-                        } label: {
-                            HabitCellView(habit: localHabit)
+            VStack {
+                if habitCount == 0 {
+                    EmptyCellView(currentContentsType: .habit)
+                }
+                else {
+                    //TODO: 로컬 데이터 기준으로 수정 요망
+                    ScrollView {
+                        ForEach(localChallenges) { localChallenge in
+                            
+                            NavigationLink {
+//                                if localChallenge.isHabit == true {
+//                                    HabitDetailView(calendar: Calendar.current)
+//                                }
+                            } label: {
+                                if localChallenge.isHabit == true {
+                                    HabitCellView(habit: localChallenge)
+                                }
+                            }
                         }
+                    }
+                }
+            }
+            .onAppear {
+                for localChallenge in localChallenges {
+                    if localChallenge.isHabit == true {
+                        habitCount += 1
                     }
                 }
             }

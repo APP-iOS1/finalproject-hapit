@@ -29,7 +29,6 @@ struct HabitSegmentDetailView: View {
         //case 0 은 챌린지
         case 0:
             VStack {
-                
                 if challengeCount == 0 {
                     EmptyCellView(currentContentsType: .habit)
                 } else {
@@ -37,29 +36,25 @@ struct HabitSegmentDetailView: View {
                         //TODO: 이거 우리 이제 필 없음
                         //TODO: 개인챌린지랑 함께하기챌린지랑 db구조상의 차이점이 없어짐
                         //TODO: 초대 시 수락받으면 로컬에 저장을 해주는 중
-                        NavigationLink {
-                            ZStack{
-                                ScrollView(showsIndicators: false) {
-                                    //TODO: 로컬에 있는 챌린지 불러오는 중
-                                    ForEach(localChallenges) { localChallenge in
-                                        if localChallenge.isHabit == false {
+                        ForEach(localChallenges) { localChallenge in
+                            if localChallenge.isHabit == false {
+                                NavigationLink {
+                                    ZStack {
+                                        ScrollView(showsIndicators: false) {
+                                            //TODO: 로컬에 있는 챌린지 불러오는 중
                                             ChallengeDetailView(currentDate: $date, localChallenge: localChallenge)
                                         }
-                                    } // ForEach - challengeArray
-                                }
-                                .padding()
-                                .background(Color("BackgroundColor"))
-                                ModalAnchorView()
-                            } // ZStack
-                        } label: {
-                            ForEach(localChallenges) { localChallenge in
-                                if localChallenge.isHabit == false {
+                                        .padding()
+                                        .background(Color("BackgroundColor"))
+                                        ModalAnchorView()
+                                    } // ZStack
+                                } label: {
                                     ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge)
                                 }
-                            } // ForEach - challengeArray
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 5)
+                                .padding(.horizontal, 20)
+                                .padding(.bottom, 5)
+                            } // if
+                        } // ForEach
                     } // ScrollView
                     .onAppear {
                         restoreChallenges()

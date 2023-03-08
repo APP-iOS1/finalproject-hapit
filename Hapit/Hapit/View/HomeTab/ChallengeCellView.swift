@@ -19,6 +19,7 @@ struct ChallengeCellView: View {
     @State var tempIsChecked: Bool = false
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    @ObservedResults(LocalChallenge.self) var localHabits
     @AppStorage("currentDate") var currentDate: String = UserDefaults.standard.string(forKey: "currentDate") ?? ""
     
     // MARK: - Method
@@ -109,13 +110,16 @@ struct ChallengeCellView: View {
             } // contextMenu
             .onAppear() {
                 if currentDate != getToday() { // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우 - 앱이 켜질 때마다 서버에 업로드되는 메모리 낭비를 방지
-                    // 로컬에 업데이트
-                    $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
-                                                                                isChecked: $localChallenge.isChecked.wrappedValue)
-                    // 서버에 업데이트
-                    //TODO: 파베의 연속일 업데이트도 잠시 넣어두고 나중에 한꺼번에 업데이트 해주기
-                    // 초기화
-                    $localChallenge.isChecked.wrappedValue = false
+                    // 66일이 아닌 경우에만(습관이 되지 않은 경우에만)
+                    if $localChallenge.count.wrappedValue < 66 {
+                        // 로컬에 업데이트
+                        $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
+                                                                                    isChecked: $localChallenge.isChecked.wrappedValue)
+                        // 서버에 업데이트
+                        //TODO: 파베의 연속일 업데이트도 잠시 넣어두고 나중에 한꺼번에 업데이트 해주기
+                        // 초기화
+                        $localChallenge.isChecked.wrappedValue = false
+                    }
                 }
                 currentDate = getToday()
                 currentUserInfos = []
@@ -129,13 +133,21 @@ struct ChallengeCellView: View {
          
             }
             .onChange(of: scenePhase) { _ in // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우
-                if currentDate != getToday() { // 자정이 되는 순간
-                    // 로컬에 업데이트
-                    $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
-                                                                            isChecked: $localChallenge.isChecked.wrappedValue)
-                    // 초기화
-                    $localChallenge.isChecked.wrappedValue = false
+                if currentDate != getToday() {
+                    if $localChallenge.count.wrappedValue < 66 {
+                        // 로컬에 업데이트
+                        $localChallenge.count.wrappedValue = habitManager.countDays(count: $localChallenge.count.wrappedValue,
+                                                                                    isChecked: $localChallenge.isChecked.wrappedValue)
+                        // 초기화
+                        $localChallenge.isChecked.wrappedValue = false
+                    } else if $localChallenge.count.wrappedValue == 66 {
+                        // 로컬해빗에 추가해주고 로컬 챌린지 배열에서 지워준다
+                        $localHabits.append(localChallenge)
+                        $localChallenges.remove(localChallenge)
+                        
+                    }
                 }
+                    
                 currentDate = getToday()
             }
             

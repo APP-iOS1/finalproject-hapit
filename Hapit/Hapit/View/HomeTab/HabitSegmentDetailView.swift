@@ -18,18 +18,17 @@ struct HabitSegmentDetailView: View {
     @EnvironmentObject var authManager: AuthManager
     
     @State private var isOnAlarm: Bool = false // 알림 설정
-    @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
-    @State private var challengeCount: Int = 0
-    @State private var habitCount: Int = 0
+    @State private var showsCustomAlert = false // 챌 린지 디테일 뷰로 넘길 값
     
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
+    @ObservedResults(LocalChallenge.self) var localHabits
     
     var body: some View {
         switch selectedIndex {
         //case 0 은 챌린지
         case 0:
             VStack {
-                if challengeCount == 0 {
+                if localChallenges.isEmpty {
                     EmptyCellView(currentContentsType: .habit)
                 } else {
                     ScrollView {
@@ -37,7 +36,6 @@ struct HabitSegmentDetailView: View {
                         //TODO: 개인챌린지랑 함께하기챌린지랑 db구조상의 차이점이 없어짐
                         //TODO: 초대 시 수락받으면 로컬에 저장을 해주는 중
                         ForEach(localChallenges) { localChallenge in
-                            if localChallenge.isHabit == false {
                                 NavigationLink {
                                     ZStack {
                                         ScrollView(showsIndicators: false) {
@@ -53,7 +51,6 @@ struct HabitSegmentDetailView: View {
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 5)
-                            } // if
                         } // ForEach
                     } // ScrollView
                     .onAppear {
@@ -65,18 +62,11 @@ struct HabitSegmentDetailView: View {
                 } // else
             } // VStack
             //시작할때 0번 인덱스에 해당하는 챌린지뷰를 먼저 그리기 때문에 챌린지 뷰 onAppear시에 챌린지와 습관을 분리해서 각각 배열에 저장해줌
-            .onAppear {
-                for localChallenge in localChallenges {
-                    if localChallenge.isHabit == false {
-                        challengeCount += 1
-                    }
-                }
-            }
         //case 1은 습관
         case 1:
             //TODO: 서버에 있는 배열 기준으로 체크중 -> 수정요망
             VStack {
-                if habitCount == 0 {
+                if localHabits.isEmpty {
                     EmptyCellView(currentContentsType: .habit)
                 }
                 else {
@@ -89,18 +79,9 @@ struct HabitSegmentDetailView: View {
 //                                    HabitDetailView(calendar: Calendar.current)
 //                                }
                             } label: {
-                                if localChallenge.isHabit == true {
                                     HabitCellView(habit: localChallenge)
-                                }
                             }
                         }
-                    }
-                }
-            }
-            .onAppear {
-                for localChallenge in localChallenges {
-                    if localChallenge.isHabit == true {
-                        habitCount += 1
                     }
                 }
             }

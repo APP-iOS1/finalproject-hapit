@@ -91,9 +91,19 @@ struct ChallengeCellView: View {
                 
             }//HStack
             .padding(20)
-            //        .foregroundColor(.black)
             .background(
-                Color("CellColor")
+                ZStack{
+                    Color("CellColor")
+                    if $localChallenge.isChecked.wrappedValue == true {
+                        
+                            JellyConfetti(title: "")
+        //                        .onAppear{
+        //                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        //                                isShownConfetti = false
+        //                            }
+        //                        }
+                    }
+                }
             )
             .cornerRadius(20)
             .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
@@ -144,16 +154,6 @@ struct ChallengeCellView: View {
                     $localChallenge.isChecked.wrappedValue = false
                 }
                 currentDate = getToday()
-            }
-            
-            if $localChallenge.isChecked.wrappedValue == true {
-                
-                    JellyConfetti(title: "")
-//                        .onAppear{
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                                isShownConfetti = false
-//                            }
-//                        }
             }
         }
     }

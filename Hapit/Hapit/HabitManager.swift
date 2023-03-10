@@ -44,20 +44,13 @@ final class HabitManager: ObservableObject{
         }
         return tempChallenges
     }
+    
+    @Published var selectedFriends: [User] = []
     //나의 다이어리가 저장되는 변수
     @Published var posts: [Post] = []
     
     //챌린지를 같이 진행하고 있는 친구들의 다이어리가 저장되는 변수
     @Published var currentMatePosts: [Post] = []
-    
-    //나의 친구들을 받을 변수
-    @Published var friends: [User] = []
-    
-    //친구의 챌린지를 받을 변수
-    @Published var friendchallenges: [Challenge] = []
-
-    // 최종으로 받아오는 초대할 친구 목록
-    @Published var seletedFriends: [ChallengeFriends] = []
 
     let database = Firestore.firestore()
     

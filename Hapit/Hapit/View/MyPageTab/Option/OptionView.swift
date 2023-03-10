@@ -174,7 +174,7 @@ struct OptionView: View {
 //                    }
 //
 //            }
-            //MARK: - 2.챌린지(Challenge)(성공)
+            //MARK: - 2.챌린지(Challenge)
             ///2-1. 내가 참여중인 챌린지(함께 하는 챌린지)
             ///mateArray에서 나의 uid와 같은 데이터를 찾아서 지움
             ///2-2. 내가 만든 챌린지(함께하는 챌린지)
@@ -203,7 +203,7 @@ struct OptionView: View {
                     }
                 }
             }
-            //MARK: - 4. 내 친구에 저장된 나를 삭제(성공)
+            //MARK: - 4. 내 친구에 저장된 나를 삭제
             Task{
                 try await userInfoManager.getFriendArray()
                 
@@ -211,7 +211,7 @@ struct OptionView: View {
                     try await userInfoManager.removeFriendData(userID: currentUser ?? "", friendID: friend.id)
                 }
             }
-            //MARK: - 5. 로그아웃(성공)
+            //MARK: - 5. 로그아웃
             Task{
                 // 로그인 ?
                 flag = 2
@@ -223,9 +223,9 @@ struct OptionView: View {
 //                // 로그아웃 인 상태를 저장함
 //                authManager.save(value: Key.logOut.rawValue, forkey: "state")
             }
-            /// 6-1. 유저의 메세지들을 먼저 삭제하기
-            /// 6-2. 유저의 정보 삭제(회원 탈퇴 완료)
-            // 6-1. 메세지 삭제하기(성공)
+            
+            //MARK: - 6. 유저에서 나를 삭제
+            ///유저의 메세지들을 먼저 삭제하기
             Task{
                 for message in messageManager.messageArray{
                     if message.receiverID == currentUser ?? "" {
@@ -233,14 +233,15 @@ struct OptionView: View {
                     }
                 }
                 
-            }
-            //MARK: - 6. 유저에서 나를 삭제(--)
-            //Task{
-                // 6-2. user 삭제()
-                //try await authManager.deleteUser(uid: currentUser ?? "")
-                //try await getOut(uid: currentUser ?? "")
-            //}
-        }},withCancelButton: true)
+            }           
+        }
+        //MARK: - 7. 유저에서 나를 삭제
+            //user 삭제
+            Task{
+                try await authManager.deleteUser(uid: currentUser ?? "")
+           }
+            
+        },withCancelButton: true)
     }
     
     func signOut() {

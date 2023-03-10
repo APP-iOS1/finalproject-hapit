@@ -14,17 +14,25 @@ struct JellyConfetti: View{
     
     var body: some View {
         ZStack {
-            Circle()
-                .fill(Color.blue)
-                .frame(width: 12, height: 12)
+            Image("bearTurquoise")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+//                .fill(Color.blue)
+                .frame(width:CGFloat(Int.random(in: 100..<150)) ,height: CGFloat(Int.random(in: 100..<150)))
+                .rotationEffect(.degrees(Double(Int.random(in: -360..<0))))
+                                                .rotation3DEffect(.degrees(Double(Int.random(in: 0..<45))), axis: (x: 1, y: 1, z: 1))
                 .modifier(ParticlesModifier())
-                .offset(x: -100, y : -50)
-            
-            Circle()
-                .fill(Color.red)
-                .frame(width: 12, height: 12)
+                .offset(x: 40, y: 50)
+                    
+            Image("bearYellow")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+//                .fill(Color.red)
+                .frame(width:CGFloat(Int.random(in: 100..<150)) ,height: CGFloat(Int.random(in: 100..<150)))
+                .rotationEffect(.degrees(Double(Int.random(in: -360..<0))))
+                                                .rotation3DEffect(.degrees(Double(Int.random(in: 0..<45))), axis: (x: 1, y: 1, z: 1))
                 .modifier(ParticlesModifier())
-                .offset(x: 60, y : 70)
+                .offset(x: 40, y: 50)
         }
     }
 }
@@ -36,12 +44,12 @@ struct ParticlesModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         ZStack {
-            ForEach(0..<80, id: \.self) { index in
+            ForEach(0..<10, id: \.self) { index in
                 content
                     .hueRotation(Angle(degrees: time * 80))
                     .scaleEffect(scale)
                     .modifier(FireworkParticlesGeometryEffect(time: time))
-                    .opacity(((duration-time) / duration))
+                    .opacity(((duration - time) / duration))
             }
         }
         .onAppear {
@@ -54,9 +62,9 @@ struct ParticlesModifier: ViewModifier {
 }
 
 struct FireworkParticlesGeometryEffect : GeometryEffect {
-    var time : Double
+    var time: Double
     var speed = Double.random(in: 20 ... 200)
-    var direction = Double.random(in: -Double.pi ...  Double.pi)
+    var direction = Double.random(in: -Double.pi ... Double.pi)
     
     var animatableData: Double {
         get { time }
@@ -65,7 +73,7 @@ struct FireworkParticlesGeometryEffect : GeometryEffect {
     func effectValue(size: CGSize) -> ProjectionTransform {
         let xTranslation = speed * cos(direction) * time
         let yTranslation = speed * sin(direction) * time
-        let affineTranslation =  CGAffineTransform(translationX: xTranslation, y: yTranslation)
+        let affineTranslation = CGAffineTransform(translationX: xTranslation, y: yTranslation)
         return ProjectionTransform(affineTranslation)
     }
 }

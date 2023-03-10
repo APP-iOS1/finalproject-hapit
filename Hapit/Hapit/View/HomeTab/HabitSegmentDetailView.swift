@@ -29,55 +29,61 @@ struct HabitSegmentDetailView: View {
         switch selectedIndex {
         case 0:
             VStack {
+                //TODO: 서버에 있는 챌린지 기준으로 분기처리 중(로컬중심으로 개편 필요)
                 if habitManager.currentUserChallenges.count < 1 {
                     EmptyCellView(currentContentsType: .challenge)
                 } else {
                     ScrollView {
-                                ForEach(habitManager.currentUserChallenges) { challenge in
-                                    ForEach(challenge.mateArray, id: \.self) { mate in
-                                        if mate == authManager.firebaseAuth.currentUser?.uid {
-                                            NavigationLink {
-                                                ZStack{
-                                                    ScrollView(showsIndicators: false) {
-                                                        ForEach(localChallenges) { localChallenge in
-                                                            if localChallenge.challengeId == challenge.id {
-                                                                ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
-                                                            }
-                                                        } // ForEach - localChallenges
-                                                    }
-                                                    .padding()
-                                                    .background(Color("BackgroundColor"))
-                                                    ModalAnchorView()
-                                                } // ZStack
-                                                
-                                            } label: {
+                        //TODO: 이거 우리 이제 필 없음
+                        //TODO: 개인챌린지랑 함께하기챌린지랑 db구조상의 차이점이 없어짐
+                        //TODO: 초대 시 수락받으면 로컬에 저장을 해주는 중
+                        ForEach(habitManager.currentUserChallenges) { challenge in
+                            ForEach(challenge.mateArray, id: \.self) { mate in
+                                if mate == authManager.firebaseAuth.currentUser?.uid {
+                                    NavigationLink {
+                                        ZStack{
+                                            ScrollView(showsIndicators: false) {
+                                                //TODO: 로컬에 있는 챌린지 불러오는 중
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
                                                         ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
                                                     }
                                                 } // ForEach - localChallenges
                                             }
-                                            .padding(.horizontal, 20)
-                                            .padding(.bottom, 5)
-                                        } // if
-                                    } // ForEach - mateArray
-                                } // ForEach - currentUserChallenges
-                        } // ScrollView
-                        .onAppear {
-                            //restoreChallenges()
-                            habitManager.loadChallenge()
-                        } // onAppear
-//                        .refreshable { // MARK: - Only iOS 16
-//                            restoreChallenges()
-//                        } // refreshable
+                                            .padding()
+                                            .background(Color("BackgroundColor"))
+                                            ModalAnchorView()
+                                        } // ZStack
+                                        
+                                    } label: {
+                                        ForEach(localChallenges) { localChallenge in
+                                            if localChallenge.challengeId == challenge.id {
+                                                ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
+                                            }
+                                        } // ForEach - localChallenges
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.bottom, 5)
+                                } // if
+                            } // ForEach - mateArray
+                        } // ForEach - currentUserChallenges
+                    } // ScrollView
+                    .onAppear {
+                        restoreChallenges()
+                    } // onAppear
+                    .refreshable { // MARK: - Only iOS 16
+                        restoreChallenges()
+                    } // refreshable
                 } // else
             } // VStack
    
         case 1:
+            //TODO: 서버에 있는 배열 기준으로 체크중 -> 수정요망
             if habitManager.habits.count < 1{
                 EmptyCellView(currentContentsType: .habit)
             }
             else{
+                //TODO: 로컬 데이터 기준으로 수정 요망
                 ScrollView {
                     ForEach(habitManager.habits) { habit in
                         
@@ -95,6 +101,7 @@ struct HabitSegmentDetailView: View {
     }
     
     // MARK: - 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우 복구하는 함수 (앱을 삭제하고 재설치하는 경우)
+    // DB 흐름을 로컬중심으로 개편 -> 서버에 올리는 시점을 바꿔야 한다. -> 나머지 부분에 대해서는 이 함수로 퉁 칠 수 있도록
     func restoreChallenges() {
         if countMyChallengesFromServer() != 0 && countLocalChallenges() == 0 {
             // 로컬에 있는 챌린지와 서버에 있는 챌린지 개수가 다를 경우, 앱이 삭제됐었던 것이므로 서버에 있는 챌린지들을 로컬에 다시 모두 담아준다.

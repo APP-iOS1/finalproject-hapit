@@ -55,5 +55,4 @@ final class BadgeManager: ObservableObject{
     func save(value: Bool = true, forkey key: String) {
         UserDefaults.standard.set(value, forKey: key)
     }
-    
 }

@@ -10,10 +10,15 @@ import FirebaseAuth
 
 struct OptionView: View {
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var signInManager: SignInManager
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @EnvironmentObject var messageManager: MessageManager
     @EnvironmentObject var lnManager: LocalNotificationManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
+    @EnvironmentObject var googleSignInManager: GoogleSignInManager
+    @EnvironmentObject var kakaoSignInManager: KakaoSignInManager
+    @EnvironmentObject var appleSignInManager: AppleSignInManager
     @Environment(\.scenePhase) var scenePhase
     
     @Binding var index: Int
@@ -149,8 +154,9 @@ struct OptionView: View {
                      primaryButtonTitle: "로그아웃",
                      primaryAction: { Task {
                 flag = 1
-                authManager.loggedIn = "logOut"
-                authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                signOut()
+//                signInManager.loggedIn = "logOut"
+//                signInManager.save(value: Key.logOut.rawValue, forkey: "state")
                 index = 0 } },
                      withCancelButton: true)
         
@@ -211,10 +217,11 @@ struct OptionView: View {
                 flag = 2
                 // 화면 위치 변경
                 index = 0
-                //로그인 뷰를 띄워주기 위함(logOut 상태를 표현함)
-                authManager.loggedIn = "logOut"
-                // 로그아웃 인 상태를 저장함
-                authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                signOut()
+//                //로그인 뷰를 띄워주기 위함(logOut 상태를 표현함)
+//                authManager.loggedIn = "logOut"
+//                // 로그아웃 인 상태를 저장함
+//                authManager.save(value: Key.logOut.rawValue, forkey: "state")
             }
             
             //MARK: - 6. 유저에서 나를 삭제
@@ -226,8 +233,7 @@ struct OptionView: View {
                     }
                 }
                 
-            }
-           
+            }           
         }
         //MARK: - 7. 유저에서 나를 삭제
             //user 삭제
@@ -236,6 +242,24 @@ struct OptionView: View {
            }
             
         },withCancelButton: true)
+    }
+    
+    func signOut() {
+        var loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+
+        if loginMethod == "general" {
+            normalSignInManager.loggedIn = "logOut"
+            normalSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        } else if loginMethod == "google" {
+            googleSignInManager.loggedIn = "logOut"
+            googleSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        } else if loginMethod == "kakao" {
+            kakaoSignInManager.loggedIn = "logOut"
+            kakaoSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        } else if loginMethod == "apple" {
+            appleSignInManager.loggedIn = "logOut"
+            appleSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        }
     }
 }
 

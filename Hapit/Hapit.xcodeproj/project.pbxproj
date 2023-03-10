@@ -84,12 +84,19 @@
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
 		F4007A212995019A00AA8919 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A202995019A00AA8919 /* GoogleSignIn */; };
 		F4007A2329952BE900AA8919 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A2229952BE900AA8919 /* GoogleSignInSwift */; };
-		F4007A272998C7C500AA8919 /* AuthManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */; };
+		F4007A272998C7C500AA8919 /* AppleSignInManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4007A262998C7C500AA8919 /* AppleSignInManagerExtension.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
 		F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4101A5C29935BE800006039 /* KeyboardManager.swift */; };
+		F41B6A6729B7743F00EC19F3 /* SignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A6629B7743F00EC19F3 /* SignProtocol.swift */; };
+		F41B6A6D29B84B7D00EC19F3 /* NewAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A6C29B84B7D00EC19F3 /* NewAuthManager.swift */; };
+		F41B6A6F29B85FD100EC19F3 /* SignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A6E29B85FD100EC19F3 /* SignInManager.swift */; };
+		F41B6A7529B8669500EC19F3 /* NormalSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7429B8669500EC19F3 /* NormalSignInManager.swift */; };
+		F41B6A7729B86BC100EC19F3 /* AppleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7629B86BC100EC19F3 /* AppleSignInManager.swift */; };
+		F41B6A7B29B871C300EC19F3 /* KakaoSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7A29B871C300EC19F3 /* KakaoSignInManager.swift */; };
+		F41B6A7D29B8741000EC19F3 /* GoogleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7C29B8741000EC19F3 /* GoogleSignInManager.swift */; };
+		F41B6A8229BA12B600EC19F3 /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A8129BA12B600EC19F3 /* SignInError.swift */; };
 		F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423787E2990A2C40005B12D /* NavigationBarColor.swift */; };
-		F4622DC1299A6DF60055D2AE /* KeyboardReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */; };
 		F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC3299A74250055D2AE /* StepBar_15.swift */; };
 		F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC5299A74990055D2AE /* StepBar_16.swift */; };
 		F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCA299A89350055D2AE /* RegisterGuideText.swift */; };
@@ -200,11 +207,18 @@
 		C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsCellView.swift; sourceTree = "<group>"; };
 		C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeCellView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
-		F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagerExtension.swift; sourceTree = "<group>"; };
+		F4007A262998C7C500AA8919 /* AppleSignInManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInManagerExtension.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
 		F4101A5C29935BE800006039 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		F41B6A6629B7743F00EC19F3 /* SignProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignProtocol.swift; sourceTree = "<group>"; };
+		F41B6A6C29B84B7D00EC19F3 /* NewAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAuthManager.swift; sourceTree = "<group>"; };
+		F41B6A6E29B85FD100EC19F3 /* SignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7429B8669500EC19F3 /* NormalSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7629B86BC100EC19F3 /* AppleSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7A29B871C300EC19F3 /* KakaoSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7C29B8741000EC19F3 /* GoogleSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A8129BA12B600EC19F3 /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		F423787E2990A2C40005B12D /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
-		F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardReadable.swift; sourceTree = "<group>"; };
 		F4622DC3299A74250055D2AE /* StepBar_15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_15.swift; sourceTree = "<group>"; };
 		F4622DC5299A74990055D2AE /* StepBar_16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_16.swift; sourceTree = "<group>"; };
 		F4622DCA299A89350055D2AE /* RegisterGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterGuideText.swift; sourceTree = "<group>"; };
@@ -418,10 +432,45 @@
 			children = (
 				F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */,
 				F423787E2990A2C40005B12D /* NavigationBarColor.swift */,
-				F4007A262998C7C500AA8919 /* AuthManagerExtension.swift */,
-				F4622DC0299A6DF60055D2AE /* KeyboardReadable.swift */,
+				F4007A262998C7C500AA8919 /* AppleSignInManagerExtension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		F41B6A6529B7733300EC19F3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A6629B7743F00EC19F3 /* SignProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		F41B6A7029B8609000EC19F3 /* SignInManager */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A6E29B85FD100EC19F3 /* SignInManager.swift */,
+				F41B6A7329B8667100EC19F3 /* SignInTypes */,
+			);
+			name = SignInManager;
+			sourceTree = "<group>";
+		};
+		F41B6A7329B8667100EC19F3 /* SignInTypes */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A7429B8669500EC19F3 /* NormalSignInManager.swift */,
+				F41B6A7629B86BC100EC19F3 /* AppleSignInManager.swift */,
+				F41B6A7C29B8741000EC19F3 /* GoogleSignInManager.swift */,
+				F41B6A7A29B871C300EC19F3 /* KakaoSignInManager.swift */,
+			);
+			name = SignInTypes;
+			sourceTree = "<group>";
+		};
+		F41B6A8029BA0FD800EC19F3 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A8129BA12B600EC19F3 /* SignInError.swift */,
+			);
+			path = "\U0010Errors";
 			sourceTree = "<group>";
 		};
 		F4622DC2299A74020055D2AE /* StepBar */ = {
@@ -466,6 +515,8 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				F41B6A8029BA0FD800EC19F3 /* Errors */,
+				F41B6A6529B7733300EC19F3 /* Protocols */,
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
 				959DCC3C299B52B6005CB3A2 /* Configuration */,
 				F40B9A512988CDFB00385014 /* Extension */,
@@ -527,6 +578,8 @@
 			isa = PBXGroup;
 			children = (
 				F47BA14E297A67FE000222EE /* AuthManager.swift */,
+				F41B6A7029B8609000EC19F3 /* SignInManager */,
+				F41B6A6C29B84B7D00EC19F3 /* NewAuthManager.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
 				95FAB87129920B0100E797EA /* BadgeManager.swift */,
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
@@ -733,9 +786,9 @@
 			files = (
 				67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */,
 				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
-				F4622DC1299A6DF60055D2AE /* KeyboardReadable.swift in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */,
+				F41B6A7B29B871C300EC19F3 /* KakaoSignInManager.swift in Sources */,
 				C50FEE422991F35F00C18D3F /* MessageCellView.swift in Sources */,
 				F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
@@ -753,6 +806,7 @@
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
 				F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
+				F41B6A6729B7743F00EC19F3 /* SignProtocol.swift in Sources */,
 				67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
 				C5882FA62990B5F3001FD3B6 /* FriendsEditRow.swift in Sources */,
@@ -761,13 +815,16 @@
 				C958D163298CE6DE0057AA5B /* ChallengeFriendsCellView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				36658E4B29954ED100BA9B67 /* RemoteNotification.swift in Sources */,
+				F41B6A6F29B85FD100EC19F3 /* SignInManager.swift in Sources */,
 				674A917E2989FFCD0050CF0B /* CustomAlert.swift in Sources */,
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */,
+				F41B6A7729B86BC100EC19F3 /* AppleSignInManager.swift in Sources */,
 				3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */,
 				F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */,
+				F41B6A6D29B84B7D00EC19F3 /* NewAuthManager.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
 				C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */,
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
@@ -785,6 +842,7 @@
 				3C39C493298985D400603149 /* PostModalView.swift in Sources */,
 				3C811D1D2987628A0005539A /* ChallengeDetailView.swift in Sources */,
 				C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */,
+				F41B6A8229BA12B600EC19F3 /* SignInError.swift in Sources */,
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
@@ -796,7 +854,7 @@
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
 				950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */,
 				67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */,
-				F4007A272998C7C500AA8919 /* AuthManagerExtension.swift in Sources */,
+				F4007A272998C7C500AA8919 /* AppleSignInManagerExtension.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
@@ -806,6 +864,7 @@
 				C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */,
 				F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */,
 				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
+				F41B6A7529B8669500EC19F3 /* NormalSignInManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */,
@@ -814,6 +873,7 @@
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
 				C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */,
 				F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */,
+				F41B6A7D29B8741000EC19F3 /* GoogleSignInManager.swift in Sources */,
 				F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */,
 				C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */,
 				369D01D729777E97004CB739 /* Dairy.swift in Sources */,

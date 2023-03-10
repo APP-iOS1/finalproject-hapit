@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
+    @State var isClicked = false
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
@@ -63,7 +64,7 @@ struct HomeView: View {
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
                 //MARK: 세그먼트디테일뷰
-                HabitSegmentDetailView(selectedIndex: $selectedIndex)
+                HabitSegmentDetailView(selectedIndex: $selectedIndex, isClicked: $isClicked)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())
@@ -79,7 +80,7 @@ struct HomeView: View {
             
         }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
-            AddChallengeView(isAddHabitViewShown: $isAddHabitViewShown)
+            AddChallengeView(isAddHabitViewShown: $isAddHabitViewShown, isClicked: $isClicked)
                 .background(Color("BackgroundColor"))
 
         }

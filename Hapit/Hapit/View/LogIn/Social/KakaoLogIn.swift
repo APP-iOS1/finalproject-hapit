@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct KakaoLogIn: View {
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var kakaoSignInManager: KakaoSignInManager
     
     var body: some View {
         Button(action: {
             Task {
-                await authManager.kakaoSignIn()
+                await kakaoSignInManager.kakaoSignIn()
             }
         }){
             Image("kakaobtn")
@@ -26,6 +26,6 @@ struct KakaoLogIn: View {
 struct KakaoLogIn_Previews: PreviewProvider {
     static var previews: some View {
         KakaoLogIn()
-            .environmentObject(AuthManager())
+            .environmentObject(KakaoSignInManager())
     }
 }

@@ -22,7 +22,7 @@ struct ToSView: View {
     @Binding var pw: String
     @Binding var nickName: String
     
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
     
     var deviceHeight = UIScreen.main.bounds.size.height
     
@@ -180,7 +180,7 @@ struct ToSView: View {
                             isClicked = true
                             Task {
                                 do {
-                                    try await authManager.register(email: email, pw: pw, name: nickName)
+                                    try await normalSignInManager.register(email: email, pw: pw, name: nickName)
                                 } catch {
                                     throw(error)
                                 }

@@ -9,8 +9,6 @@ import SwiftUI
 
 struct LogInView: View {
     
-    @EnvironmentObject var keyboardManager: KeyboardManager
-    
     @State private var email: String = ""
     @State private var pw: String = ""
     
@@ -22,6 +20,7 @@ struct LogInView: View {
     
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var habitManager: HabitManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
     
     let deviceHeight = UIScreen.main.bounds.height
     
@@ -180,7 +179,6 @@ struct LogInView: View {
                         .foregroundColor(.red)
                         .padding(.bottom, 15)
                     }
-                    //.edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
                     .disableAutocorrection(true)
                     
                         Button(action: {
@@ -192,14 +190,14 @@ struct LogInView: View {
                                     pwFocusField = true
                                 } else {
                                     do {
-                                        try await authManager.login(with: email, pw)
+                                        try await normalSignInManager.login(with: email, pw)
                                         
                                         //2.3 로그인 상태 변경
-                                        authManager.loggedIn = "logIn"
+                                        normalSignInManager.loggedIn = "logIn"
                                         //2.4 로그인 상태 UserDefaults에 저장
-                                        authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                                        normalSignInManager.save(value: Key.logIn.rawValue, forkey: "state")
                                         //2.5 로그인 방법 UserDefaults에 저장
-                                        authManager.loginMethod(value: LoginMethod.general.rawValue, forkey: "loginMethod")
+                                        normalSignInManager.save(value: LoginMethod.general.rawValue, forkey: "loginMethod")
                                         verified = true
                                         
                                         let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
@@ -207,8 +205,8 @@ struct LogInView: View {
                                         UserDefaults.standard.set(localNickname, forKey: "localNickname")
                                     } catch {
                                         // 로그인 과정 or 이메일 불러오는 과정에서 오류 발생 시
-                                        authManager.loggedIn = "logOut"
-                                        authManager.save(value: Key.logOut.rawValue, forkey: "state")
+                                        normalSignInManager.loggedIn = "logOut"
+                                        normalSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
                                         verified = true
                                         throw(error)
                                     }
@@ -262,6 +260,5 @@ struct LogInView_Previews: PreviewProvider {
         LogInView()
             .environmentObject(AuthManager())
             .environmentObject(HabitManager())
-            .environmentObject(KeyboardManager())
     }
 }

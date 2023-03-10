@@ -42,6 +42,10 @@ struct Challenge: Hashable, Codable, Identifiable {
         return dateFormatter.string(from: createdAt)
     }
     
+    static func ==(lhs: Challenge, rhs: Challenge) -> Bool {
+        return lhs.id == rhs.id && lhs.creator == rhs.creator && lhs.mateArray == rhs.mateArray && lhs.challengeTitle == rhs.challengeTitle && lhs.createdAt == rhs.createdAt && lhs.count == rhs.count && lhs.isChecked == rhs.isChecked && lhs.uid == rhs.uid
+    }
+    
     // MARK: Local Challenge에서 사용될 List<String>형의 변수
     var mateList: List<String> {
         var tempList: List<String> = List<String>()

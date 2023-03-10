@@ -24,6 +24,8 @@ struct AddChallengeView: View {
     @State private var challengeTitle: String = ""
     @Binding var isAddHabitViewShown: Bool
     
+    @Binding var isClicked: Bool
+    
     //FIXME: 알람데이터 저장이 필요
     @State private var isAlarmOn: Bool = false
     @State private var currentDate = Date()  
@@ -67,7 +69,6 @@ struct AddChallengeView: View {
                             Text("\(challengeTitle.count) / \(maximumCount)")
                                 .foregroundColor(isOverCount ? .red : Color("GrayFontColor"))
                         }
-                        .font(.custom("IMHyemin-Regular", size: 12))
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
                     }
@@ -174,6 +175,7 @@ struct AddChallengeView: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color.accentColor)
                             }
+                            .font(.custom("IMHyemin-Regular", size: 12))
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)
                         

@@ -13,12 +13,17 @@ struct ContentView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var signInManager: SignInManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
+    @EnvironmentObject var googleSignInManager: GoogleSignInManager
+    @EnvironmentObject var kakaoSignInManager: KakaoSignInManager
+    @EnvironmentObject var appleSignInManager: AppleSignInManager
     
     @State private var index: Int = 0
     @State private var flag: Int = 1
     
     var body: some View {
-        switch authManager.loggedIn {
+        switch manager() {
         case "logIn":
             TabView(selection: $index) {
                 HomeView()
@@ -73,13 +78,13 @@ struct ContentView: View {
                             Task {
                                 if authManager.firebaseAuth.currentUser?.uid != "" && flag == 1 {
                                     do {
-                                        try await authManager.logOut()
+                                        try await signOut()
                                     } catch {
                                         throw(error)
                                     }
                                 } else if authManager.firebaseAuth.currentUser?.uid != "" && flag == 2 {
                                     do {
-                                        try await authManager.deleteUser(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
+                                        try await getOut(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                                     } catch {
                                         throw(error)
                                     }
@@ -91,12 +96,59 @@ struct ContentView: View {
                 .navigationBarColor(backgroundColor: .clear)
         }
     }
+    
+    func manager() -> String {
+        var tmp: String?
+        
+        if UserDefaults.standard.string(forKey: "loginMethod") == "general" {
+            tmp = normalSignInManager.loggedIn
+        } else if UserDefaults.standard.string(forKey: "loginMethod") == "google" {
+            tmp = googleSignInManager.loggedIn
+        } else if UserDefaults.standard.string(forKey: "loginMethod") == "kakao" {
+            tmp = kakaoSignInManager.loggedIn
+        } else if UserDefaults.standard.string(forKey: "loginMethod") == "apple" {
+            tmp = appleSignInManager.loggedIn
+        }
+        return tmp ?? ""
+    }
+    
+    func signOut() async throws {
+        let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+
+        if loginMethod == "general" {
+            try await normalSignInManager.logOut()
+        } else if loginMethod == "google" {
+            try await googleSignInManager.logOut()
+        } else if loginMethod == "kakao" {
+            try await kakaoSignInManager.logOut()
+        } else if loginMethod == "apple" {
+            try await appleSignInManager.logOut()
+        }
+    }
+    
+    func getOut(uid: String) async throws {
+        let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+
+        if loginMethod == "general" {
+            try await normalSignInManager.deleteUser(uid: uid)
+        } else if loginMethod == "google" {
+            try await googleSignInManager.deleteUser(uid: uid)
+        } else if loginMethod == "kakao" {
+            try await kakaoSignInManager.deleteUser(uid: uid)
+        } else if loginMethod == "apple" {
+            try await appleSignInManager.deleteUser(uid: uid)
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(KeyboardManager())
             .environmentObject(AuthManager())
+            .environmentObject(SignInManager())
+            .environmentObject(NormalSignInManager())
+            .environmentObject(AppleSignInManager())
+            .environmentObject(GoogleSignInManager())
+            .environmentObject(KakaoSignInManager())
     }
 }

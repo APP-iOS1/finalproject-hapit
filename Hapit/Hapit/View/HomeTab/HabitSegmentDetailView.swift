@@ -20,6 +20,9 @@ struct HabitSegmentDetailView: View {
     @State private var isOnAlarm: Bool = false // 알림 설정
     @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
     
+    //---
+    @Binding var isClicked: Bool // 챌린지 추가 버튼 눌렸는가
+    
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
     var body: some View {
@@ -43,7 +46,7 @@ struct HabitSegmentDetailView: View {
                                                 //TODO: 로컬에 있는 챌린지 불러오는 중
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
-                                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
+                                                        ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
                                                     }
                                                 } // ForEach - localChallenges
                                             }
@@ -113,6 +116,8 @@ struct HabitSegmentDetailView: View {
                     }
                 }
             }
+        } else {
+            return
         }
     }
     
@@ -122,6 +127,7 @@ struct HabitSegmentDetailView: View {
         for challenge in habitManager.currentUserChallenges {
                 count += 1
             }
+        print("server \(count)")
         return count
     }
     
@@ -130,6 +136,7 @@ struct HabitSegmentDetailView: View {
         for _ in localChallenges {
             count += 1
         }
+        print("local \(count)")
         return count
     }
     
@@ -137,6 +144,6 @@ struct HabitSegmentDetailView: View {
 
 struct HabitSegmentDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        HabitSegmentDetailView(selectedIndex: .constant(0))
+        HabitSegmentDetailView(selectedIndex: .constant(0), isClicked: .constant(false))
     }
 }

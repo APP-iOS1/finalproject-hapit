@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct GoogleLogIn: View {
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var googleSignInManager: GoogleSignInManager
     
     var body: some View {
         Button(action: {
             Task {
-                await authManager.googleSignIn()
+                await googleSignInManager.googleSignIn()
             }
         }){
             Image("googlebtn")
@@ -26,6 +26,6 @@ struct GoogleLogIn: View {
 struct GoogleLogIn_Previews: PreviewProvider {
     static var previews: some View {
         GoogleLogIn()
-            .environmentObject(AuthManager())
+            .environmentObject(GoogleSignInManager())
     }
 }

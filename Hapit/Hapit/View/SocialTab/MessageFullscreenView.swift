@@ -18,15 +18,6 @@ struct MessageFullscreenView: View {
             // MARK: if - 메시지 함이 비었을 때
             if messageManager.messageArray.isEmpty {
                 EmptyCellView(currentContentsType: .message)
-//                VStack {
-//                    Text("현재 도착한 메시지가 없습니다.")
-//                        .font(.custom("IMHyemin-Bold", size: 20))
-//                    Image(systemName: "envelope.open")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 150)
-//                }
-//                .frame(maxWidth: .infinity)
                 
                 // MARK: else - 메시지가 한 개 이상 있을 때
             } else {

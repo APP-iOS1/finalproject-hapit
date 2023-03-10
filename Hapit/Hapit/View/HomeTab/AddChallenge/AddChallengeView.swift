@@ -139,7 +139,7 @@ struct AddChallengeView: View {
                                 $localChallenges.append(newChallenge.localChallenge)
                                 
                                 // mateArray에 있는 친구들 돌면서 초대 메세지(FCM) 보내기
-                                if habitManager.selectedFriends.count > 0 {
+//                                if habitManager.selectedFriends.count > 0 {
                                     for friend in habitManager.selectedFriends{
                                         receiverFCMToken = try await authManager.getFCMToken(uid: friend.id)
                                         
@@ -150,12 +150,11 @@ struct AddChallengeView: View {
                                             title: "그룹챌린지 요청이 왔어요!",
                                             body: "나랑 챌린지할래? :)"
                                         )
-                                        
-                                        print(friend)
                                     }
-                                }
+//                                }
+                                
                                 //TODO: 이거 필 없을듯..!
-                                habitManager.loadChallenge()
+//                                habitManager.loadChallenge()
                                 
                                 isAddHabitViewShown = false
                                 

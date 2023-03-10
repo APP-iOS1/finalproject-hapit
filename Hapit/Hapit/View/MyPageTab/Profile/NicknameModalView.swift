@@ -17,17 +17,17 @@ struct NicknameModalView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button {
-                    showModal = false
-                } label: {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                }
-                .padding()
-            }
+//            HStack {
+//                Spacer()
+//                Button {
+//                    showModal = false
+//                } label: {
+//                    Image(systemName: "xmark")
+//                        .resizable()
+//                        .frame(width: 20, height: 20)
+//                }
+//                .padding()
+//            }
             
             Spacer()
             

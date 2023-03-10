@@ -80,10 +80,6 @@ struct BearModalView_Previews: PreviewProvider {
     }
 }
 
-
-
-
-
 //
 //
 //var body: some View {

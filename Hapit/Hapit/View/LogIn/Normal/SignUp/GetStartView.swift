@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GetStartView: View {
     @EnvironmentObject var normalSignInManager: NormalSignInManager
+    @EnvironmentObject var authManager: AuthManager
 
     @Binding var email: String
     @Binding var pw: String

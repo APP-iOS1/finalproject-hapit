@@ -155,8 +155,6 @@ struct OptionView: View {
                      primaryAction: { Task {
                 flag = 1
                 signOut()
-//                signInManager.loggedIn = "logOut"
-//                signInManager.save(value: Key.logOut.rawValue, forkey: "state")
                 index = 0 } },
                      withCancelButton: true)
         
@@ -236,16 +234,11 @@ struct OptionView: View {
             }           
         }
         //MARK: - 7. 유저에서 나를 삭제
-            //user 삭제
-            Task{
-                try await authManager.deleteUser(uid: currentUser ?? "")
-           }
-            
         },withCancelButton: true)
     }
     
     func signOut() {
-        var loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+        let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
 
         if loginMethod == "general" {
             normalSignInManager.loggedIn = "logOut"
@@ -261,6 +254,25 @@ struct OptionView: View {
             appleSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
         }
     }
+    
+    func getOut() {
+        let loginMethod = UserDefaults.standard.string(forKey: "loginMethod") ?? ""
+
+        if loginMethod == "general" {
+            normalSignInManager.loggedIn = "logOut"
+            normalSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        } else if loginMethod == "google" {
+            googleSignInManager.loggedIn = "logOut"
+            googleSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        } else if loginMethod == "kakao" {
+            kakaoSignInManager.loggedIn = "logOut"
+            kakaoSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        } else if loginMethod == "apple" {
+            appleSignInManager.loggedIn = "logOut"
+            appleSignInManager.save(value: Key.logOut.rawValue, forkey: "state")
+        }
+    }
+    
 }
 
 struct ListTextModifier: ViewModifier {

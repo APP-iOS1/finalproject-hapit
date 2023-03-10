@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RegisterView: View, KeyboardReadable {
+struct RegisterView: View {
     
     @State private var email: String = ""
     @State private var mailDuplicated: Bool = false

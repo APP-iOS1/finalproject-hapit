@@ -46,7 +46,7 @@ struct HabitSegmentDetailView: View {
                                                 //TODO: 로컬에 있는 챌린지 불러오는 중
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
-                                                        ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
+                                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
                                                     }
                                                 } // ForEach - localChallenges
                                             }
@@ -76,7 +76,7 @@ struct HabitSegmentDetailView: View {
                     } // refreshable
                 } // else
             } // VStack
-   
+            
         case 1:
             //TODO: 서버에 있는 배열 기준으로 체크중 -> 수정요망
             if habitManager.habits.count < 1{
@@ -125,8 +125,8 @@ struct HabitSegmentDetailView: View {
     func countMyChallengesFromServer() -> Int {
         var count = 0
         for challenge in habitManager.currentUserChallenges {
-                count += 1
-            }
+            count += 1
+        }
         print("server \(count)")
         return count
     }

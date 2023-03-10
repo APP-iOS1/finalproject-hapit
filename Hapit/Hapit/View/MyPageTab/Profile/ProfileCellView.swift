@@ -35,7 +35,8 @@ struct ProfileCellView: View {
                                 .frame(width: 90, height: 90))
                     }
                     .padding(30)
-                }.halfSheet(showSheet: $showBearModal) {
+                }
+                .halfSheet(showSheet: $showBearModal) {
                     BearModalView(showModal: $showBearModal, isSelectedJelly: $isSelectedJelly)
                         .environmentObject(authManager)
                 }
@@ -95,9 +96,11 @@ struct ProfileCellView: View {
     }
 }
 
+// halfSheet ----------------------------------
+
 extension View {
     func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping () -> SheetView) -> some View {
-        
+
         return self
             .background(
                 HalfSheetHelper(sheetView: sheetView(), showSheet: showSheet)
@@ -106,16 +109,16 @@ extension View {
 }
 
 struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
-    
+
     var sheetView: SheetView
     @Binding var showSheet: Bool
-    
+
     let controller = UIViewController()
-    
+
     func makeCoordinator() -> Coordinator {
         return Coordinator(parent: self)
     }
-    
+
     func makeUIViewController(context: Context) -> UIViewController {
         controller.view.backgroundColor = .clear
         return controller
@@ -129,19 +132,19 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
             uiViewController.present(sheetController, animated: true)
         } else {
             // closing view when showSheet toggled again
-            uiViewController.dismiss(animated: true, completion: nil)
+//            uiViewController.dismiss(animated: true, completion: nil)
         }
     }
     
-    // On Dismiss
+//     On Dismiss
     class Coordinator: NSObject, UISheetPresentationControllerDelegate {
-        
+
         var parent: HalfSheetHelper
-        
+
         init(parent: HalfSheetHelper) {
             self.parent = parent
         }
-        
+
         func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
             parent.showSheet = false
         }

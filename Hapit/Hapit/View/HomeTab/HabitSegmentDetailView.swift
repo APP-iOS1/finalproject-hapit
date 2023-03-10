@@ -65,6 +65,7 @@ struct HabitSegmentDetailView: View {
                             } // ForEach - mateArray
                         } // ForEach - currentUserChallenges
                     } // ScrollView
+                    .padding(.bottom, 1)
                     .onAppear {
                         restoreChallenges()
                     } // onAppear

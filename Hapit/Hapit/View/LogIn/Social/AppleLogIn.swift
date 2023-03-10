@@ -9,12 +9,12 @@ import SwiftUI
 
 struct AppleLogIn: View {
     
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var appleSignInManager: AppleSignInManager
     
     var body: some View {
         Button(action: {
             Task {
-                await authManager.startSignInWithAppleFlow()
+                await appleSignInManager.startSignInWithAppleFlow()
             }
         }){
             Image("appleLogo_dark")
@@ -27,6 +27,6 @@ struct AppleLogIn: View {
 struct AppleLogIn_Previews: PreviewProvider {
     static var previews: some View {
         AppleLogIn()
-            .environmentObject(AuthManager())
+            .environmentObject(AppleSignInManager())
     }
 }

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct GetStartView: View {
-    
-    @EnvironmentObject var keyboardManager: KeyboardManager
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
 
     @Binding var email: String
     @Binding var pw: String
@@ -93,9 +91,10 @@ struct GetStartView: View {
                 Button {
                     Task {
                         do {
-                            try await authManager.login(with: email, pw)
-                            authManager.loggedIn = "logIn"
-                            authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                            try await normalSignInManager.login(with: email, pw)
+                            normalSignInManager.loggedIn = "logIn"
+                            normalSignInManager.save(value: Key.logIn.rawValue, forkey: "state")
+                            normalSignInManager.save(value: Newby.newby.rawValue, forkey: "newby")
                         } catch {
                             throw(error)
                         }

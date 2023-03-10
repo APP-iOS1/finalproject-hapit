@@ -20,6 +20,9 @@ struct HabitSegmentDetailView: View {
     @State private var isOnAlarm: Bool = false // 알림 설정
     @State private var showsCustomAlert = false // 챌린지 디테일 뷰로 넘길 값
     
+    //---
+    @Binding var isClicked: Bool // 챌린지 추가 버튼 눌렸는가
+    
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
     var body: some View {
@@ -30,43 +33,43 @@ struct HabitSegmentDetailView: View {
                     EmptyCellView(currentContentsType: .challenge)
                 } else {
                     ScrollView {
-                        ForEach(habitManager.currentUserChallenges) { challenge in
-                            ForEach(challenge.mateArray, id: \.self) { mate in
-                                if mate == authManager.firebaseAuth.currentUser?.uid {
-                                    NavigationLink {
-                                        ZStack{
-                                            ScrollView(showsIndicators: false) {
+                                ForEach(habitManager.currentUserChallenges) { challenge in
+                                    ForEach(challenge.mateArray, id: \.self) { mate in
+                                        if mate == authManager.firebaseAuth.currentUser?.uid {
+                                            NavigationLink {
+                                                ZStack{
+                                                    ScrollView(showsIndicators: false) {
+                                                        ForEach(localChallenges) { localChallenge in
+                                                            if localChallenge.challengeId == challenge.id {
+                                                                ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
+                                                            }
+                                                        } // ForEach - localChallenges
+                                                    }
+                                                    .padding()
+                                                    .background(Color("BackgroundColor"))
+                                                    ModalAnchorView()
+                                                } // ZStack
+                                                
+                                            } label: {
                                                 ForEach(localChallenges) { localChallenge in
                                                     if localChallenge.challengeId == challenge.id {
-                                                        ChallengeDetailView(currentDate: $date, localChallenge: localChallenge, currentChallenge: challenge)
+                                                        ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
                                                     }
                                                 } // ForEach - localChallenges
                                             }
-                                            .padding()
-                                            .background(Color("BackgroundColor"))
-                                            ModalAnchorView()
-                                        } // ZStack
-                                        
-                                    } label: {
-                                        ForEach(localChallenges) { localChallenge in
-                                            if localChallenge.challengeId == challenge.id {
-                                                ChallengeCellView(currentUserInfos: [], localChallenge: localChallenge, challenge: challenge)
-                                            }
-                                        } // ForEach - localChallenges
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.bottom, 5)
-                                } // if
-                            } // ForEach - mateArray
-                        } // ForEach - currentUserChallenges
-                    } // ScrollView
-                    .onAppear {
-                        restoreChallenges()
-                        print(localChallenges)
-                    } // onAppear
-                    .refreshable { // MARK: - Only iOS 16
-                        restoreChallenges()
-                    } // refreshable
+                                            .padding(.horizontal, 20)
+                                            .padding(.bottom, 5)
+                                        } // if
+                                    } // ForEach - mateArray
+                                } // ForEach - currentUserChallenges
+                        } // ScrollView
+                        .onAppear {
+                            //restoreChallenges()
+                            habitManager.loadChallenge()
+                        } // onAppear
+//                        .refreshable { // MARK: - Only iOS 16
+//                            restoreChallenges()
+//                        } // refreshable
                 } // else
             } // VStack
    
@@ -106,6 +109,8 @@ struct HabitSegmentDetailView: View {
                     }
                 }
             }
+        } else {
+            return
         }
     }
     
@@ -115,6 +120,7 @@ struct HabitSegmentDetailView: View {
         for challenge in habitManager.currentUserChallenges {
                 count += 1
             }
+        print("server \(count)")
         return count
     }
     
@@ -123,6 +129,7 @@ struct HabitSegmentDetailView: View {
         for _ in localChallenges {
             count += 1
         }
+        print("local \(count)")
         return count
     }
     
@@ -130,6 +137,6 @@ struct HabitSegmentDetailView: View {
 
 struct HabitSegmentDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        HabitSegmentDetailView(selectedIndex: .constant(0))
+        HabitSegmentDetailView(selectedIndex: .constant(0), isClicked: .constant(false))
     }
 }

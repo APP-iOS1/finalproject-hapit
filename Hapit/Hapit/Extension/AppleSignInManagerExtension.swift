@@ -12,13 +12,13 @@ import CryptoKit
 import Firebase
 import FirebaseAuth
 
-extension AuthManager: ASAuthorizationControllerPresentationContextProviding {
+extension AppleSignInManager: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
 }
 
-extension AuthManager: ASAuthorizationControllerDelegate {
+extension AppleSignInManager: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let currentNonce = nonce else {
@@ -26,12 +26,12 @@ extension AuthManager: ASAuthorizationControllerDelegate {
             }
             
             guard let appleIDToken = appleIDCredential.identityToken else {
-                print("Unable to fetch identity token")
+                self.save(value: SignInError.appleIdentityTokenFetchError.rawValue, forkey: "error")
                 return
             }
             
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                self.save(value: SignInError.serializeTokenStringError.rawValue, forkey: "error")
                 return
             }
             
@@ -71,12 +71,15 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                             "badge" : newby.badge,
                             "friends" : newby.friends
                         ])
+                        self.save(value: Newby.newby.rawValue, forkey: "newby")
                     }
                     // 8. 로그인 상태 값 변경 및 UserDefaults 저장하기
                     self.loggedIn = "logIn"
                     self.save(value: Key.logIn.rawValue, forkey: "state")
-                    self.loginMethod(value: LoginMethod.apple.rawValue, forkey: "loginMethod")
+                    self.save(value: LoginMethod.apple.rawValue, forkey: "loginMethod")
                 } catch {
+                    self.save(value: SignInError.appleSignInError.rawValue, forkey: "error")
+                    dump(SignInError.appleSignInError.rawValue)
                     throw(error)
                 }
             }

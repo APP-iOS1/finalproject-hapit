@@ -152,9 +152,8 @@ struct AddChallengeView: View {
                                         )
                                     }
 //                                }
-                                
-                                //TODO: 이거 필 없을듯..!
-//                                habitManager.loadChallenge()
+
+                                habitManager.loadChallenge()
                                 
                                 isAddHabitViewShown = false
                                 

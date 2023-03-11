@@ -25,6 +25,7 @@
 		3C5CAA96298C8FEC007C3EAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA95298C8FEC007C3EAA /* ContentView.swift */; };
 		3C811D1D2987628A0005539A /* ChallengeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1C2987628A0005539A /* ChallengeDetailView.swift */; };
 		3C811D1F29877AF10005539A /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1E29877AF10005539A /* DateValue.swift */; };
+		3C9C89EA29BC492E0033D3A0 /* CellSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C89E929BC492D0033D3A0 /* CellSkeletonView.swift */; };
 		3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3CE9DFF329792FFB00E76147 /* SegmentedPicker */; };
 		3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9DFF7297A512300E76147 /* EmptyCellView.swift */; };
 		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
@@ -154,6 +155,7 @@
 		3C5CAA95298C8FEC007C3EAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3C811D1C2987628A0005539A /* ChallengeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailView.swift; sourceTree = "<group>"; };
 		3C811D1E29877AF10005539A /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
+		3C9C89E929BC492D0033D3A0 /* CellSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSkeletonView.swift; sourceTree = "<group>"; };
 		3CE9DFF7297A512300E76147 /* EmptyCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCellView.swift; sourceTree = "<group>"; };
 		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		3CF39BAA29779347003D4809 /* ChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellView.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				3CF39BAA29779347003D4809 /* ChallengeCellView.swift */,
 				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
 				3CE9DFF7297A512300E76147 /* EmptyCellView.swift */,
+				3C9C89E929BC492D0033D3A0 /* CellSkeletonView.swift */,
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
 			);
 			path = HomeTab;
@@ -849,6 +852,7 @@
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
 				959DCC3E299B52F4005CB3A2 /* Screen.swift in Sources */,
 				95FAB8742992334900E797EA /* Badge.swift in Sources */,
+				3C9C89EA29BC492E0033D3A0 /* CellSkeletonView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
 				673EA3942995495400AB5EA8 /* LocalChallenge.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,

@@ -13,10 +13,18 @@ import FirebaseAuth
 
 final class HabitManager: ObservableObject{
     
+    enum LoadingState{
+        
+        case idle
+        case loading
+        case success
+        //case error(Error)
+    }
+    
     enum FirebaseError: Error{
         case badSnapshot
     }
-    
+
     private var cancellables = Set<AnyCancellable>()
     
     let currentUser = Auth.auth().currentUser ?? nil
@@ -30,8 +38,12 @@ final class HabitManager: ObservableObject{
     // 해당하는 챌린지의 일지의 배열
 
     @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
-
+    
+    // 로딩상태를 저장하는 변수.
+    @Published var loadingState: LoadingState = .idle
+    
     var currentUserChallenges: [Challenge] {
+        
         var tempChallenges: [Challenge] = []
         for challenge in challenges {
             if let currentUser = currentUser {
@@ -42,6 +54,7 @@ final class HabitManager: ObservableObject{
                 return []
             }
         }
+        
         return tempChallenges
     }
     
@@ -55,12 +68,11 @@ final class HabitManager: ObservableObject{
     let database = Firestore.firestore()
     
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
-        
         Future<[Challenge], Error> {  promise in
-            
             self.database.collection("Challenge")
                 .order(by: "createdAt", descending: true)
                 .getDocuments{(snapshot, error) in
+
                     
                     if let error = error {
                         promise(.failure (error))
@@ -92,6 +104,7 @@ final class HabitManager: ObservableObject{
     }
 
     func loadChallenge(){
+        self.loadingState = .loading // 챌린지 가져오는 중임을 저장
         challenges.removeAll()
         self.fetchChallengeCombine()
             .sink { (completion) in
@@ -99,6 +112,7 @@ final class HabitManager: ObservableObject{
                 case .failure(_):
                     return
                 case .finished:
+                    self.loadingState = .success // 챌린지 모두 가져오기 성공
                     return
                 }
             } receiveValue: { [weak self] (challenges) in

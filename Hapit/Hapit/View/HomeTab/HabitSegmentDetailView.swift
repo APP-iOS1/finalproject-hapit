@@ -31,10 +31,10 @@ struct HabitSegmentDetailView: View {
             VStack {
                 //TODO: 서버에 있는 챌린지 기준으로 분기처리 중(로컬중심으로 개편 필요)
                 if habitManager.currentUserChallenges.count < 1  {
-                    if habitManager.loadingState == .success{
+                    if habitManager.loadingState == .success { // 서버에서 챌린지를 모두 성공적으로 가져왔다면
                         EmptyCellView(currentContentsType: .challenge)
                     }
-                    else {
+                    else { // 가져오는 중이라면
                         ScrollView {
                             CellSkeletonView()
                         }

@@ -72,6 +72,7 @@ final class HabitManager: ObservableObject{
             self.database.collection("Challenge")
                 .order(by: "createdAt", descending: true)
                 .getDocuments{(snapshot, error) in
+
                     
                     if let error = error {
                         promise(.failure (error))
@@ -103,6 +104,7 @@ final class HabitManager: ObservableObject{
     }
 
     func loadChallenge(){
+        self.loadingState = .loading // 챌린지 가져오는 중임을 저장
         challenges.removeAll()
         self.fetchChallengeCombine()
             .sink { (completion) in
@@ -110,14 +112,13 @@ final class HabitManager: ObservableObject{
                 case .failure(_):
                     return
                 case .finished:
-                    self.loadingState = .success
+                    self.loadingState = .success // 챌린지 모두 가져오기 성공
                     return
                 }
             } receiveValue: { [weak self] (challenges) in
                 self?.challenges = challenges
             }
             .store(in: &cancellables)
-
     }
     
     func create(_ challenge: Challenge) -> AnyPublisher<Void, Error> {

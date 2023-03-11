@@ -114,7 +114,7 @@ struct AddChallengeView: View {
                                 // 챌린지 작성자 uid 저장
                                 // TODO: authManager.firebaseAuth.currentUser?.uid ?? "" 변수로 저장해놓으면 더 간단하지 않을까잉?
                                 var mateArray: [String] = []
-                                mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
+//                                mateArray.append(authManager.firebaseAuth.currentUser?.uid ?? "")
                                 
                                 // 앱 내 메시지 보내는 기능...
                                 for friend in habitManager.selectedFriends {

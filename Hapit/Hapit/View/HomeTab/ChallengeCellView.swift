@@ -15,8 +15,10 @@ struct ChallengeCellView: View {
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var userInfoManager: UserInfoManager
     @Environment(\.scenePhase) var scenePhase
-    @State var currentUserInfos: [User]
+    
+    @State var currentUserInfos: [User] = []
     @State var tempIsChecked: Bool = false
+    
     @ObservedRealmObject var localChallenge: LocalChallenge // 로컬챌린지에서 각 필드를 업데이트 해주기 위해 선언 - 담을 그릇
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     @ObservedResults(LocalChallenge.self) var localHabits
@@ -123,14 +125,22 @@ struct ChallengeCellView: View {
                 }
                 currentDate = getToday()
                 currentUserInfos = []
+            }
+            .onAppear{
                 //TODO: 로컬의 메이트 어레이 불러오는 거로...
-                Task {
-                    // 함께 챌린지 진행하는 친구들 프사
-                    for member in $localChallenge.mateList.wrappedValue {
-                        try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
-                    }
-                }
-         
+//                Task {
+//                    // 함께 챌린지 진행하는 친구들 프사
+//                    for member in $localChallenge.mateList.wrappedValue {
+//                        
+//                        if member != userInfoManager.currentUserInfo?.id{
+//                            
+//                            let memberUser = try await userInfoManager.getUserInfoByUID(userUid: member)
+//                            
+//                            currentUserInfos.append(memberUser ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
+//                            
+//                        }
+//                    }
+//                }
             }
             .onChange(of: scenePhase) { _ in // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우
                 if currentDate != getToday() {
@@ -147,13 +157,13 @@ struct ChallengeCellView: View {
                         
                     }
                 }
-                    
+                
                 currentDate = getToday()
             }
             
             if $localChallenge.isChecked.wrappedValue == true {
                 
-                    JellyConfetti(title: "")
+                JellyConfetti(title: "")
             }
         }
     }

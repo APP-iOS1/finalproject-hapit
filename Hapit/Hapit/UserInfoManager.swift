@@ -56,6 +56,7 @@ final class UserInfoManager: ObservableObject {
         
         do {
             let snapshot = try await userPath.getDocument()
+            
             if let requestedData = snapshot.data() {
                 tempUser = makeUser(with: requestedData, id: snapshot.documentID)
 

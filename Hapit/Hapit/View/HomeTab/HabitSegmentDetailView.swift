@@ -35,7 +35,7 @@ struct HabitSegmentDetailView: View {
                         //TODO: 이거 우리 이제 필 없음
                         //TODO: 개인챌린지랑 함께하기챌린지랑 db구조상의 차이점이 없어짐
                         //TODO: 초대 시 수락받으면 로컬에 저장을 해주는 중
-                        ForEach(localChallenges) { localChallenge in
+                        ForEach(localChallenges, id: \.challengeId) { localChallenge in
                                 NavigationLink {
                                     ZStack {
                                         ScrollView(showsIndicators: false) {
@@ -54,13 +54,18 @@ struct HabitSegmentDetailView: View {
                         } // ForEach
                     } // ScrollView
                     .onAppear {
-                        restoreChallenges()
+//                        restoreChallenges()
                     } // onAppear
                     .refreshable { // MARK: - Only iOS 16
-                        restoreChallenges()
+//                        restoreChallenges()
                     } // refreshable
                 } // else
             } // VStack
+            .onAppear {
+                for localChallenge in localChallenges {
+                    print(localChallenge)
+                }
+            }
             //시작할때 0번 인덱스에 해당하는 챌린지뷰를 먼저 그리기 때문에 챌린지 뷰 onAppear시에 챌린지와 습관을 분리해서 각각 배열에 저장해줌
         //case 1은 습관
         case 1:

@@ -14,7 +14,7 @@ import FirebaseAuth
 
 extension AuthManager: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
+        return self.view.window ?? UIWindow()
     }
 }
 

@@ -30,13 +30,13 @@ final class FCMManager: ObservableObject {
     func sendFirebaseMessageToUser(datas:FCMManager, to token: String, title: String, body: String) {
         print("sendMessageTouser()")
         let urlString = "https://fcm.googleapis.com/fcm/send"
-        let url = NSURL(string: urlString)!
+        let url = NSURL(string: urlString) ?? NSURL(string: "")
         let paramString: [String : Any] = ["to": token,
                                            "priority": "high",
                                            "notification" : ["title" : title, "body" : body,"badge" : 1],
                                            "data" : ["user" : "test_id"]
         ]
-        let request = NSMutableURLRequest(url: url as URL)
+        let request = NSMutableURLRequest(url: url as! URL)
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: paramString, options: [.prettyPrinted])
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

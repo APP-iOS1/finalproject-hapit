@@ -92,7 +92,6 @@ struct GetStartView: View {
                 Button {
                     Task {
                         do {
-
                             try await normalSignInManager.login(with: email, pw)
                             let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                             UserDefaults.standard.set(localNickname, forKey: "localNickname")

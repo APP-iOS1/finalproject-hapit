@@ -22,6 +22,7 @@ struct HabitSegmentDetailView: View {
     
     //---
     @Binding var isClicked: Bool // 챌린지 추가 버튼 눌렸는가
+    @Binding var challCount: Int?
     
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
@@ -78,7 +79,9 @@ struct HabitSegmentDetailView: View {
                     } // ScrollView
                     .padding(.bottom, 1)
                     .onAppear {
-                        restoreChallenges()
+                        Task {
+                            restoreChallenges()
+                        }
                     } // onAppear
                     .refreshable { // MARK: - Only iOS 16
                         restoreChallenges()
@@ -125,8 +128,6 @@ struct HabitSegmentDetailView: View {
                         }
                     }
                 }
-            } else {
-                return
             }
         }
         
@@ -151,8 +152,8 @@ struct HabitSegmentDetailView: View {
         
     }
     
-    struct HabitSegmentDetailView_Previews: PreviewProvider {
-        static var previews: some View {
-            HabitSegmentDetailView(selectedIndex: .constant(0), isClicked: .constant(false))
-        }
-    }
+//    struct HabitSegmentDetailView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            HabitSegmentDetailView(selectedIndex: .constant(0), isClicked: .constant(false))
+//        }
+//    }

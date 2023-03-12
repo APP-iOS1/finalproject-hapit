@@ -46,7 +46,7 @@ final class HabitManager: ObservableObject{
         
         var tempChallenges: [Challenge] = []
         for challenge in challenges {
-            if let currentUser = currentUser {
+            if let currentUser = Auth.auth().currentUser ?? nil {
                 if challenge.mateArray.contains(currentUser.uid){
                     tempChallenges.append(challenge)
                 }
@@ -54,7 +54,6 @@ final class HabitManager: ObservableObject{
                 return []
             }
         }
-        
         return tempChallenges
     }
     
@@ -72,8 +71,6 @@ final class HabitManager: ObservableObject{
             self.database.collection("Challenge")
                 .order(by: "createdAt", descending: true)
                 .getDocuments{(snapshot, error) in
-
-                    
                     if let error = error {
                         promise(.failure (error))
                         return

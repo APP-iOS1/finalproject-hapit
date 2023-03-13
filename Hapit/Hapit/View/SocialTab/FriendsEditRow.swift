@@ -18,6 +18,7 @@ struct FriendsEditRow: View {
     @Binding var friendOrNot: Bool
     @Binding var isAdded: Bool
     @Binding var selectedFriend: User
+    
     let friend: User
     var isRemoveOrAdd: Bool
     @State private var friendMessage: [Message] = [Message]()

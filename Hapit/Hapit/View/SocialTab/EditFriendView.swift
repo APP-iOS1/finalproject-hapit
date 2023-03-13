@@ -9,7 +9,11 @@ import SwiftUI
 
 struct EditFriendView: View {
     @EnvironmentObject var userInfoManager: UserInfoManager
+    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var messageManager: MessageManager
+    @EnvironmentObject var habitManager: HabitManager
     @Binding var friends: [User]
+    
     @State private var isAddAlert = false
     @State private var isAddedAlert = false
     @State private var isRemoveAlert = false

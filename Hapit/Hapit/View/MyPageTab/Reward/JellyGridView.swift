@@ -35,14 +35,16 @@ struct JellyGridView: View {
                     
                 }else{
                     if #available(iOS 15.0, *) {
-                        ProgressView("가져오는 중...")
-                            .tint(.pink)
-                            .foregroundColor(.pink)
+                        ProgressView("젤리 가져오는 중...")
+                            .tint(Color.accentColor)
+                            .foregroundColor(Color.accentColor)
+                            .font(.custom("IMHyemin-Bold", size: 17))
                             
                     } else {
-                        ProgressView("가져오는 중...")
-                            .progressViewStyle(CircularProgressViewStyle(tint: .pink))
-                            .foregroundColor(.pink)
+                        ProgressView("젤리 가져오는 중...")
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.accentColor))
+                            .foregroundColor(Color.accentColor)
+                            .font(.custom("IMHyemin-Bold", size: 17))
                     }
                 }
                 

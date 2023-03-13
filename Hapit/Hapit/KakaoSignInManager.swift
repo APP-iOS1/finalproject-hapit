@@ -61,11 +61,9 @@ class KakaoSignInManager: NormalSignInManager {
                     }
                 } catch {
                     save(value: SignInError.firebaseAuthSignInError.rawValue, forkey: "error")
-                    dump(SignInError.firebaseAuthSignInError.rawValue)
                     throw(error)
                 }
                 save(value: SignInError.registerUserError.rawValue, forkey: "error")
-                dump(SignInError.registerUserError.rawValue)
                 throw(error)
             }
     }

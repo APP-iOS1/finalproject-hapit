@@ -33,6 +33,7 @@ final class AuthManager: ObservableObject {
     @Published var bearBadges: [Badge] = []
     @Published var newBadges: [String] = []
 
+
     // MARK: firestore references
     /// storageRef: firebase storage 레퍼런스
     /// database: firestore DB 레퍼런스
@@ -223,5 +224,7 @@ final class AuthManager: ObservableObject {
             throw(error)
         }
     }
+    
+    
     
 }

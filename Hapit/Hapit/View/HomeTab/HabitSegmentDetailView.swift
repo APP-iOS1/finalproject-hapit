@@ -105,7 +105,6 @@ struct HabitSegmentDetailView: View {
                             HabitCellView(habit: habit)
                         }
                     }
-        
                 }
             }
             default: Text("something wrong")
@@ -134,10 +133,9 @@ struct HabitSegmentDetailView: View {
         // MARK: - 서버에 있는 내가 참여하는 모든 챌린지의 개수를 반환하는 함수
         func countMyChallengesFromServer() -> Int {
             var count = 0
-            for challenge in habitManager.currentUserChallenges {
+            for _ in habitManager.currentUserChallenges {
                 count += 1
             }
-            print("server \(count)")
             return count
         }
         
@@ -146,7 +144,6 @@ struct HabitSegmentDetailView: View {
             for _ in localChallenges {
                 count += 1
             }
-            print("local \(count)")
             return count
         }
         

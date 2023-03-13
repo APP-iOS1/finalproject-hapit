@@ -38,9 +38,9 @@ struct MyPageView: View {
                                 Text("축하해요.\n\(newOneName)을 얻으셨어요.")
                                 //.font(.title)
                                     .padding()
-                                    .font(.custom("IMHyemin-Bold", size: 28))
+                                    .font(.custom("IMHyemin-Bold", size: 23))
                                     .foregroundColor(.white)
-                                    .background(.pink)
+                                    .background(Color.accentColor)
                                     .clipShape(Capsule())
                             }
                             

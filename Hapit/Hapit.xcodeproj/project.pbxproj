@@ -42,6 +42,7 @@
 		67BD574E298FE3C600DD37B0 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574D298FE3C600DD37B0 /* LocalNotification.swift */; };
 		67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */; };
 		67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */; };
+		67C244C529BF73E800E4B810 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C244C429BF73E800E4B810 /* AccountView.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
 		950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950580852994994B00381AE8 /* JellyEmptyView.swift */; };
 		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -172,6 +173,7 @@
 		67BD574D298FE3C600DD37B0 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
+		67C244C429BF73E800E4B810 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		950580852994994B00381AE8 /* JellyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyEmptyView.swift; sourceTree = "<group>"; };
 		959DCC3D299B52F4005CB3A2 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */,
+				67C244C429BF73E800E4B810 /* AccountView.swift */,
 			);
 			path = Option;
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
 				C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */,
+				67C244C529BF73E800E4B810 /* AccountView.swift in Sources */,
 				F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */,
 				F41B6A7D29B8741000EC19F3 /* GoogleSignInManager.swift in Sources */,
 				F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */,

@@ -79,12 +79,11 @@ struct HabitSegmentDetailView: View {
                     } // ScrollView
                     .padding(.bottom, 1)
                     .onAppear {
-                        Task {
-                            restoreChallenges()
-                        }
+                        restoreChallenges()
                     } // onAppear
                     .refreshable { // MARK: - Only iOS 16
                         restoreChallenges()
+                        habitManager.loadChallenge() // 새로고침
                     } // refreshable
                 } // else
             } // VStack

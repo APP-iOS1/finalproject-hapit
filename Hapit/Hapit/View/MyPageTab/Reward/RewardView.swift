@@ -16,7 +16,7 @@ struct RewardView: View {
             // 타이틀
             VStack {
                 HStack {
-                    Text("곰젤리 전시관")
+                    Text("해핏 전시관")
                         .font(.custom("IMHyemin-Bold", size: 22))
                     Spacer()
                 }.padding(.bottom, 5)

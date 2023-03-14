@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct NicknameModalView: View {
-    @Binding var showModal: Bool
+    @Binding var showNicknameModal: Bool
     @Binding var userNickname: String
     @State private var nickname = ""
     @State private var isValid = false
+    @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var authManager: AuthManager
     
@@ -56,8 +57,7 @@ struct NicknameModalView: View {
                     // UserDefaults nickname 업데이트
                     if isValid {
                         userNickname = nickname
-                        UserDefaults.standard.set(userNickname, forKey: "localNickname")
-                        showModal = false
+                        //UserDefaults.standard.set(userNickname, forKey: "localNickname")
                         
                         do {
                             let current = authManager.firebaseAuth
@@ -65,6 +65,8 @@ struct NicknameModalView: View {
                         } catch {
                             throw(error)
                         }
+                        dismiss()
+                        showNicknameModal = false
                     }
                 }
             } label: {
@@ -83,6 +85,6 @@ struct NicknameModalView: View {
 
 struct NicknameModalView_Previews: PreviewProvider {
     static var previews: some View {
-            NicknameModalView(showModal: .constant(false), userNickname: .constant(""))
+        NicknameModalView(showNicknameModal: .constant(false), userNickname: .constant(""))
     }
 }

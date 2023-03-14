@@ -15,6 +15,8 @@ struct HomeView: View {
     @State private var isAddHabitViewShown: Bool = false
     @State private var habitTypeList: [String] = ["챌린지", "습관"]
     @State var selectedIndex: Int = 0
+    @State var isClicked = false
+    @State var challCount: Int?
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
@@ -63,7 +65,7 @@ struct HomeView: View {
                 //.padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
                 
                 //MARK: 세그먼트디테일뷰
-                HabitSegmentDetailView(selectedIndex: $selectedIndex)
+                HabitSegmentDetailView(selectedIndex: $selectedIndex, isClicked: $isClicked, challCount: $challCount)
             }//VStack
             .background(Color("BackgroundColor").ignoresSafeArea())
             .navigationBarTitle(getToday())
@@ -79,7 +81,7 @@ struct HomeView: View {
             
         }//NavigationView
         .sheet(isPresented: $isAddHabitViewShown) {
-            AddChallengeView(isAddHabitViewShown: $isAddHabitViewShown)
+            AddChallengeView(isAddHabitViewShown: $isAddHabitViewShown, isClicked: $isClicked, challCount: $challCount)
                 .background(Color("BackgroundColor"))
 
         }
@@ -90,7 +92,7 @@ struct HomeView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")
         dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        dateFormatter.dateFormat = "yy년 MM월 dd일" // "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일" // "yyyy-MM-dd HH:mm:ss"
         
         let dateCreatedAt = Date(timeIntervalSince1970: Date().timeIntervalSince1970)
         

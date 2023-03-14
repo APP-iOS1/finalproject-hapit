@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileCellView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var userInfoManager: UserInfoManager
-    @AppStorage("localNickname") var localNickname = ""
+    //@AppStorage("localNickname") var localNickname = ""
     @Binding var nickName: String
     @Binding var email: String
     @State private var isSelectedJelly = 0
@@ -51,7 +51,7 @@ struct ProfileCellView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(localNickname)
+                            Text("\(nickName)")
                                 .font(.custom("IMHyemin-Bold", size: 22))
                             
                             Text("\(email)")
@@ -75,7 +75,7 @@ struct ProfileCellView: View {
                             }
                     }
                     .halfSheet(showSheet: $showNicknameModal) {
-                        NicknameModalView(showModal: $showNicknameModal, userNickname: $nickName)
+                        NicknameModalView(showNicknameModal: $showNicknameModal, userNickname: $nickName)
                             .environmentObject(authManager)
                     }
                 }
@@ -84,6 +84,8 @@ struct ProfileCellView: View {
         }
         .onAppear {
             Task {
+                showNicknameModal = false
+                nickName = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                 try await userInfoManager.getCurrentUserInfo(currentUserUid: authManager.firebaseAuth.currentUser?.uid ?? "")
                 // 프사 초기화 (firstIndex는 Optional 반환해서 unwrapping 해줘야 함)
                 isSelectedJelly = bearArray.firstIndex(of: userInfoManager.currentUserInfo?.proImage ?? "") ?? 0

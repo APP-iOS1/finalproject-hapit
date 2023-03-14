@@ -24,7 +24,6 @@ final class BadgeManager: ObservableObject{
         case other = "bearLock"
     }
 
-    
     enum BadgeName: String{
         case noob = "noob"
         case pro = "pro"

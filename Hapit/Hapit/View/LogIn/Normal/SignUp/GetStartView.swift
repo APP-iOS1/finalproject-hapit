@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct GetStartView: View {
-    
-    @EnvironmentObject var keyboardManager: KeyboardManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
     @EnvironmentObject var authManager: AuthManager
 
     @Binding var email: String
@@ -93,11 +92,12 @@ struct GetStartView: View {
                 Button {
                     Task {
                         do {
-                            try await authManager.login(with: email, pw)
+                            try await normalSignInManager.login(with: email, pw)
                             let localNickname = try await authManager.getNickName(uid: authManager.firebaseAuth.currentUser?.uid ?? "")
                             UserDefaults.standard.set(localNickname, forKey: "localNickname")
-                            authManager.loggedIn = "logIn"
-                            authManager.save(value: Key.logIn.rawValue, forkey: "state")
+                            normalSignInManager.loggedIn = "logIn"
+                            normalSignInManager.save(value: Key.logIn.rawValue, forkey: "state")
+                            normalSignInManager.save(value: Newby.newby.rawValue, forkey: "newby")
                         } catch {
                             throw(error)
                         }

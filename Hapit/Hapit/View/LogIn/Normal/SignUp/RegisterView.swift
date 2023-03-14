@@ -7,13 +7,11 @@
 
 import SwiftUI
 
-struct RegisterView: View, KeyboardReadable {
+struct RegisterView: View {
     
     @State private var email: String = ""
     @State private var mailDuplicated: Bool = false
     @State private var emailTmp: String = ""
-    
-    @EnvironmentObject var keyboardManager: KeyboardManager
     
     var dupEmail: Bool {
         return email == emailTmp
@@ -44,7 +42,7 @@ struct RegisterView: View, KeyboardReadable {
     @State private var canGoNext: Bool = false
     @State private var isClicked: Bool = false
     
-    @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var normalSignInManager: NormalSignInManager
     
     let deviceHeight = UIScreen.main.bounds.height
     
@@ -383,14 +381,14 @@ struct RegisterView: View, KeyboardReadable {
                     Button(action: {
                         Task {
                             do {
-                                let target = try await authManager.isEmailDuplicated(email: email)
+                                let target = try await normalSignInManager.isEmailDuplicated(email: email)
                                 mailDuplicated = target
                             } catch {
                                 throw(error)
                             }
                             
                             do {
-                                let target = try await authManager.isNicknameDuplicated(nickName: nickName)
+                                let target = try await normalSignInManager.isNicknameDuplicated(nickName: nickName)
                                 nameCheck = target
                             } catch {
                                 throw(error)
@@ -427,7 +425,6 @@ struct RegisterView: View, KeyboardReadable {
                 .disabled(isOk())
                 .padding(.vertical, geo.size.height / 50)
             }
-            //.edgesIgnoringSafeArea(keyboardManager.isVisible ? .bottom : [])
             .ignoresSafeArea(.keyboard)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
@@ -501,6 +498,6 @@ struct TextFieldUnderLineRectangleModifier: ViewModifier {
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         RegisterView()
-            .environmentObject(KeyboardManager())
+            .environmentObject(NormalSignInManager())
     }
 }

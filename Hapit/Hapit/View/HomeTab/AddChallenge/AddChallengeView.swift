@@ -24,10 +24,15 @@ struct AddChallengeView: View {
     @State private var challengeTitle: String = ""
     @Binding var isAddHabitViewShown: Bool
     
+    @State var buttonClicked: Bool = false
+    @Binding var isClicked: Bool
+    
     //FIXME: 알람데이터 저장이 필요
     @State private var isAlarmOn: Bool = false
     @State private var currentDate = Date()  
     @State private var notiTime = Date()
+    
+    @Binding var challCount: Int?
     
     @ObservedResults(LocalChallenge.self) var localChallenges // 새로운 로컬챌린지 객체를 담아주기 위해 선언 - 데이터베이스
     
@@ -67,7 +72,6 @@ struct AddChallengeView: View {
                             Text("\(challengeTitle.count) / \(maximumCount)")
                                 .foregroundColor(isOverCount ? .red : Color("GrayFontColor"))
                         }
-                        .font(.custom("IMHyemin-Regular", size: 12))
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
                     }
@@ -106,6 +110,7 @@ struct AddChallengeView: View {
                     Spacer()
                     
                     Button {
+                        //buttonClicked = true
                         Task {
                             do {
                                 let id = UUID().uuidString
@@ -151,31 +156,41 @@ struct AddChallengeView: View {
                                         )
                                     }
 //                                }
-                                
-                                //TODO: 이거 필 없을듯..!
-//                                habitManager.loadChallenge()
+
+                                //habitManager.loadChallenge()
+                                //print(habitManager.challenges)
                                 
                                 isAddHabitViewShown = false
                                 
                                 habitManager.selectedFriends = [] // 비움
+
                             } catch {
                                 throw(error)
                             }
                         }
-                        
+//                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+//                            if UserDefaults.standard.string(forKey: "newby") ?? "" == "newby" {
+//                                UserDefaults.standard.set("ob", forKey: "newby")
+//                            }
+//                            isAddHabitViewShown = false
+//                        }
                     } label: {
-                        Text("챌린지 생성하기")
-                            .font(.custom("IMHyemin-Bold", size: 16))
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.accentColor)
-                            }
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 10)
-                        
+                        //if buttonClicked == false {
+                            Text("챌린지 생성하기")
+                                .font(.custom("IMHyemin-Bold", size: 16))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.accentColor)
+                                }
+                                .font(.custom("IMHyemin-Regular", size: 12))
+                                .padding(.horizontal, 20)
+                                .padding(.bottom, 10)
+                        //} else {
+                            //ProgressView()
+                        //}
                     } // label
                     .disabled((isOverCount == true) || (challengeTitle.count < 1))
                 } // VStack
@@ -217,6 +232,11 @@ struct AddChallengeView: View {
                     try await userInfoManager.getFriendArray()
                 } catch {
                 }
+            }
+        }
+        .onDisappear() {
+            Task {
+                habitManager.loadChallenge()
             }
         }
     } // Body

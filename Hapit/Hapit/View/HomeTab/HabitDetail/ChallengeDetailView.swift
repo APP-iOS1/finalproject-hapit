@@ -291,6 +291,8 @@ struct ChallengeDetailView: View {
                 }
             }
         }
+        //모달이 올라오면 그 아래 있는 컨텐츠는 클릭할 수 없게 만들게 해주기 위함.
+        .disabled(modalManager.modal.position == .open ? true : false)
         .sheet(isPresented: $showsCreatePostView) {
             DedicatedWriteDiaryView(currentChallenge: currentChallenge)
         }

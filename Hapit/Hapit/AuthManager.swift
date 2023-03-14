@@ -33,7 +33,6 @@ final class AuthManager: ObservableObject {
     @Published var bearBadges: [Badge] = []
     @Published var newBadges: [String] = []
 
-
     // MARK: firestore references
     /// storageRef: firebase storage 레퍼런스
     /// database: firestore DB 레퍼런스
@@ -87,14 +86,14 @@ final class AuthManager: ObservableObject {
     }
 
     // MARK: - 사용 중인 유저의 친구목록을 반환
-    func getFriends(uid: String) async throws -> [String] {
+    func getFriends(uid: String) async throws -> [User] {
         do {
             let target = try await database.collection("User").document("\(uid)")
                 .getDocument()
 
             let docData = target.data()
 
-            let tmpFriends: [String] = docData?["friends"] as? [String] ?? [""]
+            let tmpFriends: [User] = docData?["friends"] as? [User] ?? []
 
             return tmpFriends
         } catch {
@@ -224,7 +223,4 @@ final class AuthManager: ObservableObject {
             throw(error)
         }
     }
-    
-    
-    
 }

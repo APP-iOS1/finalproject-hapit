@@ -143,7 +143,7 @@ struct ToSView: View {
                             Text("(필수) 개인정보 수집 및 이용동의")
                                 .font(.custom("IMHyemin-Regular", size: 16))
                             Spacer()
-                            NavigationLink(destination: PrivateToS()){
+                            NavigationLink(destination: PrivateToS(urlToLoad: "https://placid-llama-50b.notion.site/e210f96695484a59b8b850f16f0a76a5")){
                                 Image(systemName: "chevron.right")
                             }
                         }

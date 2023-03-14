@@ -47,6 +47,7 @@ struct SocialView: View {
                         // MARK: 친구관리
                         NavigationLink {
                             EditFriendView(friends: $friends)
+                            
                         } label: {
                             Image("person.2.badge.gearshape")
                         }
@@ -64,34 +65,37 @@ struct SocialView: View {
         }
         // FIXME: 뷰 들어올 때마다가 아니라 친구 목록의 변화가 있을때마다 실행되게끔 바꾸기
         // currentUser 로그인할 때 fetch 해봤더니 실패..
-        .task {
-            do {
-                let current = authManager.firebaseAuth
-                try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
-                try await userInfoManager.getFriendArray()
-                self.friends = userInfoManager.friendArray
-                self.myFriends = userInfoManager.friendArray
-                
-                let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: "")
-                // 셀에 (나) 표시
-                self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends, loginMethod: tmp.loginMethod, fcmToken: tmp.fcmToken), at: 0)
-                
-                // 챌린지 진행일수 정렬
-                sortMyFriends = myFriends.sorted(by:
-                                                    {challengeDaysCount(friend: $0) > challengeDaysCount(friend: $1)})
-
-                rankCountArray = ranking(friends: sortMyFriends)
-                
-                // 안 읽은 메세지 있나 확인
-                // FIXME: 한 박자 늦게 뜨는 이슈
-                messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
-                for msg in messageManager.messageArray {
-                    if !(msg.isRead) {
-                        isAllRead = false
-                        break
+        .onAppear() {
+            //.task
+            Task {
+                do {
+                    let current = authManager.firebaseAuth
+                    try await userInfoManager.getCurrentUserInfo(currentUserUid: current.currentUser?.uid ?? "")
+                    try await userInfoManager.getFriendArray()
+                    self.friends = userInfoManager.friendArray
+                    self.myFriends = userInfoManager.friendArray
+                    
+                    let tmp = userInfoManager.currentUserInfo ?? User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""], loginMethod: "", fcmToken: "")
+                    // 셀에 (나) 표시
+                    self.myFriends.insert(User(id: tmp.id, name: "(나) " + tmp.name, email: tmp.email, pw: tmp.pw, proImage: tmp.proImage, badge: tmp.badge, friends: tmp.friends, loginMethod: tmp.loginMethod, fcmToken: tmp.fcmToken), at: 0)
+                    
+                    // 챌린지 진행일수 정렬
+                    sortMyFriends = myFriends.sorted(by:
+                                                        {challengeDaysCount(friend: $0) > challengeDaysCount(friend: $1)})
+                    
+                    rankCountArray = ranking(friends: sortMyFriends)
+                    
+                    // 안 읽은 메세지 있나 확인
+                    // FIXME: 한 박자 늦게 뜨는 이슈
+                    messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+                    for msg in messageManager.messageArray {
+                        if !(msg.isRead) {
+                            isAllRead = false
+                            break
+                        }
                     }
+                } catch {
                 }
-            } catch {
             }
         }
     }

@@ -11,6 +11,7 @@ import WebKit
 struct PrivateToS: UIViewRepresentable {
     var urlToLoad: String
     
+    @MainActor
     func makeUIView(context: Context) -> WKWebView {
         
         guard let url = URL(string: self.urlToLoad) else {

@@ -6,15 +6,34 @@
 //
 
 import SwiftUI
+import WebKit
 
-struct ADToS: View {
-    var body: some View {
-        Text("ADTos")
+struct ADToS: UIViewRepresentable {
+    var urlToLoad: String
+    
+    @MainActor
+    
+    func makeUIView(context: Context) -> WKWebView {
+        
+        guard let url = URL(string: self.urlToLoad) else {
+            return WKWebView()
+        }
+        
+        let webView = WKWebView()
+        
+        webView.load(URLRequest(url: url))
+        return webView
     }
+    
+    //업데이트 ui view
+    func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<ADToS>) {
+        
+    }
+    
 }
 
 struct ADToS_Previews: PreviewProvider {
     static var previews: some View {
-        ADToS()
+        ADToS(urlToLoad: "")
     }
 }

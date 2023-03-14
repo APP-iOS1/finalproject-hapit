@@ -27,14 +27,14 @@ struct OptionView: View {
                 }.listRowSeparator(.hidden)
                 
                 NavigationLink {
-                    
+                    ServiceToS(urlToLoad: "https://placid-llama-50b.notion.site/badf083532df4e6999e987e374b4a469")
                 } label: {
                     Text("이용약관")
                         .modifier(ListTextModifier())
                 }.listRowSeparator(.hidden)
                 
                 NavigationLink {
-                    
+                    PrivateToS(urlToLoad: "https://placid-llama-50b.notion.site/e210f96695484a59b8b850f16f0a76a5")
                 } label: {
                     Text("개인정보 처리방침")
                         .modifier(ListTextModifier())

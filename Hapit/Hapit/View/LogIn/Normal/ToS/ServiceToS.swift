@@ -6,15 +6,33 @@
 //
 
 import SwiftUI
+import WebKit
 
-struct ServiceToS: View {
-    var body: some View {
-        Text("1")
+struct ServiceToS: UIViewRepresentable {
+    var urlToLoad: String
+    
+    @MainActor
+    func makeUIView(context: Context) -> WKWebView {
+        
+        guard let url = URL(string: self.urlToLoad) else {
+            return WKWebView()
+        }
+        
+        let webView = WKWebView()
+        
+        webView.load(URLRequest(url: url))
+        return webView
     }
+    
+    //업데이트 ui view
+    func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<ServiceToS>) {
+        
+    }
+    
 }
 
 struct ServiceToS_Previews: PreviewProvider {
     static var previews: some View {
-        ServiceToS()
+        ServiceToS(urlToLoad: "")
     }
 }

@@ -126,7 +126,7 @@ struct ToSView: View {
                             Text("(필수) 서비스 이용약관 동의")
                                 .font(.custom("IMHyemin-Regular", size: 16))
                             Spacer()
-                            NavigationLink(destination: ServiceToS()){
+                            NavigationLink(destination: ServiceToS(urlToLoad: "https://placid-llama-50b.notion.site/badf083532df4e6999e987e374b4a469")){
                                 Image(systemName: "chevron.right")
                             }
                         }
@@ -159,7 +159,7 @@ struct ToSView: View {
                             Text("(선택) E-mail 광고성 정보 수신동의") // 크게 중요해보이지 않음
                                 .font(.custom("IMHyemin-Regular", size: 16))
                             Spacer()
-                            NavigationLink(destination: ServiceToS()){
+                            NavigationLink(destination: ServiceToS(urlToLoad: "https://placid-llama-50b.notion.site/78c7981b89a94d3d81fa5d29d31b43dc")){
                                 Image(systemName: "chevron.right")
                             }
                         }

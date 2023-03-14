@@ -87,7 +87,7 @@ struct MyPageView: View {
                         // String 타입인 뱃지이름을 활용하여 Data를 가져옴.
                         // Test 용
                         UserDefaults.standard.set(false, forKey: "noob")
-                        
+                       
                         // MARK: First Login Check and there is a chance to get back
                         if (badgeManager.noob == false && !authManager.badges.contains(BadgeManager.BadgeImage.noob.rawValue)) {
                             // Save a status of a newbie badge.
@@ -98,6 +98,34 @@ struct MyPageView: View {
                             
                             isShowedConfetti.toggle()
                             newOneName = "첫 가입 축하"
+                        }
+                        // MARK: First Login Check and there is a chance to get back
+                        if habitManager.currentUserChallenges.count >= 5{
+                            UserDefaults.standard.set(false, forKey: "pro")
+                            if (badgeManager.pro == false && !authManager.badges.contains(BadgeManager.BadgeImage.pro.rawValue)) {
+                                // Save a status of a newbie badge.
+                                badgeManager.save(forkey: BadgeManager.BadgeName.pro.rawValue)
+                                
+                                // Add a badge to cloud and fetch Images.
+                                try await authManager.updateBadge(uid: authManager.firebaseAuth.currentUser?.uid ?? "", badge: BadgeManager.BadgeImage.pro.rawValue)
+                                
+                                isShowedConfetti.toggle()
+                                newOneName = "프로"
+                            }
+                            if habitManager.currentUserChallenges.count >= 10{
+                                UserDefaults.standard.set(false, forKey: "master")
+                                // MARK: First Login Check and there is a chance to get back
+                                if (badgeManager.master == false && !authManager.badges.contains(BadgeManager.BadgeImage.master.rawValue)) {
+                                    // Save a status of a newbie badge.
+                                    badgeManager.save(forkey: BadgeManager.BadgeName.master.rawValue)
+                                    
+                                    // Add a badge to cloud and fetch Images.
+                                    try await authManager.updateBadge(uid: authManager.firebaseAuth.currentUser?.uid ?? "", badge: BadgeManager.BadgeImage.master.rawValue)
+                                    
+                                    isShowedConfetti.toggle()
+                                    newOneName = "마스터"
+                                }
+                            }
                         }
                         
                     } catch {

@@ -45,6 +45,4 @@ class Badge: Identifiable, Equatable {
         default: return ""
         }
     }
-    
-    
 }

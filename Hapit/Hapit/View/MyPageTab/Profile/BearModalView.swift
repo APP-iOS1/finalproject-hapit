@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BearModalView: View {
     
+    @Environment(\.dismiss) var dismiss
     @Binding var showModal: Bool
     @Binding var isSelectedJelly: Int
     
@@ -36,6 +37,7 @@ struct BearModalView: View {
                     LazyVGrid(columns: columns, spacing: 10) {
                         ForEach(authManager.bearBadges) { badge in
                             Button {
+                                dismiss()
                                 showModal.toggle()
                                 if badge.imageName != ""{
                                     self.isSelectedJelly = authManager.bearBadges.firstIndex(of: badge) ?? 0
@@ -51,7 +53,7 @@ struct BearModalView: View {
                                         .overlay(RoundedRectangle(cornerRadius: 20)
                                             .stroke(self.isSelectedJelly == authManager.bearBadges.firstIndex(of: badge) ? Color("DarkPinkColor") : Color("GrayFontColor"),
                                                     lineWidth: 2))
-                                }else{
+                                } else {
                                     Image("bearLock")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)

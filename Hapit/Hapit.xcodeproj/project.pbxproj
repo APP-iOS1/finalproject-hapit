@@ -59,6 +59,7 @@
 		C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5212475298CC1A400235921 /* UserInfoManager.swift */; };
 		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
 		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
+		C5511D2429C0A50B003100F1 /* AboutHapitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5511D2329C0A50B003100F1 /* AboutHapitView.swift */; };
 		C5706F1529878730001300F5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C5706F1429878730001300F5 /* .swiftlint.yml */; };
 		C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E6E0D298E54500078B60F /* EditFriendView.swift */; };
 		C5882FA62990B5F3001FD3B6 /* FriendsEditRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5882FA52990B5F3001FD3B6 /* FriendsEditRow.swift */; };
@@ -177,6 +178,7 @@
 		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
 		C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
 		C5482987298751EC000C743E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C5511D2329C0A50B003100F1 /* AboutHapitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutHapitView.swift; sourceTree = "<group>"; };
 		C5706F1429878730001300F5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C57E6E0D298E54500078B60F /* EditFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFriendView.swift; sourceTree = "<group>"; };
 		C5882FA52990B5F3001FD3B6 /* FriendsEditRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsEditRow.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */,
+				C5511D2329C0A50B003100F1 /* AboutHapitView.swift */,
 			);
 			path = Option;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				C5882FA62990B5F3001FD3B6 /* FriendsEditRow.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
 				3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */,
+				C5511D2429C0A50B003100F1 /* AboutHapitView.swift in Sources */,
 				C958D163298CE6DE0057AA5B /* ChallengeFriendsCellView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
 				36658E4B29954ED100BA9B67 /* RemoteNotification.swift in Sources */,

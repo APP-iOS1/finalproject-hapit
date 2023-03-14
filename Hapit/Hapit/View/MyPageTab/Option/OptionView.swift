@@ -31,7 +31,7 @@ struct OptionView: View {
         VStack {
             List {
                 NavigationLink {
-                    
+                    AboutHapitView()
                 } label: {
                     Text("해핏에 대해서")
                         .modifier(ListTextModifier())

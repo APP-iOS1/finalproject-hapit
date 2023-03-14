@@ -29,13 +29,6 @@ struct OptionView: View {
                 NavigationLink {
                     
                 } label: {
-                    Text("오픈소스 라이선스")
-                        .modifier(ListTextModifier())
-                }.listRowSeparator(.hidden)
-                
-                NavigationLink {
-                    
-                } label: {
                     Text("이용약관")
                         .modifier(ListTextModifier())
                 }.listRowSeparator(.hidden)
@@ -48,7 +41,7 @@ struct OptionView: View {
                 }.listRowSeparator(.hidden)
                 
                 NavigationLink {
-                    
+                    MakersView()
                 } label: {
                     Text("만든 사람들")
                         .modifier(ListTextModifier())

@@ -22,7 +22,9 @@ final class UserInfoManager: ObservableObject {
     //싱글턴활용해보기
     func getCurrentUserInfo(currentUserUid: String?) async throws -> Void {
         guard let currentUserUid else { return }
+        
         let userPath = database.collection("User").document("\(currentUserUid)")
+        
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
@@ -32,11 +34,26 @@ final class UserInfoManager: ObservableObject {
             throw(error)
         }
     }
+//    func getUserInfosByChallenge(challenge: Challenge) async throws -> [User] {
+//        let mateArray: [String] = challenge.mateArray
+//        var tempArray: [User] = []
+//        do {
+//            for mate in mateArray {
+//                try await tempArray.append(getUserInfoByUID(userUid: mate) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: []))
+//                return tempArray
+//            }
+//        } catch {
+//            throw(error)
+//        }
+//        return tempArray
+//    }
     
     func getUserInfoByUID(userUid: String?) async throws -> User? {
         var tempUser: User? = nil
         guard let userUid else { return nil }
+        
         let userPath = database.collection("User").document("\(userUid)")
+        
         do {
             let snapshot = try await userPath.getDocument()
             if let requestedData = snapshot.data() {
@@ -63,8 +80,10 @@ final class UserInfoManager: ObservableObject {
         let proImage: String = requestedData["proImage"] as? String ?? ""
         let badge: [String] = requestedData["badge"] as? [String] ?? [""]
         let friends: [String] = requestedData["friends"] as? [String] ?? [""]
+        let loginMethod: String = requestedData["loginMethod"] as? String ?? ""
+        let fcmToken: String = requestedData["fcmToken"] as? String ?? ""
         
-        let userInfo = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends)
+        let userInfo = User(id: id, name: name, email: email, pw: pw, proImage: proImage, badge: badge, friends: friends, loginMethod: loginMethod, fcmToken: fcmToken)
         
         return userInfo
     }
@@ -84,12 +103,10 @@ final class UserInfoManager: ObservableObject {
     }
     
     // MARK: 현재 유저의 친구 정보 불러오기
-    func getFriendArray(currentUserUid: String?) async throws -> Void {
-        guard let currentUserUid else { return }
-        let target = try await database.collection("User").document(currentUserUid).getDocument()
-        let docData = target.data()
-        //친구의 UID 리스트
-        let friendList: [String] = docData?["friends"] as? [String] ?? [""]
+    // 다른 사람의 uid로 친구 불러올 일 없으므로 인자 제거했음
+    func getFriendArray() async throws -> [User] {
+        // SocialView 불러오면서 getCurrentUserInfo()를 실행하기 때문에 CurrentUserInfo 사용 가능
+        let friendList = currentUserInfo?.friends ?? [""]
         
         self.friendArray.removeAll()
         
@@ -106,6 +123,7 @@ final class UserInfoManager: ObservableObject {
                 throw(error)
             }
         }
+        return friendArray
     }
     
     // MARK: 친구 삭제

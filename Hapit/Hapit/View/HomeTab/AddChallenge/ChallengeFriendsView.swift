@@ -12,55 +12,51 @@ struct ChallengeFriendsView: View {
     
     @EnvironmentObject var habitManager: HabitManager
     @EnvironmentObject var authManager: AuthManager
-    @State var isChecked: Bool = false
+    @EnvironmentObject var userInfoManager: UserInfoManager
     
-    //친구 더미 데이터
-    @State var friends: [ChallengeFriends]
-    //친구 데이터 임시 저장
-    @Binding var temeFriend: [ChallengeFriends]
+    @State var tempFriends: [User] = []
     
     var body: some View {
         ZStack {
+          HStack{
             Spacer()
             VStack {
                 ScrollView {
-                        ForEach(friends, id: \.self) { friend in
-                            let mate = ChallengeFriends(uid: friend.uid, proImage: friend.proImage ,name: friend.name)
-                            ChallengeFriendsCellView(challengeFriends: mate,temeFriend: $temeFriend)
-                        }.padding(.top,20)
-                    
+                    ForEach(userInfoManager.friendArray, id: \.self) { friend in
+                        ChallengeFriendsCellView(selectedFriend: friend, tempFriends: $tempFriends)
+                        }
+                        .padding(.top, 20)
                 }
+                
                 Button{
-                    habitManager.seletedFriends = temeFriend
-                    temeFriend = []
+                    habitManager.selectedFriends = tempFriends
+                    tempFriends = []
                     dismiss()
                 }label: {
                     Text("함께할 친구 추가하기")
+                        .font(.custom("IMHyemin-Bold", size: 16))
                         .foregroundColor(.white)
                         .frame(width: 330,height: 50)
                         .background {
                             RoundedRectangle(cornerRadius: 10)
                         }
                 }//Button
+                .padding(.bottom, 10)
             }//VStack
+            Spacer()
+            }//HStack
         }//ZStack
         .background(Color("BackgroundColor").ignoresSafeArea())
         .navigationBarTitle("함께할 친구 고르기")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    temeFriend = []
+                    habitManager.selectedFriends.removeAll()
                     dismiss()
                 } label: {
                     Image(systemName: "chevron.backward")
                 } // label
             } // ToolbarIte
         } // toolbar
-    }
-}
-
-struct ChallengeFriendsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChallengeFriendsView(friends: [ChallengeFriends(uid: "1", proImage: "",name: "김예원"),ChallengeFriends(uid: "2", proImage: "",name: "박민주"),ChallengeFriends(uid: "3", proImage: "",name: "신현준"),ChallengeFriends(uid: "4", proImage: "",name: "이주희"),ChallengeFriends(uid: "5", proImage: "",name: "김응관"),ChallengeFriends(uid: "6", proImage: "",name: "추현호")],temeFriend: .constant([ChallengeFriends(uid: "1", proImage: "",name: "김예원")]))
     }
 }

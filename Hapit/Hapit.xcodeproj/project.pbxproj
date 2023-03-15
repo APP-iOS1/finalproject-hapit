@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625FB66297634AC0006478B /* HabitDetailView.swift */; };
+		36658E4B29954ED100BA9B67 /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36658E4A29954ED100BA9B67 /* RemoteNotification.swift */; };
 		368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368AE79D29878DA7005088E5 /* DiaryModalView.swift */; };
-		369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D429777E72004CB739 /* DiaryViewModel.swift */; };
+		3696BF8429940EF60025A3A4 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3696BF8329940EF60025A3A4 /* FCMManager.swift */; };
 		369D01D729777E97004CB739 /* Dairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369D01D629777E97004CB739 /* Dairy.swift */; };
 		36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 36D4A14B2989EEBD0048309A /* FirebaseMessaging */; };
 		36E1440B298CE7720044E666 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 36E1440A298CE7720044E666 /* Realm */; };
@@ -23,14 +23,16 @@
 		3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */; };
 		3C5CAA8F298B9C5C007C3EAA /* HabitSegmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA8E298B9C5B007C3EAA /* HabitSegmentDetailView.swift */; };
 		3C5CAA96298C8FEC007C3EAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5CAA95298C8FEC007C3EAA /* ContentView.swift */; };
-		3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */; };
-		3C811D1D2987628A0005539A /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1C2987628A0005539A /* CustomDatePickerView.swift */; };
+		3C811D1D2987628A0005539A /* ChallengeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1C2987628A0005539A /* ChallengeDetailView.swift */; };
 		3C811D1F29877AF10005539A /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C811D1E29877AF10005539A /* DateValue.swift */; };
+		3C9C89EA29BC492E0033D3A0 /* CellSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C89E929BC492D0033D3A0 /* CellSkeletonView.swift */; };
 		3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 3CE9DFF329792FFB00E76147 /* SegmentedPicker */; };
 		3CE9DFF8297A512300E76147 /* EmptyCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9DFF7297A512300E76147 /* EmptyCellView.swift */; };
 		3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BA429770D87003D4809 /* AddFriendView.swift */; };
 		3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAA29779347003D4809 /* ChallengeCellView.swift */; };
 		3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF39BAC29779359003D4809 /* HabitCellView.swift */; };
+		6736343C29C0A49200A7F18B /* MakersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736343B29C0A49200A7F18B /* MakersView.swift */; };
+		673EA3942995495400AB5EA8 /* LocalChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673EA3932995495400AB5EA8 /* LocalChallenge.swift */; };
 		674A917E2989FFCD0050CF0B /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674A917D2989FFCD0050CF0B /* CustomAlert.swift */; };
 		674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674A917F2989FFF00050CF0B /* CustomAlertModifier.swift */; };
 		674F28B12977C49100390405 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674F28B02977C49100390405 /* Challenge.swift */; };
@@ -41,20 +43,29 @@
 		67BD574E298FE3C600DD37B0 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574D298FE3C600DD37B0 /* LocalNotification.swift */; };
 		67BD5750298FE3F500DD37B0 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */; };
 		67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */; };
+		67C244C529BF73E800E4B810 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C244C429BF73E800E4B810 /* AccountView.swift */; };
 		7087FAA2E8C8D99EFC752F3E /* Pods_Hapit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */; };
+		950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950580852994994B00381AE8 /* JellyEmptyView.swift */; };
 		95397CC2298C8FD400D3B7DB /* (null) in Sources */ = {isa = PBXBuildFile; };
+		959DCC3E299B52F4005CB3A2 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959DCC3D299B52F4005CB3A2 /* Screen.swift */; };
 		95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D0679D297A1FB1003447EA /* HabitManager.swift */; };
 		95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A0297A252B003447EA /* FirebaseFirestore */; };
 		95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95D067A2297A252B003447EA /* FirebaseFirestoreSwift */; };
+		95F63A6A299763C400FBF966 /* JellyConfetti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F63A69299763C400FBF966 /* JellyConfetti.swift */; };
+		95FAB86E2991DB5100E797EA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86D2991DB5100E797EA /* FirebaseStorage */; };
+		95FAB8702991DB5100E797EA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */; };
+		95FAB87229920B0100E797EA /* BadgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FAB87129920B0100E797EA /* BadgeManager.swift */; };
+		95FAB8742992334900E797EA /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FAB8732992334900E797EA /* Badge.swift */; };
 		C50FEE3E2991DE1000C18D3F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FEE3D2991DE1000C18D3F /* Message.swift */; };
 		C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FEE3F2991DE9100C18D3F /* MessageManager.swift */; };
 		C50FEE422991F35F00C18D3F /* MessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FEE412991F35F00C18D3F /* MessageCellView.swift */; };
 		C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5212475298CC1A400235921 /* UserInfoManager.swift */; };
 		C54829852987505C000C743E /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */; };
 		C54829862987505C000C743E /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */; };
+		C5511D2429C0A50B003100F1 /* AboutHapitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5511D2329C0A50B003100F1 /* AboutHapitView.swift */; };
 		C5706F1529878730001300F5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C5706F1429878730001300F5 /* .swiftlint.yml */; };
 		C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57E6E0D298E54500078B60F /* EditFriendView.swift */; };
-		C5882FA62990B5F3001FD3B6 /* FriendsEditLow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5882FA52990B5F3001FD3B6 /* FriendsEditLow.swift */; };
+		C5882FA62990B5F3001FD3B6 /* FriendsEditRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5882FA52990B5F3001FD3B6 /* FriendsEditRow.swift */; };
 		C58BC9E4298C8880009B358D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C58BC9E3298C8880009B358D /* GoogleService-Info.plist */; };
 		C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55142977A7C9008BB0CF /* Jelly.swift */; };
 		C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D55162977B782008BB0CF /* NicknameModalView.swift */; };
@@ -68,16 +79,33 @@
 		C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88729766C6800E58C84 /* BearModalView.swift */; };
 		C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */; };
 		C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */; };
-		C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */; };
+		C90766FD2989F8E900D646F7 /* MateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90766FC2989F8E900D646F7 /* MateProfileView.swift */; };
 		C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9076701298AD81F00D646F7 /* InvitedMateView.swift */; };
 		C958D15F298CD8690057AA5B /* ChallengeFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D15E298CD8690057AA5B /* ChallengeFriends.swift */; };
 		C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */; };
 		C958D163298CE6DE0057AA5B /* ChallengeFriendsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */; };
 		C97E42202991F13B002321C8 /* FriendChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */; };
 		C9CBC801297683BB00D530CC /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CBC800297683BB00D530CC /* SocialView.swift */; };
+		F4007A212995019A00AA8919 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A202995019A00AA8919 /* GoogleSignIn */; };
+		F4007A2329952BE900AA8919 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A2229952BE900AA8919 /* GoogleSignInSwift */; };
+		F4007A272998C7C500AA8919 /* AppleSignInManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4007A262998C7C500AA8919 /* AppleSignInManagerExtension.swift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
 		F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */; };
+		F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4101A5C29935BE800006039 /* KeyboardManager.swift */; };
+		F41B6A6729B7743F00EC19F3 /* SignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A6629B7743F00EC19F3 /* SignProtocol.swift */; };
+		F41B6A6D29B84B7D00EC19F3 /* NewAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A6C29B84B7D00EC19F3 /* NewAuthManager.swift */; };
+		F41B6A6F29B85FD100EC19F3 /* SignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A6E29B85FD100EC19F3 /* SignInManager.swift */; };
+		F41B6A7529B8669500EC19F3 /* NormalSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7429B8669500EC19F3 /* NormalSignInManager.swift */; };
+		F41B6A7729B86BC100EC19F3 /* AppleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7629B86BC100EC19F3 /* AppleSignInManager.swift */; };
+		F41B6A7B29B871C300EC19F3 /* KakaoSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7A29B871C300EC19F3 /* KakaoSignInManager.swift */; };
+		F41B6A7D29B8741000EC19F3 /* GoogleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A7C29B8741000EC19F3 /* GoogleSignInManager.swift */; };
+		F41B6A8229BA12B600EC19F3 /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41B6A8129BA12B600EC19F3 /* SignInError.swift */; };
 		F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423787E2990A2C40005B12D /* NavigationBarColor.swift */; };
+		F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC3299A74250055D2AE /* StepBar_15.swift */; };
+		F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DC5299A74990055D2AE /* StepBar_16.swift */; };
+		F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCA299A89350055D2AE /* RegisterGuideText.swift */; };
+		F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCC299A893F0055D2AE /* ToSGuideText.swift */; };
+		F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */; };
 		F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA14E297A67FE000222EE /* AuthManager.swift */; };
 		F47BA151297A697F000222EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BA150297A697F000222EE /* User.swift */; };
 		F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F47BA153297A75EE000222EE /* FirebaseAuth */; };
@@ -112,9 +140,9 @@
 
 /* Begin PBXFileReference section */
 		0C9C7D2CE76DAFB6CDD8A4EC /* Pods-Hapit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hapit.release.xcconfig"; path = "Target Support Files/Pods-Hapit/Pods-Hapit.release.xcconfig"; sourceTree = "<group>"; };
-		3625FB66297634AC0006478B /* HabitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailView.swift; sourceTree = "<group>"; };
+		36658E4A29954ED100BA9B67 /* RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
 		368AE79D29878DA7005088E5 /* DiaryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModalView.swift; sourceTree = "<group>"; };
-		369D01D429777E72004CB739 /* DiaryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryViewModel.swift; path = ViewModel/DiaryViewModel.swift; sourceTree = "<group>"; };
+		3696BF8329940EF60025A3A4 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
 		369D01D629777E97004CB739 /* Dairy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dairy.swift; path = Model/Dairy.swift; sourceTree = "<group>"; };
 		36E1440E298CE7F20044E666 /* HapitPushInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitPushInfo.swift; sourceTree = "<group>"; };
 		36F8EC022988D6F70029B701 /* Hapit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hapit.entitlements; sourceTree = "<group>"; };
@@ -127,16 +155,17 @@
 		3C5CAA8A298A39A8007C3EAA /* ModalAnchorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalAnchorView.swift; sourceTree = "<group>"; };
 		3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalManager.swift; sourceTree = "<group>"; };
 		3C5CAA8E298B9C5B007C3EAA /* HabitSegmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitSegmentDetailView.swift; sourceTree = "<group>"; };
-		3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C5CAA95298C8FEC007C3EAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalendarView.swift; sourceTree = "<group>"; };
-		3C811D1C2987628A0005539A /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
+		3C811D1C2987628A0005539A /* ChallengeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailView.swift; sourceTree = "<group>"; };
 		3C811D1E29877AF10005539A /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
+		3C9C89E929BC492D0033D3A0 /* CellSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSkeletonView.swift; sourceTree = "<group>"; };
 		3CE9DFF7297A512300E76147 /* EmptyCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCellView.swift; sourceTree = "<group>"; };
 		3CF39BA429770D87003D4809 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		3CF39BAA29779347003D4809 /* ChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellView.swift; sourceTree = "<group>"; };
 		3CF39BAC29779359003D4809 /* HabitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellView.swift; sourceTree = "<group>"; };
 		5EF260FF7D795428372CA911 /* Pods-Hapit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hapit.debug.xcconfig"; path = "Target Support Files/Pods-Hapit/Pods-Hapit.debug.xcconfig"; sourceTree = "<group>"; };
+		6736343B29C0A49200A7F18B /* MakersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakersView.swift; sourceTree = "<group>"; };
+		673EA3932995495400AB5EA8 /* LocalChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChallenge.swift; sourceTree = "<group>"; };
 		674A917D2989FFCD0050CF0B /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		674A917F2989FFF00050CF0B /* CustomAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
 		674F28B02977C49100390405 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
@@ -147,7 +176,13 @@
 		67BD574D298FE3C600DD37B0 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
+		67C244C429BF73E800E4B810 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		950580852994994B00381AE8 /* JellyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyEmptyView.swift; sourceTree = "<group>"; };
+		959DCC3D299B52F4005CB3A2 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		95D0679D297A1FB1003447EA /* HabitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitManager.swift; sourceTree = "<group>"; };
+		95F63A69299763C400FBF966 /* JellyConfetti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyConfetti.swift; sourceTree = "<group>"; };
+		95FAB87129920B0100E797EA /* BadgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManager.swift; sourceTree = "<group>"; };
+		95FAB8732992334900E797EA /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		B3F4F3AB62A29109F5C8B279 /* Pods_Hapit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hapit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50FEE3D2991DE1000C18D3F /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C50FEE3F2991DE9100C18D3F /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
@@ -156,9 +191,10 @@
 		C54829832987505C000C743E /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
 		C54829842987505C000C743E /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
 		C5482987298751EC000C743E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C5511D2329C0A50B003100F1 /* AboutHapitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutHapitView.swift; sourceTree = "<group>"; };
 		C5706F1429878730001300F5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C57E6E0D298E54500078B60F /* EditFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFriendView.swift; sourceTree = "<group>"; };
-		C5882FA52990B5F3001FD3B6 /* FriendsEditLow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsEditLow.swift; sourceTree = "<group>"; };
+		C5882FA52990B5F3001FD3B6 /* FriendsEditRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsEditRow.swift; sourceTree = "<group>"; };
 		C58BC9E3298C8880009B358D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C59D55142977A7C9008BB0CF /* Jelly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jelly.swift; sourceTree = "<group>"; };
 		C59D55162977B782008BB0CF /* NicknameModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModalView.swift; sourceTree = "<group>"; };
@@ -172,15 +208,30 @@
 		C5FAC88729766C6800E58C84 /* BearModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearModalView.swift; sourceTree = "<group>"; };
 		C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyBadgeView.swift; sourceTree = "<group>"; };
 		C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
-		C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChallengeMateProfileView.swift; sourceTree = "<group>"; };
+		C90766FC2989F8E900D646F7 /* MateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MateProfileView.swift; sourceTree = "<group>"; };
 		C9076701298AD81F00D646F7 /* InvitedMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitedMateView.swift; sourceTree = "<group>"; };
 		C958D15E298CD8690057AA5B /* ChallengeFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriends.swift; sourceTree = "<group>"; };
 		C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsView.swift; sourceTree = "<group>"; };
 		C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendsCellView.swift; sourceTree = "<group>"; };
 		C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendChallengeCellView.swift; sourceTree = "<group>"; };
 		C9CBC800297683BB00D530CC /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		F4007A262998C7C500AA8919 /* AppleSignInManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInManagerExtension.swift; sourceTree = "<group>"; };
 		F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShakeEffect.swift"; sourceTree = "<group>"; };
+		F4101A5C29935BE800006039 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		F41B6A6629B7743F00EC19F3 /* SignProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignProtocol.swift; sourceTree = "<group>"; };
+		F41B6A6C29B84B7D00EC19F3 /* NewAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAuthManager.swift; sourceTree = "<group>"; };
+		F41B6A6E29B85FD100EC19F3 /* SignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7429B8669500EC19F3 /* NormalSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7629B86BC100EC19F3 /* AppleSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7A29B871C300EC19F3 /* KakaoSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A7C29B8741000EC19F3 /* GoogleSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInManager.swift; sourceTree = "<group>"; };
+		F41B6A8129BA12B600EC19F3 /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		F423787E2990A2C40005B12D /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
+		F4622DC3299A74250055D2AE /* StepBar_15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_15.swift; sourceTree = "<group>"; };
+		F4622DC5299A74990055D2AE /* StepBar_16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBar_16.swift; sourceTree = "<group>"; };
+		F4622DCA299A89350055D2AE /* RegisterGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterGuideText.swift; sourceTree = "<group>"; };
+		F4622DCC299A893F0055D2AE /* ToSGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSGuideText.swift; sourceTree = "<group>"; };
+		F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartGuideText.swift; sourceTree = "<group>"; };
 		F47BA14E297A67FE000222EE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		F47BA150297A697F000222EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,9 +256,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95FAB8702991DB5100E797EA /* FirebaseStorageCombine-Community in Frameworks */,
 				3CE9DFF429792FFB00E76147 /* SegmentedPicker in Frameworks */,
 				95D067A1297A252B003447EA /* FirebaseFirestore in Frameworks */,
 				36D4A14C2989EEBD0048309A /* FirebaseMessaging in Frameworks */,
+				95FAB86E2991DB5100E797EA /* FirebaseStorage in Frameworks */,
+				F4007A2329952BE900AA8919 /* GoogleSignInSwift in Frameworks */,
+				F4007A212995019A00AA8919 /* GoogleSignIn in Frameworks */,
 				36E1440D298CE7720044E666 /* RealmSwift in Frameworks */,
 				95D067A3297A252B003447EA /* FirebaseFirestoreSwift in Frameworks */,
 				F47BA154297A75EE000222EE /* FirebaseAuth in Frameworks */,
@@ -240,6 +295,7 @@
 				3CF39BAA29779347003D4809 /* ChallengeCellView.swift */,
 				3CF39BAC29779359003D4809 /* HabitCellView.swift */,
 				3CE9DFF7297A512300E76147 /* EmptyCellView.swift */,
+				3C9C89E929BC492D0033D3A0 /* CellSkeletonView.swift */,
 				C9CBC7FE2976831600D530CC /* HabitDetail */,
 			);
 			path = HomeTab;
@@ -254,14 +310,6 @@
 			path = CustomModal;
 			sourceTree = "<group>";
 		};
-		3C5CAA94298C8E3E007C3EAA /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				3C5CAA92298C8CA4007C3EAA /* GoogleService-Info.plist */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		674A917C2989FFA80050CF0B /* CustomAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,8 +322,6 @@
 		67BD574C298FE3B300DD37B0 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				67BD574D298FE3C600DD37B0 /* LocalNotification.swift */,
-				67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */,
 				67BD5753298FEE1600DD37B0 /* LocalNotificationSettingView.swift */,
 			);
 			path = Notification;
@@ -288,6 +334,14 @@
 				0C9C7D2CE76DAFB6CDD8A4EC /* Pods-Hapit.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		959DCC3C299B52B6005CB3A2 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				959DCC3D299B52F4005CB3A2 /* Screen.swift */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		C54829822987503B000C743E /* Font */ = {
@@ -315,6 +369,8 @@
 			children = (
 				C5FAC88029765E7500E58C84 /* RewardView.swift */,
 				C5FAC88429766BE100E58C84 /* JellyGridView.swift */,
+				950580852994994B00381AE8 /* JellyEmptyView.swift */,
+				95F63A69299763C400FBF966 /* JellyConfetti.swift */,
 				C5FAC88929766E1A00E58C84 /* JellyBadgeView.swift */,
 			);
 			path = Reward;
@@ -334,6 +390,9 @@
 			isa = PBXGroup;
 			children = (
 				C5FE7D9D2988F6AA00B552E9 /* OptionView.swift */,
+				C5511D2329C0A50B003100F1 /* AboutHapitView.swift */,
+				67C244C429BF73E800E4B810 /* AccountView.swift */,
+				6736343B29C0A49200A7F18B /* MakersView.swift */,
 			);
 			path = Option;
 			sourceTree = "<group>";
@@ -345,7 +404,7 @@
 				C958D160298CE3E20057AA5B /* ChallengeFriendsView.swift */,
 				C958D162298CE6DE0057AA5B /* ChallengeFriendsCellView.swift */,
 				C9076701298AD81F00D646F7 /* InvitedMateView.swift */,
-				C90766FC2989F8E900D646F7 /* AddChallengeMateProfileView.swift */,
+				C90766FC2989F8E900D646F7 /* MateProfileView.swift */,
 			);
 			path = AddChallenge;
 			sourceTree = "<group>";
@@ -355,10 +414,8 @@
 			children = (
 				674A917C2989FFA80050CF0B /* CustomAlert */,
 				368AE79D29878DA7005088E5 /* DiaryModalView.swift */,
-				3625FB66297634AC0006478B /* HabitDetailView.swift */,
 				C5FAC877297632BD00E58C84 /* WriteDiaryView.swift */,
-				3C811D1A298760BA0005539A /* MonthlyCalendarView.swift */,
-				3C811D1C2987628A0005539A /* CustomDatePickerView.swift */,
+				3C811D1C2987628A0005539A /* ChallengeDetailView.swift */,
 				67A5AE812987EE300020212F /* DedicatedWriteDiaryView.swift */,
 				67A5AE832987EF2A0020212F /* PhotoPicker.swift */,
 				3C39C492298985D400603149 /* PostModalView.swift */,
@@ -376,7 +433,7 @@
 				C59D55182977CD17008BB0CF /* FriendChallengeView.swift */,
 				C97E421F2991F13B002321C8 /* FriendChallengeCellView.swift */,
 				C59D551A2977D149008BB0CF /* MessageFullscreenView.swift */,
-				C5882FA52990B5F3001FD3B6 /* FriendsEditLow.swift */,
+				C5882FA52990B5F3001FD3B6 /* FriendsEditRow.swift */,
 				C50FEE412991F35F00C18D3F /* MessageCellView.swift */,
 			);
 			path = SocialTab;
@@ -387,8 +444,65 @@
 			children = (
 				F40B9A522988CE3E00385014 /* View+ShakeEffect.swift */,
 				F423787E2990A2C40005B12D /* NavigationBarColor.swift */,
+				F4007A262998C7C500AA8919 /* AppleSignInManagerExtension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		F41B6A6529B7733300EC19F3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A6629B7743F00EC19F3 /* SignProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		F41B6A7029B8609000EC19F3 /* SignInManager */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A6E29B85FD100EC19F3 /* SignInManager.swift */,
+				F41B6A7329B8667100EC19F3 /* SignInTypes */,
+			);
+			name = SignInManager;
+			sourceTree = "<group>";
+		};
+		F41B6A7329B8667100EC19F3 /* SignInTypes */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A7429B8669500EC19F3 /* NormalSignInManager.swift */,
+				F41B6A7629B86BC100EC19F3 /* AppleSignInManager.swift */,
+				F41B6A7C29B8741000EC19F3 /* GoogleSignInManager.swift */,
+				F41B6A7A29B871C300EC19F3 /* KakaoSignInManager.swift */,
+			);
+			name = SignInTypes;
+			sourceTree = "<group>";
+		};
+		F41B6A8029BA0FD800EC19F3 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				F41B6A8129BA12B600EC19F3 /* SignInError.swift */,
+			);
+			path = "\U0010Errors";
+			sourceTree = "<group>";
+		};
+		F4622DC2299A74020055D2AE /* StepBar */ = {
+			isa = PBXGroup;
+			children = (
+				F49E2918297714E8009EEB1A /* StepBar.swift */,
+				F4622DC3299A74250055D2AE /* StepBar_15.swift */,
+				F4622DC5299A74990055D2AE /* StepBar_16.swift */,
+			);
+			path = StepBar;
+			sourceTree = "<group>";
+		};
+		F4622DC9299A89220055D2AE /* GuideText */ = {
+			isa = PBXGroup;
+			children = (
+				F4622DCA299A89350055D2AE /* RegisterGuideText.swift */,
+				F4622DCC299A893F0055D2AE /* ToSGuideText.swift */,
+				F4622DCE299A8A290055D2AE /* GetStartGuideText.swift */,
+			);
+			path = GuideText;
 			sourceTree = "<group>";
 		};
 		F49E28BE29762C9B009EEB1A = {
@@ -399,7 +513,6 @@
 				F49E28C829762C9C009EEB1A /* Products */,
 				89A963E5358D329345D77DC3 /* Pods */,
 				2672DC2838A0CC595638793A /* Frameworks */,
-				3C5CAA94298C8E3E007C3EAA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -414,7 +527,10 @@
 		F49E28C929762C9C009EEB1A /* Hapit */ = {
 			isa = PBXGroup;
 			children = (
+				F41B6A8029BA0FD800EC19F3 /* Errors */,
+				F41B6A6529B7733300EC19F3 /* Protocols */,
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
+				959DCC3C299B52B6005CB3A2 /* Configuration */,
 				F40B9A512988CDFB00385014 /* Extension */,
 				C54829822987503B000C743E /* Font */,
 				C5482987298751EC000C743E /* Info.plist */,
@@ -441,9 +557,11 @@
 		F49E28D829762CCF009EEB1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				67BD574D298FE3C600DD37B0 /* LocalNotification.swift */,
 				369D01D629777E97004CB739 /* Dairy.swift */,
 				3C811D1E29877AF10005539A /* DateValue.swift */,
 				C59D55142977A7C9008BB0CF /* Jelly.swift */,
+				95FAB8732992334900E797EA /* Badge.swift */,
 				674F28B02977C49100390405 /* Challenge.swift */,
 				674F28B22977C4C000390405 /* Post.swift */,
 				F47BA150297A697F000222EE /* User.swift */,
@@ -451,6 +569,8 @@
 				C958D15E298CD8690057AA5B /* ChallengeFriends.swift */,
 				36E1440E298CE7F20044E666 /* HapitPushInfo.swift */,
 				C50FEE3D2991DE1000C18D3F /* Message.swift */,
+				673EA3932995495400AB5EA8 /* LocalChallenge.swift */,
+				36658E4A29954ED100BA9B67 /* RemoteNotification.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -470,11 +590,16 @@
 			isa = PBXGroup;
 			children = (
 				F47BA14E297A67FE000222EE /* AuthManager.swift */,
-				369D01D429777E72004CB739 /* DiaryViewModel.swift */,
+				F41B6A7029B8609000EC19F3 /* SignInManager */,
+				F41B6A6C29B84B7D00EC19F3 /* NewAuthManager.swift */,
 				95D0679D297A1FB1003447EA /* HabitManager.swift */,
+				95FAB87129920B0100E797EA /* BadgeManager.swift */,
 				3C5CAA8C298A39D8007C3EAA /* ModalManager.swift */,
 				C5212475298CC1A400235921 /* UserInfoManager.swift */,
 				C50FEE3F2991DE9100C18D3F /* MessageManager.swift */,
+				F4101A5C29935BE800006039 /* KeyboardManager.swift */,
+				3696BF8329940EF60025A3A4 /* FCMManager.swift */,
+				67BD574F298FE3F500DD37B0 /* LocalNotificationManager.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -524,7 +649,8 @@
 				F49E28E4297639F4009EEB1A /* RegisterView.swift */,
 				F49E28E829765DFA009EEB1A /* ToSView.swift */,
 				F49E291629770195009EEB1A /* GetStartView.swift */,
-				F49E2918297714E8009EEB1A /* StepBar.swift */,
+				F4622DC9299A89220055D2AE /* GuideText */,
+				F4622DC2299A74020055D2AE /* StepBar */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -557,6 +683,10 @@
 				36D4A14B2989EEBD0048309A /* FirebaseMessaging */,
 				36E1440A298CE7720044E666 /* Realm */,
 				36E1440C298CE7720044E666 /* RealmSwift */,
+				95FAB86D2991DB5100E797EA /* FirebaseStorage */,
+				95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */,
+				F4007A202995019A00AA8919 /* GoogleSignIn */,
+				F4007A2229952BE900AA8919 /* GoogleSignInSwift */,
 			);
 			productName = Hapit;
 			productReference = F49E28C729762C9C009EEB1A /* Hapit.app */;
@@ -591,6 +721,7 @@
 				95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				36E14409298CE7720044E666 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				F4007A1F2995019900AA8919 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = F49E28C829762C9C009EEB1A /* Products */;
 			projectDirPath = "";
@@ -669,32 +800,44 @@
 				95397CC2298C8FD400D3B7DB /* (null) in Sources */,
 				F49E28DC297633A7009EEB1A /* LogInView.swift in Sources */,
 				C5212476298CC1A400235921 /* UserInfoManager.swift in Sources */,
+				F41B6A7B29B871C300EC19F3 /* KakaoSignInManager.swift in Sources */,
 				C50FEE422991F35F00C18D3F /* MessageCellView.swift in Sources */,
+				F4622DC6299A74990055D2AE /* StepBar_16.swift in Sources */,
 				F49E28E929765DFA009EEB1A /* ToSView.swift in Sources */,
 				F49E28EC29766335009EEB1A /* ServiceToS.swift in Sources */,
 				3C5CAA86298A376E007C3EAA /* Modal.swift in Sources */,
 				F49E28E3297639D3009EEB1A /* AppleLogIn.swift in Sources */,
 				C59D551B2977D149008BB0CF /* MessageFullscreenView.swift in Sources */,
+				3696BF8429940EF60025A3A4 /* FCMManager.swift in Sources */,
 				3C5CAA8F298B9C5C007C3EAA /* HabitSegmentDetailView.swift in Sources */,
 				C59D55152977A7C9008BB0CF /* Jelly.swift in Sources */,
 				F49E28E5297639F4009EEB1A /* RegisterView.swift in Sources */,
 				F40B9A532988CE3E00385014 /* View+ShakeEffect.swift in Sources */,
 				F49E28E1297639C6009EEB1A /* GoogleLogIn.swift in Sources */,
+				95F63A6A299763C400FBF966 /* JellyConfetti.swift in Sources */,
 				F47BA14F297A67FE000222EE /* AuthManager.swift in Sources */,
+				F4101A5D29935BE800006039 /* KeyboardManager.swift in Sources */,
 				F49E291729770195009EEB1A /* GetStartView.swift in Sources */,
+				F41B6A6729B7743F00EC19F3 /* SignProtocol.swift in Sources */,
 				67BD5754298FEE1600DD37B0 /* LocalNotificationSettingView.swift in Sources */,
 				F49E2919297714E8009EEB1A /* StepBar.swift in Sources */,
-				C5882FA62990B5F3001FD3B6 /* FriendsEditLow.swift in Sources */,
+				C5882FA62990B5F3001FD3B6 /* FriendsEditRow.swift in Sources */,
 				F49E28F229767F45009EEB1A /* ADToS.swift in Sources */,
 				3C5CAA8B298A39A8007C3EAA /* ModalAnchorView.swift in Sources */,
+				C5511D2429C0A50B003100F1 /* AboutHapitView.swift in Sources */,
 				C958D163298CE6DE0057AA5B /* ChallengeFriendsCellView.swift in Sources */,
 				F49E28CB29762C9C009EEB1A /* HapitApp.swift in Sources */,
+				36658E4B29954ED100BA9B67 /* RemoteNotification.swift in Sources */,
+				F41B6A6F29B85FD100EC19F3 /* SignInManager.swift in Sources */,
 				674A917E2989FFCD0050CF0B /* CustomAlert.swift in Sources */,
 				F49E28EE29766500009EEB1A /* PrivateToS.swift in Sources */,
 				F423787F2990A2C40005B12D /* NavigationBarColor.swift in Sources */,
+				F41B6A7729B86BC100EC19F3 /* AppleSignInManager.swift in Sources */,
 				3C5CAA89298A3931007C3EAA /* ModalView.swift in Sources */,
+				F4622DCD299A893F0055D2AE /* ToSGuideText.swift in Sources */,
 				F49E28DE297633D1009EEB1A /* KakaoLogIn.swift in Sources */,
 				674A91802989FFF00050CF0B /* CustomAlertModifier.swift in Sources */,
+				F41B6A6D29B84B7D00EC19F3 /* NewAuthManager.swift in Sources */,
 				3C811D1F29877AF10005539A /* DateValue.swift in Sources */,
 				C958D161298CE3E20057AA5B /* ChallengeFriendsView.swift in Sources */,
 				3C38AFBF297632F5002D5ADF /* HomeView.swift in Sources */,
@@ -705,29 +848,38 @@
 				674F28B32977C4C000390405 /* Post.swift in Sources */,
 				F47BA151297A697F000222EE /* User.swift in Sources */,
 				3CF39BAD29779359003D4809 /* HabitCellView.swift in Sources */,
-				C90766FD2989F8E900D646F7 /* AddChallengeMateProfileView.swift in Sources */,
+				C90766FD2989F8E900D646F7 /* MateProfileView.swift in Sources */,
 				C9CBC801297683BB00D530CC /* SocialView.swift in Sources */,
+				95FAB87229920B0100E797EA /* BadgeManager.swift in Sources */,
 				3CF39BAB29779347003D4809 /* ChallengeCellView.swift in Sources */,
 				3C39C493298985D400603149 /* PostModalView.swift in Sources */,
-				3C811D1D2987628A0005539A /* CustomDatePickerView.swift in Sources */,
+				3C811D1D2987628A0005539A /* ChallengeDetailView.swift in Sources */,
 				C5FAC88829766C6800E58C84 /* BearModalView.swift in Sources */,
+				F41B6A8229BA12B600EC19F3 /* SignInError.swift in Sources */,
 				C5FAC88129765E7600E58C84 /* RewardView.swift in Sources */,
 				C5FAC88529766BE100E58C84 /* JellyGridView.swift in Sources */,
-				369D01D529777E72004CB739 /* DiaryViewModel.swift in Sources */,
 				C5FE7D9E2988F6AA00B552E9 /* OptionView.swift in Sources */,
 				67A5AE822987EE300020212F /* DedicatedWriteDiaryView.swift in Sources */,
+				959DCC3E299B52F4005CB3A2 /* Screen.swift in Sources */,
+				95FAB8742992334900E797EA /* Badge.swift in Sources */,
+				3C9C89EA29BC492E0033D3A0 /* CellSkeletonView.swift in Sources */,
 				C5FAC87D29765BAC00E58C84 /* MyPageView.swift in Sources */,
-				3C811D1B298760BA0005539A /* MonthlyCalendarView.swift in Sources */,
+				673EA3942995495400AB5EA8 /* LocalChallenge.swift in Sources */,
 				C59D55192977CD17008BB0CF /* FriendChallengeView.swift in Sources */,
+				950580862994994B00381AE8 /* JellyEmptyView.swift in Sources */,
 				67A5AE842987EF2A0020212F /* PhotoPicker.swift in Sources */,
+				F4007A272998C7C500AA8919 /* AppleSignInManagerExtension.swift in Sources */,
 				C5FAC88A29766E1A00E58C84 /* JellyBadgeView.swift in Sources */,
+				6736343C29C0A49200A7F18B /* MakersView.swift in Sources */,
 				C5FAC88329765EAB00E58C84 /* ProfileCellView.swift in Sources */,
 				C5FAC878297632BD00E58C84 /* WriteDiaryView.swift in Sources */,
 				67BD574E298FE3C600DD37B0 /* LocalNotification.swift in Sources */,
 				368AE79E29878DA7005088E5 /* DiaryModalView.swift in Sources */,
 				6774979429763C29003F9D6C /* AddChallengeView.swift in Sources */,
 				C9076702298AD81F00D646F7 /* InvitedMateView.swift in Sources */,
+				F4622DC4299A74250055D2AE /* StepBar_15.swift in Sources */,
 				3C5CAA8D298A39D8007C3EAA /* ModalManager.swift in Sources */,
+				F41B6A7529B8669500EC19F3 /* NormalSignInManager.swift in Sources */,
 				95D0679E297A1FB1003447EA /* HabitManager.swift in Sources */,
 				3CF39BA529770D87003D4809 /* AddFriendView.swift in Sources */,
 				36E1440F298CE7F30044E666 /* HapitPushInfo.swift in Sources */,
@@ -735,8 +887,11 @@
 				674F28B12977C49100390405 /* Challenge.swift in Sources */,
 				C59D55172977B782008BB0CF /* NicknameModalView.swift in Sources */,
 				C57E6E0E298E54500078B60F /* EditFriendView.swift in Sources */,
+				67C244C529BF73E800E4B810 /* AccountView.swift in Sources */,
+				F4622DCF299A8A290055D2AE /* GetStartGuideText.swift in Sources */,
+				F41B6A7D29B8741000EC19F3 /* GoogleSignInManager.swift in Sources */,
+				F4622DCB299A89350055D2AE /* RegisterGuideText.swift in Sources */,
 				C50FEE402991DE9100C18D3F /* MessageManager.swift in Sources */,
-				3625FB67297634AC0006478B /* HabitDetailView.swift in Sources */,
 				369D01D729777E97004CB739 /* Dairy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -865,12 +1020,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AU882HP6MX;
+				DEVELOPMENT_TEAM = 66PR7H87SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -888,7 +1042,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FCMHapit;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -902,12 +1055,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hapit/Hapit.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Hapit/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AU882HP6MX;
+				DEVELOPMENT_TEAM = 66PR7H87SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Hapit/Info.plist;
@@ -925,7 +1077,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hapitfinal.Hapit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FCMHapit;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -980,6 +1131,14 @@
 				kind = branch;
 			};
 		};
+		F4007A1F2995019900AA8919 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		F40B9A4E298827E400385014 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -1020,6 +1179,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		95FAB86D2991DB5100E797EA /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		95FAB86F2991DB5100E797EA /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95D0679F297A252B003447EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
+		};
+		F4007A202995019A00AA8919 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4007A1F2995019900AA8919 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		F4007A2229952BE900AA8919 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4007A1F2995019900AA8919 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		F40B9A4F298827E400385014 /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;

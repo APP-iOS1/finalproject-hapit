@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct KakaoLogIn: View {
+    @EnvironmentObject var kakaoSignInManager: KakaoSignInManager
+    
     var body: some View {
-        Image("Logo - SIWA - Logo-only - White")
-            .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
+        Button(action: {
+            Task {
+                await kakaoSignInManager.kakaoSignIn()
+            }
+        }){
+            Image("kakaobtn")
+                .mask(Circle())
+                .frame(width: 44, height: 44)
+        }
     }
 }
 
 struct KakaoLogIn_Previews: PreviewProvider {
     static var previews: some View {
         KakaoLogIn()
+            .environmentObject(KakaoSignInManager())
     }
 }

@@ -13,26 +13,41 @@ import FirebaseAuth
 
 final class HabitManager: ObservableObject{
     
+    enum LoadingState{
+        
+        case idle
+        case loading
+        case success
+        //case error(Error)
+    }
+    
     enum FirebaseError: Error{
         case badSnapshot
     }
-    
+
     private var cancellables = Set<AnyCancellable>()
     
     let currentUser = Auth.auth().currentUser ?? nil
-    
+
     // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     // challenges 에서는 제거를 한다.
     @Published var currentMateInfos: [User] = []
     @Published var challenges: [Challenge] = []
+    // 특수한 조건(예로, 66일)이 되었을때, challenges 배열에서 habits 배열에 추가한다.
     @Published var habits: [Challenge] = []
-    @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
+    // 해당하는 챌린지의 일지의 배열
 
+    @Published var currentChallenge: Challenge = Challenge(id: "temp_challenge", creator: "temp_challenge", mateArray: [], challengeTitle: "temp_challenge", createdAt: Date(), count: 0, isChecked: false, uid: "temp_challenge")
+    
+    // 로딩상태를 저장하는 변수.
+    @Published var loadingState: LoadingState = .idle
+    
     var currentUserChallenges: [Challenge] {
+        
         var tempChallenges: [Challenge] = []
         for challenge in challenges {
-            if let currentUser = currentUser {
-                if challenge.uid == currentUser.uid {
+            if let currentUser = Auth.auth().currentUser ?? nil {
+                if challenge.mateArray.contains(currentUser.uid){
                     tempChallenges.append(challenge)
                 }
             } else {
@@ -42,25 +57,20 @@ final class HabitManager: ObservableObject{
         return tempChallenges
     }
     
+    @Published var selectedFriends: [User] = []
+    //나의 다이어리가 저장되는 변수
     @Published var posts: [Post] = []
-    //나의 친구들을 받을 변수
-    @Published var friends: [User] = []
-    //친구의 챌린지를 받을 변수
-    @Published var friendchallenges: [Challenge] = []
-
-    // 최종으로 받아오는 초대할 친구 목록
-    @Published var seletedFriends: [ChallengeFriends] = []
+    
+    //챌린지를 같이 진행하고 있는 친구들의 다이어리가 저장되는 변수
+    @Published var currentMatePosts: [Post] = []
 
     let database = Firestore.firestore()
     
     func fetchChallengeCombine() -> AnyPublisher<[Challenge], Error>{
-        
         Future<[Challenge], Error> {  promise in
-            
             self.database.collection("Challenge")
                 .order(by: "createdAt", descending: true)
                 .getDocuments{(snapshot, error) in
-                    
                     if let error = error {
                         promise(.failure (error))
                         return
@@ -91,15 +101,15 @@ final class HabitManager: ObservableObject{
     }
 
     func loadChallenge(){
-        
+        self.loadingState = .loading // 챌린지 가져오는 중임을 저장
         challenges.removeAll()
-        
         self.fetchChallengeCombine()
             .sink { (completion) in
                 switch completion{
                 case .failure(_):
                     return
                 case .finished:
+                    self.loadingState = .success // 챌린지 모두 가져오기 성공
                     return
                 }
             } receiveValue: { [weak self] (challenges) in
@@ -152,31 +162,104 @@ final class HabitManager: ObservableObject{
         loadChallenge()
     }
     
-    // MARK: - Update a Habit
-    @MainActor
-    func updateChallenge() async{
-        // Update a Habit
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 mateArray에서 배열의 값 하나를 삭제하는 Method
+    func removeChallegeMate(challenge: Challenge,removeValue: String) {
+        let challegeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challegeDocument.updateData([
+            "mateArray": FieldValue.arrayRemove([removeValue])
+        ])
+        loadChallenge()
     }
     
-    // MARK: - Update a Habit
-    func updateChallengeIsChecked(challenge: Challenge) -> AnyPublisher<Void, Error> {
-        // Update a Challenge
-        // Local
-        let isChecked = toggleIsChanged(isChecked: challenge.isChecked)
-        let count = updateCount(count: challenge.count,isChecked: challenge.isChecked)
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 mateArray에서 배열의 값 하나를 추가하는 Method
+    // 챌린지 초대 메시지 수락 버튼에서 사용
+    func addChallegeMate(challengeID: String, addValue: String) {
+        let challegeDocument = database.collection("Challenge").document(challengeID)
         
-        return Future<Void, Error> {  promise in
+        challegeDocument.updateData([
+            "mateArray": FieldValue.arrayUnion([addValue])
+        ])
+        loadChallenge()
+    }
+    
+    // MARK: - 사용 중인 유저의 이메일을 반환
+    func getChallengeTitle(challengeID: String) async throws -> String {
+        do {
+            let target = try await database.collection("Challenge").document("\(challengeID)")
+                .getDocument()
+            let docData = target.data()
+            let challengeTitle: String = docData?["challengeTitle"] as? String ?? ""
             
+            return challengeTitle
+        } catch {
+            throw(error)
+        }
+    }
+    
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 cretor를 변경하는 Method
+    func updateChallegecreator(challenge: Challenge,creator: String) {
+        
+        let challengeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challengeDocument.updateData([
+            "creator": creator
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        loadChallenge()
+    }
+    // MARK: - 서버의 Challenge Collection에서 Challenge의 Uid를 변경하는 Method
+    func updateChallegeUid(challenge: Challenge,uid: String) {
+        let challegeDocument = database.collection("Challenge").document(challenge.id)
+        
+        challegeDocument.updateData([
+            "uid": uid
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        loadChallenge()
+    }
+    
+    // MARK: - 24시간 지나면 isChecked 다 false로 해주는 함수 - 그룹 챌린지
+    func makeIsCheckedFalse(challenge: Challenge) -> AnyPublisher<Void, Error> {
+        // Update a Challenge
+        return Future<Void, Error> {  promise in
             self.database.collection("Challenge")
                 .document(challenge.id)
-                .updateData(["isChecked": isChecked])
-            
+                .updateData(["isChecked": false])
+            //promise(.success())
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - 로컬에서 변경된 연속일수를 업데이트하는 함수
+    func updateCount(challenge: Challenge, count: Int) -> AnyPublisher<Void, Error> {
+        return Future<Void, Error> {  promise in
             self.database.collection("Challenge")
                 .document(challenge.id)
                 .updateData(["count": count])
-                //promise(.success())
+            //promise(.success())
         }
         .eraseToAnyPublisher()
+    }
+
+    // MARK: - 24시간 지나면 체크 상태를 기반으로 일수를 계산하는 함수
+    /// 하루라도 수행하지 않으면 0일로 초기화
+    func countDays(count: Int, isChecked: Bool) -> Int{
+        if isChecked == true{
+            return count + 1
+        } else {
+            return 0
+        }
     }
     
     func toggleIsChanged(isChecked: Bool) -> Bool{
@@ -185,29 +268,6 @@ final class HabitManager: ObservableObject{
         }else{
             return true
         }
-    }
-    
-    func updateCount(count: Int, isChecked: Bool) -> Int{
-        if isChecked == true{
-            return count - 1
-        }else{
-            return count + 1
-        }
-    }
-
-    func loadChallengeIsChecked(challenge: Challenge){
-        self.updateChallengeIsChecked(challenge: challenge)
-            .sink { (completion) in
-                switch completion{
-                case .failure( _):
-                    return
-                case .finished:
-                    return
-                }
-            } receiveValue: { _ in
-            }
-            .store(in: &cancellables)
-        loadChallenge()
     }
     
     @MainActor
@@ -244,12 +304,11 @@ final class HabitManager: ObservableObject{
     // MARK: - Post CRUD Part
     // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
-    func fetchPosts(challengeID: String, userID: String) -> AnyPublisher<[Challenge], Error>{
+    func fetchPosts(challengeID: String) -> AnyPublisher<[Challenge], Error>{
         
         Future<[Challenge], Error> {  promise in
             
             let query = self.database.collection("Post")
-                .whereField("uid", isEqualTo: userID)
                 .whereField("challengeID", isEqualTo: challengeID)
             
             query.getDocuments{(snapshot, error) in
@@ -277,10 +336,10 @@ final class HabitManager: ObservableObject{
     
     // MARK: - R: Fetch Posts 함수 (ViewModel)
     @MainActor
-    func loadPosts(challengeID: String, userID: String){
+    func loadPosts(challengeID: String){
         posts.removeAll()
         
-        self.fetchPosts(challengeID: challengeID, userID: userID)
+        self.fetchPosts(challengeID: challengeID)
             .sink { (completion) in
                 switch completion{
                 case .failure(_):
@@ -298,10 +357,10 @@ final class HabitManager: ObservableObject{
     func createService(_ post: Post) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { promise in
             self.database.collection("Post")
-                .document()
+                .document(post.id)
                 .setData([
                     "id": post.id,
-                    "uid": post.uid,
+                    "creatorID": post.creatorID,
                     "challengeID": post.challengeID,
                     "title": post.title,
                     "content": post.content,
@@ -362,11 +421,11 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - D: Post Delete 함수 (Service)
-    func deletePostService(_ post: Post) -> AnyPublisher<Void, Error>{
+    func deletePostService(_ postID: String) -> AnyPublisher<Void, Error>{
         Future<Void, Error> { promise in
             self.database.collection("Post")
-                .document(post.id)
-                .delete() { error in
+                .document(postID).delete()
+            { error in
                     if let error = error {
                         promise(.failure(error))
                     } else {
@@ -378,8 +437,8 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - D: Post Delete 함수 (ViewModel)
-    func deletePost(post: Post) {
-        self.deletePostService(post)
+    func deletePost(postID: String) {
+        self.deletePostService(postID)
             .sink { (completion) in
                 switch completion {
                 case .failure(_):
@@ -390,5 +449,4 @@ final class HabitManager: ObservableObject{
             } receiveValue: { _ in }
             .store(in: &cancellables)
     }
-    
 }

@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct GoogleLogIn: View {
+    @EnvironmentObject var googleSignInManager: GoogleSignInManager
+    
     var body: some View {
-        Image("btn_google_light_normal_ios")
-            .mask(Circle()).frame(maxWidth: .infinity, maxHeight: 44)
+        Button(action: {
+            Task {
+                await googleSignInManager.googleSignIn()
+            }
+        }){
+            Image("googlebtn")
+                .mask(Circle())
+                .frame(width: 44, height: 44)
+        }
     }
 }
 
 struct GoogleLogIn_Previews: PreviewProvider {
     static var previews: some View {
         GoogleLogIn()
+            .environmentObject(GoogleSignInManager())
     }
 }

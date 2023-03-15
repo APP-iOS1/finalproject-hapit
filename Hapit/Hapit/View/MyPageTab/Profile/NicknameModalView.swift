@@ -8,26 +8,27 @@
 import SwiftUI
 
 struct NicknameModalView: View {
-    @Binding var showModal: Bool
+    @Binding var showNicknameModal: Bool
     @Binding var userNickname: String
     @State private var nickname = ""
     @State private var isValid = false
+    @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button {
-                    showModal = false
-                } label: {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                }
-                .padding()
-            }
+//            HStack {
+//                Spacer()
+//                Button {
+//                    showModal = false
+//                } label: {
+//                    Image(systemName: "xmark")
+//                        .resizable()
+//                        .frame(width: 20, height: 20)
+//                }
+//                .padding()
+//            }
             
             Spacer()
             
@@ -36,6 +37,7 @@ struct NicknameModalView: View {
 
             TextField("닉네임을 입력하세요.", text: $nickname)
                 .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
                 .font(.custom("IMHyemin-Regular", size: 17))
                 .padding()
                 .frame(width: 350, height: 65)
@@ -52,9 +54,10 @@ struct NicknameModalView: View {
             // TODO: 공백 입력, 글자수 제한
             Button {
                 Task {
+                    // UserDefaults nickname 업데이트
                     if isValid {
                         userNickname = nickname
-                        showModal = false
+                        //UserDefaults.standard.set(userNickname, forKey: "localNickname")
                         
                         do {
                             let current = authManager.firebaseAuth
@@ -62,6 +65,8 @@ struct NicknameModalView: View {
                         } catch {
                             throw(error)
                         }
+                        dismiss()
+                        showNicknameModal = false
                     }
                 }
             } label: {
@@ -70,16 +75,16 @@ struct NicknameModalView: View {
                     .foregroundColor(.white)
                     .padding(10)
                     .background(RoundedRectangle(cornerRadius: 15).fill(Color.accentColor))
-            }.disabled(!isValid)
+            }
+            .disabled(!isValid)
             
             Spacer()
-
         }
     }
 }
 
 struct NicknameModalView_Previews: PreviewProvider {
     static var previews: some View {
-            NicknameModalView(showModal: .constant(false), userNickname: .constant(""))
+        NicknameModalView(showNicknameModal: .constant(false), userNickname: .constant(""))
     }
 }

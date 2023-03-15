@@ -6,15 +6,32 @@
 //
 
 import SwiftUI
+import WebKit
 
-struct PrivateToS: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct PrivateToS: UIViewRepresentable {
+    var urlToLoad: String
+    
+    @MainActor
+    func makeUIView(context: Context) -> WKWebView {
+        
+        guard let url = URL(string: self.urlToLoad) else {
+            return WKWebView()
+        }
+
+        let webView = WKWebView()
+        
+        webView.load(URLRequest(url: url))
+        return webView
+    }
+    
+    //업데이트 ui view
+    func updateUIView(_ uiView: WKWebView, context: UIViewRepresentableContext<PrivateToS>) {
+        
     }
 }
 
 struct PrivateToS_Previews: PreviewProvider {
     static var previews: some View {
-        PrivateToS()
+        PrivateToS(urlToLoad: "")
     }
 }

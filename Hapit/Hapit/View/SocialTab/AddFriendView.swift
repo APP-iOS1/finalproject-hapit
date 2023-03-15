@@ -25,8 +25,9 @@ struct AddFriendView: View {
             // MARK: Title Image
             Image("fourbears")
                 .resizable()
-                .frame(width: 150, height: 90)
-            
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150)
+                
             // MARK: Title
             Text("친구를 찾아보세요! 🔍")
                 .font(.custom("IMHyemin-Bold", size: 28))

@@ -90,7 +90,7 @@ struct PostModalView: View {
                     .opacity(isLoading ? 1 : 0)
             }
             .padding()
-            .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height * ( 2 / 3 ))
+            .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height * ( 2 / 3 ) - 20)
             .background(
                 Rectangle()
                     .foregroundColor(Color("CellColor"))

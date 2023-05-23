@@ -61,8 +61,6 @@ struct LocalNotificationSettingView: View {
                         $localChallenge.isChallengeAlarmOn.wrappedValue = true
                         $localChallenge.pushTime.wrappedValue = scheduledDate
                         
-                        print("저장한 후의 Realm의 localChallenge: \(localChallenge)")
-                        
                         isChallengeAlarmOn = true
                         
                         Task{

@@ -25,7 +25,7 @@ final class HabitManager: ObservableObject{
         case badSnapshot
     }
 
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     
     let currentUser = Auth.auth().currentUser ?? nil
 
@@ -198,56 +198,58 @@ final class HabitManager: ObservableObject{
     }
     
     // MARK: - 서버의 Challenge Collection에서 Challenge의 cretor를 변경하는 Method
-    func updateChallegecreator(challenge: Challenge,creator: String) {
+    func updateChallegecreator(challenge: Challenge, creator: String) async throws {
         
+        do {
         let challengeDocument = database.collection("Challenge").document(challenge.id)
         
-        challengeDocument.updateData([
+        try await challengeDocument.updateData([
             "creator": creator
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-            }
+        ])
+        } catch {
+            throw(error)
         }
         loadChallenge()
     }
+    
     // MARK: - 서버의 Challenge Collection에서 Challenge의 Uid를 변경하는 Method
-    func updateChallegeUid(challenge: Challenge,uid: String) {
-        let challegeDocument = database.collection("Challenge").document(challenge.id)
-        
-        challegeDocument.updateData([
-            "uid": uid
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-            }
+    func updateChallegeUid(challenge: Challenge, uid: String) async throws {
+        do {
+            let challegeDocument = database.collection("Challenge").document(challenge.id)
+            
+            try await challegeDocument.updateData([
+                "uid": uid
+            ])
+        } catch {
+            throw(error)
         }
+        
         loadChallenge()
     }
     
     // MARK: - 24시간 지나면 isChecked 다 false로 해주는 함수 - 그룹 챌린지
     func makeIsCheckedFalse(challenge: Challenge) -> AnyPublisher<Void, Error> {
         // Update a Challenge
-        return Future<Void, Error> {  promise in
+        return Future<Void, Error> { promise in
             self.database.collection("Challenge")
                 .document(challenge.id)
                 .updateData(["isChecked": false])
-            //promise(.success())
         }
         .eraseToAnyPublisher()
     }
     
     // MARK: - 로컬에서 변경된 연속일수를 업데이트하는 함수
     func updateCount(challenge: Challenge, count: Int) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error> {  promise in
+        return Future<Void, Error> { promise in
             self.database.collection("Challenge")
                 .document(challenge.id)
-                .updateData(["count": count])
-            //promise(.success())
+                .updateData(["count": count]) { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
         }
         .eraseToAnyPublisher()
     }
@@ -271,7 +273,7 @@ final class HabitManager: ObservableObject{
     }
     
     @MainActor
-    func fetchChallenge(challengeID: String) -> AnyPublisher<Challenge, Error>{
+    func fetchChallenge(challengeID: String) -> AnyPublisher<Challenge, Error> {
         
         Future<Challenge, Error> {  promise in
             
@@ -304,7 +306,7 @@ final class HabitManager: ObservableObject{
     // MARK: - Post CRUD Part
     // MARK: - R: Fetch Posts 함수 (Service)
     @MainActor
-    func fetchPosts(challengeID: String) -> AnyPublisher<[Challenge], Error>{
+    func fetchPosts(challengeID: String) -> AnyPublisher<[Challenge], Error> {
         
         Future<[Challenge], Error> {  promise in
             

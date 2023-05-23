@@ -29,7 +29,6 @@ class KakaoSignInManager: NormalSignInManager {
             }
         } catch {
             save(value: SignInError.getPassWordError.rawValue, forkey: "error")
-            dump(SignInError.getPassWordError.rawValue)
             throw(error)
         }
     }
@@ -147,7 +146,6 @@ class KakaoSignInManager: NormalSignInManager {
                                 }
                             } catch {
                                 self.save(value: SignInError.firebaseAuthSignInError.rawValue, forkey: "error")
-                                dump(SignInError.firebaseAuthSignInError.rawValue)
                                 throw(error)
                             }
                         }
@@ -196,7 +194,6 @@ class KakaoSignInManager: NormalSignInManager {
                                 }
                             } catch {
                                 self.save(value: SignInError.firebaseAuthSignInError.rawValue, forkey: "error")
-                                dump(SignInError.firebaseAuthSignInError.rawValue)
                                 throw(error)
                             }
                         }

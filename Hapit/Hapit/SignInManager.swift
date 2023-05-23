@@ -97,7 +97,7 @@ class SignInManager: UIViewController, ObservableObject, SignIn {
                     }
                 }
             default:
-                print("apple or general")
+                break
             }
 
             try await firebaseAuth.currentUser?.delete()

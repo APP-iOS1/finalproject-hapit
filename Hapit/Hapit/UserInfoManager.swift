@@ -62,9 +62,6 @@ final class UserInfoManager: ObservableObject {
                 guard let tempUser else { return nil}
                 return tempUser
             }
-            else {
-                dump("\(#function) - DEBUG: NO SNAPSHOT FOUND")
-            }
         } catch {
             throw(error)
         }
@@ -104,7 +101,7 @@ final class UserInfoManager: ObservableObject {
     
     // MARK: 현재 유저의 친구 정보 불러오기
     // 다른 사람의 uid로 친구 불러올 일 없으므로 인자 제거했음
-    func getFriendArray() async throws -> [User] {
+    func getFriendArray() async throws {
         // SocialView 불러오면서 getCurrentUserInfo()를 실행하기 때문에 CurrentUserInfo 사용 가능
         let friendList = currentUserInfo?.friends ?? [""]
         
@@ -123,7 +120,6 @@ final class UserInfoManager: ObservableObject {
                 throw(error)
             }
         }
-        return friendArray
     }
     
     // MARK: 친구 삭제

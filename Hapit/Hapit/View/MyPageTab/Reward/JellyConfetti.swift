@@ -18,7 +18,7 @@ struct JellyConfetti: View{
                 .resizable()
                 .aspectRatio(contentMode: .fit)
 //                .fill(Color.blue)
-                .frame(width:CGFloat(Int.random(in: 100..<150)) ,height: CGFloat(Int.random(in: 100..<150)))
+                .frame(width: CGFloat(Int.random(in: 100..<150)), height: CGFloat(Int.random(in: 100..<150)))
                 .rotationEffect(.degrees(Double(Int.random(in: -360..<0))))
                                                 .rotation3DEffect(.degrees(Double(Int.random(in: 0..<45))), axis: (x: 1, y: 1, z: 1))
                 .modifier(ParticlesModifier())
@@ -28,7 +28,7 @@ struct JellyConfetti: View{
                 .resizable()
                 .aspectRatio(contentMode: .fit)
 //                .fill(Color.red)
-                .frame(width:CGFloat(Int.random(in: 100..<150)) ,height: CGFloat(Int.random(in: 100..<150)))
+                .frame(width: CGFloat(Int.random(in: 100..<150)), height: CGFloat(Int.random(in: 100..<150)))
                 .rotationEffect(.degrees(Double(Int.random(in: -360..<0))))
                                                 .rotation3DEffect(.degrees(Double(Int.random(in: 0..<45))), axis: (x: 1, y: 1, z: 1))
                 .modifier(ParticlesModifier())
@@ -61,7 +61,7 @@ struct ParticlesModifier: ViewModifier {
     }
 }
 
-struct FireworkParticlesGeometryEffect : GeometryEffect {
+struct FireworkParticlesGeometryEffect: GeometryEffect {
     var time: Double
     var speed = Double.random(in: 20 ... 200)
     var direction = Double.random(in: -Double.pi ... Double.pi)

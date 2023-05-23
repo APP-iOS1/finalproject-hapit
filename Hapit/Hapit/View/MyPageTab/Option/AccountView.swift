@@ -90,7 +90,7 @@ struct AccountView: View {
                             if challenge.uid.contains(currentUser ?? ""){
                                 // 참여중인 챌린지의 마지막 사람에게 할당함.
                                 try await habitManager.updateChallegecreator(challenge: challenge, creator: authManager.getNickName(uid: challenge.mateArray.last ?? ""))
-                                habitManager.updateChallegeUid(challenge: challenge, uid: challenge.mateArray.last ?? "")
+                                try await habitManager.updateChallegeUid(challenge: challenge, uid: challenge.mateArray.last ?? "")
                             }
                         }
                         //2-3. 1보다 작은 경우(개인 챌린지인 경우)(성공)

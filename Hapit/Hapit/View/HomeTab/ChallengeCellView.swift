@@ -95,13 +95,7 @@ struct ChallengeCellView: View {
                 ZStack{
                     Color("CellColor")
                     if $localChallenge.isChecked.wrappedValue == true {
-                        
-                            JellyConfetti(title: "")
-        //                        .onAppear{
-        //                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-        //                                isShownConfetti = false
-        //                            }
-        //                        }
+                        JellyConfetti(title: "")
                     }
                 }
             )
@@ -129,6 +123,21 @@ struct ChallengeCellView: View {
                     // 서버에 업데이트
                     //TODO: 이거도 잠시 넣어두고 나중에 한꺼번에 업데이트 해주기
                     habitManager.updateCount(challenge: challenge, count: $localChallenge.count.wrappedValue)
+                        .sink(receiveCompletion: { completion in
+                            switch completion {
+                            case .failure(let error):
+#if DEBUG
+                                print(error)
+#endif
+                            case .finished:
+#if DEBUG
+                                print("Successed to update count")
+#endif
+                            }
+                        }, receiveValue: { _ in
+                        })
+                        .store(in: &habitManager.cancellables)
+                    
                     // 초기화
                     $localChallenge.isChecked.wrappedValue = false
                 }
@@ -141,7 +150,7 @@ struct ChallengeCellView: View {
                         try await currentUserInfos.append(userInfoManager.getUserInfoByUID(userUid: member) ?? User(id: "", name: "", email: "", pw: "", proImage: "bearWhite", badge: [], friends: [], loginMethod: "", fcmToken: ""))
                     }
                 }
-         
+                
             }
             .onChange(of: scenePhase) { _ in // 마지막에 접속한 날짜랑 현재 접속한 날짜랑 다를 경우
                 if currentDate != getToday() { // 자정이 되는 순간
@@ -150,10 +159,27 @@ struct ChallengeCellView: View {
                                                                                 isChecked: $localChallenge.isChecked.wrappedValue)
                     // 서버에 업데이트
                     habitManager.updateCount(challenge: challenge, count: $localChallenge.count.wrappedValue)
+                        .sink(receiveCompletion: { completion in
+                            switch completion {
+                            case .failure(let error):
+#if DEBUG
+                                print(error)
+#endif
+                            case .finished:
+#if DEBUG
+                                print("Successed to update count")
+#endif
+                            }
+                        }, receiveValue: { _ in
+                        })
+                        .store(in: &habitManager.cancellables)
                     // 초기화
                     $localChallenge.isChecked.wrappedValue = false
                 }
                 currentDate = getToday()
+            }
+            .onDisappear {
+                habitManager.cancellables.removeAll()
             }
         }
     }

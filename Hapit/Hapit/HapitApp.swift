@@ -23,8 +23,7 @@ class AppDelegate: NSObject, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        KakaoSDK.initSDK(appKey: "fa6e48dad20c3ead13f0758608cb305f")
-
+        KakaoSDK.initSDK(appKey: "")
         UNUserNotificationCenter.current().delegate = self
 
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -41,7 +40,7 @@ class AppDelegate: NSObject, UIApplicationDelegate{
          Messaging.messaging().apnsToken = deviceToken
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         if (AuthApi.isKakaoTalkLoginUrl(url)) {
             return AuthController.handleOpenUrl(url: url)
         }
@@ -52,14 +51,11 @@ class AppDelegate: NSObject, UIApplicationDelegate{
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("\(#function)")
     }
 }
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-      print("Firebase registration token: \(String(describing: fcmToken))")
-
       let dataDict: [String: String] = ["token": fcmToken ?? ""]
         NotificationCenter.default.post(
         name: Notification.Name("FCMToken"),
@@ -67,7 +63,6 @@ extension AppDelegate: MessagingDelegate {
         userInfo: dataDict
       )
         self.fcmToken = fcmToken ?? ""
- 
     }
 }
 
@@ -103,8 +98,7 @@ struct HapitApp: App {
                 .environmentObject(KakaoSignInManager())
                 .environmentObject(GoogleSignInManager())
                 .environmentObject(SignInManager())
-                .onAppear{
-                    print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)
+                .onAppear {
                     UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
                 }
         }

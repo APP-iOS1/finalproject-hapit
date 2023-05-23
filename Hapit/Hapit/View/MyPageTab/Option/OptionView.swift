@@ -105,11 +105,7 @@ struct OptionView: View {
                      primaryButtonTitle: "허용",
                      primaryAction: {lnManager.openSettings()},
                      withCancelButton: true)
-        
-        
     }
-    
-    
 }
 
 struct ListTextModifier: ViewModifier {

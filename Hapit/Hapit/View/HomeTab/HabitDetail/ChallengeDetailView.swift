@@ -177,11 +177,9 @@ struct ChallengeDetailView: View {
             //MARK: onAppear
             .onAppear{
                 // MARK: 포스트 불러오기
-                habitManager.fetchChallenge(challengeID: currentChallenge.id)
+                let _ = habitManager.fetchChallenge(challengeID: currentChallenge.id)
                 // 현재 챌린지에 해당하는 모든 포스트들을 불러온다.
                 habitManager.loadPosts(challengeID: currentChallenge.id)
-                print("currentChalleng.id", currentChallenge.id)
-                print("habitmanager.posts", habitManager.posts)
                 currentDate = Date()
                 
                 self.modalManager.newModal(position: .closed) {
@@ -270,7 +268,6 @@ struct ChallengeDetailView: View {
                                 }
                             }
                         }
-                        print("isAbleToPost", isAbleToPost)
                         if isAbleToPost{
                             showsCreatePostView.toggle()
                         }

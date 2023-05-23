@@ -68,8 +68,6 @@ struct DedicatedWriteDiaryView: View {
                             .foregroundColor(Color("GrayFontColor"))
                     }
                     
-                    
-     
                 } // VStack
                 //.formStyle(.columns) // ios 15
                 .toolbar {

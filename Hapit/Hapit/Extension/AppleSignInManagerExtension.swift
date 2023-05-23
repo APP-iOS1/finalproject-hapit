@@ -79,7 +79,6 @@ extension AppleSignInManager: ASAuthorizationControllerDelegate {
                     self.save(value: LoginMethod.apple.rawValue, forkey: "loginMethod")
                 } catch {
                     self.save(value: SignInError.appleSignInError.rawValue, forkey: "error")
-                    dump(SignInError.appleSignInError.rawValue)
                     throw(error)
                 }
             }

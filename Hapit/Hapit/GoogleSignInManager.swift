@@ -60,7 +60,6 @@ class GoogleSignInManager: SignInManager {
                     self.save(value: LoginMethod.google.rawValue, forkey: "loginMethod")
                 } catch {
                     self.save(value: SignInError.googleSignInError.rawValue, forkey: "error")
-                    dump(SignInError.googleSignInError.rawValue)
                     throw(error)
                 }
             }
@@ -120,7 +119,6 @@ class GoogleSignInManager: SignInManager {
                     self.save(value: LoginMethod.google.rawValue, forkey: "loginMethod")
                 } catch {
                     self.save(value: SignInError.googleSignInError.rawValue, forkey: "error")
-                    dump(SignInError.googleSignInError.rawValue)
                     throw(error)
                 }
             }
@@ -137,7 +135,6 @@ class GoogleSignInManager: SignInManager {
             try await self.firebaseAuth.signIn(with: credential)
         } catch {
             self.save(value: SignInError.firebaseAuthCredentialSignInError.rawValue, forkey: "error")
-            dump(SignInError.firebaseAuthCredentialSignInError.rawValue)
             throw(error)
         }
     }

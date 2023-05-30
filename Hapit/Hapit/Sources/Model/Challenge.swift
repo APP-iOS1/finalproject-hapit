@@ -48,7 +48,7 @@ struct Challenge: Hashable, Codable, Identifiable {
     
     // MARK: Local Challenge에서 사용될 List<String>형의 변수
     var mateList: List<String> {
-        var tempList: List<String> = List<String>()
+        let tempList: List<String> = List<String>()
         for mate in mateArray {
             tempList.append(mate)
         }

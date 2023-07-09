@@ -116,7 +116,6 @@
 		F33D296D2A233F8D00B6B205 /* SignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D290A2A233F8D00B6B205 /* SignProtocol.swift */; };
 		F33D296E2A233F8D00B6B205 /* IM_Hyemin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F33D290D2A233F8D00B6B205 /* IM_Hyemin-Regular.ttf */; };
 		F33D296F2A233F8D00B6B205 /* IM_Hyemin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F33D290E2A233F8D00B6B205 /* IM_Hyemin-Bold.ttf */; };
-		F3AF94F12A262CE500A0F584 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3AF94ED2A262A2600A0F584 /* GoogleService-Info.plist */; };
 		F4007A212995019A00AA8919 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A202995019A00AA8919 /* GoogleSignIn */; };
 		F4007A2329952BE900AA8919 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F4007A2229952BE900AA8919 /* GoogleSignInSwift */; };
 		F40B9A50298827E400385014 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F40B9A4F298827E400385014 /* KakaoSDK */; };
@@ -245,7 +244,6 @@
 		F33D290A2A233F8D00B6B205 /* SignProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignProtocol.swift; sourceTree = "<group>"; };
 		F33D290D2A233F8D00B6B205 /* IM_Hyemin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Regular.ttf"; sourceTree = "<group>"; };
 		F33D290E2A233F8D00B6B205 /* IM_Hyemin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IM_Hyemin-Bold.ttf"; sourceTree = "<group>"; };
-		F3AF94ED2A262A2600A0F584 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F3AF94EE2A262A2600A0F584 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F49E28C729762C9C009EEB1A /* Hapit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hapit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49E28CA29762C9C009EEB1A /* HapitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapitApp.swift; sourceTree = "<group>"; };
@@ -639,7 +637,6 @@
 			isa = PBXGroup;
 			children = (
 				36F8EC022988D6F70029B701 /* Hapit.entitlements */,
-				F3AF94ED2A262A2600A0F584 /* GoogleService-Info.plist */,
 				F3AF94EE2A262A2600A0F584 /* Info.plist */,
 			);
 			path = Supports;
@@ -764,7 +761,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3AF94F12A262CE500A0F584 /* GoogleService-Info.plist in Resources */,
 				F49E28D229762CA0009EEB1A /* Preview Assets.xcassets in Resources */,
 				F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */,
 				F33D293E2A233F8D00B6B205 /* .AddChallengeView.swift.swp in Resources */,

@@ -42,9 +42,3 @@ struct RewardView: View {
         .padding(EdgeInsets(top: 5, leading: 20, bottom: 20, trailing: 20))
     }
 }
-
-struct RewardView_Previews: PreviewProvider {
-    static var previews: some View {
-        RewardView()
-    }
-}

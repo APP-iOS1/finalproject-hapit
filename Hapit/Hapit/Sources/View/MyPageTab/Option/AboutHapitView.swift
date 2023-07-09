@@ -34,9 +34,3 @@ struct AboutHapitView: View {
         }
     }
 }
-
-struct AboutHapitView_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutHapitView()
-    }
-}

@@ -167,8 +167,3 @@ class CustomHostingController<Content: View>: UIHostingController<Content> {
     }
 }
 
-struct ProfileCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileCellView(nickName: .constant(""), email: .constant(""))
-    }
-}

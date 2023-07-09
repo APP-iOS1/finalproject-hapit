@@ -57,12 +57,5 @@ struct CellSkeletonView: View {
         )
         .cornerRadius(20)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-        
-    }
-}
-
-struct CellSkeletonView_Previews: PreviewProvider {
-    static var previews: some View {
-        CellSkeletonView()
     }
 }

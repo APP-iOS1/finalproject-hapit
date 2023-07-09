@@ -49,7 +49,6 @@ struct CustomAlertModifier: ViewModifier {
 //                        insertion: .move(edge: .leading).combined(with: .opacity),
 //                        removal: .move(edge: .trailing).combined(with: .opacity)))
             }
-           
         }
     }
 }
@@ -73,22 +72,5 @@ extension View {
                 primaryButtonTitle: primaryButtonTitle,
                 primaryAction: primaryAction,
                 withCancelButton: withCancelButton))
-    }
-}
-
-struct CustomAlertModifier_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Text("가즈아")
-        }
-        .modifier(
-            CustomAlertModifier(
-                isPresented: .constant(true),
-                title: "제목",
-                message: "내용",
-                primaryButtonTitle: "확인버튼",
-                primaryAction: { },
-                withCancelButton: true)
-        )
     }
 }

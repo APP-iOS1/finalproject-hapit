@@ -147,10 +147,3 @@ struct PostModalView: View {
     }
  
 }
-
-struct PostModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostModalView(postsForModalView: .constant([
-            Post(id: "temp_id", creatorID: "GqAtTh9IMmMuZrFlRqZoZCOrV1l1", challengeID: "7B2BFA02-2E44-49CC-9776-C34A8D078F80", title: "중R", content: "zz", createdAt: Date()) ]))
-    }
-}

@@ -16,9 +16,3 @@ struct ModalAnchorView: View {
            
     }
 }
-
-struct ModalAnchorView_Previews: PreviewProvider {
-    static var previews: some View {
-        ModalAnchorView()
-    }
-}

@@ -131,9 +131,3 @@ struct DedicatedWriteDiaryView: View {
         }
     } // body
 }
-
-//struct DedicatedWriteDiaryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DedicatedWriteDiaryView(selectedImage: .constant(nil))
-//    }
-//}

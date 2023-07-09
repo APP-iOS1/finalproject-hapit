@@ -87,10 +87,3 @@ struct LocalNotificationSettingView: View {
         }
     }
 }
-
-//
-//struct LocalNotificationSettingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LocalNotificationSettingView()
-//    }
-//}

@@ -149,10 +149,3 @@ struct WriteDiaryView: View {
         
     } // body
 }
-
-@available(iOS 16.0, *)
-struct WriteDiaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteDiaryView()
-    }
-}

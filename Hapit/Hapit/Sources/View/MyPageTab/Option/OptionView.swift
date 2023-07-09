@@ -114,9 +114,3 @@ struct ListTextModifier: ViewModifier {
             .font(.custom("IMHyemin-Bold", size: 16))
     }
 }
-
-struct OptionView_Previews: PreviewProvider {
-    static var previews: some View {
-        OptionView(index: .constant(0), flag: .constant(1))
-    }
-}

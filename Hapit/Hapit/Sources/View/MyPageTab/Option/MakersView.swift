@@ -76,9 +76,3 @@ struct MakersView: View {
         }
     }
 }
-
-struct MakersView_Previews: PreviewProvider {
-    static var previews: some View {
-        MakersView()
-    }
-}

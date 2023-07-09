@@ -100,12 +100,6 @@ struct JellyGridView: View {
     }
 }
 
-struct JellyGridView_Previews: PreviewProvider {
-    static var previews: some View {
-        JellyGridView()
-    }
-}
-
 //
 //// TODO: 뱃지 존재 여부에 따라 색깔 바꾸기
 //if index == 0 {

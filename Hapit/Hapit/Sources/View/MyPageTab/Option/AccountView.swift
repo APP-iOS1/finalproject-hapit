@@ -173,8 +173,3 @@ struct AccountView: View {
     }
 }
 
-struct AccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountView(index: .constant(0), flag: .constant(0))
-    }
-}

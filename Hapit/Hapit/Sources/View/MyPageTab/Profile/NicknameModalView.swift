@@ -83,8 +83,3 @@ struct NicknameModalView: View {
     }
 }
 
-struct NicknameModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        NicknameModalView(showNicknameModal: .constant(false), userNickname: .constant(""))
-    }
-}

@@ -85,9 +85,3 @@ struct FriendChallengeCellView: View {
         }
     }
 }
-
-//struct FriendChallengeCellView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FriendChallengeCellView(challenge: Challenge(id: "", creator: "박진주", mateArray: [], challengeTitle: "책 읽기", createdAt: Date(), count: 1, isChecked: false, uid: ""))
-//    }
-//}

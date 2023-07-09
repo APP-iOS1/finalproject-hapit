@@ -90,9 +90,3 @@ struct FriendsEditRow: View {
         .padding(.bottom, 7)
     }
 }
-
-//struct FriendsEditLow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FriendsEditRow(friend: User(id: "", name: "", email: "", pw: "", proImage: "", badge: [""], friends: [""]), isRemoveOrAdd: true)
-//    }
-//}

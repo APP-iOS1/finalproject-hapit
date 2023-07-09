@@ -47,9 +47,3 @@ struct MessageFullscreenView: View {
                      withCancelButton: true)
     }
 }
-
-struct MessageFullscreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageFullscreenView(isAllRead: .constant(true))
-    }
-}

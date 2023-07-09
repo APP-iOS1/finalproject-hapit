@@ -188,9 +188,3 @@ struct FriendsRow: View {
         .padding(.horizontal)
     }
 }
-
-struct SocialView_Previews: PreviewProvider {
-    static var previews: some View {
-        SocialView()
-    }
-}

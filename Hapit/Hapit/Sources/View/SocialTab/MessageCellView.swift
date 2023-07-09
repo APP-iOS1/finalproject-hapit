@@ -220,8 +220,3 @@ extension Image {
             .padding(.trailing, -12)
     }
 }
-//struct MessageCellView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MessageCellView(isAllRead: .constant(true), msg: Message(id: "", messageType: "", sendTime: Date(), senderID: "", receiverID: "", isRead: false, challengeID: ""))
-//    }
-//}

@@ -24,9 +24,3 @@ struct ToSGuideText: View {
         }
     }
 }
-
-struct ToSGuideText_Previews: PreviewProvider {
-    static var previews: some View {
-        ToSGuideText(fontSize: 30)
-    }
-}

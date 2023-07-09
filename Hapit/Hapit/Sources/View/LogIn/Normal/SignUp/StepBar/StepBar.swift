@@ -71,9 +71,3 @@ struct StepBar: View {
         }
     }
 }
-
-//struct StepBar_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StepBar(nowStep: 2)
-//    }
-//}

@@ -30,9 +30,3 @@ struct ServiceToS: UIViewRepresentable {
     }
     
 }
-
-struct ServiceToS_Previews: PreviewProvider {
-    static var previews: some View {
-        ServiceToS(urlToLoad: "")
-    }
-}

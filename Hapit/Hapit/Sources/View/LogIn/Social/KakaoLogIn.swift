@@ -22,10 +22,3 @@ struct KakaoLogIn: View {
         }
     }
 }
-
-struct KakaoLogIn_Previews: PreviewProvider {
-    static var previews: some View {
-        KakaoLogIn()
-            .environmentObject(KakaoSignInManager())
-    }
-}

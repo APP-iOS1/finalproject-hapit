@@ -23,10 +23,3 @@ struct AppleLogIn: View {
         }
     }
 }
-
-struct AppleLogIn_Previews: PreviewProvider {
-    static var previews: some View {
-        AppleLogIn()
-            .environmentObject(AppleSignInManager())
-    }
-}

@@ -22,9 +22,3 @@ struct RegisterGuideText: View {
         }
     }
 }
-
-struct RegisterGuideText_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterGuideText(fontSize: CGFloat(34))
-    }
-}

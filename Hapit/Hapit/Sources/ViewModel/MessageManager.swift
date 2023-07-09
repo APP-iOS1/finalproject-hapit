@@ -43,43 +43,44 @@ final class MessageManager: ObservableObject {
                 .document(userID)
                 .collection("Message")
                 .document(messageID).delete()
-            fetchMessage(userID: userID)
+            try await fetchMessage(userID: userID)
         } catch {
             throw(error)
         }
     }
     
-    // TODO: async
-    // TODO: 밑에 fetchFriendMessage랑 if문 써서 합칠 수 있을 것 같음
-    func fetchMessage(userID: String) {
-        database.collection("User")
-            .document(userID).collection("Message")
-            .order(by: "sendTime", descending: true)
-            .getDocuments { (snapshot, error) in
-                self.messageArray.removeAll()
-                if let snapshot {
-                    for document in snapshot.documents {
-                        let id: String = document.documentID
-                        let docData = document.data()
-                        let messageType: String = docData["alarmType"] as? String ?? ""
-                        let senderID: String = docData["senderID"] as? String ?? ""
-                        let receiverID: String = docData["receiverID"] as? String ?? ""
-                        let isRead: Bool = docData["isRead"] as? Bool ?? false
-                        let challengeID: String = docData["challengeID"] as? String ?? ""
-                        if let sendStamp = docData["sendTime"] as? Timestamp {
-                            let sendTime = sendStamp.dateValue()
-                            let msgData: Message = Message(id: id,
-                                                           messageType: messageType,
-                                                           sendTime: sendTime,
-                                                           senderID: senderID,
-                                                           receiverID: receiverID,
-                                                           isRead: isRead,
-                                                           challengeID: challengeID)
-                            self.messageArray.append(msgData)
-                        }
-                    }
+    // MARK: 메시지 불러오는 함수
+    func fetchMessage(userID: String) async throws -> Void {
+        do {
+            let snapshot = try await database.collection("User")
+                .document(userID).collection("Message")
+                .order(by: "sendTime", descending: true)
+                .getDocuments()
+            self.messageArray.removeAll()
+            
+            for document in snapshot.documents {
+                let id: String = document.documentID
+                let docData = document.data()
+                let messageType: String = docData["alarmType"] as? String ?? ""
+                let senderID: String = docData["senderID"] as? String ?? ""
+                let receiverID: String = docData["receiverID"] as? String ?? ""
+                let isRead: Bool = docData["isRead"] as? Bool ?? false
+                let challengeID: String = docData["challengeID"] as? String ?? ""
+                if let sendStamp = docData["sendTime"] as? Timestamp {
+                    let sendTime = sendStamp.dateValue()
+                    let msgData: Message = Message(id: id,
+                                                   messageType: messageType,
+                                                   sendTime: sendTime,
+                                                   senderID: senderID,
+                                                   receiverID: receiverID,
+                                                   isRead: isRead,
+                                                   challengeID: challengeID)
+                    self.messageArray.append(msgData)
                 }
             }
+        } catch {
+            throw(error)
+        }
     }
     
     // MARK: 친구 메시지 불러오는 함수 (친구 신청 중복 막기 위함)
@@ -117,7 +118,7 @@ final class MessageManager: ObservableObject {
             throw(error)
         }
     }
-    
+
     // MARK: Message 읽음 처리 해주는 함수
     func updateIsRead(userID: String, messageID: String) async throws -> Void {
         let path = database.collection("User")

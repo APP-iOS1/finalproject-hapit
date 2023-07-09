@@ -180,7 +180,7 @@ struct MessageCellView: View {
                 // 메시지 전부 읽음처리
                 try await messageManager.updateIsRead(userID: userInfoManager.currentUserInfo?.id ?? "", messageID: msg.id)
                 // fetch 후 메시지함 뱃지 제거 (전부 읽음)
-                messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+                try await messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
                 for msg in messageManager.messageArray {
                     if !(msg.isRead) {
                         isAllRead = false

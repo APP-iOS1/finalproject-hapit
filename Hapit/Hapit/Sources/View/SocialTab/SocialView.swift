@@ -87,7 +87,7 @@ struct SocialView: View {
                     
                     // 안 읽은 메세지 있나 확인
                     // FIXME: 한 박자 늦게 뜨는 이슈
-                    messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
+                    try await messageManager.fetchMessage(userID: userInfoManager.currentUserInfo?.id ?? "")
                     for msg in messageManager.messageArray {
                         if !(msg.isRead) {
                             isAllRead = false

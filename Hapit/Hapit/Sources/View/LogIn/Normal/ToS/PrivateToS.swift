@@ -29,9 +29,3 @@ struct PrivateToS: UIViewRepresentable {
         
     }
 }
-
-struct PrivateToS_Previews: PreviewProvider {
-    static var previews: some View {
-        PrivateToS(urlToLoad: "")
-    }
-}

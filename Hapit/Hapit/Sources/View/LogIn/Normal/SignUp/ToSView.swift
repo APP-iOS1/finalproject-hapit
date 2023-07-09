@@ -226,9 +226,3 @@ struct ToSView: View {
         }
     }
 }
-
-struct ToSView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToSView(email: .constant(""), pw: .constant(""), nickName: .constant(""))
-    }
-}

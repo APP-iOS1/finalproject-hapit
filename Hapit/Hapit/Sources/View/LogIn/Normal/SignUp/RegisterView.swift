@@ -494,10 +494,3 @@ struct TextFieldUnderLineRectangleModifier: ViewModifier {
 
     }
 }
-
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView()
-            .environmentObject(NormalSignInManager())
-    }
-}

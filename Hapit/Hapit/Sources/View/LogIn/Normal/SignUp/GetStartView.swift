@@ -120,9 +120,3 @@ struct GetStartView: View {
         }
     }
 }
-
-struct GetStartView_Previews: PreviewProvider {
-    static var previews: some View {
-        GetStartView(email: .constant(""), pw: .constant(""))
-    }
-}

@@ -22,10 +22,3 @@ struct GoogleLogIn: View {
         }
     }
 }
-
-struct GoogleLogIn_Previews: PreviewProvider {
-    static var previews: some View {
-        GoogleLogIn()
-            .environmentObject(GoogleSignInManager())
-    }
-}

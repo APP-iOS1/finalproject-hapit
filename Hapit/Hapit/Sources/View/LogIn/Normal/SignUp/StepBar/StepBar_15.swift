@@ -23,9 +23,3 @@ struct StepBar_15: View {
         .padding(.top, -30)
     }
 }
-
-//struct StepBar_15_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StepBar_15(step: 2, frameSize: 30, fontSize: 15)
-//    }
-//}

@@ -21,9 +21,3 @@ struct GetStartGuideText: View {
         }
     }
 }
-
-struct GetStartGuideText_Previews: PreviewProvider {
-    static var previews: some View {
-        GetStartGuideText(fontSize: 30)
-    }
-}

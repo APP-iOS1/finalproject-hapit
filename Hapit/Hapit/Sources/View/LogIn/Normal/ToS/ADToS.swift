@@ -31,9 +31,3 @@ struct ADToS: UIViewRepresentable {
     }
     
 }
-
-struct ADToS_Previews: PreviewProvider {
-    static var previews: some View {
-        ADToS(urlToLoad: "")
-    }
-}

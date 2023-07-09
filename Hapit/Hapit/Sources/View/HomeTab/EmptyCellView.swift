@@ -70,9 +70,3 @@ struct EmptyCellView: View {
         
     }
 }
-
-struct EmptyCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyCellView(currentContentsType: .challenge)
-    }
-}

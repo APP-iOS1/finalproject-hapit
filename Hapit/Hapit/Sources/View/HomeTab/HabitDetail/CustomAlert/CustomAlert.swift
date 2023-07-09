@@ -59,15 +59,3 @@ struct CustomAlert: View {
     .padding(.horizontal, 40)
   }
 }
-
-struct CustomAlert_Previews: PreviewProvider {
-  static var previews: some View {
-    CustomAlert(
-      isPresented: .constant(true),
-      title: "타이틀",
-      message: "메시지메시지메시지~",
-      primaryButtonTitle: "확인",
-      primaryAction: { },
-      withCancelButton: true)
-  }
-}

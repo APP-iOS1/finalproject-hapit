@@ -66,7 +66,6 @@
 		F33D293B2A233F8D00B6B205 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D28C92A233F8D00B6B205 /* PhotoPicker.swift */; };
 		F33D293C2A233F8D00B6B205 /* LocalNotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D28CB2A233F8D00B6B205 /* LocalNotificationSettingView.swift */; };
 		F33D293D2A233F8D00B6B205 /* HabitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D28CC2A233F8D00B6B205 /* HabitCellView.swift */; };
-		F33D293E2A233F8D00B6B205 /* .AddChallengeView.swift.swp in Resources */ = {isa = PBXBuildFile; fileRef = F33D28CD2A233F8D00B6B205 /* .AddChallengeView.swift.swp */; };
 		F33D293F2A233F8D00B6B205 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D28CE2A233F8D00B6B205 /* HomeView.swift */; };
 		F33D29402A233F8D00B6B205 /* ChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D28CF2A233F8D00B6B205 /* ChallengeCellView.swift */; };
 		F33D29412A233F8D00B6B205 /* HabitSegmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33D28D02A233F8D00B6B205 /* HabitSegmentDetailView.swift */; };
@@ -194,7 +193,6 @@
 		F33D28C92A233F8D00B6B205 /* PhotoPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		F33D28CB2A233F8D00B6B205 /* LocalNotificationSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationSettingView.swift; sourceTree = "<group>"; };
 		F33D28CC2A233F8D00B6B205 /* HabitCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitCellView.swift; sourceTree = "<group>"; };
-		F33D28CD2A233F8D00B6B205 /* .AddChallengeView.swift.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .AddChallengeView.swift.swp; sourceTree = "<group>"; };
 		F33D28CE2A233F8D00B6B205 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F33D28CF2A233F8D00B6B205 /* ChallengeCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeCellView.swift; sourceTree = "<group>"; };
 		F33D28D02A233F8D00B6B205 /* HabitSegmentDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitSegmentDetailView.swift; sourceTree = "<group>"; };
@@ -413,7 +411,6 @@
 				F33D28BD2A233F8D00B6B205 /* HabitDetail */,
 				F33D28CA2A233F8D00B6B205 /* Notification */,
 				F33D28CC2A233F8D00B6B205 /* HabitCellView.swift */,
-				F33D28CD2A233F8D00B6B205 /* .AddChallengeView.swift.swp */,
 				F33D28CE2A233F8D00B6B205 /* HomeView.swift */,
 				F33D28CF2A233F8D00B6B205 /* ChallengeCellView.swift */,
 				F33D28D02A233F8D00B6B205 /* HabitSegmentDetailView.swift */,
@@ -763,7 +760,6 @@
 			files = (
 				F49E28D229762CA0009EEB1A /* Preview Assets.xcassets in Resources */,
 				F49E28CF29762CA0009EEB1A /* Assets.xcassets in Resources */,
-				F33D293E2A233F8D00B6B205 /* .AddChallengeView.swift.swp in Resources */,
 				C5706F1529878730001300F5 /* .swiftlint.yml in Resources */,
 				F33D296E2A233F8D00B6B205 /* IM_Hyemin-Regular.ttf in Resources */,
 				F33D296F2A233F8D00B6B205 /* IM_Hyemin-Bold.ttf in Resources */,

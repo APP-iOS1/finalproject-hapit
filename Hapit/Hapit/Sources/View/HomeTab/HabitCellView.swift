@@ -49,9 +49,3 @@ struct HabitCellView: View {
         .padding(.bottom, 5)
     }// body
 }
-
-//struct HabitCellView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HabitCellView(didHabit: Bool, title: <#T##String#>, dateFromStart: <#T##Int#>, dayWithOutStop: <#T##Int#>)
-//    }
-//}

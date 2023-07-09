@@ -11,9 +11,6 @@ struct DiaryModalView: View {
     var body: some View {
         
         ZStack{
-//            Color("AccentColor")
-//                .ignoresSafeArea()
-//            
             VStack {
 
                 Image("diaryImage")
@@ -29,11 +26,5 @@ struct DiaryModalView: View {
                 Text("대충 글")
             }
         }
-    }
-}
-
-struct DiaryModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        DiaryModalView()
     }
 }

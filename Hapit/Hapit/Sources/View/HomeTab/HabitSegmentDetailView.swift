@@ -147,9 +147,3 @@ struct HabitSegmentDetailView: View {
         }
         
     }
-    
-//    struct HabitSegmentDetailView_Previews: PreviewProvider {
-//        static var previews: some View {
-//            HabitSegmentDetailView(selectedIndex: .constant(0), isClicked: .constant(false))
-//        }
-//    }

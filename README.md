@@ -1,4 +1,5 @@
-# Hapit <img src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/44b1d8aa-e409-4927-ac36-fc9661457d79" align=left width=100>
+
+# Hapit <img src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/8624583a-6d8a-4192-94fa-5d865e3e47c7" align=left width=100>
 
 > 66일 동안 진행하는 귀여운 습관 챌린지 메이트 🧸
 
@@ -8,7 +9,8 @@
 > 해핏은 스스로 습관을 형성하기 어려운 사람들을 위해 귀여운 요소들을 통한 습관 런닝 메이트 역할을 수행할 것입니다.
 > 왜냐하면 습관 형성을 위한 꾸준한 실천을 유지하기 위해서는 흥미를 느낄 수 있도록 재미있게 동기부여 해줄 필요가 있기 때문입니다.
 
-<img width="1363" alt="hapit readme 001" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/c11701b1-3d6a-4076-b6bf-ac1f788bcfa6">
+<img width="1363" alt="hapit readme 001" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/b5a98eaa-0a80-445a-8bbe-c8c1559f7576">
+
 
 <br />
 
@@ -21,16 +23,16 @@
 
 ## 🔎 Detail
 ### Home
-<img width="1363" alt="hapit readme 003" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/27605738-339c-4327-bd6b-0d7dae3aaa81">
-<img width="1363" alt="hapit readme 004" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/7407a273-317f-4dfc-8ccf-2228b048ed1e">
-<img width="1363" alt="hapit readme 005" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/1e849503-b495-4959-ae84-384a4ab907f5">
+<img width="1363" alt="hapit readme 003" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/6ac9f5c2-a442-4a36-b088-51c56f72c3b8">
+<img width="1363" alt="hapit readme 004" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/5c75e283-797e-43ed-831e-1ed4da0a0122">
+<img width="1363" alt="hapit readme 005" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/a1447333-20c5-417e-915c-c79e028865dd">
 
 ### Social
-<img width="1363" alt="hapit readme 007" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/5e419e5b-8c8f-4d5e-a759-5a2ee8c9edfb">
-<img width="1363" alt="hapit readme 008" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/73c70cff-dc98-4c9b-a4e4-0ce22a75ac47">
+<img width="1363" alt="hapit readme 007" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/8e2fb9ee-31a4-470e-b5a5-4ac63f644fda">
+<img width="1363" alt="hapit readme 008" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/e4ef6ee7-dbd8-473f-95ec-d2254b8078dc">
 
 ### MyPage
-<img width="1363" alt="hapit readme 010" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/9621b709-4373-41a0-8382-7420e9e2f6a7">
+<img width="1363" alt="hapit readme 010" src="https://github.com/APPSCHOOL1-REPO/finalproject-hapit/assets/48899055/a74d180a-4001-4089-89eb-d71ccec9b22b">
 
 <br />
 
